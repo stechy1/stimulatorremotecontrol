@@ -1,0 +1,64 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Aplikace-->
+    <string name="app_name">stimulatorremotecontrol</string>
+    <string name="app_title">Bezdrátové ovládání stimulátoru</string>
+    <string name="app_author">Tým snů</string>
+    <string name="not_connected">Žádné zařízení není připojeno</string>
+    <string name="bt_not_enabled_leaving">Bluetooth nebyl povolen. Ukončuji aplikaci…</string>
+    <string name="lost_connection">Spojení bylo ztraceno</string>
+
+    <!-- Podnadpis aplikace-->
+    <string name="title_connecting">připojuji…</string>
+    <string name="title_connected_to">připojeno k <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="title_not_connected">nepřipojeno</string>
+
+    <!-- Hlavní menu-->
+    <string name="menu_main_connect">připojit</string>
+    <string name="menu_main_disconnect">odpojit</string>
+
+    <!-- Boční menu -->
+    <string name="nav_drawer_open">Otevřít navigaci</string>
+    <string name="nav_drawer_close">Zavřít navigaci</string>
+
+    <string name="nav_text_item_1">ERP</string>
+    <string name="nav_text_item_2">BCI</string>
+    <string name="nav_text_item_3">Reaction experiment</string>
+    <string name="nav_text_item_4">Autostimulation</string>
+    <string name="nav_text_item_5">Biosensor logger</string>
+    <string name="nav_text_item_6">Test mode</string>
+    <string name="nav_text_settings">Nastavení</string>
+    
+    <!-- Activity - hledání a připojení zařízení-->
+    <string name="select_device">vyberte zařízení pro připojení</string>
+    <string name="none_paired">Žádné zařízení není spárované</string>
+    <string name="title_paired_devices">Spárovaná zařízení</string>
+
+    <!-- Activity - nastavení-->
+    <string name="language_change">Změna jazyka</string>
+
+    <!-- ERP screens -->
+    <string-array name="erp_screen_titles">
+        <item>Schema</item>
+        <item>Nastavení výstupů</item>
+        <item>Obecné nastavení</item>
+    </string-array>
+    <!-- ERP screen - 1 -->
+    <string name="erp_screen_1_new_schema">Nové schéma</string>
+    <string name="erp_screen_1_select_schema">Vybrat</string>
+    <string name="erp_screen_1_delete_schema">Smazat</string>
+    <string name="erp_screen_1_save_schema">Uložit…</string>
+    <string name="erp_screen_1_export_schema">Export</string>
+
+    <!-- ERP screen - 2 -->
+    <string-array name="erp_screen_2_output_types">
+        <item>Pulse - up [ms]</item>
+        <item>Pulse - down [ms]</item>
+        <item>Distribution - value [%]</item>
+        <item>Distribution - delay [%]</item>
+        <item>Brightness [%]</item>
+    </string-array>
+    <string name="erp_screen_2_output">. VÝSTUP:</string>
+
+    <!-- ERP screen - 3 -->
+    <string name="settings">Nastavení</string>
+</resources>

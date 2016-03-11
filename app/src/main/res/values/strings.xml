@@ -1,0 +1,72 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Aplikace-->
+    <string name="app_name">stimulatorremotecontrol</string>
+    <string name="app_title">Remote stimulator control</string>
+    <string name="app_author">Tým snů</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving application…</string>
+    <string name="lost_connection">Connection lost…</string>
+
+    <!-- Podnadpis aplikace-->
+    <string name="title_connecting">connecting…</string>
+    <string name="title_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="title_not_connected">not connected</string>
+
+    <!-- Hlavní menu-->
+    <string name="menu_main_connect">connect</string>
+    <string name="menu_main_disconnect">disconnect</string>
+
+    <!-- Boční menu -->
+    <string name="nav_drawer_open">Open sidebar</string>
+    <string name="nav_drawer_close">Close sidebar</string>
+
+    <string name="nav_text_item_1">ERP</string>
+    <string name="nav_text_item_2">BCI</string>
+    <string name="nav_text_item_3">Reaction experiment</string>
+    <string name="nav_text_item_4">Autostimulation</string>
+    <string name="nav_text_item_5">Biosensor logger</string>
+    <string name="nav_text_item_6">Test mode</string>
+    <string name="nav_text_settings">Settings</string>
+    
+    <!-- Activity - hledání a připojení zařízení-->
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="title_paired_devices">Paired Devices</string>
+
+    <!-- Activity - nastavení-->
+    <string name="language_change">Change language</string>
+
+    <!-- ERP screens -->
+    <string-array name="erp_screen_titles">
+        <item>Schema</item>
+        <item>Output settings</item>
+        <item>General settings</item>
+    </string-array>
+    <!-- ERP screen - 1 -->
+    <string name="erp_screen_1_new_schema">New schema</string>
+    <string name="erp_screen_1_select_schema">Select</string>
+    <string name="erp_screen_1_delete_schema">Delete</string>
+    <string name="erp_screen_1_save_schema">Save as…</string>
+    <string name="erp_screen_1_export_schema">Export</string>
+
+    <!--<string-array name="erp_screen_1_rand_array">
+        <item>Zakázat</item>
+        <item>Kratší</item>
+        <item>Delší</item>
+        <item>Kratší i delší</item>
+    </string-array>-->
+
+    <!-- ERP screen - 2 -->
+    <string-array name="erp_screen_2_output_types">
+        <item>Pulse - up [ms]</item>
+        <item>Pulse - down [ms]</item>
+        <item>Distribution - value [%]</item>
+        <item>Distribution - delay [%]</item>
+        <item>Brightness [%]</item>
+    </string-array>
+    <string name="erp_screen_2_save_outputs">Save values</string>
+    <string name="erp_screen_2_output">. OUTPUT</string>
+
+    <!-- ERP screen - 3 -->
+    <string name="settings">Nastavení</string>
+</resources>

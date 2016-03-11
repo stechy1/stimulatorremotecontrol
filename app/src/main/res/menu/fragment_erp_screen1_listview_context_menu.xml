@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/erp_screen_1_context_select"
+        android:title="@string/erp_screen_1_select_schema"/>
+    <item
+        android:id="@+id/erp_screen_1_context_delete"
+        android:title="@string/erp_screen_1_delete_schema"/>
+    <item
+        android:id="@+id/erp_screen_1_context_saveas"
+        android:title="@string/erp_screen_1_save_schema"/>
+</menu>
