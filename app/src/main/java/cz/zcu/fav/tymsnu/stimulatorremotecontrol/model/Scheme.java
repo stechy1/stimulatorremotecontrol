@@ -37,7 +37,19 @@ public final class Scheme {
     // endregion
 
     // region Private methods
-
+    private void rearangeOutputs() {
+        final int listCount = outputList.size();
+        if (outputCount > listCount) {
+            int delta = outputCount - listCount;
+            for (int i = 0; i < delta; i++) {
+                outputList.add(new Output("Output" + i));
+            }
+        } else {
+            for (int i = listCount; i > outputCount; i--) {
+                outputList.remove(i);
+            }
+        }
+    }
     // endregion
 
     // region Public methods
@@ -59,6 +71,9 @@ public final class Scheme {
 
     public void setOutputCount(int outputCount) {
         this.outputCount = outputCount;
+
+        if (outputList.size() != outputCount)
+            rearangeOutputs();
     }
 
     public List<Output> getOutputList() {

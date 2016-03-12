@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Observable;
@@ -199,7 +200,11 @@ public final class Screen2 extends ASimpleFragment
                 for (int i = 0; i < count; i++) {
                     int val = Integer.parseInt(inputs[i].getText().toString());
                     Output output = outputs.get(i);
-                    output.distribution.setValue(val);
+                    if (output.canUpdateDistribution(outputs, val))
+                        output.distribution.setValue(val);
+                    else
+                        Toast.makeText(getContext(), "Distribution > 100", Toast.LENGTH_SHORT).show();
+
                 }
                 break;
             case DISTRIBUTION_DELAY:
