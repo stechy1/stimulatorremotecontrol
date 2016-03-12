@@ -72,4 +72,6 @@
         <item>Vzestupná</item>
         <item>Sestupná</item>
     </string-array>
+    <string name="erp_screen_3_output_count">Počet výstupů</string>
+    <string name="erp_screen_3_output_count_save">Uložit</string>
 </resources>

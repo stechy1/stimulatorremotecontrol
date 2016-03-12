@@ -38,7 +38,7 @@ public final class Scheme {
 
     // region Private methods
     private void rearangeOutputs() {
-        final int listCount = outputList.size();
+        int listCount = outputList.size();
         if (outputCount > listCount) {
             int delta = outputCount - listCount;
             for (int i = 0; i < delta; i++) {

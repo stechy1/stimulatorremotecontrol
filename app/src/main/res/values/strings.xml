@@ -80,5 +80,6 @@
         <item>Leading</item>
         <item>Falling</item>
     </string-array>
-
+    <string name="erp_screen_3_output_count">Output count</string>
+    <string name="erp_screen_3_output_count_save">Save</string>
 </resources>

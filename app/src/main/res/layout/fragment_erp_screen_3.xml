@@ -25,6 +25,25 @@
         android:id="@+id/erp_screen_3_spinner_edge"
         android:entries="@array/erp_screen_3_edge_values"/>
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/erp_screen_3_output_count"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/erp_screen_3_edittext_output_count"
+            android:hint="@string/erp_screen_3_output_count"
+            android:inputType="number"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/erp_screen_3_button_save"
+        android:text="@string/erp_screen_3_output_count_save"/>
 
 </LinearLayout>
