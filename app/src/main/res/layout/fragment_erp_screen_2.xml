@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <android.support.v7.widget.AppCompatSpinner
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/erp_screen_2_spinner_output_type" />
+        android:id="@+id/erp_screen_2_spinner_output_type"
+        android:entries="@array/erp_screen_2_output_types"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
