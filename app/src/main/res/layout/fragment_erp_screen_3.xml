@@ -8,19 +8,23 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nastavení náhodnosti"
-        android:textAlignment="center" />
+        android:text="@string/erp_screen_3_random"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/erp_screen_3_spinner_random"
+        android:entries="@array/erp_screen_3_random_values"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nastavení hrany"
-        android:textAlignment="center" />
-
-    <TextView
+        android:text="@string/erp_screen_3_edge" />
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Již brzy..."
-        android:textSize="@dimen/abc_action_bar_default_height_material"
-        android:textAlignment="center" />
+        android:id="@+id/erp_screen_3_spinner_edge"
+        android:entries="@array/erp_screen_3_edge_values"/>
+
+
+
 </LinearLayout>

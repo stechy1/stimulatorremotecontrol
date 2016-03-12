@@ -68,5 +68,17 @@
     <string name="erp_screen_2_output">. OUTPUT</string>
 
     <!-- ERP screen - 3 -->
-    <string name="settings">Nastavení</string>
+    <string name="erp_screen_3_random">Random</string>
+    <string-array name="erp_screen_3_random_values">
+        <item>OFF</item>
+        <item>Short</item>
+        <item>Long</item>
+        <item>Short and long</item>
+    </string-array>
+    <string name="erp_screen_3_edge">Edge</string>
+    <string-array name="erp_screen_3_edge_values">
+        <item>Leading</item>
+        <item>Falling</item>
+    </string-array>
+
 </resources>

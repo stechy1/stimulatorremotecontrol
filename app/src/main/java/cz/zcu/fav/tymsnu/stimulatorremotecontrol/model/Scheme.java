@@ -15,8 +15,8 @@ public final class Scheme {
 
     private String name;
     private int outputCount;
-    public final Edge edge;
-    public final Random random;
+    private Edge edge;
+    private Random random;
 
     private final List<Output> outputList;
     // endregion
@@ -80,6 +80,22 @@ public final class Scheme {
         return outputList;
     }
 
+    public Edge getEdge() {
+        return edge;
+    }
+
+    public void setEdge(Edge edge) {
+        this.edge = edge;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
     // endregion
 
 
@@ -113,11 +129,37 @@ public final class Scheme {
 
     // region Enums
     public enum Edge {
-        LEADING, FALLING
+        LEADING, FALLING;
+
+        public static Edge valueOf(int index) {
+            switch (index) {
+                case 0:
+                    return LEADING;
+                case 1:
+                    return FALLING;
+                default:
+                    return LEADING;
+            }
+        }
     }
 
     public enum Random {
-        OFF, SHORT, LONG, SHORT_LONG
+        OFF, SHORT, LONG, SHORT_LONG;
+
+        public static Random valueOf(int index) {
+            switch (index) {
+                case 0:
+                    return OFF;
+                case 1:
+                    return SHORT;
+                case 2:
+                    return LONG;
+                case 3:
+                    return SHORT_LONG;
+                default:
+                    return OFF;
+            }
+        }
     }
     // endregion
 }
