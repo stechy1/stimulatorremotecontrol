@@ -166,5 +166,5 @@ public final class SchemeManager extends Observable {
         void callack();
     }
 
-    public interface OnSchemeChange extends Observer {}
+    public interface OnSchemeChangeListener extends Observer {}
 }
