@@ -15,7 +15,7 @@
         android:id="@+id/erp_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="24dp" />
 
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/indicator"

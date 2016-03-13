@@ -3,18 +3,19 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.InputType;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -25,7 +26,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
 public final class Screen2 extends ASimpleFragment
-        implements AdapterView.OnItemSelectedListener, SchemeManager.OnSchemeChangeListener, View.OnClickListener {
+        implements AdapterView.OnItemSelectedListener, SchemeManager.OnSchemeChange, View.OnClickListener {
 
     private static final int PULSE_UP = 0;
     private static final int PULSE_DOWN = 1;
@@ -34,13 +35,14 @@ public final class Screen2 extends ASimpleFragment
     private static final int BRIGHTNESS = 4;
 
     private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
+    private final List<String> resources = new ArrayList<>();
 
     private String outText;
 
     private EditText[] inputs;
 
     private LinearLayout outputs;
-    private Spinner spinner;
+    private AppCompatSpinner spinner;
     private int outputTypeIndex;
 
     @Nullable
@@ -48,7 +50,8 @@ public final class Screen2 extends ASimpleFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_erp_screen_2, container, false);
 
-        spinner = (Spinner) v.findViewById(R.id.erp_screen_2_spinner_output_type);
+        spinner = (AppCompatSpinner) v.findViewById(R.id.erp_screen_2_spinner_output_type);
+        spinner.setAdapter(buildSpinnerAdapter());
         spinner.setOnItemSelectedListener(this);
 
         // TODO odebrat tlačítko uložit a udělat synchronizaci hodnot při jejich změně
@@ -102,16 +105,21 @@ public final class Screen2 extends ASimpleFragment
         writeValues(outputs);
     }
 
+    private ArrayAdapter<String> buildSpinnerAdapter() {
+        if (resources.isEmpty())
+            resources.addAll(Arrays.asList(getResources().getStringArray(R.array.erp_screen_2_output_types)));
+
+        return new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, resources);
+    }
+
     private void changeValues() {
         Scheme scheme = schemeManager.getSelectedScheme();
         if (scheme == null)
             return;
 
-        final Context context = getContext();
-        if (context == null)
-            return;
 
         final List<Output> outputs = scheme.getOutputList();
+        final Context context = getContext();
         final LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
         if (inputs[0] == null) {
@@ -127,7 +135,6 @@ public final class Screen2 extends ASimpleFragment
 
                 EditText editText = new EditText(context);
                 editText.setLayoutParams(textLayoutParams);
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 inputs[i] = editText;
 
                 layout.addView(textView);
@@ -200,11 +207,7 @@ public final class Screen2 extends ASimpleFragment
                 for (int i = 0; i < count; i++) {
                     int val = Integer.parseInt(inputs[i].getText().toString());
                     Output output = outputs.get(i);
-                    if (output.canUpdateDistribution(outputs, val))
-                        output.distribution.setValue(val);
-                    else
-                        Toast.makeText(getContext(), "Distribution > 100", Toast.LENGTH_SHORT).show();
-
+                    output.distribution.setValue(val);
                 }
                 break;
             case DISTRIBUTION_DELAY:

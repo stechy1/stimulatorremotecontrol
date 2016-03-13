@@ -1,8 +1,6 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 
-import java.util.List;
-
 public final class Output {
 
     // region Variables
@@ -12,11 +10,7 @@ public final class Output {
     private int brightness;
     // endregion
 
-// region Constructors
-    public Output(String name) {
-        this(name, new Puls(), new Distribution(), 0);
-    }
-
+    // region Constructors
     public Output(String name, Puls puls, Distribution distribution, int brightness) {
         this.name = name;
         this.puls = puls;
@@ -30,16 +24,7 @@ public final class Output {
     // endregion
 
     // region Public methods
-    public boolean canUpdateDistribution(List<Output> outputs, int val) {
-        int sum = 0;
-        for (Output output : outputs) {
-            sum += output.distribution.getValue();
-        }
-        sum -= distribution.getValue();
 
-        return sum + val <= 100;
-
-    }
     // endregion
 
     // region Getters & Setters

@@ -1,53 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="56dp">
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="Nastavení náhodnosti"
+        android:textAlignment="center" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/erp_screen_3_random"/>
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/erp_screen_3_spinner_random"
-            android:entries="@array/erp_screen_3_random_values"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nastavení hrany"
+        android:textAlignment="center" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/erp_screen_3_edge" />
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/erp_screen_3_spinner_edge"
-            android:entries="@array/erp_screen_3_edge_values"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/erp_screen_3_output_count"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/erp_screen_3_edittext_output_count"
-                android:hint="@string/erp_screen_3_output_count"
-                android:inputType="number"/>
-        </LinearLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/erp_screen_3_button_save"
-            android:text="@string/erp_screen_3_output_count_save"/>
-    </LinearLayout>
-</ScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Již brzy..."
+        android:textSize="@dimen/abc_action_bar_default_height_material"
+        android:textAlignment="center" />
+</LinearLayout>

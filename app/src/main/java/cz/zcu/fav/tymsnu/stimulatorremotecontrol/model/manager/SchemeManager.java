@@ -44,12 +44,12 @@ public final class SchemeManager extends Observable {
         if (loaded)
             return;
 
-        List<Output> list1 = new ArrayList<>();
-        list1.add(new Output("Out1", new Output.Puls(1, 2), new Output.Distribution(6, 8), 9));
-        list1.add(new Output("Out2", new Output.Puls(3, 4), new Output.Distribution(3, 5), 0));
-        list1.add(new Output("Out3", new Output.Puls(5, 6), new Output.Distribution(1, 7), 3));
-
-        schemeList.add(new Scheme("Scheme1", 3, Scheme.Edge.FALLING, Scheme.Random.OFF, list1));
+        schemeList.add(new Scheme("Scheme1", 3, Scheme.Edge.FALLING, Scheme.Random.OFF,
+                Arrays.asList(
+                        new Output("Out1", new Output.Puls(1, 2), new Output.Distribution(6, 8), 9),
+                        new Output("Out2", new Output.Puls(3, 4), new Output.Distribution(3, 5), 0),
+                        new Output("Out3", new Output.Puls(5, 6), new Output.Distribution(1, 7), 3)
+                )));
         schemeList.add(new Scheme("Scheme2", 3, Scheme.Edge.LEADING, Scheme.Random.SHORT,
                 Arrays.asList(
                         new Output("Out1", new Output.Puls(9, 8), new Output.Distribution(4, 3), 5),
@@ -142,8 +142,7 @@ public final class SchemeManager extends Observable {
     }
 
     public void notifyValueChanged() {
-        setChanged();
-        notifyObservers(selectedScheme);
+
     }
     // endregion
 
@@ -167,5 +166,5 @@ public final class SchemeManager extends Observable {
         void callack();
     }
 
-    public interface OnSchemeChangeListener extends Observer {}
+    public interface OnSchemeChange extends Observer {}
 }

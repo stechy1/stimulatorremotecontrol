@@ -68,22 +68,5 @@
     <string name="erp_screen_2_output">. OUTPUT</string>
 
     <!-- ERP screen - 3 -->
-    <string name="erp_screen_3_random">Random</string>
-    <string-array name="erp_screen_3_random_values">
-        <item>OFF</item>
-        <item>Short</item>
-        <item>Long</item>
-        <item>Short and long</item>
-    </string-array>
-    <string name="erp_screen_3_edge">Edge</string>
-    <string-array name="erp_screen_3_edge_values">
-        <item>Leading</item>
-        <item>Falling</item>
-    </string-array>
-    <string name="erp_screen_3_output_count">Output count</string>
-    <string name="erp_screen_3_output_count_save">Save</string>
-
-    <!-- Exceptions -->
-    <string name="exception_general">Failed to perform action</string>
-    <string name="exception_out_of_range">Value is out of range</string>
+    <string name="settings">Nastavení</string>
 </resources>
