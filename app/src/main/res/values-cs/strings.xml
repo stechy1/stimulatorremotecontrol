@@ -60,5 +60,18 @@
     <string name="erp_screen_2_output">. VÝSTUP:</string>
 
     <!-- ERP screen - 3 -->
-    <string name="settings">Nastavení</string>
+    <string name="erp_screen_3_random">Náhodnost</string>
+    <string-array name="erp_screen_3_random_values">
+        <item>Vypnuto</item>
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+        <item>Krátká i dlouhá</item>
+    </string-array>
+    <string name="erp_screen_3_edge">Hrana</string>
+    <string-array name="erp_screen_3_edge_values">
+        <item>Vzestupná</item>
+        <item>Sestupná</item>
+    </string-array>
+    <string name="erp_screen_3_output_count">Počet výstupů</string>
+    <string name="erp_screen_3_output_count_save">Uložit</string>
 </resources>
