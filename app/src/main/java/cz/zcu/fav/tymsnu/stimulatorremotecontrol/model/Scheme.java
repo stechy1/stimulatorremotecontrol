@@ -77,7 +77,7 @@ public final class Scheme {
                 outputList.add(new Output("Output" + i));
             }
         } else {
-            for (int i = --listCount; i >= outputCount; i--) {
+            for (int i = --listCount; i > outputCount; i--) {
                 outputList.remove(i);
             }
         }
