@@ -2,6 +2,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,8 +116,10 @@ public final class Screen3 extends ASimpleFragment
             schemeManager.notifyValueChanged();
         } catch (IllegalArgumentException ex) {
             Toast.makeText(getContext(), getString(R.string.exception_out_of_range), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, ex.toString());
         } catch (Exception ex) {
             Toast.makeText(getContext(), getString(R.string.exception_general), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, ex.toString());
         }
     }
 }
