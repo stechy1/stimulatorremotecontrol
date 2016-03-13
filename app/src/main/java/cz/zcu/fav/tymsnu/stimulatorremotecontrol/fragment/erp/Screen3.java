@@ -113,9 +113,10 @@ public final class Screen3 extends ASimpleFragment
             int val = Integer.parseInt(outputCountEditText.getText().toString());
             scheme.setOutputCount(val);
             schemeManager.notifyValueChanged();
+        } catch (IllegalArgumentException ex) {
+            Toast.makeText(getContext(), getString(R.string.exception_out_of_range), Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.exception_general), Toast.LENGTH_SHORT).show();
         }
     }
-
 }

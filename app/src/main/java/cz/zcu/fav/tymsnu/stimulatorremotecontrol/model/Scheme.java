@@ -7,26 +7,52 @@ import java.util.List;
 public final class Scheme {
 
     // region Variables
-    public static final int DEF_OUTPUT_COUNT = 0;
+    // Výchozí počet výstupů
+    public static final int MIN_OUTPUT_COUNT = 1;
+    public static final int MAX_OUTPUT_COUNT = 8;
 
+
+     // Indikátor, zda-li je schéma načteno
     public boolean loaded = false;
     // TODO implementovat reakci na změnu hodnot ve schématu (indikátor na screenu1)
     public boolean changed = false;
 
+    // Název schématu
     private String name;
+    // Počet výstupů
     private int outputCount;
+    // Nastavení hrany (náběžná/sestupná)
     private Edge edge;
+    // Nastavení náhodnosti (žádná/krátká/dlouhá/krátká i dlouhá)
     private Random random;
-
+    // Kolekce udržující výstupy
     private final List<Output> outputList;
     // endregion
 
     // region Constructors
 
+    /**
+     * Konstruktor schématu
+     * Vytvoří nové schéma s výchozími hodnotami
+     * @param name Název schématu
+     */
     public Scheme(String name) {
-        this(name, DEF_OUTPUT_COUNT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
+        this(name, MIN_OUTPUT_COUNT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
+
+        for (int i = 0; i < MIN_OUTPUT_COUNT; i++) {
+            outputList.add(new Output("Output" + i));
+        }
     }
 
+    /**
+     * Konstruktor schématu
+     * Vytvoří nové schéma na základě parametrů
+     * @param name Název schématu
+     * @param outputCount Počet výstupů
+     * @param edge Typ hrany
+     * @param random Náhodnost
+     * @param outputList Reference na kolekci výstupů
+     */
     public Scheme(String name, int outputCount, Edge edge, Random random, List<Output> outputList) {
         this.name = name;
         this.outputCount = outputCount;
@@ -37,6 +63,12 @@ public final class Scheme {
     // endregion
 
     // region Private methods
+
+    /**
+     * Upraví počet výstupů
+     * Pokud je jich víc, než je požadováno, tak odstraní poslední
+     * Pokud je jich méně, tak vytvoří nové
+     */
     private void rearangeOutputs() {
         int listCount = outputList.size();
         if (outputCount > listCount) {
@@ -69,7 +101,10 @@ public final class Scheme {
         return outputCount;
     }
 
-    public void setOutputCount(int outputCount) {
+    public void setOutputCount(int outputCount) throws IllegalArgumentException {
+        if (outputCount < MIN_OUTPUT_COUNT || outputCount > MAX_OUTPUT_COUNT)
+            throw new IllegalArgumentException();
+
         this.outputCount = outputCount;
 
         if (outputList.size() != outputCount)

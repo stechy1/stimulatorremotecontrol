@@ -82,4 +82,8 @@
     </string-array>
     <string name="erp_screen_3_output_count">Output count</string>
     <string name="erp_screen_3_output_count_save">Save</string>
+
+    <!-- Exceptions -->
+    <string name="exception_general">Failed to perform action</string>
+    <string name="exception_out_of_range">Value is out of range</string>
 </resources>
