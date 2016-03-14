@@ -2,6 +2,9 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Třída reprezentující jeden packet
+ */
 public class Packet {
 
     private Code code;
