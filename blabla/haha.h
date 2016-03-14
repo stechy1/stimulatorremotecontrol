@@ -1,0 +1,14 @@
+//
+// Created by Vrbik on 14.03.2016.
+//
+
+#ifndef STIMULATORREMOTECONTROL2_HAHA_H
+#define STIMULATORREMOTECONTROL2_HAHA_H
+
+
+class haha {
+
+};
+
+
+#endif //STIMULATORREMOTECONTROL2_HAHA_H
