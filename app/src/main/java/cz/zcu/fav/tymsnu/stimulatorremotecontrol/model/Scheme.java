@@ -224,7 +224,7 @@ public final class Scheme implements Packetable{
         for(Output a : outputList){
             packets.add(new Packet(actualDURATION, DataConvertor.milisecondsTo2B(a.puls.getUp())));
             packets.add(new Packet(actualPAUSE, DataConvertor.milisecondsTo2B(a.puls.getDown())));
-            packets.add(new Packet(actualDISTRIBUTION, DataConvertor.intTo1B(a.distribution.getValue()))); //TODO tady ještě nevíme jak to bude s delay
+            packets.add(new Packet(actualDISTRIBUTION, DataConvertor.intTo1B(a.distribution.getValue()))); //TODO u distribution parametru ještě neposíláme delay
             packets.add(new Packet(actualBRIGHTNESS, DataConvertor.intTo1B(a.getBrightness())));
 
             actualDURATION = actualDURATION.getNext();

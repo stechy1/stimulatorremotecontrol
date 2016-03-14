@@ -1,5 +1,9 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes;
 
+/**
+ * Třída reprezentující komunikační protokol,
+ * některé hodnoty mají následovníky, pokud se stejný parametr nastavuje více výstupům
+ */
 public final class Codes {
 
     public static final Code REFRESH = new Code((byte) 0x00, "RERESH");
@@ -14,7 +18,7 @@ public final class Codes {
     public static final Code OUTPUT7_DURATION = new Code((byte) 0x32, "OUTPUT7_DURATION");
     public static final Code OUTPUT7_PAUSE = new Code((byte) 0x33, "OUTPUT7_PAUSE");
     public static final Code OUTPUT7_DISTRIBUTION = new Code((byte) 0x37, "OUTPUT7_DISTRIBUTION");
-    public static final Code OUTPUT7_BRIGHTNESS = new Code((byte) 0x3B, "OUTPUT7_BRIGHTNESS"); //TODO nejasná kód
+    public static final Code OUTPUT7_BRIGHTNESS = new Code((byte) 0x3B, "OUTPUT7_BRIGHTNESS"); //TODO nejasný kód
     public static final Code OUTPUT7_FREQ = new Code((byte) 0x40, "OUTPUT7_FREQ");              //TODO nejasnost
     public static final Code OUTPUT7_MIDDLE_PERIOD = new Code((byte) 0x41, "OUTPUT7_MIDDLE_PERIOD"); //TODO nejasnost
 
