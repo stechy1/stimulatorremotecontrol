@@ -7,7 +7,7 @@ import java.util.List;
 public final class Scheme {
 
     // region Variables
-    // Výchozí počet výstupů
+    // Výchozí počet výstupů (stará verze 4)
     public static final int MIN_OUTPUT_COUNT = 1;
     public static final int MAX_OUTPUT_COUNT = 8;
 
