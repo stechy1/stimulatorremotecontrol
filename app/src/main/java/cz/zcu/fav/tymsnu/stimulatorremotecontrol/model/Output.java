@@ -1,6 +1,5 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
-
 import java.util.List;
 
 public final class Output {
