@@ -4,6 +4,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.SchemeXMLHandler;
 
 public final class SchemeManager extends Observable {
 
@@ -149,9 +153,22 @@ public final class SchemeManager extends Observable {
      */
     public void save(Scheme scheme, Callback callback) {
 
+        try {
+            String name = scheme.getName();
+            if (!name.contains(".xml"))
+                name += ".xml";
 
-        if (callback != null)
-            callback.callack();
+            File outFile = new File(workingDirectory, name);
+            outFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(outFile);
+            IReadWrite readWrite = new SchemeXMLHandler(scheme);
+            readWrite.write(out);
+
+            if (callback != null)
+                callback.callack();
+        } catch (IOException e) {
+            Log.e(TAG, "Nepodarilo se zapsat do souboru");
+        }
     }
 
     /**

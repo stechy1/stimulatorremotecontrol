@@ -76,11 +76,12 @@ public final class Screen1 extends ASimpleFragment
 
         final int listPosition = info.position;
         Scheme scheme = schemeManager.getSchemeList().get(listPosition);
-        if (scheme.equals(schemeManager.getSelectedScheme()))
-            return false;
 
         switch (item.getItemId()) {
             case R.id.erp_screen_1_context_select:
+                if (scheme.equals(schemeManager.getSelectedScheme()))
+                    return false;
+
                 schemeManager.select(scheme, new SchemeManager.Callback() {
                     @Override
                     public void callack() {
