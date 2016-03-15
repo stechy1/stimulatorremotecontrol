@@ -4,13 +4,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Code;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Codes;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.DataConvertor;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packetable;
-
-public final class Scheme implements Packetable {
+public final class Scheme {
 
     // region Variables
     // Výchozí počet výstupů (stará verze 4)
@@ -96,33 +90,7 @@ public final class Scheme implements Packetable {
      * odeslat po sériové lince do stimulátoru
      * @return list packetů
      */
-    @Override
-    public ArrayList<Packet> getPackets() {
 
-        ArrayList<Packet> packets = new ArrayList<>();
-
-        packets.add(new Packet(Codes.EDGE, DataConvertor.intTo1B(getEdge().ordinal())));
-        packets.add(new Packet(Codes.RANDOMNESS_ON, DataConvertor.intTo1B(getRandom().ordinal()))); //TODO jak je to s tím kódem náhodnosti?
-
-        Code actualDURATION = Codes.OUTPUT0_DURATION;
-        Code actualPAUSE = Codes.OUTPUT0_PAUSE;
-        Code actualDISTRIBUTION = Codes.OUTPUT0_DISTRIBUTION;
-        Code actualBRIGHTNESS = Codes.OUTPUT0_BRIGHTNESS;
-
-        for(Output a : outputList){
-            packets.add(new Packet(actualDURATION, DataConvertor.milisecondsTo2B(a.puls.getUp())));
-            packets.add(new Packet(actualPAUSE, DataConvertor.milisecondsTo2B(a.puls.getDown())));
-            packets.add(new Packet(actualDISTRIBUTION, DataConvertor.intTo1B(a.distribution.getValue()))); //TODO u distribution parametru ještě neposíláme delay
-            packets.add(new Packet(actualBRIGHTNESS, DataConvertor.intTo1B(a.getBrightness())));
-
-            actualDURATION = actualDURATION.getNext();
-            actualPAUSE = actualPAUSE.getNext();
-            actualDISTRIBUTION = actualDISTRIBUTION.getNext();
-            actualBRIGHTNESS = actualBRIGHTNESS.getNext();
-        }
-
-        return packets;
-    }
     // endregion
 
     // region Getters & Setters

@@ -20,6 +20,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPPagerAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.SchemePacketHandler;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 import me.relex.circleindicator.CircleIndicator;
 
@@ -63,7 +64,7 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
             Toast.makeText(getContext(), "Vyberte schema pro spusteni stimulace", Toast.LENGTH_LONG).show();
         else {
             Toast.makeText(getContext(), "Spouštím stimulaci...", Toast.LENGTH_LONG).show();
-            List<Packet> packets = scheme.getPackets();
+            List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
             for (Packet packet : packets)
                 Log.i(TAG, packet.toString());
         }
