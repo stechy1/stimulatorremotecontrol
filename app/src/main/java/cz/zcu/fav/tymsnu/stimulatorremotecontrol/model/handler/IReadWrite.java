@@ -1,13 +1,13 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler;
 
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public interface IReadWrite {
 
-    void write(FileOutputStream outputStream) throws IOException;
+    void write(OutputStream outputStream) throws IOException;
 
-    void read(FileInputStream inputStream) throws IOException;
+    void read(InputStream inputStream) throws IOException;
 }

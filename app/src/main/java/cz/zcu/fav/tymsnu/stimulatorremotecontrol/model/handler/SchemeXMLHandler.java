@@ -4,9 +4,9 @@ import android.util.Xml;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
@@ -42,7 +42,7 @@ public class SchemeXMLHandler implements IReadWrite {
 
     // region write
     @Override
-    public void write(FileOutputStream outputStream) throws IOException {
+    public void write(OutputStream outputStream) throws IOException {
         XmlSerializer s = Xml.newSerializer();
         s.setOutput(outputStream, "UTF-8");
         s.startDocument("UTF-8", true);
@@ -65,6 +65,13 @@ public class SchemeXMLHandler implements IReadWrite {
 
     }
 
+    /**
+     * Zapíše hodnotu do XML s výchozím namespacem
+     * @param s Reference na XML serializer
+     * @param tag Tag, do kterého se má zapsat
+     * @param val Hodnota, která se má zapsat
+     * @throws IOException
+     */
     private void writeValue(XmlSerializer s, String tag, String val) throws IOException {
         writeValue(s, NAMESPACE, tag, val);
     }
@@ -122,7 +129,7 @@ public class SchemeXMLHandler implements IReadWrite {
 
     // region read
     @Override
-    public void read(FileInputStream inputStream) throws IOException {
+    public void read(InputStream inputStream) throws IOException {
 
     }
     // endregion
