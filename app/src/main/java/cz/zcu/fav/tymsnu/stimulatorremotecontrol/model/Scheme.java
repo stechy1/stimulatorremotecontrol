@@ -55,7 +55,8 @@ public final class Scheme {
      * @param outputList Reference na kolekci výstupů
      */
     public Scheme(String name, int outputCount, Edge edge, Random random, List<Output> outputList) {
-        name = name.substring(0, name.lastIndexOf("."));
+        if (name.contains("."))
+            name = name.substring(0, name.lastIndexOf("."));
         this.name = name;
         this.outputCount = outputCount;
         this.edge = edge;

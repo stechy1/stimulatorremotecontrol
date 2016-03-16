@@ -16,7 +16,7 @@ public class SchemeXMLHandler implements IReadWrite {
 
     // region variables
     private static final String NAMESPACE = "";
-    private static final String TAG_ROOT = "schema";
+    private static final String TAG_ROOT = "scheme";
     private static final String TAG_OUTPUT_COUNT = "output-count";
     private static final String TAG_EDGE = "edge";
     private static final String TAG_RANDOM = "random";
