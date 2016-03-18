@@ -85,6 +85,11 @@ public final class Scheme {
     // endregion
 
     // region Public methods
+    /**
+     * Metoda pro získání packetů, které reprezentují nastavení celého schématu a lze je postupně
+     * odeslat po sériové lince do stimulátoru
+     * @return list packetů
+     */
 
     // endregion
 

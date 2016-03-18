@@ -11,7 +11,7 @@ public final class Output {
     public final Puls puls;
     // Reference pro nastavení rozdělení
     public final Distribution distribution;
-    // Intenzita jasu (0-100) [%]
+    // Intenzita jasu [%](0-100)
     private int brightness;
     // endregion
 

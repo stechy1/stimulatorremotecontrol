@@ -6,15 +6,21 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPPagerAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.SchemePacketHandler;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 import me.relex.circleindicator.CircleIndicator;
 
@@ -53,10 +59,15 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
     // FAB onClick
     @Override
     public void onClick(View v) {
-        if (schemeManager.getSelectedScheme() != null)
+        Scheme scheme = schemeManager.getSelectedScheme();
+        if (scheme == null)
+            Toast.makeText(getContext(), "Vyberte schema pro spusteni stimulace", Toast.LENGTH_LONG).show();
+        else {
             Toast.makeText(getContext(), "Spouštím stimulaci...", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(getContext(), "Vyberte schema pro spusteni stimulace", Toast.LENGTH_LONG).show();;
+            List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
+            for (Packet packet : packets)
+                Log.i(TAG, packet.toString());
+        }
     }
 
     private PagerAdapter buildAdapter() {
