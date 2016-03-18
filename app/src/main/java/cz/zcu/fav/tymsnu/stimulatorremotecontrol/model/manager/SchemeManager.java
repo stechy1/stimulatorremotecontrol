@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -181,6 +182,15 @@ public final class SchemeManager extends Observable {
     }
 
     /**
+     * Uloží všechna schémata
+     */
+    public void saveAll() {
+        for (Scheme scheme : schemeList) {
+            save(scheme);
+        }
+    }
+
+    /**
      * Smaže schéma
      * @param scheme Reference na schéma
      */
@@ -196,6 +206,17 @@ public final class SchemeManager extends Observable {
 
         if (callback != null)
             callback.callack();
+    }
+
+    /**
+     * Smaže všechna schémata
+     */
+    public void deleteAll() {
+        Iterator<Scheme> it = schemeList.iterator();
+        for (Scheme scheme = it.next(); it.hasNext();) {
+            delete(scheme);
+            it.remove();
+        }
     }
 
     /**
