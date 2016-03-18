@@ -73,7 +73,6 @@ public final class Screen1 extends ASimpleFragment
     // ListView onContextItemSelected
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        //Log.i(TAG, "Byla vybrana polozka: " + item.getItemId());
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
@@ -92,6 +91,8 @@ public final class Screen1 extends ASimpleFragment
                         img.setImageResource(R.drawable.yes);
                     }
                 });
+                ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+
                 return true;
             case R.id.erp_screen_1_context_delete:
                 schemeManager.delete(scheme);
