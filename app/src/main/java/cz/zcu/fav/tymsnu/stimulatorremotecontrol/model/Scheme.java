@@ -37,6 +37,7 @@ public final class Scheme {
      * @param name Název schématu
      */
     public Scheme(String name) {
+
         this(name, MIN_OUTPUT_COUNT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
 
         for (int i = 0; i < MIN_OUTPUT_COUNT; i++) {
@@ -54,6 +55,8 @@ public final class Scheme {
      * @param outputList Reference na kolekci výstupů
      */
     public Scheme(String name, int outputCount, Edge edge, Random random, List<Output> outputList) {
+        if (name.contains("."))
+            name = name.substring(0, name.lastIndexOf("."));
         this.name = name;
         this.outputCount = outputCount;
         this.edge = edge;
@@ -74,7 +77,7 @@ public final class Scheme {
         if (outputCount > listCount) {
             int delta = outputCount - listCount;
             for (int i = 0; i < delta; i++) {
-                outputList.add(new Output("Output" + i));
+                outputList.add(new Output("Output" + i + outputCount));
             }
         } else {
             for (int i = --listCount; i >= outputCount; i--) {

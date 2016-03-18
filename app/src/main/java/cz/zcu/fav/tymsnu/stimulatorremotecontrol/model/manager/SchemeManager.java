@@ -4,14 +4,20 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWriteScheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.SchemeJSONHandler;
 
 public final class SchemeManager extends Observable {
 
@@ -56,27 +62,27 @@ public final class SchemeManager extends Observable {
         if (loaded)
             return;
 
-        List<Output> list1 = new ArrayList<>();
-        list1.add(new Output("Out1", new Output.Puls(1, 2), new Output.Distribution(6, 8), 9));
-        list1.add(new Output("Out2", new Output.Puls(3, 4), new Output.Distribution(3, 5), 0));
-        list1.add(new Output("Out3", new Output.Puls(5, 6), new Output.Distribution(1, 7), 3));
-
-        schemeList.add(new Scheme("Scheme1", 3, Scheme.Edge.FALLING, Scheme.Random.OFF, list1));
-        schemeList.add(new Scheme("Scheme2", 3, Scheme.Edge.LEADING, Scheme.Random.SHORT,
-                Arrays.asList(
-                        new Output("Out1", new Output.Puls(9, 8), new Output.Distribution(4, 3), 5),
-                        new Output("Out2", new Output.Puls(2, 7), new Output.Distribution(8, 2), 2),
-                        new Output("Out3", new Output.Puls(1, 5), new Output.Distribution(9, 4), 7)
-                )));
-        schemeList.add(new Scheme("Scheme3", 3, Scheme.Edge.FALLING, Scheme.Random.SHORT_LONG,
-                Arrays.asList(
-                        new Output("Out1", new Output.Puls(5, 4), new Output.Distribution(7, 5), 2),
-                        new Output("Out2", new Output.Puls(9, 3), new Output.Distribution(9, 3), 6),
-                        new Output("Out3", new Output.Puls(2, 6), new Output.Distribution(5, 6), 4)
-                )));
+//        List<Output> list1 = new ArrayList<>();
+//        list1.add(new Output("Out1", new Output.Puls(1, 2), new Output.Distribution(6, 8), 9));
+//        list1.add(new Output("Out2", new Output.Puls(3, 4), new Output.Distribution(3, 5), 0));
+//        list1.add(new Output("Out3", new Output.Puls(5, 6), new Output.Distribution(1, 7), 3));
+//
+//        schemeList.add(new Scheme("Scheme1", 3, Scheme.Edge.FALLING, Scheme.Random.OFF, list1));
+//        schemeList.add(new Scheme("Scheme2", 3, Scheme.Edge.LEADING, Scheme.Random.SHORT,
+//                Arrays.asList(
+//                        new Output("Out1", new Output.Puls(9, 8), new Output.Distribution(4, 3), 5),
+//                        new Output("Out2", new Output.Puls(2, 7), new Output.Distribution(8, 2), 2),
+//                        new Output("Out3", new Output.Puls(1, 5), new Output.Distribution(9, 4), 7)
+//                )));
+//        schemeList.add(new Scheme("Scheme3", 3, Scheme.Edge.FALLING, Scheme.Random.SHORT_LONG,
+//                Arrays.asList(
+//                        new Output("Out1", new Output.Puls(5, 4), new Output.Distribution(7, 5), 2),
+//                        new Output("Out2", new Output.Puls(9, 3), new Output.Distribution(9, 3), 6),
+//                        new Output("Out3", new Output.Puls(2, 6), new Output.Distribution(5, 6), 4)
+//                )));
 
         loaded = true;
-        /*if (workingDirectory == null)
+        if (workingDirectory == null)
             return;
 
         schemeList.clear();
@@ -84,14 +90,14 @@ public final class SchemeManager extends Observable {
         File[] schemes = workingDirectory.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                return pathname.getName().contains(".xml");
+                return pathname.getName().contains(".json");
             }
         });
 
         for (File file : schemes) {
             String name = file.getName();
             schemeList.add(new Scheme(name));
-        }*/
+        }
     }
 
     /**
@@ -101,6 +107,14 @@ public final class SchemeManager extends Observable {
     private void loadScheme(Scheme scheme) {
         if (scheme.loaded)
             return;
+
+        try {
+            File file = new File(workingDirectory, scheme.getName() + ".json");
+            InputStream in = new FileInputStream(file);
+            new SchemeJSONHandler().read(in, scheme);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         scheme.loaded = true;
         Log.i(TAG, "Scheme: " + scheme + " is loaded");
@@ -149,9 +163,31 @@ public final class SchemeManager extends Observable {
      */
     public void save(Scheme scheme, Callback callback) {
 
+        try {
+            String name = scheme.getName();
+            if (!name.contains(".json"))
+                name += ".json";
 
-        if (callback != null)
-            callback.callack();
+            File outFile = new File(workingDirectory, name);
+            outFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(outFile);
+            IReadWriteScheme readWrite = new SchemeJSONHandler();
+            readWrite.write(out, scheme);
+
+            if (callback != null)
+                callback.callack();
+        } catch (IOException e) {
+            Log.e(TAG, "Nepodarilo se zapsat do souboru");
+        }
+    }
+
+    /**
+     * Uloží všechna schémata
+     */
+    public void saveAll() {
+        for (Scheme scheme : schemeList) {
+            save(scheme);
+        }
     }
 
     /**
@@ -170,6 +206,17 @@ public final class SchemeManager extends Observable {
 
         if (callback != null)
             callback.callack();
+    }
+
+    /**
+     * Smaže všechna schémata
+     */
+    public void deleteAll() {
+        Iterator<Scheme> it = schemeList.iterator();
+        for (Scheme scheme = it.next(); it.hasNext();) {
+            delete(scheme);
+            it.remove();
+        }
     }
 
     /**
