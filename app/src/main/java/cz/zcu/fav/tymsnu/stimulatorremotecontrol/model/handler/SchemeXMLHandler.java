@@ -1,7 +1,10 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler;
 
+import android.util.Log;
 import android.util.Xml;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
@@ -12,7 +15,7 @@ import java.util.List;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 
-public class SchemeXMLHandler implements IReadWrite {
+public class SchemeXMLHandler implements IReadWriteScheme {
 
     // region variables
     private static final String NAMESPACE = "";
@@ -31,18 +34,13 @@ public class SchemeXMLHandler implements IReadWrite {
     private static final String TAG_BRIGHTNESS = "brightness";
     // endregion
 
-    private Scheme scheme = null;
 
     public SchemeXMLHandler() {
     }
 
-    public SchemeXMLHandler(Scheme scheme) {
-        this.scheme = scheme;
-    }
-
     // region write
     @Override
-    public void write(OutputStream outputStream) throws IOException {
+    public void write(OutputStream outputStream, Scheme scheme) throws IOException {
         XmlSerializer s = Xml.newSerializer();
         s.setOutput(outputStream, "UTF-8");
         s.startDocument("UTF-8", true);
@@ -129,8 +127,93 @@ public class SchemeXMLHandler implements IReadWrite {
 
     // region read
     @Override
-    public void read(InputStream inputStream) throws IOException {
+    public void read(InputStream inputStream, Scheme scheme) throws IOException, XmlPullParserException {
+        XmlPullParser pullParser = Xml.newPullParser();
+        pullParser.setInput(inputStream, "UTF-8");
 
+        int event = pullParser.getEventType();
+
+        while (event != XmlPullParser.END_DOCUMENT) {
+            String tag = null;
+            switch (event) {
+                case XmlPullParser.START_DOCUMENT:
+                    break;
+                case XmlPullParser.START_TAG:
+                    tag = pullParser.getName();
+                    Log.i("handler", "Oteviram tag: " + tag);
+                    switch (tag) {
+                        case TAG_ROOT:
+                            break;
+                        case TAG_OUTPUT_COUNT:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_EDGE:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_RANDOM:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_OUTPUTS:
+                            readOutputs(pullParser, scheme);
+                            //Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                    }
+                    break;
+                case XmlPullParser.END_TAG:
+                    tag = pullParser.getName();
+                    Log.i("handler", "Zaviram tag: " + tag);
+                    break;
+            }
+
+            event = pullParser.next();
+        }
+    }
+
+    private void readOutputs(XmlPullParser pullParser, Scheme scheme) throws IOException, XmlPullParserException {
+        String tag = null;
+        int event = pullParser.next();
+        int stopCounter = 0;
+        while (stopCounter < 500) {
+            switch (event) {
+                case XmlPullParser.START_TAG:
+                    tag = pullParser.getName();
+                    switch (tag) {
+                        case TAG_OUTPUT:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_PULS:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_PULS_UP:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_PULS_DOWN:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_DISTRIBUTION:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_DISTRIBUTION_VALUE:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_DISTRIBUTION_DELAY:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_BRIGHTNESS:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                    }
+                    break;
+
+                case XmlPullParser.END_TAG:
+                    tag = pullParser.getName();
+                    if (tag.equals(TAG_OUTPUTS))
+                        return;
+                    break;
+            }
+            stopCounter++;
+        }
     }
     // endregion
+
 }

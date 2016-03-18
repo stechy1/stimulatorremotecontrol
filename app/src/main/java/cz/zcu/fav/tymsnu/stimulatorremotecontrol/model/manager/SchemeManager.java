@@ -3,9 +3,13 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager;
 
 import android.util.Log;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +18,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWriteScheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.SchemeXMLHandler;
 
 public final class SchemeManager extends Observable {
@@ -106,6 +110,14 @@ public final class SchemeManager extends Observable {
         if (scheme.loaded)
             return;
 
+        try {
+            File file = new File(workingDirectory, scheme.getName() + ".xml");
+            InputStream in = new FileInputStream(file);
+            new SchemeXMLHandler().read(in, scheme);
+        } catch (XmlPullParserException | IOException e) {
+            e.printStackTrace();
+        }
+
         scheme.loaded = true;
         Log.i(TAG, "Scheme: " + scheme + " is loaded");
     }
@@ -161,8 +173,8 @@ public final class SchemeManager extends Observable {
             File outFile = new File(workingDirectory, name);
             outFile.createNewFile();
             FileOutputStream out = new FileOutputStream(outFile);
-            IReadWrite readWrite = new SchemeXMLHandler(scheme);
-            readWrite.write(out);
+            IReadWriteScheme readWrite = new SchemeXMLHandler();
+            readWrite.write(out, scheme);
 
             if (callback != null)
                 callback.callack();

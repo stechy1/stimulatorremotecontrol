@@ -11,7 +11,7 @@ import java.util.List;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 
-public class SchemeJSONHandler implements IReadWrite {
+public class SchemeJSONHandler implements IReadWriteScheme {
 
     // region variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
@@ -27,18 +27,14 @@ public class SchemeJSONHandler implements IReadWrite {
     private static final String TAG_BRIGHTNESS = "brightness";
     // endregion
 
-    private Scheme scheme = null;
 
     public SchemeJSONHandler() {}
 
-    public SchemeJSONHandler(Scheme scheme) {
-        this.scheme = scheme;
-    }
 
 
     // region write
     @Override
-    public void write(OutputStream outputStream) throws IOException {
+    public void write(OutputStream outputStream, Scheme scheme) throws IOException {
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream));
         writer.setIndent("  ");
 
@@ -98,7 +94,7 @@ public class SchemeJSONHandler implements IReadWrite {
 
     // region read
     @Override
-    public void read(InputStream inputStream) throws IOException {
+    public void read(InputStream inputStream, Scheme scheme) throws IOException {
 
     }
     // endregion
