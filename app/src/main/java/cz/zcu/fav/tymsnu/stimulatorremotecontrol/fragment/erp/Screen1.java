@@ -60,6 +60,8 @@ public final class Screen1 extends ASimpleFragment
                 img.setImageResource(R.drawable.yes);
             }
         });
+
+        ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
     }
 
     // ListView onCreateContextMenu

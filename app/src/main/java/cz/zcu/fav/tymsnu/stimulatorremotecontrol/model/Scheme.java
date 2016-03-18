@@ -77,7 +77,7 @@ public final class Scheme {
         if (outputCount > listCount) {
             int delta = outputCount - listCount;
             for (int i = 0; i < delta; i++) {
-                outputList.add(new Output("Output" + i));
+                outputList.add(new Output("Output" + i + outputCount));
             }
         } else {
             for (int i = --listCount; i >= outputCount; i--) {

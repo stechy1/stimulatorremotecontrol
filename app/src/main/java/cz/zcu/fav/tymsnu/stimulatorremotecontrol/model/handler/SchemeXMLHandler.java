@@ -154,8 +154,34 @@ public class SchemeXMLHandler implements IReadWriteScheme {
                             Log.i("handler", "Hodnota: " + pullParser.nextText());
                             break;
                         case TAG_OUTPUTS:
-                            readOutputs(pullParser, scheme);
-                            //Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            //readOutputs(pullParser, scheme);
+                            Log.i("handler", "Narazil jsem na vystupy");
+
+                            break;
+
+                        case TAG_OUTPUT:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_PULS:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_PULS_UP:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_PULS_DOWN:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_DISTRIBUTION:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_DISTRIBUTION_VALUE:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_DISTRIBUTION_DELAY:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
+                            break;
+                        case TAG_BRIGHTNESS:
+                            Log.i("handler", "Hodnota: " + pullParser.nextText());
                             break;
                     }
                     break;
