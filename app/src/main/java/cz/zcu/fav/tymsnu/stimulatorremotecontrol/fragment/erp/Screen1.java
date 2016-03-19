@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.util.Observable;
+
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPScreen1ListViewAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
@@ -26,7 +28,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
 public final class Screen1 extends ASimpleFragment
-        implements AdapterView.OnItemClickListener, View.OnClickListener {
+        implements AdapterView.OnItemClickListener, View.OnClickListener, SchemeManager.OnSchemeChangeListener {
 
     private static final String TAG = "Screen1";
 
@@ -45,6 +47,8 @@ public final class Screen1 extends ASimpleFragment
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.erp_screen_1_fab);
         fab.setOnClickListener(this);
+
+        schemeManager.addObserver(this);
 
         return v;
     }
@@ -145,4 +149,8 @@ public final class Screen1 extends ASimpleFragment
         return new ERPScreen1ListViewAdapter(getContext(), schemeManager.getSchemeList());
     }
 
+    @Override
+    public void update(Observable observable, Object data) {
+        ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+    }
 }
