@@ -69,7 +69,9 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
             List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
             for (Packet packet : packets) {
                 Log.i(TAG, packet.toString());
-                iBtCommunication.write(packet.getValue());
+                if (!iBtCommunication.write(packet.getValue())) {
+                    break;
+                }
             }
         }
     }
