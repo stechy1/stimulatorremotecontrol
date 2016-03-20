@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
@@ -103,7 +104,12 @@ public final class Screen1 extends ASimpleFragment
                 schemeManager.delete(scheme);
                 return true;
             case R.id.erp_screen_1_context_saveas:
-                schemeManager.save(scheme);
+                schemeManager.save(scheme, new SchemeManager.Callback() {
+                    @Override
+                    public void callack() {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema bylo uloženo", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
                 return true;
         }
         return super.onContextItemSelected(item);

@@ -50,7 +50,8 @@
     <string name="erp_screen_1_delete_schema">Smazat</string>
     <string name="erp_screen_1_save_schema">Uložit…</string>
     <string name="erp_screen_1_export_schema">Export</string>
-    <string name="erp_screen_1_context_menu_title">Options</string>
+    <string name="erp_screen_1_context_menu_title">Možnosti</string>
+    <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
 
     <!-- ERP screen - 2 -->
     <string-array name="erp_screen_2_output_types">

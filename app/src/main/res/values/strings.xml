@@ -51,6 +51,7 @@
     <string name="erp_screen_1_save_schema">Save as…</string>
     <string name="erp_screen_1_export_schema">Export</string>
     <string name="erp_screen_1_context_menu_title">Options</string>
+    <string name="erp_screen_1_save_scheme_success">Schema has been saved</string>
 
     <!-- ERP screen - 2 -->
     <string-array name="erp_screen_2_output_types">
