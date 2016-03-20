@@ -26,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.DeviceListActivity;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
@@ -145,7 +144,8 @@ public class MainActivity extends AppCompatActivity
                         connectDevice(data);
 
                     } catch (Exception ex) {
-                        Toast.makeText(this, "Zařízení nebylo rozpoznáno", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(findViewById(android.R.id.content), "Zařízení nebylo rozpoznáno", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "Zařízení nebylo rozpoznáno", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -158,8 +158,9 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     // User did not enable Bluetooth or an error occurred
                     Log.d(TAG, "BT not enabled");
-                    Toast.makeText(this, R.string.bt_not_enabled_leaving,
-                            Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.bt_not_enabled_leaving, Snackbar.LENGTH_SHORT).show();
+//                    Toast.makeText(this, R.string.bt_not_enabled_leaving,
+//                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 break;
@@ -287,9 +288,10 @@ public class MainActivity extends AppCompatActivity
                     Snackbar.make(self.findViewById(android.R.id.content), readMessage, Snackbar.LENGTH_LONG).show();
                     break;
 
-                case Constants.MESSAGE_TOAST:
-                    Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST),
-                            Toast.LENGTH_SHORT).show();
+                case Constants.MESSAGE_SHOW:
+                    Snackbar.make(findViewById(android.R.id.content), msg.getData().getString(Constants.TOAST), Snackbar.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST),
+//                            Toast.LENGTH_SHORT).show();
                     break;
             }
 

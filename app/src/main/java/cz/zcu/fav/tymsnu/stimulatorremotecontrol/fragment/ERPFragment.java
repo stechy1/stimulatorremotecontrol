@@ -4,6 +4,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -61,9 +61,11 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
     public void onClick(View v) {
         Scheme scheme = schemeManager.getSelectedScheme();
         if (scheme == null)
-            Toast.makeText(getContext(), "Vyberte schema pro spusteni stimulace", Toast.LENGTH_LONG).show();
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Vyberte schema pro spusteni stimulace", Toast.LENGTH_LONG).show();
         else {
-            Toast.makeText(getContext(), "Spouštím stimulaci...", Toast.LENGTH_LONG).show();
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Spouštím stimulaci...", Toast.LENGTH_LONG).show();
             List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
             for (Packet packet : packets) {
                 Log.i(TAG, packet.toString());

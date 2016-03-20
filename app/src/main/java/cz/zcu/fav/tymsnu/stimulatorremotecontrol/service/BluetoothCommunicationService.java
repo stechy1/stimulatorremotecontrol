@@ -243,7 +243,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
      */
     private void connectionFailed() {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(Constants.MESSAGE_SHOW);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Unable to connect device");
         msg.setData(bundle);
@@ -258,7 +258,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
      */
     private void connectionLost() {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(Constants.MESSAGE_SHOW);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, mContext.getString(R.string.lost_connection));
         msg.setData(bundle);

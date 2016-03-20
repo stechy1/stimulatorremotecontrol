@@ -3,6 +3,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Observable;
@@ -203,7 +203,8 @@ public final class Screen2 extends ASimpleFragment
                     if (output.canUpdateDistribution(outputs, val))
                         output.distribution.setValue(val);
                     else
-                        Toast.makeText(getContext(), "Distribution > 100", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Distribution > 100", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Distribution > 100", Toast.LENGTH_SHORT).show();
 
                 }
                 break;
