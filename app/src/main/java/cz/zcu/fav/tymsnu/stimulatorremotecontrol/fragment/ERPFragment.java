@@ -65,8 +65,10 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
         else {
             Toast.makeText(getContext(), "Spouštím stimulaci...", Toast.LENGTH_LONG).show();
             List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
-            for (Packet packet : packets)
+            for (Packet packet : packets) {
                 Log.i(TAG, packet.toString());
+                iBtCommunication.write(packet.getValue());
+            }
         }
     }
 

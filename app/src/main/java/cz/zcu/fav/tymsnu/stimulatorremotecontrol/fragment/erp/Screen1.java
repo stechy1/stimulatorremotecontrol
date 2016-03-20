@@ -61,7 +61,7 @@ public final class Screen1 extends ASimpleFragment
             @Override
             public void callack() {
                 ImageView img = (ImageView) view.findViewById(R.id.control_scheme_view_image);
-                img.setImageResource(R.drawable.yes);
+                img.setImageResource(R.drawable.checkbox_marked_outline);
             }
         });
 
@@ -72,6 +72,7 @@ public final class Screen1 extends ASimpleFragment
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getActivity().getMenuInflater().inflate(R.menu.fragment_erp_screen1_listview_context_menu, menu);
+        menu.setHeaderTitle(R.string.erp_screen_1_context_menu_title);
     }
 
     // ListView onContextItemSelected
@@ -92,7 +93,7 @@ public final class Screen1 extends ASimpleFragment
                     public void callack() {
                         final View v = info.targetView;
                         ImageView img = (ImageView) v.findViewById(R.id.control_scheme_view_image);
-                        img.setImageResource(R.drawable.yes);
+                        img.setImageResource(R.drawable.checkbox_marked_outline);
                     }
                 });
                 ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();

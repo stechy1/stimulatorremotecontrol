@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothCommunicationService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_bt_disconnect));
+                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_disconnected));
                             break;
                         case BluetoothCommunicationService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity
                         case BluetoothCommunicationService.STATE_LISTEN:
                         case BluetoothCommunicationService.STATE_NONE:
                             setStatus(R.string.title_not_connected);
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_device_access_bluetooth_searching));
+                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_off));
                             break;
                     }
                     break;
@@ -284,8 +284,7 @@ public class MainActivity extends AppCompatActivity
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    //Toast.makeText(getApplicationContext(), readMessage, Toast.LENGTH_LONG);
-                    Snackbar.make(self.findViewById(android.R.id.content), readMessage, Snackbar.LENGTH_INDEFINITE).show();
+                    Snackbar.make(self.findViewById(android.R.id.content), readMessage, Snackbar.LENGTH_LONG).show();
                     break;
 
                 case Constants.MESSAGE_TOAST:

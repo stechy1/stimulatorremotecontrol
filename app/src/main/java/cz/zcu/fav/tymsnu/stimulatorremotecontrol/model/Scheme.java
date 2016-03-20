@@ -14,8 +14,6 @@ public final class Scheme {
 
      // Indikátor, zda-li je schéma načteno
     public boolean loaded = false;
-    // TODO implementovat reakci na změnu hodnot ve schématu (indikátor na screenu1)
-    public boolean changed = false;
 
     // Název schématu
     private String name;

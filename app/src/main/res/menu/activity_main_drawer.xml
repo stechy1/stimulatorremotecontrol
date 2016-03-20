@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Experimenty">
+    <item android:title="@string/nav_drawer_title_1">
         <menu>
         <item
             android:id="@+id/nav_item_1"
-            android:title="@string/nav_text_item_1"/>
+            android:title="@string/nav_text_item_1"
+            android:icon="@drawable/pulse"/>
         <item
             android:id="@+id/nav_item_2"
-            android:title="@string/nav_text_item_2"/>
+            android:title="@string/nav_text_item_2"
+            android:icon="@drawable/pulse"/>
         <item
             android:id="@+id/nav_item_3"
-            android:title="@string/nav_text_item_3"/>
+            android:title="@string/nav_text_item_3"
+            android:icon="@drawable/pulse"/>
         <item
             android:id="@+id/nav_item_4"
-            android:title="@string/nav_text_item_4"/>
+            android:title="@string/nav_text_item_4"
+            android:icon="@drawable/pulse"/>
         <item
             android:id="@+id/nav_item_5"
-            android:title="@string/nav_text_item_5"/>
+            android:title="@string/nav_text_item_5"
+            android:icon="@drawable/pulse"/>
         <item
             android:id="@+id/nav_item_6"
-            android:title="@string/nav_text_item_6"/>
+            android:title="@string/nav_text_item_6"
+            android:icon="@drawable/pulse"/>
         </menu>
     </item>
-    <item android:title="Možnosti">
+    <item android:title="@string/nav_drawer_title_2">
         <menu>
             <item
                 android:id="@+id/nav_settings"

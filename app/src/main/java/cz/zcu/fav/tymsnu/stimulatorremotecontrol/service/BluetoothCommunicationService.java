@@ -305,7 +305,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
                     // successful connection or an exception
                     socket = mmServerSocket.accept();
                 } catch (IOException e) {
-                    Log.e(TAG, "accept() failed", e);
+                    Log.e(TAG, "accept() failed");
                     break;
                 }
 
