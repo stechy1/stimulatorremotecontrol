@@ -145,7 +145,6 @@ public class MainActivity extends AppCompatActivity
 
                     } catch (Exception ex) {
                         Snackbar.make(findViewById(android.R.id.content), "Zařízení nebylo rozpoznáno", Snackbar.LENGTH_SHORT).show();
-                        //Toast.makeText(this, "Zařízení nebylo rozpoznáno", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -159,8 +158,6 @@ public class MainActivity extends AppCompatActivity
                     // User did not enable Bluetooth or an error occurred
                     Log.d(TAG, "BT not enabled");
                     Snackbar.make(findViewById(android.R.id.content), R.string.bt_not_enabled_leaving, Snackbar.LENGTH_SHORT).show();
-//                    Toast.makeText(this, R.string.bt_not_enabled_leaving,
-//                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 break;
@@ -290,8 +287,6 @@ public class MainActivity extends AppCompatActivity
 
                 case Constants.MESSAGE_SHOW:
                     Snackbar.make(findViewById(android.R.id.content), msg.getData().getString(Constants.TOAST), Snackbar.LENGTH_SHORT).show();
-//                    Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST),
-//                            Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -338,7 +333,6 @@ public class MainActivity extends AppCompatActivity
         if (oldFragment != null)
             transaction.remove(oldFragment);
         transaction.replace(R.id.frame_container, fragment).commit();
-        //setTitle();
     }
 
     Activity self = this;
@@ -354,7 +348,6 @@ public class MainActivity extends AppCompatActivity
                 switch (state) {
                     case BluetoothAdapter.STATE_OFF:
                         Log.i(TAG, "Bluetooth off");
-                        //Snackbar.make(self.findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE).show();
                         final Snackbar snackbar = Snackbar.make(self.findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
                         snackbar.setText("Bluetooth byl vypnut");
                         snackbar.setAction("Zapnout", new View.OnClickListener() {

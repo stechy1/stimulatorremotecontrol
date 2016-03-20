@@ -62,10 +62,8 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
         Scheme scheme = schemeManager.getSelectedScheme();
         if (scheme == null)
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
-            //Toast.makeText(getContext(), "Vyberte schema pro spusteni stimulace", Toast.LENGTH_LONG).show();
         else {
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
-            //Toast.makeText(getContext(), "Spouštím stimulaci...", Toast.LENGTH_LONG).show();
             List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
             for (Packet packet : packets) {
                 Log.i(TAG, packet.toString());

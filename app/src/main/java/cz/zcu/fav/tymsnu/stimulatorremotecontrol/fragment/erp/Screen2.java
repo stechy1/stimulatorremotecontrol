@@ -204,7 +204,6 @@ public final class Screen2 extends ASimpleFragment
                         output.distribution.setValue(val);
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), "Distribution > 100", Snackbar.LENGTH_SHORT).show();
-                        //Toast.makeText(getContext(), "Distribution > 100", Toast.LENGTH_SHORT).show();
 
                 }
                 break;

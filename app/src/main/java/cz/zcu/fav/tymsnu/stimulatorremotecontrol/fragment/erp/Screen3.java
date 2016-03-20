@@ -116,11 +116,9 @@ public final class Screen3 extends ASimpleFragment
             schemeManager.notifyValueChanged();
         } catch (IllegalArgumentException ex) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
-            //Toast.makeText(getContext(), getString(R.string.exception_out_of_range), Toast.LENGTH_SHORT).show();
             Log.e(TAG, ex.toString());
         } catch (Exception ex) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_general), Snackbar.LENGTH_SHORT).show();
-            //Toast.makeText(getContext(), getString(R.string.exception_general), Toast.LENGTH_SHORT).show();
             Log.e(TAG, ex.toString());
         }
     }

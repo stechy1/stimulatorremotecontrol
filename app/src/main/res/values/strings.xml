@@ -44,6 +44,9 @@
         <item>Output settings</item>
         <item>General settings</item>
     </string-array>
+    <string name="erp_screen_select_schema">Select schema for stimulation</string>
+    <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
+
     <!-- ERP screen - 1 -->
     <string name="erp_screen_1_new_schema">New schema</string>
     <string name="erp_screen_1_select_schema">Select</string>
