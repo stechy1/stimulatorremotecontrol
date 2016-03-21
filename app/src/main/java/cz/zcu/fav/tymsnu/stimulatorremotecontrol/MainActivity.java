@@ -26,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.DeviceListActivity;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity
                         connectDevice(data);
 
                     } catch (Exception ex) {
-                        Toast.makeText(this, "Zařízení nebylo rozpoznáno", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(findViewById(android.R.id.content), "Zařízení nebylo rozpoznáno", Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -158,8 +157,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     // User did not enable Bluetooth or an error occurred
                     Log.d(TAG, "BT not enabled");
-                    Toast.makeText(this, R.string.bt_not_enabled_leaving,
-                            Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.bt_not_enabled_leaving, Snackbar.LENGTH_SHORT).show();
                     finish();
                 }
                 break;
@@ -262,7 +260,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothCommunicationService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_bt_disconnect));
+                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_disconnected));
                             break;
                         case BluetoothCommunicationService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -270,7 +268,7 @@ public class MainActivity extends AppCompatActivity
                         case BluetoothCommunicationService.STATE_LISTEN:
                         case BluetoothCommunicationService.STATE_NONE:
                             setStatus(R.string.title_not_connected);
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_device_access_bluetooth_searching));
+                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_off));
                             break;
                     }
                     break;
@@ -284,13 +282,11 @@ public class MainActivity extends AppCompatActivity
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    //Toast.makeText(getApplicationContext(), readMessage, Toast.LENGTH_LONG);
-                    Snackbar.make(self.findViewById(android.R.id.content), readMessage, Snackbar.LENGTH_INDEFINITE).show();
+                    Snackbar.make(self.findViewById(android.R.id.content), readMessage, Snackbar.LENGTH_LONG).show();
                     break;
 
-                case Constants.MESSAGE_TOAST:
-                    Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST),
-                            Toast.LENGTH_SHORT).show();
+                case Constants.MESSAGE_SHOW:
+                    Snackbar.make(findViewById(android.R.id.content), msg.getData().getString(Constants.TOAST), Snackbar.LENGTH_SHORT).show();
                     break;
             }
 
@@ -337,7 +333,6 @@ public class MainActivity extends AppCompatActivity
         if (oldFragment != null)
             transaction.remove(oldFragment);
         transaction.replace(R.id.frame_container, fragment).commit();
-        //setTitle();
     }
 
     Activity self = this;
@@ -353,7 +348,6 @@ public class MainActivity extends AppCompatActivity
                 switch (state) {
                     case BluetoothAdapter.STATE_OFF:
                         Log.i(TAG, "Bluetooth off");
-                        //Snackbar.make(self.findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE).show();
                         final Snackbar snackbar = Snackbar.make(self.findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
                         snackbar.setText("Bluetooth byl vypnut");
                         snackbar.setAction("Zapnout", new View.OnClickListener() {

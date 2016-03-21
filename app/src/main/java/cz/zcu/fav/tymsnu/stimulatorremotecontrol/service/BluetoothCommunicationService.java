@@ -221,21 +221,23 @@ public class BluetoothCommunicationService implements IBtCommunication {
      * @param out The bytes to write
      * @see ConnectedThread#write(byte[])
      */
-    public void write(byte[] out) {
+    public boolean write(byte[] out) {
         if(mState != STATE_CONNECTED) {
             Toast.makeText(mContext, R.string.not_connected, Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
         // Create temporary object
         ConnectedThread r;
         // Synchronize a copy of the ConnectedThread
         synchronized (this) {
-            if (mState != STATE_CONNECTED) return;
+            if (mState != STATE_CONNECTED) return false;
             r = mConnectedThread;
         }
         // Perform the write unsynchronized
         r.write(out);
+
+        return true;
     }
 
     /**
@@ -243,7 +245,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
      */
     private void connectionFailed() {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(Constants.MESSAGE_SHOW);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Unable to connect device");
         msg.setData(bundle);
@@ -258,7 +260,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
      */
     private void connectionLost() {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(Constants.MESSAGE_SHOW);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, mContext.getString(R.string.lost_connection));
         msg.setData(bundle);
@@ -305,7 +307,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
                     // successful connection or an exception
                     socket = mmServerSocket.accept();
                 } catch (IOException e) {
-                    Log.e(TAG, "accept() failed", e);
+                    Log.e(TAG, "accept() failed");
                     break;
                 }
 

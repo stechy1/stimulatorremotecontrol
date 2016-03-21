@@ -19,6 +19,8 @@
     <!-- Boční menu -->
     <string name="nav_drawer_open">Open sidebar</string>
     <string name="nav_drawer_close">Close sidebar</string>
+    <string name="nav_drawer_title_1">Experiments</string>
+    <string name="nav_drawer_title_2">Options</string>
 
     <string name="nav_text_item_1">ERP</string>
     <string name="nav_text_item_2">BCI</string>
@@ -42,19 +44,17 @@
         <item>Output settings</item>
         <item>General settings</item>
     </string-array>
+    <string name="erp_screen_select_schema">Select schema for stimulation</string>
+    <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
+
     <!-- ERP screen - 1 -->
     <string name="erp_screen_1_new_schema">New schema</string>
     <string name="erp_screen_1_select_schema">Select</string>
     <string name="erp_screen_1_delete_schema">Delete</string>
     <string name="erp_screen_1_save_schema">Save as…</string>
     <string name="erp_screen_1_export_schema">Export</string>
-
-    <!--<string-array name="erp_screen_1_rand_array">
-        <item>Zakázat</item>
-        <item>Kratší</item>
-        <item>Delší</item>
-        <item>Kratší i delší</item>
-    </string-array>-->
+    <string name="erp_screen_1_context_menu_title">Options</string>
+    <string name="erp_screen_1_save_scheme_success">Schema has been saved</string>
 
     <!-- ERP screen - 2 -->
     <string-array name="erp_screen_2_output_types">
@@ -68,5 +68,22 @@
     <string name="erp_screen_2_output">. OUTPUT</string>
 
     <!-- ERP screen - 3 -->
-    <string name="settings">Nastavení</string>
+    <string name="erp_screen_3_random">Random</string>
+    <string-array name="erp_screen_3_random_values">
+        <item>OFF</item>
+        <item>Short</item>
+        <item>Long</item>
+        <item>Short and long</item>
+    </string-array>
+    <string name="erp_screen_3_edge">Edge</string>
+    <string-array name="erp_screen_3_edge_values">
+        <item>Leading</item>
+        <item>Falling</item>
+    </string-array>
+    <string name="erp_screen_3_output_count">Output count</string>
+    <string name="erp_screen_3_output_count_save">Save</string>
+
+    <!-- Exceptions -->
+    <string name="exception_general">Failed to perform action</string>
+    <string name="exception_out_of_range">Value is out of range</string>
 </resources>

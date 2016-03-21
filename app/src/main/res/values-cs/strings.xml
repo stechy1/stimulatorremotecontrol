@@ -19,6 +19,8 @@
     <!-- Boční menu -->
     <string name="nav_drawer_open">Otevřít navigaci</string>
     <string name="nav_drawer_close">Zavřít navigaci</string>
+    <string name="nav_drawer_title_1">Experimenty</string>
+    <string name="nav_drawer_title_2">Možnosti</string>
 
     <string name="nav_text_item_1">ERP</string>
     <string name="nav_text_item_2">BCI</string>
@@ -42,12 +44,17 @@
         <item>Nastavení výstupů</item>
         <item>Obecné nastavení</item>
     </string-array>
+    <string name="erp_screen_select_schema">Vyberte schema pro spusteni stimulace</string>
+    <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
+
     <!-- ERP screen - 1 -->
     <string name="erp_screen_1_new_schema">Nové schéma</string>
     <string name="erp_screen_1_select_schema">Vybrat</string>
     <string name="erp_screen_1_delete_schema">Smazat</string>
     <string name="erp_screen_1_save_schema">Uložit…</string>
     <string name="erp_screen_1_export_schema">Export</string>
+    <string name="erp_screen_1_context_menu_title">Možnosti</string>
+    <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
 
     <!-- ERP screen - 2 -->
     <string-array name="erp_screen_2_output_types">
@@ -58,7 +65,25 @@
         <item>Brightness [%]</item>
     </string-array>
     <string name="erp_screen_2_output">. VÝSTUP:</string>
+    <string name="erp_screen_2_save_outputs">Uložit hodnoty</string>
 
     <!-- ERP screen - 3 -->
-    <string name="settings">Nastavení</string>
+    <string name="erp_screen_3_random">Náhodnost</string>
+    <string-array name="erp_screen_3_random_values">
+        <item>Vypnuto</item>
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+        <item>Krátká i dlouhá</item>
+    </string-array>
+    <string name="erp_screen_3_edge">Hrana</string>
+    <string-array name="erp_screen_3_edge_values">
+        <item>Vzestupná</item>
+        <item>Sestupná</item>
+    </string-array>
+    <string name="erp_screen_3_output_count">Počet výstupů</string>
+    <string name="erp_screen_3_output_count_save">Uložit</string>
+
+    <!-- Exceptions -->
+    <string name="exception_general">Akci se nepodařilo dokončit</string>
+    <string name="exception_out_of_range">Hodnota je mimo rozsah</string>
 </resources>

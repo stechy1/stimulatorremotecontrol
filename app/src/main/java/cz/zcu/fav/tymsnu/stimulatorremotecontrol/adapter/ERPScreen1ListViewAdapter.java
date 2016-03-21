@@ -45,7 +45,7 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
         }
 
         Scheme scheme = objects.get(position);
-        schemeHolder.imageView.setImageResource(scheme.loaded ? R.drawable.yes : R.drawable.no);
+        schemeHolder.imageView.setImageResource(scheme.loaded ? R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
         schemeHolder.text1.setText(scheme.getName());
         schemeHolder.text2.setText("Count: " + scheme.getOutputCount());
 
