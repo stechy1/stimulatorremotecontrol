@@ -6,24 +6,27 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IBtCommunication;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.AScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen1;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen3;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
 public class ERPPagerAdapter extends FragmentStatePagerAdapter {
 
     private final IBtCommunication iBtCommunication;
+    private final SchemeManager schemeManager;
 
-    public ERPPagerAdapter(FragmentManager fm, IBtCommunication iBtCommunication) {
+    public ERPPagerAdapter(FragmentManager fm, IBtCommunication iBtCommunication, SchemeManager schemeManager) {
         super(fm);
 
         this.iBtCommunication = iBtCommunication;
+        this.schemeManager = schemeManager;
     }
 
     @Override
     public Fragment getItem(int position) {
-        ASimpleFragment fragment;
+        AScreen fragment;
         switch (position) {
             case 0:
                 fragment = new Screen1();
@@ -39,6 +42,7 @@ public class ERPPagerAdapter extends FragmentStatePagerAdapter {
         }
 
         fragment.setBtCommunication(iBtCommunication);
+        fragment.setSchemeManager(schemeManager);
 
         return fragment;
     }

@@ -23,7 +23,6 @@ public final class SchemeManager extends Observable {
 
     // region Variables
     private static final String TAG = "SchemeManager";
-    private static SchemeManager INSTANCE;
 
     // Reference na pracovní adresár
     private File workingDirectory;
@@ -36,20 +35,12 @@ public final class SchemeManager extends Observable {
     private Scheme selectedScheme;
     // endregion
 
-    public static SchemeManager getINSTANCE() {
-        if (INSTANCE == null)
-            INSTANCE = new SchemeManager();
-
-        return INSTANCE;
-    }
 
     // region Constructors
     /**
      * Konstruktor scheme manageru
      */
-    private SchemeManager() {
-
-    }
+    public SchemeManager() {}
     // endregion
 
     // region Private methods

@@ -15,16 +15,15 @@ import android.widget.Spinner;
 import java.util.Observable;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
-public final class Screen3 extends ASimpleFragment
+public final class Screen3 extends AScreen
         implements SchemeManager.OnSchemeChangeListener, View.OnClickListener {
 
     private static final String TAG = "Screen3";
 
-    private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
+    //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
 
     private Spinner randomSpinner;
     private Spinner edgeSpinner;

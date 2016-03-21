@@ -32,7 +32,6 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ERPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.HomeFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SettingsFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.service.BluetoothCommunicationService;
 
 public class MainActivity extends AppCompatActivity
@@ -90,8 +89,8 @@ public class MainActivity extends AppCompatActivity
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
 
-        SchemeManager sm = SchemeManager.getINSTANCE();
-        sm.setWorkingDirectory(getFilesDir());
+        //SchemeManager sm = SchemeManager.getINSTANCE();
+        //sm.setWorkingDirectory(getFilesDir());
     }
 
     @Override

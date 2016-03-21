@@ -28,7 +28,7 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
 
     private static final String TAG = "ERPFragment";
 
-    private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
+    private final SchemeManager schemeManager = new SchemeManager();
 
     private TextView title;
     private String[] titles;
@@ -36,6 +36,7 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        schemeManager.setWorkingDirectory(getActivity().getFilesDir());
         View view = inflater.inflate(R.layout.fragment_erp, container, false);
 
         title = (TextView) view.findViewById(R.id.erp_title);
@@ -75,7 +76,7 @@ public class ERPFragment extends ASimpleFragment implements View.OnClickListener
     }
 
     private PagerAdapter buildAdapter() {
-        return(new ERPPagerAdapter(getChildFragmentManager(), iBtCommunication));
+        return(new ERPPagerAdapter(getChildFragmentManager(), iBtCommunication, schemeManager));
     }
 
     // region ViewPager page changed

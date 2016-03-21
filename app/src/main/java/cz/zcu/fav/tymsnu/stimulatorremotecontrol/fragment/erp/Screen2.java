@@ -19,12 +19,11 @@ import java.util.List;
 import java.util.Observable;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
-public final class Screen2 extends ASimpleFragment
+public final class Screen2 extends AScreen
         implements AdapterView.OnItemSelectedListener, SchemeManager.OnSchemeChangeListener, View.OnClickListener {
 
     private static final int PULSE_UP = 0;
@@ -33,7 +32,7 @@ public final class Screen2 extends ASimpleFragment
     private static final int DISTRIBUTION_DELAY = 3;
     private static final int BRIGHTNESS = 4;
 
-    private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
+    //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
 
     private String outText;
 

@@ -24,16 +24,15 @@ import java.util.Observable;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPScreen1ListViewAdapter;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
-public final class Screen1 extends ASimpleFragment
+public final class Screen1 extends AScreen
         implements AdapterView.OnItemClickListener, View.OnClickListener, SchemeManager.OnSchemeChangeListener {
 
     private static final String TAG = "Screen1";
 
-    private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
+    //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
     private ListView schemeView;
 
     @Nullable
