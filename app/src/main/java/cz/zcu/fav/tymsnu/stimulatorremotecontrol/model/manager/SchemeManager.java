@@ -110,6 +110,7 @@ public final class SchemeManager extends Observable {
         Scheme scheme = new Scheme(name);
         scheme.loaded = true;
         schemeList.add(scheme);
+        save(scheme);
 
         if (callback != null)
             callback.callack();
