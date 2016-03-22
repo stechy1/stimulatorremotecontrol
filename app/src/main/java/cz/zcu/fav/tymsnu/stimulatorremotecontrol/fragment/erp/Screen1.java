@@ -3,7 +3,6 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -16,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,8 +45,10 @@ public final class Screen1 extends AScreen
         schemeView.setOnItemClickListener(this);
         registerForContextMenu(schemeView);
 
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.erp_screen_1_fab);
-        fab.setOnClickListener(this);
+        Button button = (Button) v.findViewById(R.id.erp_screen_1_new_scheme);
+        button.setOnClickListener(this);
+//        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.erp_screen_1_fab);
+//        fab.setOnClickListener(this);
 
         schemeManager.addObserver(this);
 
