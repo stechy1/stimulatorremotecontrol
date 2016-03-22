@@ -57,31 +57,31 @@
     <string name="erp_screen_1_save_scheme_success">Schema has been saved</string>
 
     <!-- ERP screen - 2 -->
-    <string-array name="erp_screen_2_output_types">
+    <string name="erp_screen_2_random">Random</string>
+    <string-array name="erp_screen_2_random_values">
+        <item>OFF</item>
+        <item>Short</item>
+        <item>Long</item>
+        <item>Short and long</item>
+    </string-array>
+    <string name="erp_screen_2_edge">Edge</string>
+    <string-array name="erp_screen_2_edge_values">
+        <item>Leading</item>
+        <item>Falling</item>
+    </string-array>
+    <string name="erp_screen_2_output_count">Output count</string>
+    <string name="erp_screen_2_output_count_save">Save</string>
+
+    <!-- ERP screen - 3 -->
+    <string-array name="erp_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>
         <item>Distribution - value [%]</item>
         <item>Distribution - delay [%]</item>
         <item>Brightness [%]</item>
     </string-array>
-    <string name="erp_screen_2_save_outputs">Save values</string>
-    <string name="erp_screen_2_output">. OUTPUT</string>
-
-    <!-- ERP screen - 3 -->
-    <string name="erp_screen_3_random">Random</string>
-    <string-array name="erp_screen_3_random_values">
-        <item>OFF</item>
-        <item>Short</item>
-        <item>Long</item>
-        <item>Short and long</item>
-    </string-array>
-    <string name="erp_screen_3_edge">Edge</string>
-    <string-array name="erp_screen_3_edge_values">
-        <item>Leading</item>
-        <item>Falling</item>
-    </string-array>
-    <string name="erp_screen_3_output_count">Output count</string>
-    <string name="erp_screen_3_output_count_save">Save</string>
+    <string name="erp_screen_3_save_outputs">Save values</string>
+    <string name="erp_screen_3_output">. OUTPUT</string>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>

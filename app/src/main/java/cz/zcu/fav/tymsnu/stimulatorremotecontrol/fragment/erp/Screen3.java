@@ -45,19 +45,19 @@ public final class Screen3 extends AScreen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_erp_screen_2, container, false);
+        View v = inflater.inflate(R.layout.fragment_erp_screen_3, container, false);
 
-        spinner = (Spinner) v.findViewById(R.id.erp_screen_2_spinner_output_type);
+        spinner = (Spinner) v.findViewById(R.id.erp_screen_3_spinner_output_type);
         spinner.setOnItemSelectedListener(this);
 
         // TODO odebrat tlačítko uložit a udělat synchronizaci hodnot při jejich změně
-        Button btnSave = (Button) v.findViewById(R.id.erp_screen_2_button_save_output);
+        Button btnSave = (Button) v.findViewById(R.id.erp_screen_3_button_save_output);
         btnSave.setOnClickListener(this);
 
-        outputs = (LinearLayout) v.findViewById(R.id.erp_screen_2_linearlayout);
+        outputs = (LinearLayout) v.findViewById(R.id.erp_screen_3_linearlayout);
         inputs = new EditText[1];
 
-        outText = getResources().getString(R.string.erp_screen_2_output);
+        outText = getResources().getString(R.string.erp_screen_3_output);
 
         schemeManager.addObserver(this);
 

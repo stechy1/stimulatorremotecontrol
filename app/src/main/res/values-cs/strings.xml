@@ -47,6 +47,22 @@
     <string name="erp_screen_select_schema">Vyberte schema pro spusteni stimulace</string>
     <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
 
+    <!-- ERP screen - 2 -->
+    <string name="erp_screen_2_random">Náhodnost</string>
+    <string-array name="erp_screen_2_random_values">
+        <item>Vypnuto</item>
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+        <item>Krátká i dlouhá</item>
+    </string-array>
+    <string name="erp_screen_2_edge">Hrana</string>
+    <string-array name="erp_screen_2_edge_values">
+        <item>Vzestupná</item>
+        <item>Sestupná</item>
+    </string-array>
+    <string name="erp_screen_2_output_count">Počet výstupů</string>
+    <string name="erp_screen_2_output_count_save">Uložit</string>
+
     <!-- ERP screen - 1 -->
     <string name="erp_screen_1_new_schema">Nové schéma</string>
     <string name="erp_screen_1_select_schema">Vybrat</string>
@@ -56,32 +72,16 @@
     <string name="erp_screen_1_context_menu_title">Možnosti</string>
     <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
 
-    <!-- ERP screen - 2 -->
-    <string-array name="erp_screen_2_output_types">
+    <!-- ERP screen - 3 -->
+    <string-array name="erp_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>
         <item>Distribution - value [%]</item>
         <item>Distribution - delay [%]</item>
         <item>Brightness [%]</item>
     </string-array>
-    <string name="erp_screen_2_output">. VÝSTUP:</string>
-    <string name="erp_screen_2_save_outputs">Uložit hodnoty</string>
-
-    <!-- ERP screen - 3 -->
-    <string name="erp_screen_3_random">Náhodnost</string>
-    <string-array name="erp_screen_3_random_values">
-        <item>Vypnuto</item>
-        <item>Krátká</item>
-        <item>Dlouhá</item>
-        <item>Krátká i dlouhá</item>
-    </string-array>
-    <string name="erp_screen_3_edge">Hrana</string>
-    <string-array name="erp_screen_3_edge_values">
-        <item>Vzestupná</item>
-        <item>Sestupná</item>
-    </string-array>
-    <string name="erp_screen_3_output_count">Počet výstupů</string>
-    <string name="erp_screen_3_output_count_save">Uložit</string>
+    <string name="erp_screen_3_output">. VÝSTUP:</string>
+    <string name="erp_screen_3_save_outputs">Uložit hodnoty</string>
 
     <!-- Exceptions -->
     <string name="exception_general">Akci se nepodařilo dokončit</string>

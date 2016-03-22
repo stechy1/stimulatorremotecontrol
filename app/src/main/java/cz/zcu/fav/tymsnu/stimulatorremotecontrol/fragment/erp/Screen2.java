@@ -2,14 +2,11 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import java.util.Observable;
@@ -19,7 +16,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
 public final class Screen2 extends AScreen
-        implements SchemeManager.OnSchemeChangeListener, View.OnClickListener {
+        implements SchemeManager.OnSchemeChangeListener, NumberPicker.OnValueChangeListener {
 
     private static final String TAG = "Screen2";
 
@@ -27,19 +24,22 @@ public final class Screen2 extends AScreen
 
     private Spinner randomSpinner;
     private Spinner edgeSpinner;
-    private EditText outputCountEditText;
+    private NumberPicker numberPicker;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_erp_screen_3, container, false);
+        View v = inflater.inflate(R.layout.fragment_erp_screen_2, container, false);
 
-        randomSpinner = (Spinner) v.findViewById(R.id.erp_screen_3_spinner_random);
-        edgeSpinner = (Spinner) v.findViewById(R.id.erp_screen_3_spinner_edge);
-        outputCountEditText = (EditText) v.findViewById(R.id.erp_screen_3_edittext_output_count);
+        randomSpinner = (Spinner) v.findViewById(R.id.erp_screen_2_spinner_random);
+        edgeSpinner = (Spinner) v.findViewById(R.id.erp_screen_2_spinner_edge);
 
-        Button saveButton = (Button) v.findViewById(R.id.erp_screen_3_button_save);
-        saveButton.setOnClickListener(this);
+
+        numberPicker = (NumberPicker) v.findViewById(R.id.erp_screen_2_number_picker);
+        numberPicker.setMaxValue(8);
+        numberPicker.setMinValue(1);
+        numberPicker.setValue(1);
+        numberPicker.setOnValueChangedListener(this);
 
         Scheme scheme = schemeManager.getSelectedScheme();
         if (scheme != null)
@@ -56,7 +56,7 @@ public final class Screen2 extends AScreen
     private void readValues(Scheme scheme) {
         randomSpinner.setSelection(scheme.getRandom().ordinal());
         edgeSpinner.setSelection(scheme.getEdge().ordinal());
-        outputCountEditText.setText(scheme.getOutputCount() + "");
+        numberPicker.setValue(scheme.getOutputCount());
     }
 
     private final AdapterView.OnItemSelectedListener randomSpinnerListener = new AdapterView.OnItemSelectedListener() {
@@ -96,7 +96,7 @@ public final class Screen2 extends AScreen
     @Override
     public void update(Observable observable, Object object) {
         if (object == null) {
-            outputCountEditText.setText("0");
+            numberPicker.setValue(1);
             return;
         }
 
@@ -106,21 +106,13 @@ public final class Screen2 extends AScreen
     }
 
     @Override
-    public void onClick(View v) {
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         Scheme scheme = schemeManager.getSelectedScheme();
+
         if (scheme == null)
             return;
 
-        try {
-            int val = Integer.parseInt(outputCountEditText.getText().toString());
-            scheme.setOutputCount(val);
-            schemeManager.notifyValueChanged();
-        } catch (IllegalArgumentException ex) {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
-            Log.e(TAG, ex.toString());
-        } catch (Exception ex) {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_general), Snackbar.LENGTH_SHORT).show();
-            Log.e(TAG, ex.toString());
-        }
+        scheme.setOutputCount(newVal);
+        schemeManager.notifyValueChanged();
     }
 }
