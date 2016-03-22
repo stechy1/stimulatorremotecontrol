@@ -94,11 +94,13 @@ public final class Screen3 extends AScreen
     };
 
     @Override
-    public void update(Observable observable, Object data) {
-        Scheme scheme = (Scheme) data;
-
-        if (scheme == null)
+    public void update(Observable observable, Object object) {
+        if (object == null) {
+            outputCountEditText.setText("0");
             return;
+        }
+
+        Scheme scheme = (Scheme) object;
 
         readValues(scheme);
     }

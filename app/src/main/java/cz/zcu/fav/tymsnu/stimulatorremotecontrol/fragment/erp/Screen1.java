@@ -85,9 +85,6 @@ public final class Screen1 extends AScreen
 
         switch (item.getItemId()) {
             case R.id.erp_screen_1_context_select:
-                if (scheme.equals(schemeManager.getSelectedScheme()))
-                    return false;
-
                 schemeManager.select(scheme, new SchemeManager.Callback() {
                     @Override
                     public void callack() {
@@ -96,11 +93,15 @@ public final class Screen1 extends AScreen
                         img.setImageResource(R.drawable.checkbox_marked_outline);
                     }
                 });
-                ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
-
                 return true;
             case R.id.erp_screen_1_context_delete:
-                schemeManager.delete(scheme);
+                schemeManager.delete(scheme, new SchemeManager.Callback() {
+                    @Override
+                    public void callack() {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema bylo smazáno", Snackbar.LENGTH_SHORT).show();
+                        schemeView.requestLayout();
+                    }
+                });
                 return true;
             case R.id.erp_screen_1_context_saveas:
                 schemeManager.save(scheme, new SchemeManager.Callback() {
@@ -129,7 +130,12 @@ public final class Screen1 extends AScreen
             public void onClick(DialogInterface dialog, int which) {
                 String schemeName = input.getText().toString();
                 Log.i(TAG, "Nazev schematu: " + schemeName);
-                schemeManager.create(schemeName);
+                schemeManager.create(schemeName, new SchemeManager.Callback() {
+                    @Override
+                    public void callack() {
+                        ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+                    }
+                });
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -156,7 +162,8 @@ public final class Screen1 extends AScreen
     }
 
     @Override
-    public void update(Observable observable, Object data) {
+    public void update(Observable observable, Object object) {
+        Log.i(TAG, "Screen1, data set changed");
         ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
     }
 }

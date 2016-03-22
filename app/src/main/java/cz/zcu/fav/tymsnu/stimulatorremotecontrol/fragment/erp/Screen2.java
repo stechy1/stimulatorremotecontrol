@@ -67,6 +67,11 @@ public final class Screen2 extends AScreen
     // Při změně schématu
     @Override
     public void update(Observable observable, Object object) {
+        if (object == null) {
+            inputs = new EditText[1];
+            this.outputs.removeAllViews();
+            return;
+        }
         Scheme scheme = (Scheme) object;
         spinner.setSelection(PULSE_UP);
 

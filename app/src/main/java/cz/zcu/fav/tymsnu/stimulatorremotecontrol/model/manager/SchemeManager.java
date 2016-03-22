@@ -53,25 +53,6 @@ public final class SchemeManager extends Observable {
         if (loaded)
             return;
 
-//        List<Output> list1 = new ArrayList<>();
-//        list1.add(new Output("Out1", new Output.Puls(1, 2), new Output.Distribution(6, 8), 9));
-//        list1.add(new Output("Out2", new Output.Puls(3, 4), new Output.Distribution(3, 5), 0));
-//        list1.add(new Output("Out3", new Output.Puls(5, 6), new Output.Distribution(1, 7), 3));
-//
-//        schemeList.add(new Scheme("Scheme1", 3, Scheme.Edge.FALLING, Scheme.Random.OFF, list1));
-//        schemeList.add(new Scheme("Scheme2", 3, Scheme.Edge.LEADING, Scheme.Random.SHORT,
-//                Arrays.asList(
-//                        new Output("Out1", new Output.Puls(9, 8), new Output.Distribution(4, 3), 5),
-//                        new Output("Out2", new Output.Puls(2, 7), new Output.Distribution(8, 2), 2),
-//                        new Output("Out3", new Output.Puls(1, 5), new Output.Distribution(9, 4), 7)
-//                )));
-//        schemeList.add(new Scheme("Scheme3", 3, Scheme.Edge.FALLING, Scheme.Random.SHORT_LONG,
-//                Arrays.asList(
-//                        new Output("Out1", new Output.Puls(5, 4), new Output.Distribution(7, 5), 2),
-//                        new Output("Out2", new Output.Puls(9, 3), new Output.Distribution(9, 3), 6),
-//                        new Output("Out3", new Output.Puls(2, 6), new Output.Distribution(5, 6), 4)
-//                )));
-
         loaded = true;
         if (workingDirectory == null)
             return;
@@ -194,9 +175,29 @@ public final class SchemeManager extends Observable {
     public void delete(Scheme scheme, Callback callback) {
         Log.i(TAG, "Mazu schema: " + scheme);
 
+        String name = scheme.getName();
+        if (!name.contains(".json"))
+            name += ".json";
 
-        if (callback != null)
-            callback.callack();
+        File file = new File(workingDirectory, name);
+        if (!file.exists() || file.isDirectory() || !file.isFile()) {
+            schemeList.remove(scheme);
+            if (scheme.equals(selectedScheme)) {
+                selectedScheme = null;
+                notifyValueChanged();
+            }
+            return;
+        }
+
+        if (file.delete()) {
+            schemeList.remove(scheme);
+            if (scheme.equals(selectedScheme)) {
+                selectedScheme = null;
+                notifyValueChanged();
+            }
+            if (callback != null)
+                callback.callack();
+        }
     }
 
     /**
@@ -221,7 +222,7 @@ public final class SchemeManager extends Observable {
      * @param callback Callback který se zavolá po úspěšné změně schématu
      */
     public void select(Scheme actScheme, Callback callback) {
-        if (selectedScheme != null && selectedScheme.equals(actScheme))
+        if (selectedScheme != null && actScheme.equals(selectedScheme))
             return;
 
         this.selectedScheme = actScheme;
@@ -231,8 +232,7 @@ public final class SchemeManager extends Observable {
         if (callback != null)
             callback.callack();
 
-        setChanged();
-        notifyObservers(actScheme);
+        notifyValueChanged();
     }
 
     /**
