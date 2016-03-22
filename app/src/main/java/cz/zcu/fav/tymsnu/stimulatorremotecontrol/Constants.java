@@ -15,14 +15,6 @@ public class Constants {
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
 
-
-    public static class Fragments {
-        public static final int HOME     = 0;
-        public static final int ERP      = 1;
-
-        public static final int SETTINGS = 7;
-    }
-
     public static final int ERP_SCREEN_COUNT = 3;
 
 }

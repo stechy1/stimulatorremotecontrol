@@ -29,11 +29,15 @@
     <string name="nav_text_item_5">Biosensor logger</string>
     <string name="nav_text_item_6">Test mode</string>
     <string name="nav_text_settings">Nastavení</string>
+    <string name="nav_text_about">O aplikaci</string>
     
     <!-- Activity - hledání a připojení zařízení-->
     <string name="select_device">vyberte zařízení pro připojení</string>
     <string name="none_paired">Žádné zařízení není spárované</string>
     <string name="title_paired_devices">Spárovaná zařízení</string>
+
+    <!-- Activity - home -->
+    <string name="version">Verze: <xliff:g id="app_version">%1$s</xliff:g></string>
 
     <!-- Activity - nastavení-->
     <string name="language_change">Změna jazyka</string>

@@ -10,6 +10,10 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo1"/>
 
     <include
         layout="@layout/app_bar_main"

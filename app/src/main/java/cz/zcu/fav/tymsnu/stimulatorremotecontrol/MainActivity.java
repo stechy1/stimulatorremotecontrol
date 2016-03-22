@@ -29,8 +29,8 @@ import android.view.View;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.DeviceListActivity;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.AboutFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ERPFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.HomeFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SettingsFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.service.BluetoothCommunicationService;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
 
     private ASimpleFragment fragment;
     private ActionBarDrawerToggle mDrawerToggle;
-    private int actViewID;
+    private int actViewID = 0;
     private CharSequence title;
     private Menu menu;
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         title = getTitle();
-        displayView(Constants.Fragments.HOME);
+        displayView(R.id.nav_about);
 
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (actViewID != Constants.Fragments.HOME) {
+        if (actViewID != R.id.nav_about) {
             fragment.onBackButtonPressed(this);
         } else
             super.onBackPressed();
@@ -297,8 +297,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void displayView(int id) {
-        if (actViewID == id)
+        if (actViewID == id) {
             return;
+        }
 
         Log.i("displayView()", "" + id);
         ASimpleFragment oldFragment = fragment;
@@ -308,6 +309,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
+                break;
+
+            case R.id.nav_about:
+                fragment = new AboutFragment();
                 break;
 
             case R.id.nav_item_2:
@@ -321,8 +326,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_item_6:
 
             default:
-                fragment = new HomeFragment();
-                id = Constants.Fragments.HOME;
+                fragment = new AboutFragment();
+                id = R.id.nav_about;
                 break;
         }
 

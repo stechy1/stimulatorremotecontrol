@@ -35,6 +35,10 @@
                 android:id="@+id/nav_settings"
                 android:title="@string/nav_text_settings"
                 android:icon="@android:drawable/ic_menu_manage"/>
+            <item
+                android:id="@+id/nav_about"
+                android:title="@string/nav_text_about"
+                android:icon="@drawable/help"/>
         </menu>
     </item>
 </menu>

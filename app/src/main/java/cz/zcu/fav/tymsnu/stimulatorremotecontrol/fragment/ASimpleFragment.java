@@ -3,10 +3,10 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment;
 
 import android.support.v4.app.Fragment;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IBackPress;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IBtCommunication;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IViewSwitcher;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 
 
 public abstract class ASimpleFragment extends Fragment implements IBackPress {
@@ -19,6 +19,6 @@ public abstract class ASimpleFragment extends Fragment implements IBackPress {
 
     @Override
     public void onBackButtonPressed(IViewSwitcher IViewSwitcher) {
-        IViewSwitcher.displayView(Constants.Fragments.HOME);
+        IViewSwitcher.displayView(R.id.nav_about);
     }
 }
