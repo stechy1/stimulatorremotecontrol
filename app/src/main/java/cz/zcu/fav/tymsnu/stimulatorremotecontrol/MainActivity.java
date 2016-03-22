@@ -297,6 +297,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void displayView(int id) {
+        if (actViewID == id)
+            return;
+
         Log.i("displayView()", "" + id);
         ASimpleFragment oldFragment = fragment;
         switch (id) {
@@ -322,8 +325,6 @@ public class MainActivity extends AppCompatActivity
                 id = Constants.Fragments.HOME;
                 break;
         }
-        if (fragment == null)
-            return;
 
         fragment.setBtCommunication(mCommunicationService);
         actViewID = id;
