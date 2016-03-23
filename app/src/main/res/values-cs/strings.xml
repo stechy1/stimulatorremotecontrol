@@ -45,8 +45,8 @@
     <!-- ERP screens -->
     <string-array name="erp_screen_titles">
         <item>Schema</item>
-        <item>Nastavení výstupů</item>
         <item>Obecné nastavení</item>
+        <item>Nastavení výstupů</item>
     </string-array>
     <string name="erp_screen_select_schema">Vyberte schema pro spusteni stimulace</string>
     <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
