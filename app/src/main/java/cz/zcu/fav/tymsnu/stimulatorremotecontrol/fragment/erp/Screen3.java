@@ -187,14 +187,14 @@ public final class Screen3 extends AScreen
         switch (outputTypeIndex) {
             case PULSE_UP:
                 for (int i = 0; i < count; i++) {
-                    int val = Integer.parseInt(inputs[i].getText().toString());
+                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.puls.setUp(val);
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
-                    int val = Integer.parseInt(inputs[i].getText().toString());
+                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.puls.setDown(val);
                 }
@@ -202,18 +202,17 @@ public final class Screen3 extends AScreen
 
             case DISTRIBUTION_VALUE:
                 for (int i = 0; i < count; i++) {
-                    int val = Integer.parseInt(inputs[i].getText().toString());
+                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     if (output.canUpdateDistribution(outputs, val))
                         output.distribution.setValue(val);
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), "Distribution > 100", Snackbar.LENGTH_SHORT).show();
-
                 }
                 break;
             case DISTRIBUTION_DELAY:
                 for (int i = 0; i < count; i++) {
-                    int val = Integer.parseInt(inputs[i].getText().toString());
+                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.distribution.setDelay(val);
                 }
@@ -221,7 +220,7 @@ public final class Screen3 extends AScreen
 
             case BRIGHTNESS:
                 for (int i = 0; i < count; i++) {
-                    int val = Integer.parseInt(inputs[i].getText().toString());
+                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.setBrightness(val);
                 }
@@ -229,6 +228,29 @@ public final class Screen3 extends AScreen
         }
     }
 
+    /**
+     * Přečte hodnotu z inputu
+     * Pokud se nepodaří hodnotu naparsovat, tak vrátí 0
+     * @param input Vstup
+     * @return číslo
+     */
+    private int readValue(EditText input) {return readValue(input, 0);}
 
+    /**
+     * Přečte hodnotu z inputu
+     * Pokud se nepodaří hodnotu naparsovat, tak vrátí výchozí hodnotu
+     * @param input Vstup
+     * @param def Výchozí hodnota
+     * @return číslo
+     */
+    private int readValue(EditText input, int def) {
+        String text = input.getText().toString();
+        try {
+            return Integer.parseInt(text);
+        } catch (Exception ex) {
+            input.setText("" + def);
+            return def;
+        }
+    }
 
 }
