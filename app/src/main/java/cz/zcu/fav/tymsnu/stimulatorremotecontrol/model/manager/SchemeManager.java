@@ -159,7 +159,8 @@ public final class SchemeManager extends Observable {
      */
     public void saveAll() {
         for (Scheme scheme : schemeList) {
-            save(scheme);
+            if (scheme.loaded)
+                save(scheme);
         }
     }
 

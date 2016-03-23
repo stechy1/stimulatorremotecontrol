@@ -28,7 +28,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
 public final class Screen1 extends AScreen
-        implements AdapterView.OnItemClickListener, View.OnClickListener, SchemeManager.OnSchemeChangeListener {
+        implements AdapterView.OnItemClickListener, SchemeManager.OnSchemeChangeListener {
 
     private static final String TAG = "Screen1";
 
@@ -45,10 +45,11 @@ public final class Screen1 extends AScreen
         schemeView.setOnItemClickListener(this);
         registerForContextMenu(schemeView);
 
-        Button button = (Button) v.findViewById(R.id.erp_screen_1_new_scheme);
-        button.setOnClickListener(this);
-//        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.erp_screen_1_fab);
-//        fab.setOnClickListener(this);
+        Button buttonNewScheme = (Button) v.findViewById(R.id.erp_screen_1_new_scheme);
+        buttonNewScheme.setOnClickListener(new NewSchemeListener());
+
+        Button buttonSaveAll   = (Button) v.findViewById(R.id.erp_screen_1_save_all_schemes);
+        buttonSaveAll.setOnClickListener(new SaveAllSchemesListener());
 
         schemeManager.addObserver(this);
 
@@ -117,47 +118,6 @@ public final class Screen1 extends AScreen
         return super.onContextItemSelected(item);
     }
 
-    // FAB onClick
-    @Override
-    public void onClick(View v) {
-        final EditText input = new EditText(getContext());
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(R.string.erp_screen_1_new_schema);
-        builder.setView(input);
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String schemeName = input.getText().toString();
-                Log.i(TAG, "Nazev schematu: " + schemeName);
-                schemeManager.create(schemeName, new SchemeManager.Callback() {
-                    @Override
-                    public void callack() {
-                        ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
-                    }
-                });
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        final AlertDialog dialog = builder.show();
-
-        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                }
-            }
-        });
-    }
 
     private ArrayAdapter<Scheme> buildAdapter() {
         return new ERPScreen1ListViewAdapter(getContext(), schemeManager.getSchemeList());
@@ -167,5 +127,57 @@ public final class Screen1 extends AScreen
     public void update(Observable observable, Object object) {
         Log.i(TAG, "Screen1, data set changed");
         ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+    }
+
+    private final class NewSchemeListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            final EditText input = new EditText(getContext());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(R.string.erp_screen_1_new_schema);
+            builder.setView(input);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String schemeName = input.getText().toString();
+                    Log.i(TAG, "Nazev schematu: " + schemeName);
+                    schemeManager.create(schemeName, new SchemeManager.Callback() {
+                        @Override
+                        public void callack() {
+                            ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            final AlertDialog dialog = builder.show();
+
+            input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    }
+                }
+            });
+        }
+    }
+
+    private final class SaveAllSchemesListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            schemeManager.saveAll();
+        }
     }
 }

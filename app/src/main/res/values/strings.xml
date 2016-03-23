@@ -55,7 +55,8 @@
     <string name="erp_screen_1_new_schema">New schema</string>
     <string name="erp_screen_1_select_schema">Select</string>
     <string name="erp_screen_1_delete_schema">Delete</string>
-    <string name="erp_screen_1_save_schema">Save as…</string>
+    <string name="erp_screen_1_save_schema">Save as</string>
+    <string name="erp_screen_1_save_all">Save all</string>
     <string name="erp_screen_1_export_schema">Export</string>
     <string name="erp_screen_1_context_menu_title">Options</string>
     <string name="erp_screen_1_save_scheme_success">Schema has been saved</string>

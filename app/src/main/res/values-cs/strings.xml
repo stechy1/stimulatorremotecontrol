@@ -71,7 +71,8 @@
     <string name="erp_screen_1_new_schema">Nové schéma</string>
     <string name="erp_screen_1_select_schema">Vybrat</string>
     <string name="erp_screen_1_delete_schema">Smazat</string>
-    <string name="erp_screen_1_save_schema">Uložit…</string>
+    <string name="erp_screen_1_save_schema">Uložit</string>
+    <string name="erp_screen_1_save_all">Uložit vše</string>
     <string name="erp_screen_1_export_schema">Export</string>
     <string name="erp_screen_1_context_menu_title">Možnosti</string>
     <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
