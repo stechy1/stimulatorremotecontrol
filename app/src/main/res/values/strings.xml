@@ -77,6 +77,7 @@
     <string name="erp_screen_2_output_count_save">Save</string>
 
     <!-- ERP screen - 3 -->
+    <string name="erp_screen_3_output_type">Output type</string>
     <string-array name="erp_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>

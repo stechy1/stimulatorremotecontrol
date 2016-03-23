@@ -9,11 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/erp_screen_3_output_type"/>
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/erp_screen_3_spinner_output_type"
-            android:entries="@array/erp_screen_3_output_types"/>
+            android:entries="@array/erp_screen_3_output_types"
+            android:background="@color/colorAlpha"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
