@@ -3,6 +3,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,10 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
         }
 
         Scheme scheme = objects.get(position);
-        schemeHolder.imageView.setImageResource(scheme.loaded ?
+        schemeHolder.imageView.setImageResource(scheme.selected ?
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
         schemeHolder.text1.setText(scheme.getName());
+        schemeHolder.text1.setTextColor(scheme.loaded ? Color.BLACK : Color.GRAY);
         schemeHolder.text2.setText("Count: " + scheme.getOutputCount());
 
         return convertView;

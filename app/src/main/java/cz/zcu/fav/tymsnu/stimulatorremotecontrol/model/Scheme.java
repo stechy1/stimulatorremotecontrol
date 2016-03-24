@@ -14,6 +14,7 @@ public final class Scheme {
 
      // Indikátor, zda-li je schéma načteno
     public boolean loaded = false;
+    public boolean selected = false;
 
     // Název schématu
     private String name;

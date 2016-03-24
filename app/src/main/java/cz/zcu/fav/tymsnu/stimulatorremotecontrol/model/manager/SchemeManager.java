@@ -100,7 +100,6 @@ public final class SchemeManager extends Observable {
      * @param name Název schématu
      */
     public void create(String name) {create(name, null);}
-
     /**
      * Vytvoří nové schéma
      * @param name Název schématu
@@ -227,6 +226,11 @@ public final class SchemeManager extends Observable {
         if (selectedScheme != null && actScheme.equals(selectedScheme))
             return;
 
+        if (this.selectedScheme != null) {
+            this.selectedScheme.selected = false;
+        }
+
+        actScheme.selected = true;
         this.selectedScheme = actScheme;
         if (!actScheme.loaded)
             loadScheme(actScheme);
