@@ -62,7 +62,7 @@ public final class Screen1 extends AScreen
         Scheme selected = (Scheme) schemeView.getItemAtPosition(position);
         schemeManager.select(selected, new SchemeManager.Callback() {
             @Override
-            public void callack() {
+            public void callack(Object object) {
                 ImageView img = (ImageView) view.findViewById(R.id.control_scheme_view_image);
                 img.setImageResource(R.drawable.checkbox_marked_outline);
             }
@@ -90,7 +90,7 @@ public final class Screen1 extends AScreen
             case R.id.erp_screen_1_context_select:
                 schemeManager.select(scheme, new SchemeManager.Callback() {
                     @Override
-                    public void callack() {
+                    public void callack(Object object) {
                         final View v = info.targetView;
                         ImageView img = (ImageView) v.findViewById(R.id.control_scheme_view_image);
                         img.setImageResource(R.drawable.checkbox_marked_outline);
@@ -100,7 +100,7 @@ public final class Screen1 extends AScreen
             case R.id.erp_screen_1_context_delete:
                 schemeManager.delete(scheme, new SchemeManager.Callback() {
                     @Override
-                    public void callack() {
+                    public void callack(Object object) {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema bylo smazáno", Snackbar.LENGTH_SHORT).show();
                         schemeView.requestLayout();
                     }
@@ -109,8 +109,9 @@ public final class Screen1 extends AScreen
             case R.id.erp_screen_1_context_saveas:
                 schemeManager.save(scheme, new SchemeManager.Callback() {
                     @Override
-                    public void callack() {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema bylo uloženo", Snackbar.LENGTH_SHORT).show();
+                    public void callack(Object object) {
+                        Scheme scheme = (Scheme) object;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema: " + scheme.getName() + " bylo uloženo", Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 return true;
@@ -147,7 +148,7 @@ public final class Screen1 extends AScreen
                     Log.i(TAG, "Nazev schematu: " + schemeName);
                     schemeManager.create(schemeName, new SchemeManager.Callback() {
                         @Override
-                        public void callack() {
+                        public void callack(Object object) {
                             ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
                         }
                     });
@@ -177,7 +178,13 @@ public final class Screen1 extends AScreen
 
         @Override
         public void onClick(View v) {
-            schemeManager.saveAll();
+            schemeManager.saveAll(new SchemeManager.Callback() {
+                @Override
+                public void callack(Object object) {
+                    Integer count = (Integer) object;
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Počet uložených schémat: " + count, Snackbar.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

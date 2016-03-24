@@ -112,7 +112,7 @@ public final class SchemeManager extends Observable {
         save(scheme);
 
         if (callback != null)
-            callback.callack();
+            callback.callack(scheme);
     }
 
     public void add(Scheme scheme) {add(scheme, null);}
@@ -120,7 +120,7 @@ public final class SchemeManager extends Observable {
 
 
         if (callback != null)
-            callback.callack();
+            callback.callack(scheme);
     }
 
     /**
@@ -147,20 +147,41 @@ public final class SchemeManager extends Observable {
             readWrite.write(out, scheme);
 
             if (callback != null)
-                callback.callack();
+                callback.callack(scheme);
         } catch (IOException e) {
             Log.e(TAG, "Nepodarilo se zapsat do souboru");
         }
     }
 
     /**
-     * Uloží všechna schémata
+     * Uloží všechna načtená schémata
      */
-    public void saveAll() {
+    public void saveAll() {saveAll(null);}
+    /**
+     * Uloží všechna načtená schémata
+     * @param callbackAfterAll Callback, který se zavolá po uložení všech schémat
+     */
+    public void saveAll(Callback callbackAfterAll) {
+        saveAll(callbackAfterAll, null);
+    }
+    /**
+     * Uloží všechna načtená schémata
+     * @param callbackAfterAll Callback, který se zavolá po uložení všech schémat
+     * @param callbackAfterOne Callback, který se zavolá po uložení jednoho schématu
+     */
+    public void saveAll(Callback callbackAfterAll, Callback callbackAfterOne) {
+        int counter = 0;
         for (Scheme scheme : schemeList) {
-            if (scheme.loaded)
+            if (scheme.loaded) {
                 save(scheme);
+                counter++;
+                if (callbackAfterOne != null)
+                    callbackAfterOne.callack(scheme);
+            }
         }
+
+        if (callbackAfterAll != null)
+            callbackAfterAll.callack(counter);
     }
 
     /**
@@ -197,7 +218,7 @@ public final class SchemeManager extends Observable {
                 notifyValueChanged();
             }
             if (callback != null)
-                callback.callack();
+                callback.callack(scheme);
         }
     }
 
@@ -236,7 +257,7 @@ public final class SchemeManager extends Observable {
             loadScheme(actScheme);
 
         if (callback != null)
-            callback.callack();
+            callback.callack(actScheme);
 
         notifyValueChanged();
     }
@@ -279,7 +300,7 @@ public final class SchemeManager extends Observable {
      * Rozhraní pro zpětné volání
      */
     public interface Callback {
-        void callack();
+        void callack(Object object);
     }
 
     /**
