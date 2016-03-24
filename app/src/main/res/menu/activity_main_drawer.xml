@@ -7,28 +7,46 @@
             android:id="@+id/nav_item_1"
             android:title="@string/nav_text_item_1"
             android:icon="@drawable/pulse"/>
-        <item
-            android:id="@+id/nav_item_2"
-            android:title="@string/nav_text_item_2"
-            android:icon="@drawable/pulse"/>
-        <item
-            android:id="@+id/nav_item_3"
-            android:title="@string/nav_text_item_3"
-            android:icon="@drawable/pulse"/>
-        <item
-            android:id="@+id/nav_item_4"
-            android:title="@string/nav_text_item_4"
-            android:icon="@drawable/pulse"/>
-        <item
-            android:id="@+id/nav_item_5"
-            android:title="@string/nav_text_item_5"
-            android:icon="@drawable/pulse"/>
-        <item
-            android:id="@+id/nav_item_6"
-            android:title="@string/nav_text_item_6"
-            android:icon="@drawable/pulse"/>
+        </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/nav_item_2"
+        android:title="@string/nav_text_item_2">
+        <menu>
+            <item
+                android:id="@+id/nav_item_2_1"
+                android:title="f-VEP"
+                android:icon="@drawable/pulse" />
+            <item
+                android:id="@+id/nav_item_2_2"
+                android:title="t-VEP"
+                android:icon="@drawable/pulse" />
+            <item
+                android:id="@+id/nav_item_2_3"
+                android:title="c-VEP"
+                android:icon="@drawable/pulse" />
         </menu>
     </item>
+
+    <item
+        android:id="@+id/nav_item_3"
+        android:title="@string/nav_text_item_3"
+        android:icon="@drawable/pulse"/>
+    <item
+        android:id="@+id/nav_item_4"
+        android:title="@string/nav_text_item_4"
+        android:icon="@drawable/pulse"/>
+    <item
+        android:id="@+id/nav_item_5"
+        android:title="@string/nav_text_item_5"
+        android:icon="@drawable/pulse"/>
+    <item
+        android:id="@+id/nav_item_6"
+        android:title="@string/nav_text_item_6"
+        android:icon="@drawable/pulse"/>
+
     <item android:title="@string/nav_drawer_title_2">
         <menu>
             <item
