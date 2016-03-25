@@ -17,7 +17,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWriteScheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.SchemeJSONHandler;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.SchemeFileJSONHandler;
 
 public final class SchemeManager extends Observable {
 
@@ -83,7 +83,7 @@ public final class SchemeManager extends Observable {
         try {
             File file = new File(workingDirectory, scheme.getName() + ".json");
             InputStream in = new FileInputStream(file);
-            new SchemeJSONHandler().read(in, scheme);
+            new SchemeFileJSONHandler().read(in, scheme);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -143,7 +143,7 @@ public final class SchemeManager extends Observable {
             File outFile = new File(workingDirectory, name);
             outFile.createNewFile();
             FileOutputStream out = new FileOutputStream(outFile);
-            IReadWriteScheme readWrite = new SchemeJSONHandler();
+            IReadWriteScheme readWrite = new SchemeFileJSONHandler();
             readWrite.write(out, scheme);
 
             if (callback != null)

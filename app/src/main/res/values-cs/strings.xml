@@ -42,14 +42,36 @@
     <!-- Activity - nastavení-->
     <string name="language_change">Změna jazyka</string>
 
+    <!-- Screen titles -->
+    <string name="screen_title_schema">Schéma</string>
+    <string name="screen_title_fvep">Konfigurace f-VEP</string>
+    <string name="screen_title_tvep">Konfigurace t-VEP</string>
+    <string name="screen_title_cvep">Konfigurace c-VEP</string>
+
+    <string name="screen_title_general_settings">Obecné nastavení</string>
+    <string name="screen_title_output_settings">Nastavení výstupů</string>
+
+    <string name="select">Vybrat</string>
+    <string name="delete">Smazat</string>
+    <string name="save_as">Uložit jako</string>
+    <string name="save_all">Uložit vše</string>
+    <string name="save_values">Uložit hodnoty</string>
+    <string name="export">Exportovat</string>
+
+    <string name="context_options">Možnosti</string>
+    <string name="context_set_name">Zadejte název</string>
+
     <!-- ERP screens -->
     <string-array name="erp_screen_titles">
-        <item>Schema</item>
-        <item>Obecné nastavení</item>
-        <item>Nastavení výstupů</item>
+        <item>@string/screen_title_schema</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
     </string-array>
     <string name="erp_screen_select_schema">Vyberte schema pro spusteni stimulace</string>
     <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
+
+    <!-- ERP screen - 1 -->
+    <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
 
     <!-- ERP screen - 2 -->
     <string name="erp_screen_2_random">Náhodnost</string>
@@ -65,17 +87,6 @@
         <item>Sestupná</item>
     </string-array>
     <string name="erp_screen_2_output_count">Počet výstupů</string>
-    <string name="erp_screen_2_output_count_save">Uložit</string>
-
-    <!-- ERP screen - 1 -->
-    <string name="erp_screen_1_new_schema">Nové schéma</string>
-    <string name="erp_screen_1_select_schema">Vybrat</string>
-    <string name="erp_screen_1_delete_schema">Smazat</string>
-    <string name="erp_screen_1_save_schema">Uložit</string>
-    <string name="erp_screen_1_save_all">Uložit vše</string>
-    <string name="erp_screen_1_export_schema">Export</string>
-    <string name="erp_screen_1_context_menu_title">Možnosti</string>
-    <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
 
     <!-- ERP screen - 3 -->
     <string name="erp_screen_3_output_type">Typ parametru</string>
@@ -87,9 +98,43 @@
         <item>Brightness [%]</item>
     </string-array>
     <string name="erp_screen_3_output">. VÝSTUP:</string>
-    <string name="erp_screen_3_save_outputs">Uložit hodnoty</string>
+
+    <!-- BCI screens -->
+    <!-- BCI f-VEP screens -->
+    <string-array name="bci_fvep_screen_titles">
+        <item>@string/screen_title_fvep</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
+    </string-array>
+    <!-- BCI f-VEP screen - 1 -->
+    <string name="bci_fvep_screen_1_new_configuration">Nová konfigurace</string>
+    <!-- BCI f-VEP screen - 2 -->
+    <string name="bci_fvep_screen_2_output_count">Počet stimulů</string>
+    <!-- BCI f-VEP screen - 3 -->
+    <string name="bci_fvep_screen_3_output_type">Typ parametru</string>
+    <string-array name="bci_fvep_screen_3_output_types">
+        <item>Pulse - up [ms]</item>
+        <item>Pulse - down [ms]</item>
+        <item>Frequency (0–255)</item>
+        <item>Duty cycle (0–255)</item>
+        <item>Brightness [%]</item>
+    </string-array>
+    <string name="bci_fvep_screen_3_output">. STIMUL</string>
 
     <!-- Exceptions -->
     <string name="exception_general">Akci se nepodařilo dokončit</string>
     <string name="exception_out_of_range">Hodnota je mimo rozsah</string>
+
+    <!-- Alerts -->
+    <string name="unknown_device">Zařízení nebylo rozpoznáno</string>
+    <string name="bluetooth_off">Bluetooth je vypnutý</string>
+    <string name="turn_on">Zapnout</string>
+
+    <string name="schema_saved">Schéma <xliff:g>$s</xliff:g> bylo uloženo</string>
+    <string name="schema_was_deleted">Schéma bylo smazáno</string>
+    <string name="count_saved_schemes">Počet uložených schémat: <xliff:g>$s</xliff:g></string>
+
+    <string name="configuration_saved">Konfigurace <xliff:g>$s</xliff:g> byla uložena</string>
+    <string name="configuration_was_deleted">Konfigurace byla smazána</string>
+    <string name="count_saved_configuration">Počet uložených konfigurací: <xliff:g>$s</xliff:g></string>
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/bci_fvep_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:gravity="center_horizontal" />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bci_fvep_viewpager"
+        android:layout_marginTop="24dp"/>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/bci_fvep_tablayout"
+        style="@style/MyTabLayout"
+        android:layout_gravity="bottom" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bci_fvep_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fab_run_stimulator"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="32dp" />
+</FrameLayout>

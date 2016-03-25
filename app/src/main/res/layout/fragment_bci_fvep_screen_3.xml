@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/erp_screen_3_output_type" />
+        android:text="@string/bci_fvep_screen_3_output_type" />
 
     <Spinner
-        android:id="@+id/erp_screen_3_spinner_output_type"
+        android:id="@+id/bci_fvep_screen_3_spinner_output_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAlpha"
-        android:entries="@array/erp_screen_3_output_types" />
+        android:entries="@array/bci_fvep_screen_3_output_types" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         android:layout_weight="1"
         android:fillViewport="true">
         <LinearLayout
-            android:id="@+id/erp_screen_3_linearlayout"
+            android:id="@+id/bci_fvep_screen_3_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
@@ -34,7 +34,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/erp_screen_3_button_save_output"
+        android:id="@+id/bci_fvep_screen_3_button_save_output"
         android:text="@string/save_values"
         style="?android:buttonBarButtonStyle"/>
 </LinearLayout>

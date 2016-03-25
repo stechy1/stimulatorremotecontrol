@@ -42,23 +42,35 @@
     <!-- Activity - nastavení-->
     <string name="language_change">Change language</string>
 
+    <!-- Screen titles -->
+    <string name="screen_title_schema">Schema</string>
+    <string name="screen_title_fvep">Configuration f-VEP</string>
+    <string name="screen_title_tvep">Configuration t-VEP</string>
+    <string name="screen_title_cvep">Configuration c-VEP</string>
+
+    <string name="screen_title_general_settings">General settings</string>
+    <string name="screen_title_output_settings">Output settings</string>
+
+    <string name="select">Select</string>
+    <string name="delete">Delete</string>
+    <string name="save_as">Save as</string>
+    <string name="save_all">Save all</string>
+    <string name="save_values">Save values</string>
+    <string name="export">Export</string>
+
+    <string name="context_options">Options</string>
+    <string name="context_set_name">Set name</string>
+
     <!-- ERP screens -->
     <string-array name="erp_screen_titles">
-        <item>Schema</item>
-        <item>General settings</item>
-        <item>Output settings</item>
+        <item>@string/screen_title_schema</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
     </string-array>
     <string name="erp_screen_select_schema">Select schema for stimulation</string>
     <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
 
     <!-- ERP screen - 1 -->
-    <string name="erp_screen_1_new_schema">New schema</string>
-    <string name="erp_screen_1_select_schema">Select</string>
-    <string name="erp_screen_1_delete_schema">Delete</string>
-    <string name="erp_screen_1_save_schema">Save as</string>
-    <string name="erp_screen_1_save_all">Save all</string>
-    <string name="erp_screen_1_export_schema">Export</string>
-    <string name="erp_screen_1_context_menu_title">Options</string>
     <string name="erp_screen_1_save_scheme_success">Schema has been saved</string>
 
     <!-- ERP screen - 2 -->
@@ -75,7 +87,6 @@
         <item>Falling</item>
     </string-array>
     <string name="erp_screen_2_output_count">Output count</string>
-    <string name="erp_screen_2_output_count_save">Save</string>
 
     <!-- ERP screen - 3 -->
     <string name="erp_screen_3_output_type">Output type</string>
@@ -86,10 +97,44 @@
         <item>Distribution - delay [%]</item>
         <item>Brightness [%]</item>
     </string-array>
-    <string name="erp_screen_3_save_outputs">Save values</string>
     <string name="erp_screen_3_output">. OUTPUT</string>
+
+    <!-- BCI screens -->
+    <!-- BCI f-VEP screens -->
+    <string-array name="bci_fvep_screen_titles">
+        <item>@string/screen_title_fvep</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
+    </string-array>
+    <!-- BCI f-VEP screen - 1 -->
+    <string name="bci_fvep_screen_1_new_configuration">New configuration</string>
+    <!-- BCI f-VEP screen - 2 -->
+    <string name="bci_fvep_screen_2_output_count">Stimul count</string>
+    <!-- BCI f-VEP screen - 3 -->
+    <string name="bci_fvep_screen_3_output_type">Parameter type</string>
+    <string-array name="bci_fvep_screen_3_output_types">
+        <item>Pulse - up [ms]</item>
+        <item>Pulse - down [ms]</item>
+        <item>Frequency (0–255)</item>
+        <item>Duty cycle (0–255)</item>
+        <item>Brightness [%]</item>
+    </string-array>
+    <string name="bci_fvep_screen_3_output">. STIMUL</string>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
     <string name="exception_out_of_range">Value is out of range</string>
+
+    <!-- Alerts -->
+    <string name="unknown_device">Device not recognized</string>
+    <string name="bluetooth_off">Bluetooth is off</string>
+    <string name="turn_on">Turn on</string>
+
+    <string name="schema_saved">Schema <xliff:g>$s</xliff:g> was saved</string>
+    <string name="schema_was_deleted">Schema was deleted</string>
+    <string name="count_saved_schemes">Count of saved schemes: <xliff:g>$s</xliff:g></string>
+
+    <string name="configuration_saved">Configuration <xliff:g>$s</xliff:g> was saved</string>
+    <string name="configuration_was_deleted">Configuration was deleted</string>
+    <string name="count_saved_configuration">Count of saved configurations: <xliff:g>$s</xliff:g></string>
 </resources>

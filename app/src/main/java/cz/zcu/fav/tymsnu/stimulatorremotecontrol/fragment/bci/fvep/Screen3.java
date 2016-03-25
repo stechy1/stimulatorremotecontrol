@@ -1,4 +1,5 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep;
+
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,24 +18,20 @@ import android.widget.TextView;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 
-public final class Screen3 extends AScreen
-        implements AdapterView.OnItemSelectedListener, SchemeManager.OnSchemeChangeListener, View.OnClickListener {
+public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
 
     private static final int PULSE_UP = 0;
     private static final int PULSE_DOWN = 1;
-    private static final int DISTRIBUTION_VALUE = 2;
-    private static final int DISTRIBUTION_DELAY = 3;
+    private static final int FREQUENCY = 2;
+    private static final int DUTY_CYCLE = 3;
     private static final int BRIGHTNESS = 4;
 
-    //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
-
-    private String outText;
+    private String stimulText;
 
     private EditText[] inputs;
 
@@ -45,43 +42,24 @@ public final class Screen3 extends AScreen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_erp_screen_3, container, false);
+        View v = inflater.inflate(R.layout.fragment_bci_fvep_screen_3, container, false);
 
-        spinner = (Spinner) v.findViewById(R.id.erp_screen_3_spinner_output_type);
+        spinner = (Spinner) v.findViewById(R.id.bci_fvep_screen_3_spinner_output_type);
         spinner.setOnItemSelectedListener(this);
 
-        // TODO odebrat tlačítko uložit a udělat synchronizaci hodnot při jejich změně
-        Button btnSave = (Button) v.findViewById(R.id.erp_screen_3_button_save_output);
+        Button btnSave = (Button) v.findViewById(R.id.bci_fvep_screen_3_button_save_output);
         btnSave.setOnClickListener(this);
 
-        outputs = (LinearLayout) v.findViewById(R.id.erp_screen_3_linearlayout);
+        outputs = (LinearLayout) v.findViewById(R.id.bci_fvep_screen_3_linearlayout);
         inputs = new EditText[1];
 
-        outText = getResources().getString(R.string.erp_screen_3_output);
+        stimulText = getResources().getString(R.string.bci_fvep_screen_3_output);
 
-        schemeManager.addObserver(this);
+        manager.addObserver(this);
 
         return v;
     }
 
-    // Při změně schématu
-    @Override
-    public void update(Observable observable, Object object) {
-        if (object == null) {
-            inputs = new EditText[1];
-            this.outputs.removeAllViews();
-            return;
-        }
-        Scheme scheme = (Scheme) object;
-        spinner.setSelection(PULSE_UP);
-
-        inputs = new EditText[scheme.getOutputCount()];
-
-        outputs.removeAllViews();
-        changeValues();
-    }
-
-    // Při výběru položky ze spinneru
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         outputTypeIndex = position;
@@ -94,40 +72,53 @@ public final class Screen3 extends AScreen
 
     }
 
-    // Save button click
     @Override
     public void onClick(View v) {
-        final Scheme scheme = schemeManager.getSelectedScheme();
-        if (scheme == null)
+        ConfigurationFvep configurationFvep = (ConfigurationFvep) manager.getSelectedItem();
+        if (configurationFvep == null)
             return;
 
-        final List<Output> outputs = scheme.getOutputList();
+        writeValues(configurationFvep.outputList);
+    }
 
-        writeValues(outputs);
+    @Override
+    public void update(Observable observable, Object data) {
+        if (data == null) {
+            inputs = new EditText[1];
+            this.outputs.removeAllViews();
+            return;
+        }
+        ConfigurationFvep configuration = (ConfigurationFvep) data;
+        spinner.setSelection(PULSE_UP);
+
+        inputs = new EditText[configuration.getOutputCount()];
+
+        outputs.removeAllViews();
+        changeValues();
     }
 
     private void changeValues() {
-        Scheme scheme = schemeManager.getSelectedScheme();
-        if (scheme == null)
+        ConfigurationFvep configurationFvep = (ConfigurationFvep) manager.getSelectedItem();
+        if (configurationFvep == null)
             return;
 
         final Context context = getContext();
         if (context == null)
             return;
 
-        final List<Output> outputs = scheme.getOutputList();
+        final List<ConfigurationFvep.Output> outputs = configurationFvep.outputList;
         final LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
         if (inputs[0] == null) {
-            if (inputs.length != scheme.getOutputCount())
-                inputs = new EditText[scheme.getOutputCount()];
+            if (inputs.length != configurationFvep.getOutputCount())
+                inputs = new EditText[configurationFvep.getOutputCount()];
 
-            for (int i = 0; i < scheme.getOutputCount(); i++) {
+            for (int i = 0; i < configurationFvep.getOutputCount(); i++) {
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.HORIZONTAL);
 
                 TextView textView = new TextView(context);
-                textView.setText(i + outText);
+                textView.setText(i + stimulText);
 
                 EditText editText = new EditText(context);
                 editText.setLayoutParams(textLayoutParams);
@@ -144,84 +135,88 @@ public final class Screen3 extends AScreen
         readValues(outputs);
     }
 
-    private void readValues(List<Output> outputs) {
+    private void readValues(List<ConfigurationFvep.Output> outputs) {
         int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
                 for (int i = 0; i < count; i++) {
-                    Output output = outputs.get(i);
+                    ConfigurationFvep.Output output = outputs.get(i);
                     inputs[i].setText("" + output.puls.getUp());
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
-                    Output output = outputs.get(i);
+                    ConfigurationFvep.Output output = outputs.get(i);
                     inputs[i].setText("" + output.puls.getDown());
                 }
                 break;
 
-            case DISTRIBUTION_VALUE:
+            case FREQUENCY:
                 for (int i = 0; i < count; i++) {
-                    Output output = outputs.get(i);
-                    inputs[i].setText("" + output.distribution.getValue());
+                    ConfigurationFvep.Output output = outputs.get(i);
+                    inputs[i].setText("" + output.getFrequency());
                 }
                 break;
-            case DISTRIBUTION_DELAY:
+
+            case DUTY_CYCLE:
                 for (int i = 0; i < count; i++) {
-                    Output output = outputs.get(i);
-                    inputs[i].setText("" + output.distribution.getDelay());
+                    ConfigurationFvep.Output output = outputs.get(i);
+                    inputs[i].setText("" + output.getDutyCycle());
                 }
                 break;
 
             case BRIGHTNESS:
                 for (int i = 0; i < count; i++) {
-                    Output output = outputs.get(i);
+                    ConfigurationFvep.Output output = outputs.get(i);
                     inputs[i].setText("" + output.getBrightness());
                 }
                 break;
         }
     }
 
-    private void writeValues(List<Output> outputs) {
+    private void writeValues(List<ConfigurationFvep.Output> outputs) {
         int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    Output output = outputs.get(i);
+                    ConfigurationFvep.Output output = outputs.get(i);
                     output.puls.setUp(val);
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    Output output = outputs.get(i);
+                    ConfigurationFvep.Output output = outputs.get(i);
                     output.puls.setDown(val);
                 }
                 break;
 
-            case DISTRIBUTION_VALUE:
+            case FREQUENCY:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    Output output = outputs.get(i);
-                    if (output.canUpdateDistribution(outputs, val))
-                        output.distribution.setValue(val);
+                    ConfigurationFvep.Output output = outputs.get(i);
+                    if (output.isFrequencyInRange(val))
+                        output.setFrequency(val);
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
                 }
                 break;
-            case DISTRIBUTION_DELAY:
+            case DUTY_CYCLE:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    Output output = outputs.get(i);
-                    output.distribution.setDelay(val);
+                    ConfigurationFvep.Output output = outputs.get(i);
+                    if (output.isDutyCycleInRange(val))
+                        output.setDutyCycle(val);
+                    else
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
                 }
                 break;
 
             case BRIGHTNESS:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    Output output = outputs.get(i);
+                    ConfigurationFvep.Output output = outputs.get(i);
                     output.setBrightness(val);
                 }
                 break;
@@ -252,5 +247,4 @@ public final class Screen3 extends AScreen
             return def;
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file;
 
 import android.util.JsonWriter;
 
@@ -16,8 +16,9 @@ import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWriteScheme;
 
-public class SchemeJSONHandler implements IReadWriteScheme {
+public class SchemeFileJSONHandler implements IReadWriteScheme {
 
     // region variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
@@ -35,7 +36,7 @@ public class SchemeJSONHandler implements IReadWriteScheme {
     // endregion
 
 
-    public SchemeJSONHandler() {}
+    public SchemeFileJSONHandler() {}
 
 
 

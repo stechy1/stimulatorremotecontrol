@@ -1,6 +1,5 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -14,48 +13,49 @@ import android.widget.TextView;
 import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 
-public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
+public class FVEPScreen1ListViewAdapter extends ArrayAdapter<ConfigurationFvep> {
 
     private final Context context;
-    private final List<Scheme> objects;
+    private final List<ConfigurationFvep> objects;
 
-    public ERPScreen1ListViewAdapter(Context context, List<Scheme> objects) {
+    public FVEPScreen1ListViewAdapter(Context context, List<ConfigurationFvep> objects) {
         super(context, R.layout.control_list_view_item, objects);
+
         this.context = context;
         this.objects = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SchemeHolder schemeHolder;
+        ConfigurationHolder schemeHolder;
 
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.control_list_view_item, parent, false);
 
-            schemeHolder = new SchemeHolder();
+            schemeHolder = new ConfigurationHolder();
             schemeHolder.imageView = (ImageView) convertView.findViewById(R.id.control_scheme_view_image);
             schemeHolder.text1 = (TextView) convertView.findViewById(R.id.control_scheme_view_text1);
             schemeHolder.text2 = (TextView) convertView.findViewById(R.id.control_scheme_view_text2);
 
             convertView.setTag(schemeHolder);
         } else {
-            schemeHolder = (SchemeHolder) convertView.getTag();
+            schemeHolder = (ConfigurationHolder) convertView.getTag();
         }
 
-        Scheme scheme = objects.get(position);
-        schemeHolder.imageView.setImageResource(scheme.selected ?
+        ConfigurationFvep configuration = objects.get(position);
+        schemeHolder.imageView.setImageResource(configuration.selected ?
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
-        schemeHolder.text1.setText(scheme.getName());
-        schemeHolder.text1.setTextColor(scheme.loaded ? Color.BLACK : Color.GRAY);
-        schemeHolder.text2.setText("Count: " + scheme.getOutputCount());
+        schemeHolder.text1.setText(configuration.getName());
+        schemeHolder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
+        schemeHolder.text2.setText("Count: " + configuration.getOutputCount());
 
         return convertView;
     }
 
-    private static class SchemeHolder {
+    private static class ConfigurationHolder {
         ImageView imageView;
         TextView text1;
         TextView text2;

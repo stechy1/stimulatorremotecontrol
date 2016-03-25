@@ -1,4 +1,5 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep;
+
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,53 +15,53 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.Observable;
+import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPScreen1ListViewAdapter;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.FVEPScreen1ListViewAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
-public final class Screen1 extends AScreen
-        implements AdapterView.OnItemClickListener, SchemeManager.OnSchemeChangeListener {
+public class Screen1 extends AScreen
+        implements  AdapterView.OnItemClickListener, Observer {
 
-    private static final String TAG = "Screen1";
+    private static final String TAG = "fvep-Screen1";
 
-    //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
     private ListView listView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_erp_screen_1, container, false);
+        View v = inflater.inflate(R.layout.fragment_bci_fvep_screen_1, container, false);
 
-        listView = (ListView) v.findViewById(R.id.erp_screen_1_listview_scheme);
+        listView = (ListView) v.findViewById(R.id.container_listview);
         listView.setAdapter(buildAdapter());
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-        Button buttonNewScheme = (Button) v.findViewById(R.id.erp_screen_1_new_scheme);
-        buttonNewScheme.setOnClickListener(new NewSchemeListener());
+        Button buttonNewConiguration = (Button) v.findViewById(R.id.btn_new_configuration);
+        buttonNewConiguration.setOnClickListener(new NewConfigurationListener());
 
-        Button buttonSaveAll   = (Button) v.findViewById(R.id.erp_screen_1_save_all_schemes);
-        buttonSaveAll.setOnClickListener(new SaveAllSchemesListener());
+        Button buttonSaveAll = (Button) v.findViewById(R.id.btn_save_all);
+        buttonSaveAll.setOnClickListener(new SaveAllConfigurationsListener());
 
-        schemeManager.addObserver(this);
+        manager.addObserver(this);
 
         return v;
     }
 
-    // ListView onItemClick
+    // Kliknutí na položu v listView
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-        Scheme selected = (Scheme) listView.getItemAtPosition(position);
-        schemeManager.select(selected, new SchemeManager.Callback() {
+        ConfigurationFvep configuration = (ConfigurationFvep) listView.getItemAtPosition(position);
+        manager.select(configuration, new Manager.Callback() {
             @Override
             public void callack(Object object) {
                 ImageView img = (ImageView) view.findViewById(R.id.control_scheme_view_image);
@@ -68,10 +69,9 @@ public final class Screen1 extends AScreen
             }
         });
 
-        ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+        ((FVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
-    // ListView onCreateContextMenu
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getActivity().getMenuInflater().inflate(R.menu.context_menu_crud, menu);
@@ -84,11 +84,11 @@ public final class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        Scheme scheme = schemeManager.getSchemeList().get(listPosition);
+        ConfigurationFvep configuration = (ConfigurationFvep) manager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_select:
-                schemeManager.select(scheme, new SchemeManager.Callback() {
+                manager.select(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         final View v = info.targetView;
@@ -98,20 +98,20 @@ public final class Screen1 extends AScreen
                 });
                 return true;
             case R.id.context_delete:
-                schemeManager.delete(scheme, new SchemeManager.Callback() {
+                manager.delete(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_was_deleted), Snackbar.LENGTH_SHORT).show();
                         listView.requestLayout();
                     }
                 });
                 return true;
             case R.id.context_save_as:
-                schemeManager.save(scheme, new SchemeManager.Callback() {
+                manager.save(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
-                        Scheme scheme = (Scheme) object;
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_saved, scheme.getName()), Snackbar.LENGTH_SHORT).show();
+                        ConfigurationFvep configuration = (ConfigurationFvep) object;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 return true;
@@ -119,17 +119,17 @@ public final class Screen1 extends AScreen
         return super.onContextItemSelected(item);
     }
 
-
-    private ArrayAdapter<Scheme> buildAdapter() {
-        return new ERPScreen1ListViewAdapter(getContext(), schemeManager.getSchemeList());
+    private ListAdapter buildAdapter() {
+        return new FVEPScreen1ListViewAdapter(getContext(), manager.itemList);
     }
 
+    // Při aktualizaci datasetu v manageru (Změna schématu, změna nastavení výstupů...)
     @Override
-    public void update(Observable observable, Object object) {
-        ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+    public void update(Observable observable, Object data) {
+        ((FVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
-    private final class NewSchemeListener implements View.OnClickListener {
+    private final class NewConfigurationListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -143,14 +143,9 @@ public final class Screen1 extends AScreen
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String schemeName = input.getText().toString();
-                    Log.i(TAG, "Nazev schematu: " + schemeName);
-                    schemeManager.create(schemeName, new SchemeManager.Callback() {
-                        @Override
-                        public void callack(Object object) {
-                            ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
-                        }
-                    });
+                    String configName = input.getText().toString();
+                    Log.i(TAG, "Nazev schematu: " + configName);
+                    manager.create(configName);
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -173,15 +168,15 @@ public final class Screen1 extends AScreen
         }
     }
 
-    private final class SaveAllSchemesListener implements View.OnClickListener {
+    private final class SaveAllConfigurationsListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            schemeManager.saveAll(new SchemeManager.Callback() {
+            manager.saveAll(new Manager.Callback() {
                 @Override
                 public void callack(Object object) {
                     Integer count = (Integer) object;
-                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_schemes, count), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_configuration, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }

@@ -1,4 +1,4 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file;
 
 import android.util.Log;
 import android.util.Xml;
@@ -14,8 +14,9 @@ import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWriteScheme;
 
-public class SchemeXMLHandler implements IReadWriteScheme {
+public class SchemeFileXMLHandler implements IReadWriteScheme {
 
     // region variables
     private static final String NAMESPACE = "";
@@ -35,7 +36,7 @@ public class SchemeXMLHandler implements IReadWriteScheme {
     // endregion
 
 
-    public SchemeXMLHandler() {
+    public SchemeFileXMLHandler() {
     }
 
     // region write
