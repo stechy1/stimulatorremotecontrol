@@ -4,9 +4,33 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bci_fvep_screen_3_output_type" />
+
+    <Spinner
+        android:id="@+id/bci_fvep_screen_3_spinner_output_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAlpha"
+        android:entries="@array/bci_fvep_screen_3_output_types" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+        <LinearLayout
+            android:id="@+id/bci_fvep_screen_3_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Screen3"
-        android:id="@+id/textView4"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/bci_fvep_screen_3_button_save_output"
+        android:text="@string/save_values"
+        style="?android:buttonBarButtonStyle"/>
 </LinearLayout>

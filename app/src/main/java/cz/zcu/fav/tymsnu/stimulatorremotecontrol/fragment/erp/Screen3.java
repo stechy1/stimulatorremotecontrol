@@ -207,7 +207,7 @@ public final class Screen3 extends AScreen
                     if (output.canUpdateDistribution(outputs, val))
                         output.distribution.setValue(val);
                     else
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Distribution > 100", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             case DISTRIBUTION_DELAY:

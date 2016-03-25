@@ -45,12 +45,12 @@ public class FVEPScreen1ListViewAdapter extends ArrayAdapter<ConfigurationFvep> 
             schemeHolder = (ConfigurationHolder) convertView.getTag();
         }
 
-        ConfigurationFvep scheme = objects.get(position);
-        schemeHolder.imageView.setImageResource(scheme.selected ?
+        ConfigurationFvep configuration = objects.get(position);
+        schemeHolder.imageView.setImageResource(configuration.selected ?
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
-        schemeHolder.text1.setText(scheme.getName());
-        schemeHolder.text1.setTextColor(scheme.loaded ? Color.BLACK : Color.GRAY);
-        schemeHolder.text2.setText("Count: ");
+        schemeHolder.text1.setText(configuration.getName());
+        schemeHolder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
+        schemeHolder.text2.setText("Count: " + configuration.getOutputCount());
 
         return convertView;
     }
