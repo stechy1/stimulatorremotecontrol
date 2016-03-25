@@ -12,5 +12,5 @@ public interface IFactory<T extends AItem> {
      */
     T build(String name);
 
-    IReadWrite<T> getReadWriteAcces();
+    IReadWrite getReadWriteAcces();
 }

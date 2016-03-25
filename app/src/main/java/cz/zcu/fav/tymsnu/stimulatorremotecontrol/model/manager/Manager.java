@@ -23,7 +23,6 @@ public class Manager<T extends AItem> extends Observable {
     // region Variables
     private static final String TAG = "Manager";
     private static final String EXTENTION = ".json";
-    
 
     // Reference na pracovní adresár
     private File workingDirectory;
@@ -33,7 +32,7 @@ public class Manager<T extends AItem> extends Observable {
     private IFactory<T> factory;
 
     // Reference na aktuálně zvolený item
-    private T selectedItem;
+    private AItem selectedItem;
 
     // Kolekce všech itemů
     public final List<T> itemList = new ArrayList<>();
@@ -74,7 +73,7 @@ public class Manager<T extends AItem> extends Observable {
      * Načte item ze souboru
      * @param item Reference na načítaný item
      */
-    private void loadItem(T item)  {
+    private void loadItem(AItem item)  {
         if (item.loaded) return;
 
         try {
@@ -109,19 +108,17 @@ public class Manager<T extends AItem> extends Observable {
             callback.callack(item);
     }
 
-
-
     /**
      * Uloží item do souboru
      * @param item Referene na ukládaný item
      */
-    public void save(T item) {save(item, null);}
+    public void save(AItem item) {save(item, null);}
     /**
      * Uloží item do souboru
      * @param item Referene na ukládaný item
      * @param callback Callback který se zavolá po úspěšném uložení itemu
      */
-    public void save(T item, Callback callback) {
+    public void save(AItem item, Callback callback) {
 
         try {
             String name = item.getName();
@@ -131,7 +128,7 @@ public class Manager<T extends AItem> extends Observable {
             File outFile = new File(workingDirectory, name);
             outFile.createNewFile();
             FileOutputStream out = new FileOutputStream(outFile);
-            IReadWrite<T> readWrite = factory.getReadWriteAcces();
+            IReadWrite readWrite = factory.getReadWriteAcces();
             readWrite.write(out, item);
 
             if (callback != null)
@@ -176,13 +173,13 @@ public class Manager<T extends AItem> extends Observable {
      * Smaže schéma
      * @param item Reference na schéma
      */
-    public void delete(T item) {delete(item, null);}
+    public void delete(AItem item) {delete(item, null);}
     /**
      * Smaže schéma
      * @param item Reference na schéma
      * @param callback Callback který se zavolá po úspěšném smazání schématu
      */
-    public void delete(T item, Callback callback) {
+    public void delete(AItem item, Callback callback) {
         Log.i(TAG, "Mazu schema: " + item);
 
         String name = item.getName();
@@ -243,13 +240,13 @@ public class Manager<T extends AItem> extends Observable {
      * Označí item jako vybraná
      * @param item Reference na vybraný item
      */
-    public void select(T item) {select(item, null);}
+    public void select(AItem item) {select(item, null);}
     /**
      * Označí item jako vybraný
      * @param item Reference na vybraný item
      * @param callback Callback který se zavolá po úspěšné změně itemu
      */
-    public void select(T item, Callback callback) {
+    public void select(AItem item, Callback callback) {
         if (selectedItem != null && item.equals(selectedItem))
             return;
 

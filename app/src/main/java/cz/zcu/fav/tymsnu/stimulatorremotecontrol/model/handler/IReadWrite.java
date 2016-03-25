@@ -6,10 +6,10 @@ import java.io.OutputStream;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 
-public interface IReadWrite<T extends AItem> {
+public interface IReadWrite {
 
-    void write(OutputStream outputStream, T item) throws IOException;
+    void write(OutputStream outputStream, AItem item) throws IOException;
 
-    void read(InputStream inputStream, T item) throws IOException;
+    void read(InputStream inputStream, AItem item) throws IOException;
 
 }
