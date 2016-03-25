@@ -57,6 +57,44 @@ public class ConfigurationFvep extends AItem {
             this.brightness = brightness;
         }
 
+        /**
+         * Zjistí, zda-li je číslo v rozsahu
+         * @param val Kontrolovaná hodnota
+         * @param min Minimální hodnota (včetně)
+         * @param max Maximální hodnota (vyjma)
+         * @return True, pokud je číslo v rozsahu, jinak false
+         */
+        public boolean isInRange(int val, int min, int max) {
+            return val >= min && val < max;
+        }
+
+        /**
+         * Zjistí, zda-li hodnota odpovídá frekvenčnímu rozsahu
+         * @param val Kontrolovaná hodnota
+         * @return True, pokud hodnota odpovídá frekvenčnímu rozsahu, jinak false
+         */
+        public boolean isFrequencyInRange(int val) {
+            return isInRange(val, 0, 256);
+        }
+
+        /**
+         * Zjistí, zda-li hodnota odpovídá duty cycle rozsahu
+         * @param val Kontrolovaná hodnota
+         * @return True, pokud hodnota odpovídá duty cycle rozsahu, jinak false
+         */
+        public boolean isDutyCycleInRange(int val) {
+            return isInRange(val, 0, 256);
+        }
+
+        /**
+         * Zjistí, zda-li hodnota odpovídá rozsahu jasu
+         * @param val Kontrolovaná hodnota
+         * @return True, pokud hodnota odpovídá rozsahu jasu, jinak false
+         */
+        public boolean isBrightnessInRange(int val) {
+            return isInRange(val, 0, 256);
+        }
+
         public String getName() {
             return name;
         }
