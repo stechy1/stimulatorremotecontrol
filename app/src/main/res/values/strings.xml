@@ -87,7 +87,6 @@
         <item>Falling</item>
     </string-array>
     <string name="erp_screen_2_output_count">Output count</string>
-    <string name="erp_screen_2_output_count_save">Save</string>
 
     <!-- ERP screen - 3 -->
     <string name="erp_screen_3_output_type">Output type</string>
@@ -125,4 +124,17 @@
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
     <string name="exception_out_of_range">Value is out of range</string>
+
+    <!-- Alerts -->
+    <string name="unknown_device">Device not recognized</string>
+    <string name="bluetooth_off">Bluetooth is off</string>
+    <string name="turn_on">Turn on</string>
+
+    <string name="schema_saved">Schema <xliff:g>$s</xliff:g> was saved</string>
+    <string name="schema_was_deleted">Schema was deleted</string>
+    <string name="count_saved_schemes">Count of saved schemes: <xliff:g>$s</xliff:g></string>
+
+    <string name="configuration_saved">Configuration <xliff:g>$s</xliff:g> was saved</string>
+    <string name="configuration_was_deleted">Configuration was deleted</string>
+    <string name="count_saved_configuration">Count of saved configurations: <xliff:g>$s</xliff:g></string>
 </resources>
