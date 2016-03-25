@@ -101,7 +101,7 @@ public class Screen1 extends AScreen
                 manager.delete(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Konfigurace byla smazána", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_was_deleted), Snackbar.LENGTH_SHORT).show();
                         listView.requestLayout();
                     }
                 });
@@ -111,7 +111,7 @@ public class Screen1 extends AScreen
                     @Override
                     public void callack(Object object) {
                         ConfigurationFvep configuration = (ConfigurationFvep) object;
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Konfigurace: " + configuration.getName() + " bylo uloženo", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 return true;
@@ -176,7 +176,7 @@ public class Screen1 extends AScreen
                 @Override
                 public void callack(Object object) {
                     Integer count = (Integer) object;
-                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Počet uložených konfigurací: " + count, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_configuration, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }

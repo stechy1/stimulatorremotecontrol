@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity
                         connectDevice(data);
 
                     } catch (Exception ex) {
-                        Snackbar.make(findViewById(android.R.id.content), "Zařízení nebylo rozpoznáno", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(findViewById(android.R.id.content), getString(R.string.unknown_device), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -357,8 +357,8 @@ public class MainActivity extends AppCompatActivity
                     case BluetoothAdapter.STATE_OFF:
                         Log.i(TAG, "Bluetooth off");
                         final Snackbar snackbar = Snackbar.make(self.findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
-                        snackbar.setText("Bluetooth byl vypnut");
-                        snackbar.setAction("Zapnout", new View.OnClickListener() {
+                        snackbar.setText(getString(R.string.bluetooth_off));
+                        snackbar.setAction(getString(R.string.turn_on), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 mBluetoothAdapter.enable();

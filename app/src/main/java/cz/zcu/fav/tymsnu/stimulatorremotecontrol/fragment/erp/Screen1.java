@@ -101,7 +101,7 @@ public final class Screen1 extends AScreen
                 schemeManager.delete(scheme, new SchemeManager.Callback() {
                     @Override
                     public void callack(Object object) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema bylo smazáno", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
                         listView.requestLayout();
                     }
                 });
@@ -111,7 +111,7 @@ public final class Screen1 extends AScreen
                     @Override
                     public void callack(Object object) {
                         Scheme scheme = (Scheme) object;
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema: " + scheme.getName() + " bylo uloženo", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_saved, scheme.getName()), Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 return true;
@@ -181,7 +181,7 @@ public final class Screen1 extends AScreen
                 @Override
                 public void callack(Object object) {
                     Integer count = (Integer) object;
-                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Počet uložených schémat: " + count, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_schemes, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }

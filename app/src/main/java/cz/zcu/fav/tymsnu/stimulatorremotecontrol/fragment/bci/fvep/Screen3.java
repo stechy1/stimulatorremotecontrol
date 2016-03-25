@@ -47,7 +47,6 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
         spinner = (Spinner) v.findViewById(R.id.bci_fvep_screen_3_spinner_output_type);
         spinner.setOnItemSelectedListener(this);
 
-        // TODO odebrat tlačítko uložit a udělat synchronizaci hodnot při jejich změně
         Button btnSave = (Button) v.findViewById(R.id.bci_fvep_screen_3_button_save_output);
         btnSave.setOnClickListener(this);
 
@@ -209,6 +208,8 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     ConfigurationFvep.Output output = outputs.get(i);
                     if (output.isDutyCycleInRange(val))
                         output.setDutyCycle(val);
+                    else
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
                 }
                 break;
 
