@@ -33,17 +33,17 @@ public final class Screen1 extends AScreen
     private static final String TAG = "Screen1";
 
     //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
-    private ListView schemeView;
+    private ListView listView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_erp_screen_1, container, false);
 
-        schemeView = (ListView) v.findViewById(R.id.erp_screen_1_listview_scheme);
-        schemeView.setAdapter(buildAdapter());
-        schemeView.setOnItemClickListener(this);
-        registerForContextMenu(schemeView);
+        listView = (ListView) v.findViewById(R.id.erp_screen_1_listview_scheme);
+        listView.setAdapter(buildAdapter());
+        listView.setOnItemClickListener(this);
+        registerForContextMenu(listView);
 
         Button buttonNewScheme = (Button) v.findViewById(R.id.erp_screen_1_new_scheme);
         buttonNewScheme.setOnClickListener(new NewSchemeListener());
@@ -59,7 +59,7 @@ public final class Screen1 extends AScreen
     // ListView onItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-        Scheme selected = (Scheme) schemeView.getItemAtPosition(position);
+        Scheme selected = (Scheme) listView.getItemAtPosition(position);
         schemeManager.select(selected, new SchemeManager.Callback() {
             @Override
             public void callack(Object object) {
@@ -68,14 +68,14 @@ public final class Screen1 extends AScreen
             }
         });
 
-        ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+        ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     // ListView onCreateContextMenu
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        getActivity().getMenuInflater().inflate(R.menu.fragment_erp_screen1_listview_context_menu, menu);
-        menu.setHeaderTitle(R.string.erp_screen_1_context_menu_title);
+        getActivity().getMenuInflater().inflate(R.menu.context_menu_crud, menu);
+        menu.setHeaderTitle(R.string.context_options);
     }
 
     // ListView onContextItemSelected
@@ -87,7 +87,7 @@ public final class Screen1 extends AScreen
         Scheme scheme = schemeManager.getSchemeList().get(listPosition);
 
         switch (item.getItemId()) {
-            case R.id.erp_screen_1_context_select:
+            case R.id.context_select:
                 schemeManager.select(scheme, new SchemeManager.Callback() {
                     @Override
                     public void callack(Object object) {
@@ -97,16 +97,16 @@ public final class Screen1 extends AScreen
                     }
                 });
                 return true;
-            case R.id.erp_screen_1_context_delete:
+            case R.id.context_delete:
                 schemeManager.delete(scheme, new SchemeManager.Callback() {
                     @Override
                     public void callack(Object object) {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), "Schema bylo smazáno", Snackbar.LENGTH_SHORT).show();
-                        schemeView.requestLayout();
+                        listView.requestLayout();
                     }
                 });
                 return true;
-            case R.id.erp_screen_1_context_saveas:
+            case R.id.context_save_as:
                 schemeManager.save(scheme, new SchemeManager.Callback() {
                     @Override
                     public void callack(Object object) {
@@ -127,7 +127,7 @@ public final class Screen1 extends AScreen
     @Override
     public void update(Observable observable, Object object) {
         Log.i(TAG, "Screen1, data set changed");
-        ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+        ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     private final class NewSchemeListener implements View.OnClickListener {
@@ -138,7 +138,7 @@ public final class Screen1 extends AScreen
             input.setInputType(InputType.TYPE_CLASS_TEXT);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(R.string.erp_screen_1_new_schema);
+            builder.setTitle(R.string.context_set_name);
             builder.setView(input);
 
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -149,7 +149,7 @@ public final class Screen1 extends AScreen
                     schemeManager.create(schemeName, new SchemeManager.Callback() {
                         @Override
                         public void callack(Object object) {
-                            ((ERPScreen1ListViewAdapter) schemeView.getAdapter()).notifyDataSetChanged();
+                            ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
                         }
                     });
                 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPPagerAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager.ERPPagerAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.SchemePacketHandler;

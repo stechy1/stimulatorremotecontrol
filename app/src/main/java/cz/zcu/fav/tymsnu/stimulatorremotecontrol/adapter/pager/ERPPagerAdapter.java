@@ -1,4 +1,4 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

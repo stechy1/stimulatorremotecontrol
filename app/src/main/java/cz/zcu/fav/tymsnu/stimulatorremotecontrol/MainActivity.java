@@ -32,6 +32,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.AboutFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ERPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SettingsFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.FVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.service.BluetoothCommunicationService;
 
 public class MainActivity extends AppCompatActivity
@@ -315,7 +316,9 @@ public class MainActivity extends AppCompatActivity
                 fragment = new AboutFragment();
                 break;
 
-            case R.id.nav_item_2:
+            case R.id.nav_item_2_1:
+                fragment = new FVEPFragment();
+                break;
 
             case R.id.nav_item_3:
 

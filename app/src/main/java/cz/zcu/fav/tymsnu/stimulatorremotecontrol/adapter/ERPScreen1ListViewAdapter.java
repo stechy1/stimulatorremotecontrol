@@ -22,7 +22,7 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
     private final List<Scheme> objects;
 
     public ERPScreen1ListViewAdapter(Context context, List<Scheme> objects) {
-        super(context, R.layout.control_scheme_view_item, objects);
+        super(context, R.layout.control_list_view_item, objects);
         this.context = context;
         this.objects = objects;
     }
@@ -33,7 +33,7 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
 
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.control_scheme_view_item, parent, false);
+            convertView = inflater.inflate(R.layout.control_list_view_item, parent, false);
 
             schemeHolder = new SchemeHolder();
             schemeHolder.imageView = (ImageView) convertView.findViewById(R.id.control_scheme_view_image);
