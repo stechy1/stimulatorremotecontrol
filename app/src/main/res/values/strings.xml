@@ -55,6 +55,7 @@
     <string name="delete">Delete</string>
     <string name="save_as">Save as</string>
     <string name="save_all">Save all</string>
+    <string name="save_values">Save values</string>
     <string name="export">Export</string>
 
     <string name="context_options">Options</string>
@@ -97,7 +98,6 @@
         <item>Distribution - delay [%]</item>
         <item>Brightness [%]</item>
     </string-array>
-    <string name="erp_screen_3_save_outputs">Save values</string>
     <string name="erp_screen_3_output">. OUTPUT</string>
 
     <!-- BCI screens -->
@@ -109,6 +109,18 @@
     </string-array>
     <!-- BCI f-VEP screen - 1 -->
     <string name="bci_fvep_screen_1_new_configuration">New configuration</string>
+    <!-- BCI f-VEP screen - 2 -->
+    <string name="bci_fvep_screen_2_output_count">Stimul count</string>
+    <!-- BCI f-VEP screen - 3 -->
+    <string name="bci_fvep_screen_3_output_type">Parameter type</string>
+    <string-array name="bci_fvep_screen_3_output_types">
+        <item>Pulse - up [ms]</item>
+        <item>Pulse - down [ms]</item>
+        <item>Frequency (0–255)</item>
+        <item>Duty cycle (0–255)</item>
+        <item>Brightness [%]</item>
+    </string-array>
+    <string name="bci_fvep_screen_3_output">. STIMUL</string>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>

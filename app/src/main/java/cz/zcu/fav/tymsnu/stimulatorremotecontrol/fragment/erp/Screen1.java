@@ -126,7 +126,6 @@ public final class Screen1 extends AScreen
 
     @Override
     public void update(Observable observable, Object object) {
-        Log.i(TAG, "Screen1, data set changed");
         ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 

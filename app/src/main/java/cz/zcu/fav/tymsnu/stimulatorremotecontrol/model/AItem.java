@@ -1,7 +1,7 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 
-public class AItem {
+public abstract class AItem {
 
     protected String name;
 

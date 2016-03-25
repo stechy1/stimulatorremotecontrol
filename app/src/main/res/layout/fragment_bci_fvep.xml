@@ -30,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/fab_run_stimulator"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="@dimen/fab_margin"/>
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="32dp" />
 </FrameLayout>

@@ -4,11 +4,13 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,13 +21,16 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.FVEPScreen1ListViewAdapter;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Configuration;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class Screen1 extends AScreen
-        implements  AdapterView.OnItemClickListener {
+        implements  AdapterView.OnItemClickListener, Observer {
 
     private static final String TAG = "fvep-Screen1";
 
@@ -47,13 +52,15 @@ public class Screen1 extends AScreen
         Button buttonSaveAll = (Button) v.findViewById(R.id.btn_save_all);
         buttonSaveAll.setOnClickListener(new SaveAllConfigurationsListener());
 
+        manager.addObserver(this);
+
         return v;
     }
 
-//    Kliknutí na položu v listView
+    // Kliknutí na položu v listView
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-        Configuration configuration = (Configuration) listView.getItemAtPosition(position);
+        ConfigurationFvep configuration = (ConfigurationFvep) listView.getItemAtPosition(position);
         manager.select(configuration, new Manager.Callback() {
             @Override
             public void callack(Object object) {
@@ -71,8 +78,55 @@ public class Screen1 extends AScreen
         menu.setHeaderTitle(R.string.context_options);
     }
 
+    // ListView onContextItemSelected
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        final int listPosition = info.position;
+        ConfigurationFvep configuration = (ConfigurationFvep) manager.itemList.get(listPosition);
+
+        switch (item.getItemId()) {
+            case R.id.context_select:
+                manager.select(configuration, new Manager.Callback() {
+                    @Override
+                    public void callack(Object object) {
+                        final View v = info.targetView;
+                        ImageView img = (ImageView) v.findViewById(R.id.control_scheme_view_image);
+                        img.setImageResource(R.drawable.checkbox_marked_outline);
+                    }
+                });
+                return true;
+            case R.id.context_delete:
+                manager.delete(configuration, new Manager.Callback() {
+                    @Override
+                    public void callack(Object object) {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Konfigurace byla smazána", Snackbar.LENGTH_SHORT).show();
+                        listView.requestLayout();
+                    }
+                });
+                return true;
+            case R.id.context_save_as:
+                manager.save(configuration, new Manager.Callback() {
+                    @Override
+                    public void callack(Object object) {
+                        ConfigurationFvep configuration = (ConfigurationFvep) object;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Konfigurace: " + configuration.getName() + " bylo uloženo", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
     private ListAdapter buildAdapter() {
         return new FVEPScreen1ListViewAdapter(getContext(), manager.itemList);
+    }
+
+    // Při aktualizaci datasetu v manageru (Změna schématu, změna nastavení výstupů...)
+    @Override
+    public void update(Observable observable, Object data) {
+        ((FVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     private final class NewConfigurationListener implements View.OnClickListener {
@@ -118,7 +172,13 @@ public class Screen1 extends AScreen
 
         @Override
         public void onClick(View v) {
-
+            manager.saveAll(new Manager.Callback() {
+                @Override
+                public void callack(Object object) {
+                    Integer count = (Integer) object;
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), "Počet uložených konfigurací: " + count, Snackbar.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

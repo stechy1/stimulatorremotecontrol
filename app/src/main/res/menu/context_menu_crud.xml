@@ -5,9 +5,9 @@
         android:id="@+id/context_select"
         android:title="@string/select"/>
     <item
-        android:id="context_delete"
+        android:id="@+id/context_delete"
         android:title="@string/delete"/>
     <item
-        android:id="context_save_as"
+        android:id="@+id/context_save_as"
         android:title="@string/save_as"/>
 </menu>

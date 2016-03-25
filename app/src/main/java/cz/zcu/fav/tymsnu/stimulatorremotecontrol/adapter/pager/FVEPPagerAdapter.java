@@ -9,7 +9,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep.AScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep.Screen1;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep.Screen3;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Configuration;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class FVEPPagerAdapter extends FragmentStatePagerAdapter {
@@ -18,9 +18,9 @@ public class FVEPPagerAdapter extends FragmentStatePagerAdapter {
 
 
     private final IBtCommunication btCommunication;
-    private final Manager<Configuration> manager;
+    private final Manager<ConfigurationFvep> manager;
 
-    public FVEPPagerAdapter(FragmentManager fm, IBtCommunication btCommunication, Manager<Configuration> manager) {
+    public FVEPPagerAdapter(FragmentManager fm, IBtCommunication btCommunication, Manager<ConfigurationFvep> manager) {
         super(fm);
 
         this.btCommunication = btCommunication;

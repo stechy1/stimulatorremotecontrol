@@ -275,7 +275,10 @@ public class Manager<T extends AItem> extends Observable {
 
     // endregion
 
-
+    // region Getters & Setters
+    public AItem getSelectedItem() {
+        return selectedItem;
+    }
     /**
      * Nastaví nový pracovní adresář
      * Nesmí se jednat o soubor
@@ -286,6 +289,8 @@ public class Manager<T extends AItem> extends Observable {
 
         loadItems();
     }
+    // endregion
+
 
     /**
      * Rozhraní pro zpětné volání
