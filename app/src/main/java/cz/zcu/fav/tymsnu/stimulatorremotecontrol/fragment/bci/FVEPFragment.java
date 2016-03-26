@@ -42,6 +42,7 @@ public class FVEPFragment extends ASimpleFragment
 
         ViewPager pager = (ViewPager) v.findViewById(R.id.bci_fvep_viewpager);
         pager.setAdapter(buildPagerAdapter());
+        pager.setOffscreenPageLimit(3);
         pager.addOnPageChangeListener(this);
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.bci_fvep_tablayout);

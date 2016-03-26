@@ -20,12 +20,37 @@ public class ConfigurationFvep extends AItem {
         }
     }
 
+    /**
+     * Upraví počet výstupů
+     * Pokud je jich víc, než je požadováno, tak odstraní poslední
+     * Pokud je jich méně, tak vytvoří nové
+     */
+    private void rearangeOutputs() {
+        int listCount = outputList.size();
+        if (outputCount > listCount) {
+            int delta = outputCount - listCount;
+            for (int i = 0; i < delta; i++) {
+                outputList.add(new Output("Output" + i + outputCount));
+            }
+        } else {
+            for (int i = --listCount; i >= outputCount; i--) {
+                outputList.remove(i);
+            }
+        }
+    }
+
     public int getOutputCount() {
         return outputCount;
     }
 
     public void setOutputCount(int outputCount) {
+        if (outputCount < MIN_OUTPUT_COUNT || outputCount > MAX_OUTPUT_COUNT)
+            throw new IllegalArgumentException();
+
         this.outputCount = outputCount;
+
+        if (outputList.size() != outputCount)
+            rearangeOutputs();
     }
 
     public ConfigurationFvep(String name, int outputCount, List<Output> outputList) {
