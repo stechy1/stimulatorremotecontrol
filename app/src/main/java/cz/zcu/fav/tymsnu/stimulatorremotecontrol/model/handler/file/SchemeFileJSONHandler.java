@@ -14,11 +14,12 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWriteScheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class SchemeFileJSONHandler implements IReadWriteScheme {
+public class SchemeFileJSONHandler implements IReadWrite {
 
     // region variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
@@ -42,7 +43,8 @@ public class SchemeFileJSONHandler implements IReadWriteScheme {
 
     // region write
     @Override
-    public void write(OutputStream outputStream, Scheme scheme) throws IOException {
+    public void write(OutputStream outputStream, AItem item) throws IOException {
+        Scheme scheme = (Scheme) item;
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream));
         writer.setIndent("  ");
 
@@ -104,7 +106,8 @@ public class SchemeFileJSONHandler implements IReadWriteScheme {
 
     // region read
     @Override
-    public void read(InputStream inputStream, Scheme scheme) throws IOException {
+    public void read(InputStream inputStream, AItem item) throws IOException {
+        Scheme scheme = (Scheme) item;
         StringBuilder builder = new StringBuilder();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

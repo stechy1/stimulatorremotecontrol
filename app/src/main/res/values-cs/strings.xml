@@ -72,7 +72,7 @@
     <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
 
     <!-- ERP screen - 1 -->
-    <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
+    <string name="erp_scren_1_new_scheme">Nové schéma</string>
 
     <!-- ERP screen - 2 -->
     <string name="erp_screen_2_random">Náhodnost</string>

@@ -17,22 +17,20 @@ import android.widget.TextView;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
 public final class Screen3 extends AScreen
-        implements AdapterView.OnItemSelectedListener, SchemeManager.OnSchemeChangeListener, View.OnClickListener {
+        implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
 
     private static final int PULSE_UP = 0;
     private static final int PULSE_DOWN = 1;
     private static final int DISTRIBUTION_VALUE = 2;
     private static final int DISTRIBUTION_DELAY = 3;
     private static final int BRIGHTNESS = 4;
-
-    //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
 
     private String outText;
 
@@ -97,7 +95,7 @@ public final class Screen3 extends AScreen
     // Save button click
     @Override
     public void onClick(View v) {
-        final Scheme scheme = schemeManager.getSelectedScheme();
+        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
         if (scheme == null)
             return;
 
@@ -107,7 +105,7 @@ public final class Screen3 extends AScreen
     }
 
     private void changeValues() {
-        Scheme scheme = schemeManager.getSelectedScheme();
+        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
         if (scheme == null)
             return;
 

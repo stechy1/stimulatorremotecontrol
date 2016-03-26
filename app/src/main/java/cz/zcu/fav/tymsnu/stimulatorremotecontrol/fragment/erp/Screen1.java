@@ -23,16 +23,17 @@ import android.widget.ListView;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPScreen1ListViewAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.SchemePacketHandler;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public final class Screen1 extends AScreen
-        implements AdapterView.OnItemClickListener, SchemeManager.OnSchemeChangeListener, View.OnClickListener {
+        implements AdapterView.OnItemClickListener, View.OnClickListener, Observer {
 
     private static final String TAG = "Screen1";
 
@@ -66,10 +67,10 @@ public final class Screen1 extends AScreen
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
         Scheme selected = (Scheme) listView.getItemAtPosition(position);
-        schemeManager.select(selected, new SchemeManager.Callback() {
+        schemeManager.select(selected, new Manager.Callback() {
             @Override
             public void callack(Object object) {
-                ImageView img = (ImageView) view.findViewById(R.id.control_scheme_view_image);
+                ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
                 img.setImageResource(R.drawable.checkbox_marked_outline);
             }
         });
@@ -90,21 +91,21 @@ public final class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        Scheme scheme = schemeManager.getSchemeList().get(listPosition);
+        Scheme scheme = schemeManager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_select:
-                schemeManager.select(scheme, new SchemeManager.Callback() {
+                schemeManager.select(scheme, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         final View v = info.targetView;
-                        ImageView img = (ImageView) v.findViewById(R.id.control_scheme_view_image);
+                        ImageView img = (ImageView) v.findViewById(R.id.control_list_view_image);
                         img.setImageResource(R.drawable.checkbox_marked_outline);
                     }
                 });
                 return true;
             case R.id.context_delete:
-                schemeManager.delete(scheme, new SchemeManager.Callback() {
+                schemeManager.delete(scheme, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
@@ -113,7 +114,7 @@ public final class Screen1 extends AScreen
                 });
                 return true;
             case R.id.context_save_as:
-                schemeManager.save(scheme, new SchemeManager.Callback() {
+                schemeManager.save(scheme, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         Scheme scheme = (Scheme) object;
@@ -125,20 +126,21 @@ public final class Screen1 extends AScreen
         return super.onContextItemSelected(item);
     }
 
-
     private ArrayAdapter<Scheme> buildAdapter() {
-        return new ERPScreen1ListViewAdapter(getContext(), schemeManager.getSchemeList());
+        return new ERPScreen1ListViewAdapter(getContext(), schemeManager.itemList);
     }
 
+    // Při aktualizaci datasetu v manageru (Změna schématu, změna nastavení výstupů...)
     @Override
     public void update(Observable observable, Object object) {
+        Log.i(TAG, "Data update");
         ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     // FAB onClick
     @Override
     public void onClick(View v) {
-        Scheme scheme = schemeManager.getSelectedScheme();
+        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
         if (scheme == null)
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
         else {
@@ -168,13 +170,17 @@ public final class Screen1 extends AScreen
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String schemeName = input.getText().toString();
-                    Log.i(TAG, "Nazev schematu: " + schemeName);
-                    schemeManager.create(schemeName, new SchemeManager.Callback() {
-                        @Override
-                        public void callack(Object object) {
-                            ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
-                        }
-                    });
+                    try {
+                        schemeManager.create(schemeName, new Manager.Callback() {
+                            @Override
+                            public void callack(Object object) {
+                                ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+                            }
+                        });
+                        Log.i(TAG, "Nazev schematu: " + schemeName);
+                    } catch (IllegalArgumentException ex) {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -201,7 +207,7 @@ public final class Screen1 extends AScreen
 
         @Override
         public void onClick(View v) {
-            schemeManager.saveAll(new SchemeManager.Callback() {
+            schemeManager.saveAll(new Manager.Callback() {
                 @Override
                 public void callack(Object object) {
                     Integer count = (Integer) object;

@@ -1,6 +1,5 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep;
 
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -68,7 +67,7 @@ public class Screen1 extends AScreen
         manager.select(configuration, new Manager.Callback() {
             @Override
             public void callack(Object object) {
-                ImageView img = (ImageView) view.findViewById(R.id.control_scheme_view_image);
+                ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
                 img.setImageResource(R.drawable.checkbox_marked_outline);
             }
         });
@@ -76,6 +75,7 @@ public class Screen1 extends AScreen
         ((FVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
+    // ListView onCreateContextMenu
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getActivity().getMenuInflater().inflate(R.menu.context_menu_crud, menu);
@@ -96,7 +96,7 @@ public class Screen1 extends AScreen
                     @Override
                     public void callack(Object object) {
                         final View v = info.targetView;
-                        ImageView img = (ImageView) v.findViewById(R.id.control_scheme_view_image);
+                        ImageView img = (ImageView) v.findViewById(R.id.control_list_view_image);
                         img.setImageResource(R.drawable.checkbox_marked_outline);
                     }
                 });
@@ -171,12 +171,11 @@ public class Screen1 extends AScreen
         ((FVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
-    // Přikliknutí na FAB tlačítko
+    // FAB onClick
     @Override
     public void onClick(View v) {
         Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci", Snackbar.LENGTH_SHORT).show();
     }
-
 
     private final class NewConfigurationListener implements View.OnClickListener {
 

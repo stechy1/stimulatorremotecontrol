@@ -14,13 +14,15 @@ import android.widget.TextView;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager.ERPPagerAdapter;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.SchemeFactory;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "ERPFragment";
 
-    private final SchemeManager schemeManager = new SchemeManager();
+    private final Manager<Scheme> schemeManager = new Manager<>(new SchemeFactory());
 
     private TextView title;
     private String[] titles;
@@ -42,12 +44,6 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.erp_tablayout);
         tabLayout.setupWithViewPager(pager);
-
-        /*CircleIndicator indicator = (CircleIndicator) view.findViewById(R.id.indicator);
-        indicator.setViewPager(pager);*/
-
-        /*FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.erp_fragment_fab);
-        fab.setOnClickListener(this);*/
 
         return v;
     }

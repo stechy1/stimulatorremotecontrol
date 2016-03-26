@@ -36,9 +36,9 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
             convertView = inflater.inflate(R.layout.control_list_view_item, parent, false);
 
             schemeHolder = new SchemeHolder();
-            schemeHolder.imageView = (ImageView) convertView.findViewById(R.id.control_scheme_view_image);
-            schemeHolder.text1 = (TextView) convertView.findViewById(R.id.control_scheme_view_text1);
-            schemeHolder.text2 = (TextView) convertView.findViewById(R.id.control_scheme_view_text2);
+            schemeHolder.imageView = (ImageView) convertView.findViewById(R.id.control_list_view_image);
+            schemeHolder.text1 = (TextView) convertView.findViewById(R.id.control_list_view_text1);
+            schemeHolder.text2 = (TextView) convertView.findViewById(R.id.control_list_view_text2);
 
             convertView.setTag(schemeHolder);
         } else {

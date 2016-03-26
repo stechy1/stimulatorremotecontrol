@@ -10,14 +10,15 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.AScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen1;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen3;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class ERPPagerAdapter extends FragmentStatePagerAdapter {
 
     private final IBtCommunication iBtCommunication;
-    private final SchemeManager schemeManager;
+    private final Manager<Scheme> schemeManager;
 
-    public ERPPagerAdapter(FragmentManager fm, IBtCommunication iBtCommunication, SchemeManager schemeManager) {
+    public ERPPagerAdapter(FragmentManager fm, IBtCommunication iBtCommunication, Manager<Scheme> schemeManager) {
         super(fm);
 
         this.iBtCommunication = iBtCommunication;

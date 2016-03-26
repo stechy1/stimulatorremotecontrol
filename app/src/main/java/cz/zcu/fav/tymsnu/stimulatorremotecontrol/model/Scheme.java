@@ -4,20 +4,13 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Scheme {
+public final class Scheme extends AItem {
 
     // region Variables
     // Výchozí počet výstupů (stará verze 4)
     public static final int MIN_OUTPUT_COUNT = 1;
     public static final int MAX_OUTPUT_COUNT = 8;
 
-
-     // Indikátor, zda-li je schéma načteno
-    public boolean loaded = false;
-    public boolean selected = false;
-
-    // Název schématu
-    private String name;
     // Počet výstupů
     private int outputCount;
     // Nastavení hrany (náběžná/sestupná)
@@ -36,7 +29,6 @@ public final class Scheme {
      * @param name Název schématu
      */
     public Scheme(String name) {
-
         this(name, MIN_OUTPUT_COUNT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
 
         for (int i = 0; i < MIN_OUTPUT_COUNT; i++) {
@@ -54,9 +46,8 @@ public final class Scheme {
      * @param outputList Reference na kolekci výstupů
      */
     public Scheme(String name, int outputCount, Edge edge, Random random, List<Output> outputList) {
-        if (name.contains("."))
-            name = name.substring(0, name.lastIndexOf("."));
-        this.name = name;
+        super(name);
+
         this.outputCount = outputCount;
         this.edge = edge;
         this.random = random;
@@ -96,14 +87,6 @@ public final class Scheme {
     // endregion
 
     // region Getters & Setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getOutputCount() {
         return outputCount;
     }
@@ -162,11 +145,6 @@ public final class Scheme {
         result = 31 * result + (edge != null ? edge.hashCode() : 0);
         result = 31 * result + (random != null ? random.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     // region Enums

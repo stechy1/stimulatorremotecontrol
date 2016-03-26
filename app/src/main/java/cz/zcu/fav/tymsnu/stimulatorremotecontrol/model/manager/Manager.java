@@ -276,10 +276,11 @@ public class Manager<T extends AItem> extends Observable {
             this.selectedItem.selected = false;
         }
 
-        item.selected = true;
-        this.selectedItem = item;
         if (!item.loaded)
             loadItem(item);
+
+        item.selected = true;
+        this.selectedItem = item;
 
         if (callback != null)
             callback.callack(item);

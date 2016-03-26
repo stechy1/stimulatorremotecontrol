@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/erp_screen_1_new_scheme"
-                android:text="@string/context_set_name"
+                android:text="@string/erp_scren_1_new_scheme"
                 style="?android:buttonBarButtonStyle"
                 android:layout_gravity="left"
                 android:layout_weight="1"/>
@@ -47,6 +47,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/fab_run_stimulator"
         android:layout_gravity="right|bottom"
-        android:layout_margin="5dp"
+        android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="32dp"/>
 </FrameLayout>
