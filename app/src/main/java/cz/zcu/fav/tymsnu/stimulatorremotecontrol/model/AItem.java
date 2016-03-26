@@ -9,6 +9,8 @@ public abstract class AItem {
     public boolean selected;
 
     public AItem(String name) {
+        if (name.isEmpty())
+            throw new IllegalArgumentException();
         this.name = name;
     }
 
