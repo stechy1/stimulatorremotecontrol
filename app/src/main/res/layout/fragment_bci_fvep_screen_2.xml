@@ -11,7 +11,8 @@
         android:layout_height="180dp"
         android:text="@string/bci_fvep_screen_2_output_count"
         android:layout_gravity="center_vertical|top"
-        android:gravity="center" />
+        android:gravity="center"
+        android:layout_marginLeft="10dp"/>
 
     <NumberPicker
         android:layout_width="wrap_content"
