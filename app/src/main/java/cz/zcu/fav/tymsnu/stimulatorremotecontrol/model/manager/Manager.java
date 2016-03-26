@@ -169,6 +169,28 @@ public class Manager<T extends AItem> extends Observable {
             callbackAfterAll.callack(counter);
     }
 
+    public void rename(AItem item, String newName) {
+        rename(item, newName, null);
+    }
+    public void rename(AItem item, String newName, Callback callback) {
+        String itemName = item.getName();
+        if (!itemName.contains(EXTENTION))
+            itemName += EXTENTION;
+        String newFileName = newName;
+        if (!newFileName.contains(EXTENTION))
+            newFileName += EXTENTION;
+
+        File oldFile = new File(workingDirectory, itemName);
+        File newFile = new File(workingDirectory, newFileName);
+        boolean success = oldFile.renameTo(newFile);
+        if (success) {
+            item.setName(newName);
+            if (callback != null)
+                callback.callack(item);
+            notifyValueChanged();
+        }
+    }
+
     /**
      * Smaže schéma
      * @param item Reference na schéma

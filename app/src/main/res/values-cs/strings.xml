@@ -53,6 +53,7 @@
 
     <string name="select">Vybrat</string>
     <string name="delete">Smazat</string>
+    <string name="rename">Přejmenovat</string>
     <string name="save_as">Uložit jako</string>
     <string name="save_all">Uložit vše</string>
     <string name="save_values">Uložit hodnoty</string>

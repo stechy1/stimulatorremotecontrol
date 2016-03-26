@@ -8,6 +8,9 @@
         android:id="@+id/context_delete"
         android:title="@string/delete"/>
     <item
+        android:id="@+id/context_rename"
+        android:title="@string/rename"/>
+    <item
         android:id="@+id/context_save_as"
         android:title="@string/save_as"/>
 </menu>

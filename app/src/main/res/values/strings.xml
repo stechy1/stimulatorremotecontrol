@@ -53,6 +53,7 @@
 
     <string name="select">Select</string>
     <string name="delete">Delete</string>
+    <string name="rename">Rename</string>
     <string name="save_as">Save as</string>
     <string name="save_all">Save all</string>
     <string name="save_values">Save values</string>
