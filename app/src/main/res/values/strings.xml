@@ -130,11 +130,11 @@
     <string name="bluetooth_off">Bluetooth is off</string>
     <string name="turn_on">Turn on</string>
 
-    <string name="schema_saved">Schema <xliff:g>$s</xliff:g> was saved</string>
+    <string name="schema_saved">Schema <xliff:g id="saved_schema">%1$s</xliff:g> was saved</string>
     <string name="schema_was_deleted">Schema was deleted</string>
-    <string name="count_saved_schemes">Count of saved schemes: <xliff:g>$s</xliff:g></string>
+    <string name="count_saved_schemes">Count of saved schemes: <xliff:g id="saved_scheme_count">%1$s</xliff:g></string>
 
-    <string name="configuration_saved">Configuration <xliff:g>$s</xliff:g> was saved</string>
+    <string name="configuration_saved">Configuration <xliff:g id="saved_conf">%1$s</xliff:g> was saved</string>
     <string name="configuration_was_deleted">Configuration was deleted</string>
-    <string name="count_saved_configuration">Count of saved configurations: <xliff:g>$s</xliff:g></string>
+    <string name="count_saved_configuration">Count of saved configurations: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
 </resources>
