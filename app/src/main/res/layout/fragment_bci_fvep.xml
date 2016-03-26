@@ -24,13 +24,4 @@
         android:id="@+id/bci_fvep_tablayout"
         style="@style/MyTabLayout"
         android:layout_gravity="bottom" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/bci_fvep_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/fab_run_stimulator"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:layout_marginBottom="32dp" />
 </FrameLayout>

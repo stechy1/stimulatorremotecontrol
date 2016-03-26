@@ -4,6 +4,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.fvep;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -30,7 +31,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class Screen1 extends AScreen
-        implements  AdapterView.OnItemClickListener, Observer {
+        implements  AdapterView.OnItemClickListener, Observer, View.OnClickListener {
 
     private static final String TAG = "fvep-Screen1";
 
@@ -51,6 +52,9 @@ public class Screen1 extends AScreen
 
         Button buttonSaveAll = (Button) v.findViewById(R.id.btn_save_all);
         buttonSaveAll.setOnClickListener(new SaveAllConfigurationsListener());
+
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.bci_fvep_fab);
+        fab.setOnClickListener(this);
 
         manager.addObserver(this);
 
@@ -122,7 +126,7 @@ public class Screen1 extends AScreen
                             manager.rename(configuration, configName);
                             Log.i(TAG, "Nazev schematu: " + configName);
                         } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), "Nepovolené znaky", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -167,6 +171,13 @@ public class Screen1 extends AScreen
         ((FVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
+    // Přikliknutí na FAB tlačítko
+    @Override
+    public void onClick(View v) {
+        Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci", Snackbar.LENGTH_SHORT).show();
+    }
+
+
     private final class NewConfigurationListener implements View.OnClickListener {
 
         @Override
@@ -186,7 +197,7 @@ public class Screen1 extends AScreen
                         manager.create(configName);
                         Log.i(TAG, "Nazev schematu: " + configName);
                     } catch (IllegalArgumentException ex) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Nepovolené znaky", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });
