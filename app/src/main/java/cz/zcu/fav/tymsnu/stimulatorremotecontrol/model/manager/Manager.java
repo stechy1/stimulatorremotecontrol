@@ -92,13 +92,13 @@ public class Manager<T extends AItem> extends Observable {
      * Vytvoří nový item
      * @param name Název item
      */
-    public void create(String name) {create(name, null);}
+    public void create(String name) throws IllegalArgumentException {create(name, null);}
     /**
      * Vytvoří nový item
      * @param name Název itemu
      * @param callback Callback který se zavolá po úspěšném vytvoření itemu
      */
-    public void create(String name, Callback callback) {
+    public void create(String name, Callback callback) throws IllegalArgumentException {
         T item = factory.build(name);
         item.loaded = true;
         itemList.add(item);

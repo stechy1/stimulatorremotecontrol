@@ -130,6 +130,8 @@
     <string name="bluetooth_off">Bluetooth je vypnutý</string>
     <string name="turn_on">Zapnout</string>
 
+    <string name="illegal_input">Nepovolené znaky</string>
+
     <string name="schema_saved">Schéma <xliff:g id="saved_schema">%1$s</xliff:g> bylo uloženo</string>
     <string name="schema_was_deleted">Schéma bylo smazáno</string>
     <string name="count_saved_schemes">Počet uložených schémat: <xliff:g id="saved_scheme_count">%1$s</xliff:g></string>

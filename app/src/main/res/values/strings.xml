@@ -129,6 +129,8 @@
     <string name="unknown_device">Device not recognized</string>
     <string name="bluetooth_off">Bluetooth is off</string>
     <string name="turn_on">Turn on</string>
+    
+    <string name="illegal_input">Illegal input</string>
 
     <string name="schema_saved">Schema <xliff:g id="saved_schema">%1$s</xliff:g> was saved</string>
     <string name="schema_was_deleted">Schema was deleted</string>

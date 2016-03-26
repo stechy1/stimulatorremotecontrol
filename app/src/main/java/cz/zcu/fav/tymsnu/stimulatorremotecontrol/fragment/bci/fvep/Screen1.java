@@ -144,8 +144,12 @@ public class Screen1 extends AScreen
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String configName = input.getText().toString();
-                    Log.i(TAG, "Nazev schematu: " + configName);
-                    manager.create(configName);
+                    try {
+                        manager.create(configName);
+                        Log.i(TAG, "Nazev schematu: " + configName);
+                    } catch (IllegalArgumentException ex) {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), "Nepovolené znaky", Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
