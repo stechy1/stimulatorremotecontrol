@@ -148,15 +148,6 @@ public class Screen1 extends AScreen
                     }
                 });
                 break;
-            case R.id.context_save_as:
-                manager.save(configuration, new Manager.Callback() {
-                    @Override
-                    public void callack(Object object) {
-                        ConfigurationFvep configuration = (ConfigurationFvep) object;
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-                return true;
         }
         return super.onContextItemSelected(item);
     }

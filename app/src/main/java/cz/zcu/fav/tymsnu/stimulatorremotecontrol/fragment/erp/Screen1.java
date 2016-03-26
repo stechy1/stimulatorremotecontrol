@@ -113,15 +113,6 @@ public final class Screen1 extends AScreen
                     }
                 });
                 return true;
-            case R.id.context_save_as:
-                schemeManager.save(scheme, new Manager.Callback() {
-                    @Override
-                    public void callack(Object object) {
-                        Scheme scheme = (Scheme) object;
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_saved, scheme.getName()), Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-                return true;
         }
         return super.onContextItemSelected(item);
     }
