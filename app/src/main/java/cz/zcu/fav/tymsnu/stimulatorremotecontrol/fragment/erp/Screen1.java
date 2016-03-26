@@ -3,6 +3,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -20,19 +21,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.util.List;
 import java.util.Observable;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPScreen1ListViewAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.SchemePacketHandler;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
 
 public final class Screen1 extends AScreen
-        implements AdapterView.OnItemClickListener, SchemeManager.OnSchemeChangeListener {
+        implements AdapterView.OnItemClickListener, SchemeManager.OnSchemeChangeListener, View.OnClickListener {
 
     private static final String TAG = "Screen1";
 
-    //private final SchemeManager schemeManager = SchemeManager.getINSTANCE();
     private ListView listView;
 
     @Nullable
@@ -50,6 +53,9 @@ public final class Screen1 extends AScreen
 
         Button buttonSaveAll   = (Button) v.findViewById(R.id.erp_screen_1_save_all_schemes);
         buttonSaveAll.setOnClickListener(new SaveAllSchemesListener());
+
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.erp_fab);
+        fab.setOnClickListener(this);
 
         schemeManager.addObserver(this);
 
@@ -127,6 +133,24 @@ public final class Screen1 extends AScreen
     @Override
     public void update(Observable observable, Object object) {
         ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+    }
+
+    // FAB onClick
+    @Override
+    public void onClick(View v) {
+        Scheme scheme = schemeManager.getSelectedScheme();
+        if (scheme == null)
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
+        else {
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
+            List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
+            for (Packet packet : packets) {
+                Log.i(TAG, packet.toString());
+                if (!iBtCommunication.write(packet.getValue())) {
+                    break;
+                }
+            }
+        }
     }
 
     private final class NewSchemeListener implements View.OnClickListener {
