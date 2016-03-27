@@ -23,4 +23,7 @@ public abstract class AItem {
         this.name = name;
     }
 
+    public interface OnValueChanged {
+        void changed();
+    }
 }

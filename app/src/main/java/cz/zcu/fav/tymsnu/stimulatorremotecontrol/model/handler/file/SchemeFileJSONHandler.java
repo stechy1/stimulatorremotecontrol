@@ -15,8 +15,8 @@ import java.io.OutputStreamWriter;
 import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
 public class SchemeFileJSONHandler implements IReadWrite {

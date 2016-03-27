@@ -12,8 +12,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWriteScheme;
 
 public class SchemeFileXMLHandler implements IReadWriteScheme {

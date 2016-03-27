@@ -13,6 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
 
 public final class Screen2 extends AScreen
@@ -65,8 +66,13 @@ public final class Screen2 extends AScreen
             if (scheme == null)
                 return;
 
-            scheme.setRandom(Scheme.Random.valueOf(position));
-            schemeManager.notifySelectedItemInternalChange();
+            scheme.setRandom(Scheme.Random.valueOf(position), new AItem.OnValueChanged() {
+                @Override
+                public void changed() {
+                    schemeManager.notifySelectedItemInternalChange();
+                }
+            });
+
         }
 
         @Override
@@ -83,8 +89,12 @@ public final class Screen2 extends AScreen
             if (scheme == null)
                 return;
 
-            scheme.setEdge(Scheme.Edge.valueOf(position));
-            schemeManager.notifySelectedItemInternalChange();
+            scheme.setEdge(Scheme.Edge.valueOf(position), new AItem.OnValueChanged() {
+                @Override
+                public void changed() {
+                    schemeManager.notifySelectedItemInternalChange();
+                }
+            });
         }
 
         @Override
@@ -112,8 +122,12 @@ public final class Screen2 extends AScreen
         if (scheme == null)
             return;
 
-        scheme.setOutputCount(newVal);
-        schemeManager.notifySelectedItemInternalChange();
-        schemeManager.notifyValueChanged();
+        scheme.setOutputCount(newVal, new AItem.OnValueChanged() {
+            @Override
+            public void changed() {
+                schemeManager.notifySelectedItemInternalChange();
+                schemeManager.notifyValueChanged();
+            }
+        });
     }
 }

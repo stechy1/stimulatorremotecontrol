@@ -20,8 +20,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme.Output;
 
 public final class Screen3 extends AScreen
         implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
