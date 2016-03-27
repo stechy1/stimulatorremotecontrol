@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 
 public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListener, Observer {
@@ -24,8 +25,8 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         View v = inflater.inflate(R.layout.fragment_bci_fvep_screen_2, container, false);
 
         numberPicker = (NumberPicker) v.findViewById(R.id.fvep_screen_2_number_picker);
-        numberPicker.setMaxValue(8);
-        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(ConfigurationFvep.MAX_OUTPUT_COUNT);
+        numberPicker.setMinValue(ConfigurationFvep.MIN_OUTPUT_COUNT);
         numberPicker.setValue(1);
         numberPicker.setOnValueChangedListener(this);
 
@@ -52,9 +53,14 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         if (configuration == null)
             return;
 
-        configuration.setOutputCount(newVal);
-        manager.notifySelectedItemInternalChange();
-        manager.notifyValueChanged();
+        configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
+            @Override
+            public void changed() {
+                manager.notifySelectedItemInternalChange();
+                manager.notifyValueChanged();
+            }
+        });
+
     }
 
     // Při aktualizaci datasetu v manageru (Změna schématu, změna nastavení výstupů...)

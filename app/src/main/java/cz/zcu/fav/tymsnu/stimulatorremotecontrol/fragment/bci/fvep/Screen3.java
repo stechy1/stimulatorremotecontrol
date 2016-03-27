@@ -21,6 +21,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 
 public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
@@ -181,16 +182,24 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
-                    output.puls.setUp(val);
-                    manager.notifySelectedItemInternalChange();
+                    output.puls.setUp(val, new AItem.OnValueChanged() {
+                        @Override
+                        public void changed() {
+                            manager.notifySelectedItemInternalChange();
+                        }
+                    });
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
-                    output.puls.setDown(val);
-                    manager.notifySelectedItemInternalChange();
+                    output.puls.setDown(val, new AItem.OnValueChanged() {
+                        @Override
+                        public void changed() {
+                            manager.notifySelectedItemInternalChange();
+                        }
+                    });
                 }
                 break;
 
@@ -199,8 +208,12 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
                     if (output.isFrequencyInRange(val)) {
-                        output.setFrequency(val);
-                        manager.notifySelectedItemInternalChange();
+                        output.setFrequency(val, new AItem.OnValueChanged() {
+                            @Override
+                            public void changed() {
+                                manager.notifySelectedItemInternalChange();
+                            }
+                        });
                     }
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
@@ -211,8 +224,12 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
                     if (output.isDutyCycleInRange(val)) {
-                        output.setDutyCycle(val);
-                        manager.notifySelectedItemInternalChange();
+                        output.setDutyCycle(val, new AItem.OnValueChanged() {
+                            @Override
+                            public void changed() {
+                                manager.notifySelectedItemInternalChange();
+                            }
+                        });
                     }
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
@@ -223,8 +240,12 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
-                    output.setBrightness(val);
-                    manager.notifySelectedItemInternalChange();
+                    output.setBrightness(val, new AItem.OnValueChanged() {
+                        @Override
+                        public void changed() {
+                            manager.notifySelectedItemInternalChange();
+                        }
+                    });
                 }
                 break;
         }

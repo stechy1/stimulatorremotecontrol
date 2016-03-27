@@ -43,14 +43,21 @@ public class ConfigurationFvep extends AItem {
         return outputCount;
     }
 
-    public void setOutputCount(int outputCount) {
+    public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
         if (outputCount < MIN_OUTPUT_COUNT || outputCount > MAX_OUTPUT_COUNT)
             throw new IllegalArgumentException();
+
+        if (this.outputCount == outputCount)
+            return;
 
         this.outputCount = outputCount;
 
         if (outputList.size() != outputCount)
             rearangeOutputs();
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
     }
 
     public ConfigurationFvep(String name, int outputCount, List<Output> outputList) {
@@ -128,24 +135,45 @@ public class ConfigurationFvep extends AItem {
             return frequency;
         }
 
-        public void setFrequency(int frequency) {
+        public void setFrequency(int frequency) {setFrequency(frequency, null);}
+        public void setFrequency(int frequency, OnValueChanged onValueChanged) {
+            if (this.frequency == frequency)
+                return;
+
             this.frequency = frequency;
+
+            if (onValueChanged != null)
+                onValueChanged.changed();
         }
 
         public int getDutyCycle() {
             return duty_cycle;
         }
 
-        public void setDutyCycle(int duty_cycle) {
+        public void setDutyCycle(int duty_cycle) {setDutyCycle(duty_cycle, null);}
+        public void setDutyCycle(int duty_cycle, OnValueChanged onValueChanged) {
+            if (this.duty_cycle == duty_cycle)
+                return;
+
             this.duty_cycle = duty_cycle;
+
+            if (onValueChanged != null)
+                onValueChanged.changed();
         }
 
         public int getBrightness() {
             return brightness;
         }
 
-        public void setBrightness(int brightness) {
+        public void setBrightness(int brightness) {setBrightness(brightness, null);}
+        public void setBrightness(int brightness, OnValueChanged onValueChanged) {
+            if (this.brightness == brightness)
+                return;
+
             this.brightness = brightness;
+
+            if (onValueChanged != null)
+                onValueChanged.changed();
         }
     }
 
@@ -180,16 +208,30 @@ public class ConfigurationFvep extends AItem {
             return up;
         }
 
-        public void setUp(int up) {
+        public void setUp(int up) {setUp(up, null);}
+        public void setUp(int up, OnValueChanged onValueChanged) {
+            if (this.up == up)
+                return;
+
             this.up = up;
+
+            if (onValueChanged != null)
+                onValueChanged.changed();
         }
 
         public int getDown() {
             return down;
         }
 
-        public void setDown(int down) {
+        public void setDown(int down) {setDown(down, null);}
+        public void setDown(int down, OnValueChanged onValueChanged) {
+            if (this.down == down)
+                return;
+
             this.down = down;
+
+            if (onValueChanged != null)
+                onValueChanged.changed();
         }
     }
 }
