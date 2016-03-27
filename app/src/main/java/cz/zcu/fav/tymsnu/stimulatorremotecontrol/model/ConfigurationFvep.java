@@ -14,9 +14,9 @@ public class ConfigurationFvep extends AItem {
     public final List<Output> outputList;
 
     public ConfigurationFvep(String name) {
-        this(name, MIN_OUTPUT_COUNT, new ArrayList<Output>());
+        this(name, DEF_OUTPUT_COUNT, new ArrayList<Output>());
 
-        for (int i = 0; i < DEF_OUTPUT_COUNT; i++) {
+        for (int i = 0; i < outputCount; i++) {
             outputList.add(new Output(i + ". stimul"));
         }
     }
