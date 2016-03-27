@@ -29,7 +29,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         numberPicker.setValue(1);
         numberPicker.setOnValueChangedListener(this);
 
-        ConfigurationFvep configuration = (ConfigurationFvep) manager.getSelectedItem();
+        ConfigurationFvep configuration = manager.getSelectedItem();
         if (configuration != null)
             readValues(configuration);
 
@@ -48,7 +48,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        ConfigurationFvep configuration = (ConfigurationFvep) manager.getSelectedItem();
+        ConfigurationFvep configuration = manager.getSelectedItem();
         if (configuration == null)
             return;
 

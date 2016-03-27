@@ -32,7 +32,7 @@ public class Manager<T extends AItem> extends Observable {
     private IFactory<T> factory;
 
     // Reference na aktuálně zvolený item
-    private AItem selectedItem;
+    private T selectedItem;
 
     // Kolekce všech itemů
     public final List<T> itemList = new ArrayList<>();
@@ -112,14 +112,13 @@ public class Manager<T extends AItem> extends Observable {
      * Uloží item do souboru
      * @param item Referene na ukládaný item
      */
-    public void save(AItem item) {save(item, null);}
+    public void save(T item) {save(item, null);}
     /**
      * Uloží item do souboru
      * @param item Referene na ukládaný item
      * @param callback Callback který se zavolá po úspěšném uložení itemu
      */
-    public void save(AItem item, Callback callback) {
-
+    public void save(T item, Callback callback) {
         try {
             String name = item.getName();
             if (!name.contains(EXTENTION))
@@ -169,10 +168,10 @@ public class Manager<T extends AItem> extends Observable {
             callbackAfterAll.callack(counter);
     }
 
-    public void rename(AItem item, String newName) {
+    public void rename(T item, String newName) {
         rename(item, newName, null);
     }
-    public void rename(AItem item, String newName, Callback callback) {
+    public void rename(T item, String newName, Callback callback) {
         String itemName = item.getName();
         if (!itemName.contains(EXTENTION))
             itemName += EXTENTION;
@@ -195,13 +194,13 @@ public class Manager<T extends AItem> extends Observable {
      * Smaže schéma
      * @param item Reference na schéma
      */
-    public void delete(AItem item) {delete(item, null);}
+    public void delete(T item) {delete(item, null);}
     /**
      * Smaže schéma
      * @param item Reference na schéma
      * @param callback Callback který se zavolá po úspěšném smazání schématu
      */
-    public void delete(AItem item, Callback callback) {
+    public void delete(T item, Callback callback) {
         Log.i(TAG, "Mazu schema: " + item);
 
         String name = item.getName();
@@ -262,13 +261,13 @@ public class Manager<T extends AItem> extends Observable {
      * Označí item jako vybraná
      * @param item Reference na vybraný item
      */
-    public void select(AItem item) {select(item, null);}
+    public void select(T item) {select(item, null);}
     /**
      * Označí item jako vybraný
      * @param item Reference na vybraný item
      * @param callback Callback který se zavolá po úspěšné změně itemu
      */
-    public void select(AItem item, Callback callback) {
+    public void select(T item, Callback callback) {
         if (selectedItem != null && item.equals(selectedItem))
             return;
 
@@ -299,7 +298,7 @@ public class Manager<T extends AItem> extends Observable {
     // endregion
 
     // region Getters & Setters
-    public AItem getSelectedItem() {
+    public T getSelectedItem() {
         return selectedItem;
     }
     /**

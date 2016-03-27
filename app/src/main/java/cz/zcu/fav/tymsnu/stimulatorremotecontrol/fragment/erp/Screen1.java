@@ -169,7 +169,7 @@ public final class Screen1 extends AScreen
     // FAB onClick
     @Override
     public void onClick(View v) {
-        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
+        Scheme scheme = schemeManager.getSelectedItem();
         if (scheme == null)
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
         else {

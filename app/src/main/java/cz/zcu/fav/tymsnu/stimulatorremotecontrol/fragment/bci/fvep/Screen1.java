@@ -88,7 +88,7 @@ public class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        final ConfigurationFvep configuration = (ConfigurationFvep) manager.itemList.get(listPosition);
+        final ConfigurationFvep configuration = manager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_select:

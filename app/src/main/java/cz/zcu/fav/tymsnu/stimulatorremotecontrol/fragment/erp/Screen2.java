@@ -38,7 +38,7 @@ public final class Screen2 extends AScreen
         numberPicker.setValue(1);
         numberPicker.setOnValueChangedListener(this);
 
-        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
+        Scheme scheme = schemeManager.getSelectedItem();
 
         if (scheme != null)
             readValues(scheme);
@@ -60,7 +60,7 @@ public final class Screen2 extends AScreen
     private final AdapterView.OnItemSelectedListener randomSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Scheme scheme = (Scheme) schemeManager.getSelectedItem();
+            Scheme scheme = schemeManager.getSelectedItem();
 
             if (scheme == null)
                 return;
@@ -77,7 +77,7 @@ public final class Screen2 extends AScreen
     private final AdapterView.OnItemSelectedListener edgeSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Scheme scheme = (Scheme) schemeManager.getSelectedItem();
+            Scheme scheme = schemeManager.getSelectedItem();
 
             if (scheme == null)
                 return;
@@ -105,7 +105,7 @@ public final class Screen2 extends AScreen
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
+        Scheme scheme = schemeManager.getSelectedItem();
 
         if (scheme == null)
             return;

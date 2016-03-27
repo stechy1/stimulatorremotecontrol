@@ -48,7 +48,6 @@ public final class Screen3 extends AScreen
         spinner = (Spinner) v.findViewById(R.id.erp_screen_3_spinner_output_type);
         spinner.setOnItemSelectedListener(this);
 
-        // TODO odebrat tlačítko uložit a udělat synchronizaci hodnot při jejich změně
         Button btnSave = (Button) v.findViewById(R.id.erp_screen_3_button_save_output);
         btnSave.setOnClickListener(this);
 
@@ -95,7 +94,7 @@ public final class Screen3 extends AScreen
     // Save button click
     @Override
     public void onClick(View v) {
-        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
+        Scheme scheme = schemeManager.getSelectedItem();
         if (scheme == null)
             return;
 
@@ -105,7 +104,7 @@ public final class Screen3 extends AScreen
     }
 
     private void changeValues() {
-        Scheme scheme = (Scheme) schemeManager.getSelectedItem();
+        Scheme scheme = schemeManager.getSelectedItem();
         if (scheme == null)
             return;
 

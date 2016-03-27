@@ -74,7 +74,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
 
     @Override
     public void onClick(View v) {
-        ConfigurationFvep configurationFvep = (ConfigurationFvep) manager.getSelectedItem();
+        ConfigurationFvep configurationFvep = manager.getSelectedItem();
         if (configurationFvep == null)
             return;
 
@@ -98,7 +98,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
     }
 
     private void changeValues() {
-        ConfigurationFvep configurationFvep = (ConfigurationFvep) manager.getSelectedItem();
+        ConfigurationFvep configurationFvep = manager.getSelectedItem();
         if (configurationFvep == null)
             return;
 
