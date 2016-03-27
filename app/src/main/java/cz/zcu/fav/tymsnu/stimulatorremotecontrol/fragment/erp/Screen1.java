@@ -91,7 +91,7 @@ public final class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        Scheme scheme = schemeManager.itemList.get(listPosition);
+        final Scheme scheme = schemeManager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_select:
@@ -113,6 +113,44 @@ public final class Screen1 extends AScreen
                     }
                 });
                 return true;
+            case R.id.context_rename:
+                final EditText input = new EditText(getContext());
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(R.string.context_set_name);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String schemeName = input.getText().toString();
+                        try {
+                            schemeManager.rename(scheme, schemeName);
+                            Log.i(TAG, "Nazev schematu: " + schemeName);
+                        } catch (IllegalArgumentException ex) {
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                final AlertDialog dialog = builder.show();
+
+                input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        }
+                    }
+                });
+                break;
         }
         return super.onContextItemSelected(item);
     }
