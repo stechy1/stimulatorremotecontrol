@@ -7,6 +7,7 @@ import java.util.List;
 public class ConfigurationFvep extends AItem {
 
     public static final int MIN_OUTPUT_COUNT = 1;
+    public static final int DEF_OUTPUT_COUNT = 4;
     public static final int MAX_OUTPUT_COUNT = 8;
 
     private int outputCount;
@@ -15,9 +16,16 @@ public class ConfigurationFvep extends AItem {
     public ConfigurationFvep(String name) {
         this(name, MIN_OUTPUT_COUNT, new ArrayList<Output>());
 
-        for (int i = 0; i < outputCount; i++) {
+        for (int i = 0; i < DEF_OUTPUT_COUNT; i++) {
             outputList.add(new Output(i + ". stimul"));
         }
+    }
+
+    public ConfigurationFvep(String name, int outputCount, List<Output> outputList) {
+        super(name);
+
+        this.outputCount = outputCount;
+        this.outputList = outputList;
     }
 
     /**
@@ -58,13 +66,6 @@ public class ConfigurationFvep extends AItem {
 
         if (onValueChanged != null)
             onValueChanged.changed();
-    }
-
-    public ConfigurationFvep(String name, int outputCount, List<Output> outputList) {
-        super(name);
-
-        this.outputCount = outputCount;
-        this.outputList = outputList;
     }
 
     public static final class Output {

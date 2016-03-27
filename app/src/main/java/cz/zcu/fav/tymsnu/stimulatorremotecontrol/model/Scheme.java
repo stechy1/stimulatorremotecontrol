@@ -9,6 +9,7 @@ public final class Scheme extends AItem {
     // region Variables
     // Výchozí počet výstupů (stará verze 4)
     public static final int MIN_OUTPUT_COUNT = 1;
+    public static final int DEF_OUTPUT_COUNT = 4;
     public static final int MAX_OUTPUT_COUNT = 8;
 
     // Počet výstupů
@@ -31,7 +32,7 @@ public final class Scheme extends AItem {
     public Scheme(String name) {
         this(name, MIN_OUTPUT_COUNT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
 
-        for (int i = 0; i < MIN_OUTPUT_COUNT; i++) {
+        for (int i = 0; i < DEF_OUTPUT_COUNT; i++) {
             outputList.add(new Output("Output" + i));
         }
     }
