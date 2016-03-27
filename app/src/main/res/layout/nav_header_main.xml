@@ -17,13 +17,13 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/app_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_author"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@android:color/black"/>
 
 </LinearLayout>
