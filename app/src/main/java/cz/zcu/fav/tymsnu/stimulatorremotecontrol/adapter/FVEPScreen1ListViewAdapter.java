@@ -50,7 +50,7 @@ public class FVEPScreen1ListViewAdapter extends ArrayAdapter<ConfigurationFvep> 
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
         schemeHolder.text1.setText(configuration.getName());
         schemeHolder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
-        schemeHolder.text2.setText("Count: " + configuration.getOutputCount());
+        schemeHolder.text2.setText("Count: " + (configuration.loaded ? configuration.getOutputCount() : "unknown"));
 
         return convertView;
     }

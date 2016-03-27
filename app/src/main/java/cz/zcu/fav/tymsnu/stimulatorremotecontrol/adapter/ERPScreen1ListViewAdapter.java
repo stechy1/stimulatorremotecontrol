@@ -50,7 +50,7 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
         schemeHolder.text1.setText(scheme.getName());
         schemeHolder.text1.setTextColor(scheme.loaded ? Color.BLACK : Color.GRAY);
-        schemeHolder.text2.setText("Count: " + scheme.getOutputCount());
+        schemeHolder.text2.setText("Count: " + (scheme.loaded ? scheme.getOutputCount() : "unknown"));
 
         return convertView;
     }
