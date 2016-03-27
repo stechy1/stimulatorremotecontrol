@@ -53,6 +53,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
             return;
 
         configuration.setOutputCount(newVal);
+        manager.notifySelectedItemInternalChange();
         manager.notifyValueChanged();
     }
 

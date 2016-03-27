@@ -129,6 +129,7 @@ public class Manager<T extends AItem> extends Observable {
             FileOutputStream out = new FileOutputStream(outFile);
             IReadWrite readWrite = factory.getReadWriteAcces();
             readWrite.write(out, item);
+            item.changed = false;
 
             if (callback != null)
                 callback.callack(item);
@@ -156,21 +157,32 @@ public class Manager<T extends AItem> extends Observable {
     public void saveAll(Callback callbackAfterAll, Callback callbackAfterOne) {
         int counter = 0;
         for (T item : itemList) {
-            if (item.loaded) {
-                save(item);
+            if (item.loaded && item.changed) {
+                save(item, callbackAfterOne);
                 counter++;
-                if (callbackAfterOne != null)
-                    callbackAfterOne.callack(item);
             }
         }
 
         if (callbackAfterAll != null)
             callbackAfterAll.callack(counter);
+
+        notifyValueChanged();
     }
 
+    /**
+     * Přejmenuje item
+     * @param item Item pro přejmenování
+     * @param newName Nové jméno itemu
+     */
     public void rename(T item, String newName) {
         rename(item, newName, null);
     }
+    /**
+     * Přejmenuje item
+     * @param item Item pro přejmenování
+     * @param newName Nové jméno itemu
+     * @param callback Callback, který se zavolá po přejmenování itemu
+     */
     public void rename(T item, String newName, Callback callback) {
         String itemName = item.getName();
         if (!itemName.contains(EXTENTION))
@@ -229,16 +241,16 @@ public class Manager<T extends AItem> extends Observable {
     }
 
     /**
-     * Uloží všechny načtený itemy
+     * Smaže všechny itemy
      */
     public void deleteAll() {deleteAll(null);}
     /**
-     * Uloží všechny načtený itemy
+     * Smaže všechny itemy
      * @param callbackAfterAll Callback, který se zavolá po uložení všech itemů
      */
     public void deleteAll(Callback callbackAfterAll) {deleteAll(callbackAfterAll, null);}
     /**
-     *
+     * Smaže všechny itemy
      * @param callbackAfterAll Callback, který se zavolá po smazání všech itemů
      * @param callbackAfterOne Callback, který se zavolá po smazání jednoho itemu
      */
@@ -246,11 +258,8 @@ public class Manager<T extends AItem> extends Observable {
         int size = itemList.size();
         Iterator<T> it = itemList.iterator();
         for (T item = it.next(); it.hasNext();) {
-            delete(item);
+            delete(item, callbackAfterOne);
             it.remove();
-
-            if (callbackAfterOne != null)
-                callbackAfterOne.callack(item);
         }
 
         if (callbackAfterAll != null)
@@ -258,7 +267,7 @@ public class Manager<T extends AItem> extends Observable {
     }
 
     /**
-     * Označí item jako vybraná
+     * Označí item jako vybraný
      * @param item Reference na vybraný item
      */
     public void select(T item) {select(item, null);}
@@ -288,11 +297,25 @@ public class Manager<T extends AItem> extends Observable {
     }
 
     /**
-     * Oznámí všechny přihlášené pozorovatele, že se změníly hodnoty ve vybraném schématu
+     * Obeznámí všechny přihlášené pozorovatele, že se změníly hodnoty ve vybraném schématu
      */
     public void notifyValueChanged() {
         setChanged();
         notifyObservers(selectedItem);
+    }
+
+    /**
+     * Obeznámí všechny pozorovatele, že vybraný item změníl svůj vnitřní stav
+     * Zavolá se pouze, pokud item neměl příznak "changed"
+     */
+    public void notifySelectedItemInternalChange() {
+        if (selectedItem != null) {
+            if (selectedItem.changed)
+                return;
+
+            selectedItem.changed = true;
+            notifyValueChanged();
+        }
     }
 
     // endregion

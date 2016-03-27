@@ -7,6 +7,7 @@ public abstract class AItem {
 
     public boolean loaded;
     public boolean selected;
+    public boolean changed;
 
     public AItem(String name) {
         if (name.isEmpty())
@@ -21,4 +22,5 @@ public abstract class AItem {
     public void setName(String name) {
         this.name = name;
     }
+
 }

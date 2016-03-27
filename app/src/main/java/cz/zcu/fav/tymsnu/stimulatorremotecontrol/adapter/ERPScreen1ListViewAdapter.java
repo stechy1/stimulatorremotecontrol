@@ -36,7 +36,8 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
             convertView = inflater.inflate(R.layout.control_list_view_item, parent, false);
 
             schemeHolder = new SchemeHolder();
-            schemeHolder.imageView = (ImageView) convertView.findViewById(R.id.control_list_view_image);
+            schemeHolder.imageView1 = (ImageView) convertView.findViewById(R.id.control_list_view_image);
+            schemeHolder.imageView2 = (ImageView) convertView.findViewById(R.id.control_list_view_image_changed);
             schemeHolder.text1 = (TextView) convertView.findViewById(R.id.control_list_view_text1);
             schemeHolder.text2 = (TextView) convertView.findViewById(R.id.control_list_view_text2);
 
@@ -46,8 +47,9 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
         }
 
         Scheme scheme = objects.get(position);
-        schemeHolder.imageView.setImageResource(scheme.selected ?
+        schemeHolder.imageView1.setImageResource(scheme.selected ?
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
+        schemeHolder.imageView2.setVisibility(scheme.changed ? View.VISIBLE : View.INVISIBLE);
         schemeHolder.text1.setText(scheme.getName());
         schemeHolder.text1.setTextColor(scheme.loaded ? Color.BLACK : Color.GRAY);
         schemeHolder.text2.setText("Count: " + (scheme.loaded ? scheme.getOutputCount() : "unknown"));
@@ -56,7 +58,8 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
     }
 
     private static class SchemeHolder {
-        ImageView imageView;
+        ImageView imageView1;
+        ImageView imageView2;
         TextView text1;
         TextView text2;
     }

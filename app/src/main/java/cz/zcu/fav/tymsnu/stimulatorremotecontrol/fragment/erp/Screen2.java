@@ -66,6 +66,7 @@ public final class Screen2 extends AScreen
                 return;
 
             scheme.setRandom(Scheme.Random.valueOf(position));
+            schemeManager.notifySelectedItemInternalChange();
         }
 
         @Override
@@ -83,6 +84,7 @@ public final class Screen2 extends AScreen
                 return;
 
             scheme.setEdge(Scheme.Edge.valueOf(position));
+            schemeManager.notifySelectedItemInternalChange();
         }
 
         @Override
@@ -111,6 +113,7 @@ public final class Screen2 extends AScreen
             return;
 
         scheme.setOutputCount(newVal);
+        schemeManager.notifySelectedItemInternalChange();
         schemeManager.notifyValueChanged();
     }
 }

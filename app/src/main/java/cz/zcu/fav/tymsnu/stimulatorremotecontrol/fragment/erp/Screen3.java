@@ -187,6 +187,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.puls.setUp(val);
+                    schemeManager.notifySelectedItemInternalChange();
                 }
                 break;
             case PULSE_DOWN:
@@ -194,6 +195,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.puls.setDown(val);
+                    schemeManager.notifySelectedItemInternalChange();
                 }
                 break;
 
@@ -201,8 +203,10 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    if (output.canUpdateDistribution(outputs, val))
+                    if (output.canUpdateDistribution(outputs, val)) {
                         output.distribution.setValue(val);
+                        schemeManager.notifySelectedItemInternalChange();
+                    }
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
                 }
@@ -212,6 +216,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.distribution.setDelay(val);
+                    schemeManager.notifySelectedItemInternalChange();
                 }
                 break;
 
@@ -220,6 +225,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.setBrightness(val);
+                    schemeManager.notifySelectedItemInternalChange();
                 }
                 break;
         }

@@ -182,6 +182,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
                     output.puls.setUp(val);
+                    manager.notifySelectedItemInternalChange();
                 }
                 break;
             case PULSE_DOWN:
@@ -189,6 +190,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
                     output.puls.setDown(val);
+                    manager.notifySelectedItemInternalChange();
                 }
                 break;
 
@@ -196,8 +198,10 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
-                    if (output.isFrequencyInRange(val))
+                    if (output.isFrequencyInRange(val)) {
                         output.setFrequency(val);
+                        manager.notifySelectedItemInternalChange();
+                    }
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
                 }
@@ -206,8 +210,10 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
-                    if (output.isDutyCycleInRange(val))
+                    if (output.isDutyCycleInRange(val)) {
                         output.setDutyCycle(val);
+                        manager.notifySelectedItemInternalChange();
+                    }
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
                 }
@@ -218,6 +224,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     int val = readValue(inputs[i]);
                     ConfigurationFvep.Output output = outputs.get(i);
                     output.setBrightness(val);
+                    manager.notifySelectedItemInternalChange();
                 }
                 break;
         }
