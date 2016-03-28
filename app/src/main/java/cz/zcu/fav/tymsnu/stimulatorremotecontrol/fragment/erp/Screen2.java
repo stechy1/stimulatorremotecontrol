@@ -39,7 +39,7 @@ public final class Screen2 extends AScreen
         numberPicker.setValue(1);
         numberPicker.setOnValueChangedListener(this);
 
-        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        ConfigurationERP configuration = manager.getSelectedItem();
 
         if (configuration != null)
             readValues(configuration);
@@ -47,7 +47,7 @@ public final class Screen2 extends AScreen
         randomSpinner.setOnItemSelectedListener(randomSpinnerListener);
         edgeSpinner.setOnItemSelectedListener(edgeSpinnerListener);
 
-        schemeManager.addObserver(this);
+        manager.addObserver(this);
 
         return v;
     }
@@ -61,7 +61,7 @@ public final class Screen2 extends AScreen
     private final AdapterView.OnItemSelectedListener randomSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            ConfigurationERP configuration = schemeManager.getSelectedItem();
+            ConfigurationERP configuration = manager.getSelectedItem();
 
             if (configuration == null)
                 return;
@@ -69,7 +69,7 @@ public final class Screen2 extends AScreen
             configuration.setRandom(ConfigurationERP.Random.valueOf(position), new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
-                    schemeManager.notifySelectedItemInternalChange();
+                    manager.notifySelectedItemInternalChange();
                 }
             });
 
@@ -84,7 +84,7 @@ public final class Screen2 extends AScreen
     private final AdapterView.OnItemSelectedListener edgeSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            ConfigurationERP configuration = schemeManager.getSelectedItem();
+            ConfigurationERP configuration = manager.getSelectedItem();
 
             if (configuration == null)
                 return;
@@ -92,7 +92,7 @@ public final class Screen2 extends AScreen
             configuration.setEdge(ConfigurationERP.Edge.valueOf(position), new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
-                    schemeManager.notifySelectedItemInternalChange();
+                    manager.notifySelectedItemInternalChange();
                 }
             });
         }
@@ -117,7 +117,7 @@ public final class Screen2 extends AScreen
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        ConfigurationERP configuration = manager.getSelectedItem();
 
         if (configuration == null)
             return;
@@ -125,8 +125,8 @@ public final class Screen2 extends AScreen
         configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
             @Override
             public void changed() {
-                schemeManager.notifySelectedItemInternalChange();
-                schemeManager.notifyValueChanged();
+                manager.notifySelectedItemInternalChange();
+                manager.notifyValueChanged();
             }
         });
     }

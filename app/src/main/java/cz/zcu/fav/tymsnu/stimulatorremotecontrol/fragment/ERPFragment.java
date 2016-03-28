@@ -15,14 +15,14 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager.ERPPagerAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.SchemeFactory;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.ERPFactory;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "ERPFragment";
 
-    private final Manager<ConfigurationERP> schemeManager = new Manager<>(new SchemeFactory());
+    private final Manager<ConfigurationERP> manager = new Manager<>(new ERPFactory());
 
     private TextView title;
     private String[] titles;
@@ -30,7 +30,7 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        schemeManager.setWorkingDirectory(getActivity().getFilesDir());
+        manager.setWorkingDirectory(getActivity().getFilesDir());
         View v = inflater.inflate(R.layout.fragment_erp, container, false);
 
         title = (TextView) v.findViewById(R.id.erp_title);
@@ -49,7 +49,7 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
     }
 
     private PagerAdapter buildAdapter() {
-        return(new ERPPagerAdapter(getChildFragmentManager(), iBtCommunication, schemeManager));
+        return(new ERPPagerAdapter(getChildFragmentManager(), iBtCommunication, manager));
     }
 
     // region ViewPager page changed

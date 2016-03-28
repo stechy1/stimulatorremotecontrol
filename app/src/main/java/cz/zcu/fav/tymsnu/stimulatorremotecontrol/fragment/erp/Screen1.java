@@ -29,7 +29,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPScreen1ListViewAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.SchemePacketHandler;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.ERPPacketHandler;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public final class Screen1 extends AScreen
@@ -58,7 +58,7 @@ public final class Screen1 extends AScreen
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.erp_fab);
         fab.setOnClickListener(this);
 
-        schemeManager.addObserver(this);
+        manager.addObserver(this);
 
         return v;
     }
@@ -67,7 +67,7 @@ public final class Screen1 extends AScreen
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
         ConfigurationERP selected = (ConfigurationERP) listView.getItemAtPosition(position);
-        schemeManager.select(selected, new Manager.Callback() {
+        manager.select(selected, new Manager.Callback() {
             @Override
             public void callack(Object object) {
                 ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
@@ -91,11 +91,11 @@ public final class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        final ConfigurationERP configuration = schemeManager.itemList.get(listPosition);
+        final ConfigurationERP configuration = manager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_select:
-                schemeManager.select(configuration, new Manager.Callback() {
+                manager.select(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         final View v = info.targetView;
@@ -105,7 +105,7 @@ public final class Screen1 extends AScreen
                 });
                 return true;
             case R.id.context_delete:
-                schemeManager.delete(configuration, new Manager.Callback() {
+                manager.delete(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
@@ -126,7 +126,7 @@ public final class Screen1 extends AScreen
                     public void onClick(DialogInterface dialog, int which) {
                         String schemeName = input.getText().toString();
                         try {
-                            schemeManager.rename(configuration, schemeName);
+                            manager.rename(configuration, schemeName);
                             Log.i(TAG, "Nazev schematu: " + schemeName);
                         } catch (IllegalArgumentException ex) {
                             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
@@ -156,7 +156,7 @@ public final class Screen1 extends AScreen
     }
 
     private ArrayAdapter<ConfigurationERP> buildAdapter() {
-        return new ERPScreen1ListViewAdapter(getContext(), schemeManager.itemList);
+        return new ERPScreen1ListViewAdapter(getContext(), manager.itemList);
     }
 
     // Při aktualizaci datasetu v manageru (Změna schématu, změna nastavení výstupů...)
@@ -169,12 +169,12 @@ public final class Screen1 extends AScreen
     // FAB onClick
     @Override
     public void onClick(View v) {
-        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        ConfigurationERP configuration = manager.getSelectedItem();
         if (configuration == null)
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
         else {
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
-            List<Packet> packets = new SchemePacketHandler(configuration).getPackets();
+            List<Packet> packets = new ERPPacketHandler(configuration).getPackets();
             for (Packet packet : packets) {
                 Log.i(TAG, packet.toString());
                 if (!iBtCommunication.write(packet.getValue())) {
@@ -200,7 +200,7 @@ public final class Screen1 extends AScreen
                 public void onClick(DialogInterface dialog, int which) {
                     String schemeName = input.getText().toString();
                     try {
-                        schemeManager.create(schemeName, new Manager.Callback() {
+                        manager.create(schemeName, new Manager.Callback() {
                             @Override
                             public void callack(Object object) {
                                 ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
@@ -236,7 +236,7 @@ public final class Screen1 extends AScreen
 
         @Override
         public void onClick(View v) {
-            schemeManager.saveAll(new Manager.Callback() {
+            manager.saveAll(new Manager.Callback() {
                 @Override
                 public void callack(Object object) {
                     Integer count = (Integer) object;

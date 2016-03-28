@@ -56,7 +56,7 @@ public final class Screen3 extends AScreen
 
         outText = getResources().getString(R.string.erp_screen_3_output);
 
-        schemeManager.addObserver(this);
+        manager.addObserver(this);
 
         return v;
     }
@@ -94,7 +94,7 @@ public final class Screen3 extends AScreen
     // Save button click
     @Override
     public void onClick(View v) {
-        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        ConfigurationERP configuration = manager.getSelectedItem();
         if (configuration == null)
             return;
 
@@ -104,7 +104,7 @@ public final class Screen3 extends AScreen
     }
 
     private void changeValues() {
-        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        ConfigurationERP configuration = manager.getSelectedItem();
         if (configuration == null)
             return;
 
@@ -187,7 +187,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.puls.setUp(val);
-                    schemeManager.notifySelectedItemInternalChange();
+                    manager.notifySelectedItemInternalChange();
                 }
                 break;
             case PULSE_DOWN:
@@ -195,7 +195,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.puls.setDown(val);
-                    schemeManager.notifySelectedItemInternalChange();
+                    manager.notifySelectedItemInternalChange();
                 }
                 break;
 
@@ -205,7 +205,7 @@ public final class Screen3 extends AScreen
                     Output output = outputs.get(i);
                     if (output.canUpdateDistribution(outputs, val)) {
                         output.distribution.setValue(val);
-                        schemeManager.notifySelectedItemInternalChange();
+                        manager.notifySelectedItemInternalChange();
                     }
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
@@ -216,7 +216,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.distribution.setDelay(val);
-                    schemeManager.notifySelectedItemInternalChange();
+                    manager.notifySelectedItemInternalChange();
                 }
                 break;
 
@@ -225,7 +225,7 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     output.setBrightness(val);
-                    schemeManager.notifySelectedItemInternalChange();
+                    manager.notifySelectedItemInternalChange();
                 }
                 break;
         }

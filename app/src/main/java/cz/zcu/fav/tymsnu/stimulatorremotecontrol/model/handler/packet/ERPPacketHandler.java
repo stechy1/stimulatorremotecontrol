@@ -11,11 +11,11 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 
 
-public class SchemePacketHandler implements IPacketable {
+public class ERPPacketHandler implements IPacketable {
 
     private final ConfigurationERP configuration;
 
-    public SchemePacketHandler(ConfigurationERP configuration) {
+    public ERPPacketHandler(ConfigurationERP configuration) {
         this.configuration = configuration;
     }
 

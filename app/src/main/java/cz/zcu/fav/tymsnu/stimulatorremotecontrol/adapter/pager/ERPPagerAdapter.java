@@ -43,7 +43,7 @@ public class ERPPagerAdapter extends FragmentStatePagerAdapter {
         }
 
         fragment.setBtCommunication(iBtCommunication);
-        fragment.setSchemeManager(schemeManager);
+        fragment.setManager(schemeManager);
 
         return fragment;
     }

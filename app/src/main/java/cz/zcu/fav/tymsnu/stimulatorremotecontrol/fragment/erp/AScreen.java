@@ -7,10 +7,10 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class AScreen extends ASimpleFragment {
 
-    protected Manager<ConfigurationERP> schemeManager;
+    protected Manager<ConfigurationERP> manager;
 
 
-    public void setSchemeManager(Manager<ConfigurationERP> schemeManager) {
-        this.schemeManager = schemeManager;
+    public void setManager(Manager<ConfigurationERP> manager) {
+        this.manager = manager;
     }
 }

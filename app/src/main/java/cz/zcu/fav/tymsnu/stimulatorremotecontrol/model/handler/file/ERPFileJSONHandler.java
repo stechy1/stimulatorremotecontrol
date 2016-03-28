@@ -19,7 +19,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class SchemeFileJSONHandler implements IReadWrite {
+public class ERPFileJSONHandler implements IReadWrite {
 
     // region variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
@@ -37,7 +37,7 @@ public class SchemeFileJSONHandler implements IReadWrite {
     // endregion
 
 
-    public SchemeFileJSONHandler() {}
+    public ERPFileJSONHandler() {}
 
 
 
