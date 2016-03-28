@@ -101,6 +101,9 @@ public class Manager<T extends AItem> extends Observable {
     public void create(String name, Callback callback) throws IllegalArgumentException {
         T item = factory.build(name);
         item.loaded = true;
+        if (itemList.contains(item))
+            throw new IllegalArgumentException();
+
         itemList.add(item);
         save(item);
 
@@ -108,8 +111,11 @@ public class Manager<T extends AItem> extends Observable {
             callback.callback(item);
     }
 
-    public void add(T item) {add(item, null);}
-    public void add(T item, Callback callback) {
+    public void add(T item) throws IllegalArgumentException {add(item, null);}
+    public void add(T item, Callback callback) throws IllegalArgumentException {
+        if (itemList.contains(item))
+            throw new IllegalArgumentException();
+
         itemList.add(item);
         save(item);
 
