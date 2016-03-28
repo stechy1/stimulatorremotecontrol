@@ -4,7 +4,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ConfigurationERP extends AItem {
+public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     // region Variables
     // Výchozí počet výstupů (stará verze 4)
@@ -169,6 +169,20 @@ public final class ConfigurationERP extends AItem {
         return result;
     }
 
+    @Override
+    public ConfigurationERP duplicate(String newName) {
+        int outputCount = this.outputCount;
+        Edge edge = Edge.valueOf(this.random.ordinal());
+        Random random = Random.valueOf(this.random.ordinal());
+        List<Output> outputs = new ArrayList<>(outputCount);
+
+        for (int i = 0; i < outputCount; i++) {
+            outputs.add(new Output(this.outputList.get(i)));
+        }
+
+        return new ConfigurationERP(newName, outputCount, edge, random, outputs);
+    }
+
     // region Enums
     public enum Edge {
         LEADING, FALLING;
@@ -242,6 +256,13 @@ public final class ConfigurationERP extends AItem {
             this.puls = puls;
             this.distribution = distribution;
             this.brightness = brightness;
+        }
+
+        public Output(Output source) {
+            this.name = source.name;
+            this.puls = new Puls(source.puls);
+            this.distribution = new Distribution(source.distribution);
+            this.brightness = source.brightness;
         }
         // endregion
 
@@ -327,6 +348,15 @@ public final class ConfigurationERP extends AItem {
                 this.down = down;
             }
 
+            /**
+             * Vytvoří kopii objektu
+             * @param source Zdroj kopie
+             */
+            public Puls(Puls source) {
+                this.up = source.up;
+                this.down = source.down;
+            }
+
             public int getUp() {
                 return up;
             }
@@ -381,6 +411,15 @@ public final class ConfigurationERP extends AItem {
             public Distribution(int value, int delay) {
                 this.value = value;
                 this.delay = delay;
+            }
+
+            /**
+             * Vytvoří kopii objektu
+             * @param source Zdroj kopie
+             */
+            public Distribution(Distribution source) {
+                this.value = source.value;
+                this.delay = source.delay;
             }
 
             public int getValue() {
