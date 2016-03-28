@@ -103,7 +103,7 @@ public final class Screen1 extends AScreen
                             manager.add(duplicated);
                             manager.notifyValueChanged();
                         } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });

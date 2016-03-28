@@ -145,30 +145,6 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     // endregion
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ConfigurationERP configuration = (ConfigurationERP) o;
-
-        if (outputCount != configuration.outputCount) return false;
-        if (name != null ? !name.equals(configuration.name) : configuration.name != null) return false;
-        if (edge != configuration.edge) return false;
-        return random == configuration.random;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + outputCount;
-        result = 31 * result + (edge != null ? edge.hashCode() : 0);
-        result = 31 * result + (random != null ? random.hashCode() : 0);
-        return result;
-    }
-
     @Override
     public ConfigurationERP duplicate(String newName) {
         int outputCount = this.outputCount;
