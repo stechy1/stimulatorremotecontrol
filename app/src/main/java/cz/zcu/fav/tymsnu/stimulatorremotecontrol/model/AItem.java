@@ -1,7 +1,7 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 
-public abstract class AItem {
+public abstract class AItem<T extends AItem<T>> implements IDuplicatable<T> {
 
     protected String name;
 

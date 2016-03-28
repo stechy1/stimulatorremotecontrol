@@ -69,7 +69,7 @@ public final class Screen1 extends AScreen
         ConfigurationERP selected = (ConfigurationERP) listView.getItemAtPosition(position);
         manager.select(selected, new Manager.Callback() {
             @Override
-            public void callack(Object object) {
+            public void callback(Object object) {
                 ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
                 img.setImageResource(R.drawable.checkbox_marked_outline);
             }
@@ -94,27 +94,42 @@ public final class Screen1 extends AScreen
         final ConfigurationERP configuration = manager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
-            case R.id.context_select:
-                manager.select(configuration, new Manager.Callback() {
+            case R.id.context_duplicate:
+                showInputDialog(new DialogCallback() {
                     @Override
-                    public void callack(Object object) {
-                        final View v = info.targetView;
-                        ImageView img = (ImageView) v.findViewById(R.id.control_list_view_image);
-                        img.setImageResource(R.drawable.checkbox_marked_outline);
+                    public void callback(String res) {
+                        try {
+                            ConfigurationERP duplicated = manager.duplicate(configuration, res);
+                            manager.add(duplicated);
+                            manager.notifyValueChanged();
+                        } catch (IllegalArgumentException ex) {
+                            Log.i(TAG, ex.getMessage());
+                        }
                     }
                 });
                 return true;
             case R.id.context_delete:
                 manager.delete(configuration, new Manager.Callback() {
                     @Override
-                    public void callack(Object object) {
+                    public void callback(Object object) {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
                         listView.requestLayout();
                     }
                 });
                 return true;
             case R.id.context_rename:
-                final EditText input = new EditText(getContext());
+                showInputDialog(new DialogCallback() {
+                    @Override
+                    public void callback(String newName) {
+                        try {
+                            manager.rename(configuration, newName);
+                            Log.i(TAG, "Nazev schematu: " + newName);
+                        } catch (IllegalArgumentException ex) {
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                /*final EditText input = new EditText(getContext());
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -149,8 +164,8 @@ public final class Screen1 extends AScreen
                             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         }
                     }
-                });
-                break;
+                });*/
+                return true;
         }
         return super.onContextItemSelected(item);
     }
@@ -184,11 +199,62 @@ public final class Screen1 extends AScreen
         }
     }
 
+    private void showInputDialog(final DialogCallback callback) {
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.context_set_name);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String name = input.getText().toString();
+                callback.callback(name);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog dialog = builder.show();
+
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+    }
+
     private final class NewSchemeListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            final EditText input = new EditText(getContext());
+            showInputDialog(new DialogCallback() {
+                @Override
+                public void callback(String newName) {
+                    try {
+                        manager.create(newName, new Manager.Callback() {
+                            @Override
+                            public void callback(Object object) {
+                                ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+                            }
+                        });
+                        Log.i(TAG, "Nazev schematu: " + newName);
+                    } catch (IllegalArgumentException ex) {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            /*final EditText input = new EditText(getContext());
             input.setInputType(InputType.TYPE_CLASS_TEXT);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -202,7 +268,7 @@ public final class Screen1 extends AScreen
                     try {
                         manager.create(schemeName, new Manager.Callback() {
                             @Override
-                            public void callack(Object object) {
+                            public void callback(Object object) {
                                 ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
                             }
                         });
@@ -228,7 +294,7 @@ public final class Screen1 extends AScreen
                         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                     }
                 }
-            });
+            });*/
         }
     }
 
@@ -238,11 +304,15 @@ public final class Screen1 extends AScreen
         public void onClick(View v) {
             manager.saveAll(new Manager.Callback() {
                 @Override
-                public void callack(Object object) {
+                public void callback(Object object) {
                     Integer count = (Integer) object;
                     Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_schemes, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
+    }
+
+    private interface DialogCallback {
+        void callback(String res);
     }
 }

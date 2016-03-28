@@ -52,6 +52,7 @@
     <string name="screen_title_output_settings">Output settings</string>
 
     <string name="select">Select</string>
+    <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
     <string name="rename">Rename</string>
     <string name="save_as">Save as</string>

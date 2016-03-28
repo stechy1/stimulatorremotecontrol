@@ -52,6 +52,7 @@
     <string name="screen_title_output_settings">Nastavení výstupů</string>
 
     <string name="select">Vybrat</string>
+    <string name="duplicate">Duplikovat</string>
     <string name="delete">Smazat</string>
     <string name="rename">Přejmenovat</string>
     <string name="save_as">Uložit jako</string>

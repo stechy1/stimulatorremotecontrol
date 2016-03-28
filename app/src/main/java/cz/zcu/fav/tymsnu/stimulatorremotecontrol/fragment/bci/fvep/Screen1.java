@@ -66,7 +66,7 @@ public class Screen1 extends AScreen
         ConfigurationFvep configuration = (ConfigurationFvep) listView.getItemAtPosition(position);
         manager.select(configuration, new Manager.Callback() {
             @Override
-            public void callack(Object object) {
+            public void callback(Object object) {
                 ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
                 img.setImageResource(R.drawable.checkbox_marked_outline);
             }
@@ -91,10 +91,10 @@ public class Screen1 extends AScreen
         final ConfigurationFvep configuration = manager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
-            case R.id.context_select:
+            case R.id.context_duplicate:
                 manager.select(configuration, new Manager.Callback() {
                     @Override
-                    public void callack(Object object) {
+                    public void callback(Object object) {
                         final View v = info.targetView;
                         ImageView img = (ImageView) v.findViewById(R.id.control_list_view_image);
                         img.setImageResource(R.drawable.checkbox_marked_outline);
@@ -104,7 +104,7 @@ public class Screen1 extends AScreen
             case R.id.context_delete:
                 manager.delete(configuration, new Manager.Callback() {
                     @Override
-                    public void callack(Object object) {
+                    public void callback(Object object) {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_was_deleted), Snackbar.LENGTH_SHORT).show();
                         listView.requestLayout();
                     }
@@ -217,7 +217,7 @@ public class Screen1 extends AScreen
         public void onClick(View v) {
             manager.saveAll(new Manager.Callback() {
                 @Override
-                public void callack(Object object) {
+                public void callback(Object object) {
                     Integer count = (Integer) object;
                     Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_configuration, count), Snackbar.LENGTH_SHORT).show();
                 }

@@ -105,7 +105,16 @@ public class Manager<T extends AItem> extends Observable {
         save(item);
 
         if (callback != null)
-            callback.callack(item);
+            callback.callback(item);
+    }
+
+    public void add(T item) {add(item, null);}
+    public void add(T item, Callback callback) {
+        itemList.add(item);
+        save(item);
+
+        if (callback != null)
+            callback.callback(item);
     }
 
     /**
@@ -132,7 +141,7 @@ public class Manager<T extends AItem> extends Observable {
             item.changed = false;
 
             if (callback != null)
-                callback.callack(item);
+                callback.callback(item);
         } catch (IOException e) {
             Log.e(TAG, "Nepodarilo se zapsat do souboru");
         }
@@ -164,7 +173,7 @@ public class Manager<T extends AItem> extends Observable {
         }
 
         if (callbackAfterAll != null)
-            callbackAfterAll.callack(counter);
+            callbackAfterAll.callback(counter);
 
         notifyValueChanged();
     }
@@ -197,7 +206,7 @@ public class Manager<T extends AItem> extends Observable {
         if (success) {
             item.setName(newName);
             if (callback != null)
-                callback.callack(item);
+                callback.callback(item);
             notifyValueChanged();
         }
     }
@@ -236,7 +245,7 @@ public class Manager<T extends AItem> extends Observable {
                 notifyValueChanged();
             }
             if (callback != null)
-                callback.callack(item);
+                callback.callback(item);
         }
     }
 
@@ -263,7 +272,7 @@ public class Manager<T extends AItem> extends Observable {
         }
 
         if (callbackAfterAll != null)
-            callbackAfterAll.callack(size);
+            callbackAfterAll.callback(size);
     }
 
     /**
@@ -291,9 +300,13 @@ public class Manager<T extends AItem> extends Observable {
         this.selectedItem = item;
 
         if (callback != null)
-            callback.callack(item);
+            callback.callback(item);
 
         notifyValueChanged();
+    }
+
+    public <T extends AItem<T>> T duplicate(T source, String newName) {
+        return source.duplicate(newName);
     }
 
     /**
@@ -341,6 +354,6 @@ public class Manager<T extends AItem> extends Observable {
      * Rozhraní pro zpětné volání
      */
     public interface Callback {
-        void callack(Object object);
+        void callback(Object object);
     }
 }
