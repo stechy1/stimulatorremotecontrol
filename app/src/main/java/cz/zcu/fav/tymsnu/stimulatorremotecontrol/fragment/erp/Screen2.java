@@ -14,7 +14,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 
 public final class Screen2 extends AScreen
         implements NumberPicker.OnValueChangeListener, Observer {
@@ -39,10 +39,10 @@ public final class Screen2 extends AScreen
         numberPicker.setValue(1);
         numberPicker.setOnValueChangedListener(this);
 
-        Scheme scheme = schemeManager.getSelectedItem();
+        ConfigurationERP configuration = schemeManager.getSelectedItem();
 
-        if (scheme != null)
-            readValues(scheme);
+        if (configuration != null)
+            readValues(configuration);
 
         randomSpinner.setOnItemSelectedListener(randomSpinnerListener);
         edgeSpinner.setOnItemSelectedListener(edgeSpinnerListener);
@@ -52,21 +52,21 @@ public final class Screen2 extends AScreen
         return v;
     }
 
-    private void readValues(Scheme scheme) {
-        randomSpinner.setSelection(scheme.getRandom().ordinal());
-        edgeSpinner.setSelection(scheme.getEdge().ordinal());
-        numberPicker.setValue(scheme.getOutputCount());
+    private void readValues(ConfigurationERP configuration) {
+        randomSpinner.setSelection(configuration.getRandom().ordinal());
+        edgeSpinner.setSelection(configuration.getEdge().ordinal());
+        numberPicker.setValue(configuration.getOutputCount());
     }
 
     private final AdapterView.OnItemSelectedListener randomSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Scheme scheme = schemeManager.getSelectedItem();
+            ConfigurationERP configuration = schemeManager.getSelectedItem();
 
-            if (scheme == null)
+            if (configuration == null)
                 return;
 
-            scheme.setRandom(Scheme.Random.valueOf(position), new AItem.OnValueChanged() {
+            configuration.setRandom(ConfigurationERP.Random.valueOf(position), new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
                     schemeManager.notifySelectedItemInternalChange();
@@ -84,12 +84,12 @@ public final class Screen2 extends AScreen
     private final AdapterView.OnItemSelectedListener edgeSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Scheme scheme = schemeManager.getSelectedItem();
+            ConfigurationERP configuration = schemeManager.getSelectedItem();
 
-            if (scheme == null)
+            if (configuration == null)
                 return;
 
-            scheme.setEdge(Scheme.Edge.valueOf(position), new AItem.OnValueChanged() {
+            configuration.setEdge(ConfigurationERP.Edge.valueOf(position), new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
                     schemeManager.notifySelectedItemInternalChange();
@@ -110,19 +110,19 @@ public final class Screen2 extends AScreen
             return;
         }
 
-        Scheme scheme = (Scheme) object;
+        ConfigurationERP configuration = (ConfigurationERP) object;
 
-        readValues(scheme);
+        readValues(configuration);
     }
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        Scheme scheme = schemeManager.getSelectedItem();
+        ConfigurationERP configuration = schemeManager.getSelectedItem();
 
-        if (scheme == null)
+        if (configuration == null)
             return;
 
-        scheme.setOutputCount(newVal, new AItem.OnValueChanged() {
+        configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 schemeManager.notifySelectedItemInternalChange();

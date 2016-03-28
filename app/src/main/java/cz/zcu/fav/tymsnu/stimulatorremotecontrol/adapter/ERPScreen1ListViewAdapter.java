@@ -14,14 +14,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 
-public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
+public class ERPScreen1ListViewAdapter extends ArrayAdapter<ConfigurationERP> {
 
     private final Context context;
-    private final List<Scheme> objects;
+    private final List<ConfigurationERP> objects;
 
-    public ERPScreen1ListViewAdapter(Context context, List<Scheme> objects) {
+    public ERPScreen1ListViewAdapter(Context context, List<ConfigurationERP> objects) {
         super(context, R.layout.control_list_view_item, objects);
         this.context = context;
         this.objects = objects;
@@ -46,13 +46,13 @@ public class ERPScreen1ListViewAdapter extends ArrayAdapter<Scheme> {
             schemeHolder = (SchemeHolder) convertView.getTag();
         }
 
-        Scheme scheme = objects.get(position);
-        schemeHolder.imageView1.setImageResource(scheme.selected ?
+        ConfigurationERP configuration = objects.get(position);
+        schemeHolder.imageView1.setImageResource(configuration.selected ?
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
-        schemeHolder.imageView2.setVisibility(scheme.changed ? View.VISIBLE : View.INVISIBLE);
-        schemeHolder.text1.setText(scheme.getName());
-        schemeHolder.text1.setTextColor(scheme.loaded ? Color.BLACK : Color.GRAY);
-        schemeHolder.text2.setText("Count: " + (scheme.loaded ? scheme.getOutputCount() : "unknown"));
+        schemeHolder.imageView2.setVisibility(configuration.changed ? View.VISIBLE : View.INVISIBLE);
+        schemeHolder.text1.setText(configuration.getName());
+        schemeHolder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
+        schemeHolder.text2.setText("Count: " + (configuration.loaded ? configuration.getOutputCount() : "unknown"));
 
         return convertView;
     }

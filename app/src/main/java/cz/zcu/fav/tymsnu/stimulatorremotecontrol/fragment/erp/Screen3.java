@@ -20,8 +20,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme.Output;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 
 public final class Screen3 extends AScreen
         implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
@@ -69,10 +69,10 @@ public final class Screen3 extends AScreen
             this.outputs.removeAllViews();
             return;
         }
-        Scheme scheme = (Scheme) object;
+        ConfigurationERP configuration = (ConfigurationERP) object;
         spinner.setSelection(PULSE_UP);
 
-        inputs = new EditText[scheme.getOutputCount()];
+        inputs = new EditText[configuration.getOutputCount()];
 
         outputs.removeAllViews();
         changeValues();
@@ -94,32 +94,32 @@ public final class Screen3 extends AScreen
     // Save button click
     @Override
     public void onClick(View v) {
-        Scheme scheme = schemeManager.getSelectedItem();
-        if (scheme == null)
+        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        if (configuration == null)
             return;
 
-        final List<Output> outputs = scheme.getOutputList();
+        final List<Output> outputs = configuration.getOutputList();
 
         writeValues(outputs);
     }
 
     private void changeValues() {
-        Scheme scheme = schemeManager.getSelectedItem();
-        if (scheme == null)
+        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        if (configuration == null)
             return;
 
         final Context context = getContext();
         if (context == null)
             return;
 
-        final List<Output> outputs = scheme.getOutputList();
+        final List<Output> outputs = configuration.getOutputList();
         final LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
         if (inputs[0] == null) {
-            if (inputs.length != scheme.getOutputCount())
-                inputs = new EditText[scheme.getOutputCount()];
+            if (inputs.length != configuration.getOutputCount())
+                inputs = new EditText[configuration.getOutputCount()];
 
-            for (int i = 0; i < scheme.getOutputCount(); i++) {
+            for (int i = 0; i < configuration.getOutputCount(); i++) {
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.HORIZONTAL);
 

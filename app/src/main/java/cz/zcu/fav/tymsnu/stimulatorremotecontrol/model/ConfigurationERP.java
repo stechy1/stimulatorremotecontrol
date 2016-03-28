@@ -4,7 +4,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Scheme extends AItem {
+public final class ConfigurationERP extends AItem {
 
     // region Variables
     // Výchozí počet výstupů (stará verze 4)
@@ -29,7 +29,7 @@ public final class Scheme extends AItem {
      * Vytvoří nové schéma s výchozími hodnotami
      * @param name Název schématu
      */
-    public Scheme(String name) {
+    public ConfigurationERP(String name) {
         this(name, DEF_OUTPUT_COUNT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
 
         for (int i = 0; i < outputCount; i++) {
@@ -46,7 +46,7 @@ public final class Scheme extends AItem {
      * @param random Náhodnost
      * @param outputList Reference na kolekci výstupů
      */
-    public Scheme(String name, int outputCount, Edge edge, Random random, List<Output> outputList) {
+    public ConfigurationERP(String name, int outputCount, Edge edge, Random random, List<Output> outputList) {
         super(name);
 
         this.outputCount = outputCount;
@@ -151,12 +151,12 @@ public final class Scheme extends AItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Scheme scheme = (Scheme) o;
+        ConfigurationERP configuration = (ConfigurationERP) o;
 
-        if (outputCount != scheme.outputCount) return false;
-        if (name != null ? !name.equals(scheme.name) : scheme.name != null) return false;
-        if (edge != scheme.edge) return false;
-        return random == scheme.random;
+        if (outputCount != configuration.outputCount) return false;
+        if (name != null ? !name.equals(configuration.name) : configuration.name != null) return false;
+        if (edge != configuration.edge) return false;
+        return random == configuration.random;
 
     }
 

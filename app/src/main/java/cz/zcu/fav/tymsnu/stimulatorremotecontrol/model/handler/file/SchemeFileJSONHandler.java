@@ -15,8 +15,8 @@ import java.io.OutputStreamWriter;
 import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme.Output;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
 public class SchemeFileJSONHandler implements IReadWrite {
@@ -44,16 +44,16 @@ public class SchemeFileJSONHandler implements IReadWrite {
     // region write
     @Override
     public void write(OutputStream outputStream, AItem item) throws IOException {
-        Scheme scheme = (Scheme) item;
+        ConfigurationERP configuration = (ConfigurationERP) item;
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream));
         writer.setIndent("  ");
 
         writer.beginObject();
-        writer.name(TAG_OUTPUT_COUNT).value(scheme.getOutputCount());
-        writer.name(TAG_EDGE).value(scheme.getEdge().ordinal());
-        writer.name(TAG_RANDOM).value(scheme.getRandom().ordinal());
+        writer.name(TAG_OUTPUT_COUNT).value(configuration.getOutputCount());
+        writer.name(TAG_EDGE).value(configuration.getEdge().ordinal());
+        writer.name(TAG_RANDOM).value(configuration.getRandom().ordinal());
 
-        writeOutputs(writer, scheme.getOutputList());
+        writeOutputs(writer, configuration.getOutputList());
         writer.endObject();
 
         writer.close();
@@ -107,7 +107,7 @@ public class SchemeFileJSONHandler implements IReadWrite {
     // region read
     @Override
     public void read(InputStream inputStream, AItem item) throws IOException {
-        Scheme scheme = (Scheme) item;
+        ConfigurationERP configuration = (ConfigurationERP) item;
         StringBuilder builder = new StringBuilder();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -122,20 +122,20 @@ public class SchemeFileJSONHandler implements IReadWrite {
         try {
             JSONObject schemeObject = new JSONObject(src);
 
-            scheme.setOutputCount(schemeObject.getInt(TAG_OUTPUT_COUNT));
-            scheme.setEdge(Scheme.Edge.valueOf(schemeObject.getInt(TAG_EDGE)));
-            scheme.setRandom(Scheme.Random.valueOf(schemeObject.getInt(TAG_RANDOM)));
+            configuration.setOutputCount(schemeObject.getInt(TAG_OUTPUT_COUNT));
+            configuration.setEdge(ConfigurationERP.Edge.valueOf(schemeObject.getInt(TAG_EDGE)));
+            configuration.setRandom(ConfigurationERP.Random.valueOf(schemeObject.getInt(TAG_RANDOM)));
 
             JSONArray outputArray = schemeObject.getJSONArray(TAG_OUTPUTS);
-            readOutputs(outputArray, scheme);
+            readOutputs(outputArray, configuration);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void readOutputs(JSONArray outputs, Scheme scheme) throws JSONException {
-        List<Output> outputList = scheme.getOutputList();
+    private void readOutputs(JSONArray outputs, ConfigurationERP configuration) throws JSONException {
+        List<Output> outputList = configuration.getOutputList();
         outputList.clear();
         int length = outputs.length();
         for (int i = 0; i < length; i++) {

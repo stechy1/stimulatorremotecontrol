@@ -28,7 +28,7 @@ import java.util.Observer;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.ERPScreen1ListViewAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.SchemePacketHandler;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
@@ -66,7 +66,7 @@ public final class Screen1 extends AScreen
     // ListView onItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-        Scheme selected = (Scheme) listView.getItemAtPosition(position);
+        ConfigurationERP selected = (ConfigurationERP) listView.getItemAtPosition(position);
         schemeManager.select(selected, new Manager.Callback() {
             @Override
             public void callack(Object object) {
@@ -91,11 +91,11 @@ public final class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        final Scheme scheme = schemeManager.itemList.get(listPosition);
+        final ConfigurationERP configuration = schemeManager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_select:
-                schemeManager.select(scheme, new Manager.Callback() {
+                schemeManager.select(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         final View v = info.targetView;
@@ -105,7 +105,7 @@ public final class Screen1 extends AScreen
                 });
                 return true;
             case R.id.context_delete:
-                schemeManager.delete(scheme, new Manager.Callback() {
+                schemeManager.delete(configuration, new Manager.Callback() {
                     @Override
                     public void callack(Object object) {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
@@ -126,7 +126,7 @@ public final class Screen1 extends AScreen
                     public void onClick(DialogInterface dialog, int which) {
                         String schemeName = input.getText().toString();
                         try {
-                            schemeManager.rename(scheme, schemeName);
+                            schemeManager.rename(configuration, schemeName);
                             Log.i(TAG, "Nazev schematu: " + schemeName);
                         } catch (IllegalArgumentException ex) {
                             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
@@ -155,7 +155,7 @@ public final class Screen1 extends AScreen
         return super.onContextItemSelected(item);
     }
 
-    private ArrayAdapter<Scheme> buildAdapter() {
+    private ArrayAdapter<ConfigurationERP> buildAdapter() {
         return new ERPScreen1ListViewAdapter(getContext(), schemeManager.itemList);
     }
 
@@ -169,12 +169,12 @@ public final class Screen1 extends AScreen
     // FAB onClick
     @Override
     public void onClick(View v) {
-        Scheme scheme = schemeManager.getSelectedItem();
-        if (scheme == null)
+        ConfigurationERP configuration = schemeManager.getSelectedItem();
+        if (configuration == null)
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
         else {
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
-            List<Packet> packets = new SchemePacketHandler(scheme).getPackets();
+            List<Packet> packets = new SchemePacketHandler(configuration).getPackets();
             for (Packet packet : packets) {
                 Log.i(TAG, packet.toString());
                 if (!iBtCommunication.write(packet.getValue())) {
