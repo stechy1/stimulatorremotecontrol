@@ -101,6 +101,7 @@ public final class Screen3 extends AScreen
         final List<Output> outputs = configuration.getOutputList();
 
         writeValues(outputs);
+        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
     }
 
     private void changeValues() {

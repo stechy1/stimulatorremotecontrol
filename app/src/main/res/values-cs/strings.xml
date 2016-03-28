@@ -141,4 +141,5 @@
     <string name="configuration_saved">Konfigurace <xliff:g id="saved_conf">%1$s</xliff:g> byla uložena</string>
     <string name="configuration_was_deleted">Konfigurace byla smazána</string>
     <string name="count_saved_configuration">Počet uložených konfigurací: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
+    <string name="values_were_saved">Hodnoty byly uloženy do: <xliff:g id="config_name">%1$s</xliff:g></string>
 </resources>

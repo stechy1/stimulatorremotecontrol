@@ -141,4 +141,6 @@
     <string name="configuration_saved">Configuration <xliff:g id="saved_conf">%1$s</xliff:g> was saved</string>
     <string name="configuration_was_deleted">Configuration was deleted</string>
     <string name="count_saved_configuration">Count of saved configurations: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
+
+    <string name="values_were_saved">Values were saved to: <xliff:g id="config_name">%1$s</xliff:g></string>
 </resources>

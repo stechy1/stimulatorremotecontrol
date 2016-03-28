@@ -75,11 +75,12 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
 
     @Override
     public void onClick(View v) {
-        ConfigurationFvep configurationFvep = manager.getSelectedItem();
-        if (configurationFvep == null)
+        ConfigurationFvep configuration = manager.getSelectedItem();
+        if (configuration == null)
             return;
 
-        writeValues(configurationFvep.outputList);
+        writeValues(configuration.outputList);
+        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
