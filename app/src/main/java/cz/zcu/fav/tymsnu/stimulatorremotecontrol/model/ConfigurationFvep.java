@@ -4,16 +4,17 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationFvep extends AItem<ConfigurationFvep> {
+public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
 
     public static final int MIN_OUTPUT_COUNT = 1;
     public static final int DEF_OUTPUT_COUNT = 4;
     public static final int MAX_OUTPUT_COUNT = 8;
 
     private int outputCount;
+
     public final List<Output> outputList;
 
-    public ConfigurationFvep(String name) {
+    public ConfigurationFVEP(String name) {
         this(name, DEF_OUTPUT_COUNT, new ArrayList<Output>());
 
         for (int i = 0; i < outputCount; i++) {
@@ -21,7 +22,7 @@ public class ConfigurationFvep extends AItem<ConfigurationFvep> {
         }
     }
 
-    public ConfigurationFvep(String name, int outputCount, List<Output> outputList) {
+    public ConfigurationFVEP(String name, int outputCount, List<Output> outputList) {
         super(name);
 
         this.outputCount = outputCount;
@@ -69,7 +70,7 @@ public class ConfigurationFvep extends AItem<ConfigurationFvep> {
     }
 
     @Override
-    public ConfigurationFvep duplicate(String newName) {
+    public ConfigurationFVEP duplicate(String newName) {
         int outputCount = this.outputCount;
         List<Output> outputList = new ArrayList<>(outputCount);
 
@@ -77,7 +78,11 @@ public class ConfigurationFvep extends AItem<ConfigurationFvep> {
             outputList.add(new Output(this.outputList.get(i)));
         }
 
-        return new ConfigurationFvep(newName, outputCount, outputList);
+        return new ConfigurationFVEP(newName, outputCount, outputList);
+    }
+
+    public List<Output> getOutputList() {
+        return outputList;
     }
 
     public static final class Output {

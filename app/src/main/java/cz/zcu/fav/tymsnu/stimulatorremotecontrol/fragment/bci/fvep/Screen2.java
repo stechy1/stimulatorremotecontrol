@@ -13,7 +13,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 
 public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListener, Observer {
 
@@ -25,12 +25,12 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         View v = inflater.inflate(R.layout.fragment_bci_fvep_screen_2, container, false);
 
         numberPicker = (NumberPicker) v.findViewById(R.id.fvep_screen_2_number_picker);
-        numberPicker.setMaxValue(ConfigurationFvep.MAX_OUTPUT_COUNT);
-        numberPicker.setMinValue(ConfigurationFvep.MIN_OUTPUT_COUNT);
+        numberPicker.setMaxValue(ConfigurationFVEP.MAX_OUTPUT_COUNT);
+        numberPicker.setMinValue(ConfigurationFVEP.MIN_OUTPUT_COUNT);
         numberPicker.setValue(1);
         numberPicker.setOnValueChangedListener(this);
 
-        ConfigurationFvep configuration = manager.getSelectedItem();
+        ConfigurationFVEP configuration = manager.getSelectedItem();
         if (configuration != null)
             readValues(configuration);
 
@@ -39,7 +39,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         return v;
     }
 
-    private void readValues(ConfigurationFvep configuration) {
+    private void readValues(ConfigurationFVEP configuration) {
         int current = numberPicker.getValue();
         if (current == configuration.getOutputCount())
             return;
@@ -49,7 +49,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        ConfigurationFvep configuration = manager.getSelectedItem();
+        ConfigurationFVEP configuration = manager.getSelectedItem();
         if (configuration == null)
             return;
 
@@ -66,7 +66,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
     // Při aktualizaci datasetu v manageru (Změna schématu, změna nastavení výstupů...)
     @Override
     public void update(Observable observable, Object data) {
-        ConfigurationFvep configuration = (ConfigurationFvep) data;
+        ConfigurationFVEP configuration = (ConfigurationFVEP) data;
         if (configuration == null) {
             numberPicker.setValue(numberPicker.getMinValue());
             return;

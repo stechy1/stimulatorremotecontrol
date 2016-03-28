@@ -26,7 +26,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.FVEPScreen1ListViewAdapter;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class Screen1 extends AScreen
@@ -63,7 +63,7 @@ public class Screen1 extends AScreen
     // Kliknutí na položu v listView
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-        ConfigurationFvep configuration = (ConfigurationFvep) listView.getItemAtPosition(position);
+        ConfigurationFVEP configuration = (ConfigurationFVEP) listView.getItemAtPosition(position);
         manager.select(configuration, new Manager.Callback() {
             @Override
             public void callback(Object object) {
@@ -88,7 +88,7 @@ public class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        final ConfigurationFvep configuration = manager.itemList.get(listPosition);
+        final ConfigurationFVEP configuration = manager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_duplicate:
@@ -96,7 +96,7 @@ public class Screen1 extends AScreen
                     @Override
                     public void callback(String res) {
                         try {
-                            ConfigurationFvep duplicated = manager.duplicate(configuration, res);
+                            ConfigurationFVEP duplicated = manager.duplicate(configuration, res);
                             manager.add(duplicated);
                             manager.notifyValueChanged();
                         } catch (IllegalArgumentException ex) {

@@ -16,7 +16,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager.FVEPPagerAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.ConfigurationFactory;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
@@ -25,7 +25,7 @@ public class FVEPFragment extends ASimpleFragment
 
     private static final String TAG = "FVEPFragment";
 
-    private final Manager<ConfigurationFvep> manager = new Manager<>(new ConfigurationFactory());
+    private final Manager<ConfigurationFVEP> manager = new Manager<>(new ConfigurationFactory());
 
     private TextView title;
     private String[] titles;

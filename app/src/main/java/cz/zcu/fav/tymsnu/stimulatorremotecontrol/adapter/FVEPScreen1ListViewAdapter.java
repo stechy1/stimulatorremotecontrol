@@ -13,14 +13,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 
-public class FVEPScreen1ListViewAdapter extends ArrayAdapter<ConfigurationFvep> {
+public class FVEPScreen1ListViewAdapter extends ArrayAdapter<ConfigurationFVEP> {
 
     private final Context context;
-    private final List<ConfigurationFvep> objects;
+    private final List<ConfigurationFVEP> objects;
 
-    public FVEPScreen1ListViewAdapter(Context context, List<ConfigurationFvep> objects) {
+    public FVEPScreen1ListViewAdapter(Context context, List<ConfigurationFVEP> objects) {
         super(context, R.layout.control_list_view_item, objects);
 
         this.context = context;
@@ -46,7 +46,7 @@ public class FVEPScreen1ListViewAdapter extends ArrayAdapter<ConfigurationFvep> 
             schemeHolder = (ConfigurationHolder) convertView.getTag();
         }
 
-        ConfigurationFvep configuration = objects.get(position);
+        ConfigurationFVEP configuration = objects.get(position);
         schemeHolder.imageView1.setImageResource(configuration.selected ?
                 R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
         schemeHolder.imageView2.setVisibility(configuration.changed ? View.VISIBLE : View.INVISIBLE);

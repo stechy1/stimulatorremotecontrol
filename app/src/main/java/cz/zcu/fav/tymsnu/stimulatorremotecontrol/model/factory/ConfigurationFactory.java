@@ -1,16 +1,16 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.FvepFileJSONHandler;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.FVEPFileJSONHandler;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class ConfigurationFactory implements IFactory<ConfigurationFvep> {
+public class ConfigurationFactory implements IFactory<ConfigurationFVEP> {
 
-    private final IReadWrite handler = new FvepFileJSONHandler();
+    private final IReadWrite handler = new FVEPFileJSONHandler();
 
     @Override
-    public ConfigurationFvep build(String name) {
-        return new ConfigurationFvep(name);
+    public ConfigurationFVEP build(String name) {
+        return new ConfigurationFVEP(name);
     }
 
     @Override

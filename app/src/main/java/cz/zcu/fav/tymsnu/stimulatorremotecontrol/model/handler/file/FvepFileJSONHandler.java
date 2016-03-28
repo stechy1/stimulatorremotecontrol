@@ -14,10 +14,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class FvepFileJSONHandler implements IReadWrite<ConfigurationFvep> {
+public class FVEPFileJSONHandler implements IReadWrite<ConfigurationFVEP> {
 
     // region Variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
@@ -33,7 +33,7 @@ public class FvepFileJSONHandler implements IReadWrite<ConfigurationFvep> {
 
     // region Write
     @Override
-    public void write(OutputStream outputStream, ConfigurationFvep configuration) throws IOException {
+    public void write(OutputStream outputStream, ConfigurationFVEP configuration) throws IOException {
         JsonWriter w = new JsonWriter(new OutputStreamWriter(outputStream));
         w.setIndent("  ");
 
@@ -53,7 +53,7 @@ public class FvepFileJSONHandler implements IReadWrite<ConfigurationFvep> {
      * @param output Reference na výstup, který se má zapsat
      * @throws IOException
      */
-    private void writeOutput(JsonWriter w, ConfigurationFvep.Output output) throws IOException {
+    private void writeOutput(JsonWriter w, ConfigurationFVEP.Output output) throws IOException {
         w.beginObject();
 
         w.name(TAG_OUTPUT_NAME).value(output.getName());
@@ -76,11 +76,11 @@ public class FvepFileJSONHandler implements IReadWrite<ConfigurationFvep> {
      * @param outputs Kolekce výstupů
      * @throws IOException
      */
-    private void writeOutputs(JsonWriter w, List<ConfigurationFvep.Output> outputs) throws IOException {
+    private void writeOutputs(JsonWriter w, List<ConfigurationFVEP.Output> outputs) throws IOException {
         w.name(TAG_OUTPUTS);
         w.beginArray();
 
-        for (ConfigurationFvep.Output output : outputs) {
+        for (ConfigurationFVEP.Output output : outputs) {
             writeOutput(w, output);
         }
 
@@ -90,7 +90,7 @@ public class FvepFileJSONHandler implements IReadWrite<ConfigurationFvep> {
 
     // region Read
     @Override
-    public void read(InputStream inputStream, ConfigurationFvep configuration) throws IOException {
+    public void read(InputStream inputStream, ConfigurationFVEP configuration) throws IOException {
         StringBuilder builder = new StringBuilder();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -115,24 +115,24 @@ public class FvepFileJSONHandler implements IReadWrite<ConfigurationFvep> {
         }
     }
 
-    private void readOutput(JSONObject outputObject, List<ConfigurationFvep.Output> outputs) throws JSONException {
+    private void readOutput(JSONObject outputObject, List<ConfigurationFVEP.Output> outputs) throws JSONException {
         String name = outputObject.getString(TAG_OUTPUT_NAME);
 
         JSONObject pulsObject = outputObject.getJSONObject(TAG_PULS);
 
         int pulsUp = pulsObject.getInt(TAG_PULS_UP);
         int pulsDown = pulsObject.getInt(TAG_PULS_DOWN);
-        ConfigurationFvep.Puls puls = new ConfigurationFvep.Puls(pulsUp, pulsDown);
+        ConfigurationFVEP.Puls puls = new ConfigurationFVEP.Puls(pulsUp, pulsDown);
 
         int frequency = outputObject.getInt(TAG_FREQUENCY);
         int dutyCycle = outputObject.getInt(TAG_DUTY_CYCLE);
         int brightness = outputObject.getInt(TAG_BRIGHTNESS);
 
-        ConfigurationFvep.Output output = new ConfigurationFvep.Output(name, puls, frequency, dutyCycle, brightness);
+        ConfigurationFVEP.Output output = new ConfigurationFVEP.Output(name, puls, frequency, dutyCycle, brightness);
         outputs.add(output);
     }
-    private void readOutputs(JSONArray outputs, ConfigurationFvep c) throws JSONException {
-        List<ConfigurationFvep.Output> outputList = c.outputList;
+    private void readOutputs(JSONArray outputs, ConfigurationFVEP c) throws JSONException {
+        List<ConfigurationFVEP.Output> outputList = c.outputList;
         outputList.clear();
         int length = outputs.length();
         for (int i = 0; i < length; i++) {
