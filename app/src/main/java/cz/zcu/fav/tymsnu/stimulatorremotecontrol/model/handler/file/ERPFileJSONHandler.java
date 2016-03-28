@@ -14,14 +14,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class ERPFileJSONHandler implements IReadWrite {
+public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
 
-    // region variables
+    // region Variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
     private static final String TAG_EDGE = "edge";
     private static final String TAG_RANDOM = "random";
@@ -36,15 +35,9 @@ public class ERPFileJSONHandler implements IReadWrite {
     private static final String TAG_BRIGHTNESS = "brightness";
     // endregion
 
-
-    public ERPFileJSONHandler() {}
-
-
-
-    // region write
+    // region Write
     @Override
-    public void write(OutputStream outputStream, AItem item) throws IOException {
-        ConfigurationERP configuration = (ConfigurationERP) item;
+    public void write(OutputStream outputStream, ConfigurationERP configuration) throws IOException {
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream));
         writer.setIndent("  ");
 
@@ -104,10 +97,9 @@ public class ERPFileJSONHandler implements IReadWrite {
     }
     // endregion
 
-    // region read
+    // region Read
     @Override
-    public void read(InputStream inputStream, AItem item) throws IOException {
-        ConfigurationERP configuration = (ConfigurationERP) item;
+    public void read(InputStream inputStream, ConfigurationERP configuration) throws IOException {
         StringBuilder builder = new StringBuilder();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

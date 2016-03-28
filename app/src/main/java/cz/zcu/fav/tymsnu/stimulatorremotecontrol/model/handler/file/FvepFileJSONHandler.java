@@ -14,11 +14,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class ConfigurationFileJSONHandler implements IReadWrite {
+public class FvepFileJSONHandler implements IReadWrite<ConfigurationFvep> {
 
     // region Variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
@@ -31,10 +30,10 @@ public class ConfigurationFileJSONHandler implements IReadWrite {
     private static final String TAG_DUTY_CYCLE = "duty-cycle";
     private static final String TAG_BRIGHTNESS = "brightness";
     // endregion
-    
+
+    // region Write
     @Override
-    public void write(OutputStream outputStream, AItem item) throws IOException {
-        ConfigurationFvep configuration = (ConfigurationFvep) item;
+    public void write(OutputStream outputStream, ConfigurationFvep configuration) throws IOException {
         JsonWriter w = new JsonWriter(new OutputStreamWriter(outputStream));
         w.setIndent("  ");
 
@@ -47,6 +46,7 @@ public class ConfigurationFileJSONHandler implements IReadWrite {
         w.close();
 
     }
+
     /**
      * Zapíše jeden výstup
      * @param w Reference na JSON writer
@@ -86,10 +86,11 @@ public class ConfigurationFileJSONHandler implements IReadWrite {
 
         w.endArray();
     }
+    // endregion
 
+    // region Read
     @Override
-    public void read(InputStream inputStream, AItem item) throws IOException {
-        ConfigurationFvep configuration = (ConfigurationFvep) item;
+    public void read(InputStream inputStream, ConfigurationFvep configuration) throws IOException {
         StringBuilder builder = new StringBuilder();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -139,4 +140,5 @@ public class ConfigurationFileJSONHandler implements IReadWrite {
             readOutput(outputObject, outputList);
         }
     }
+    // endregion
 }
