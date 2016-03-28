@@ -92,12 +92,16 @@ public class Screen1 extends AScreen
 
         switch (item.getItemId()) {
             case R.id.context_duplicate:
-                manager.select(configuration, new Manager.Callback() {
+                showInputDialog(new DialogCallback() {
                     @Override
-                    public void callback(Object object) {
-                        final View v = info.targetView;
-                        ImageView img = (ImageView) v.findViewById(R.id.control_list_view_image);
-                        img.setImageResource(R.drawable.checkbox_marked_outline);
+                    public void callback(String res) {
+                        try {
+                            ConfigurationFvep duplicated = manager.duplicate(configuration, res);
+                            manager.add(duplicated);
+                            manager.notifyValueChanged();
+                        } catch (IllegalArgumentException ex) {
+                            Log.i(TAG, ex.getMessage());
+                        }
                     }
                 });
                 return true;
@@ -111,7 +115,18 @@ public class Screen1 extends AScreen
                 });
                 return true;
             case R.id.context_rename:
-                final EditText input = new EditText(getContext());
+                showInputDialog(new DialogCallback() {
+                    @Override
+                    public void callback(String configName) {
+                        try {
+                            manager.rename(configuration, configName);
+                            Log.i(TAG, "Nazev schematu: " + configName);
+                        } catch (IllegalArgumentException ex) {
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                /*final EditText input = new EditText(getContext());
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -146,7 +161,7 @@ public class Screen1 extends AScreen
                             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         }
                     }
-                });
+                });*/
                 break;
         }
         return super.onContextItemSelected(item);
@@ -168,11 +183,56 @@ public class Screen1 extends AScreen
         Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci", Snackbar.LENGTH_SHORT).show();
     }
 
+    private void showInputDialog(final DialogCallback callback) {
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.context_set_name);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String name = input.getText().toString();
+                callback.callback(name);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog dialog = builder.show();
+
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+    }
+
     private final class NewConfigurationListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            final EditText input = new EditText(getContext());
+            showInputDialog(new DialogCallback() {
+                @Override
+                public void callback(String configName) {
+                    try {
+                        manager.create(configName);
+                        Log.i(TAG, "Nazev schematu: " + configName);
+                    } catch (IllegalArgumentException ex) {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            /*final EditText input = new EditText(getContext());
             input.setInputType(InputType.TYPE_CLASS_TEXT);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -207,7 +267,7 @@ public class Screen1 extends AScreen
                         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                     }
                 }
-            });
+            });*/
         }
     }
 
@@ -223,5 +283,9 @@ public class Screen1 extends AScreen
                 }
             });
         }
+    }
+
+    private interface DialogCallback {
+        void callback(String res);
     }
 }

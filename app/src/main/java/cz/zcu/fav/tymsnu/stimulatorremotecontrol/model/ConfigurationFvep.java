@@ -4,7 +4,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationFvep extends AItem {
+public class ConfigurationFvep extends AItem<ConfigurationFvep> {
 
     public static final int MIN_OUTPUT_COUNT = 1;
     public static final int DEF_OUTPUT_COUNT = 4;
@@ -68,6 +68,18 @@ public class ConfigurationFvep extends AItem {
             onValueChanged.changed();
     }
 
+    @Override
+    public ConfigurationFvep duplicate(String newName) {
+        int outputCount = this.outputCount;
+        List<Output> outputList = new ArrayList<>(outputCount);
+
+        for (int i = 0; i < outputCount; i++) {
+            outputList.add(new Output(this.outputList.get(i)));
+        }
+
+        return new ConfigurationFvep(newName, outputCount, outputList);
+    }
+
     public static final class Output {
 
         // Název výstupu
@@ -88,6 +100,14 @@ public class ConfigurationFvep extends AItem {
             this.frequency = frequency;
             this.duty_cycle = duty_cycle;
             this.brightness = brightness;
+        }
+
+        public Output(Output source) {
+            this.name = source.name;
+            this.puls = new Puls(source.puls);
+            this.frequency = source.frequency;
+            this.duty_cycle = source.duty_cycle;
+            this.brightness = source.brightness;
         }
 
         /**
@@ -203,6 +223,11 @@ public class ConfigurationFvep extends AItem {
         public Puls(int up, int down) {
             this.up = up;
             this.down = down;
+        }
+
+        public Puls(Puls source) {
+            this.up = source.up;
+            this.down = source.down;
         }
 
         public int getUp() {
