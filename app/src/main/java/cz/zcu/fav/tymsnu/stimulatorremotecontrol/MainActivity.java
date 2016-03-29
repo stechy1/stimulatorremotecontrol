@@ -85,7 +85,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         title = getTitle();
-        displayView(R.id.nav_about);
+        if (savedInstanceState == null)
+            displayView(R.id.nav_about);
+        else {
+            actViewID = -1;
+            int selected = savedInstanceState.getInt("fragment");
+            displayView(selected);
+        }
 
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
@@ -260,7 +266,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothCommunicationService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_disconnected));
+                            menu.getItem(0).setIcon(R.drawable.bluetooth_disconnected);
                             break;
                         case BluetoothCommunicationService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -268,7 +274,7 @@ public class MainActivity extends AppCompatActivity
                         case BluetoothCommunicationService.STATE_LISTEN:
                         case BluetoothCommunicationService.STATE_NONE:
                             setStatus(R.string.title_not_connected);
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_off));
+                            menu.getItem(0).setIcon(R.drawable.bluetooth_off);
                             break;
                     }
                     break;
