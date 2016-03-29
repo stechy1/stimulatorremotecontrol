@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -34,19 +35,24 @@ public class FVEPFragment extends ASimpleFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         manager.setWorkingDirectory(createWorkingDirectory());
-        View v = inflater.inflate(R.layout.fragment_bci_fvep, container, false);
+        View v = inflater.inflate(R.layout.fragment_universal, container, false);
 
-        title = (TextView) v.findViewById(R.id.bci_fvep_title);
+        title = (TextView) v.findViewById(R.id.universal_title);
         titles = getResources().getStringArray(R.array.bci_fvep_screen_titles);
         title.setText(titles[0]);
 
-        ViewPager pager = (ViewPager) v.findViewById(R.id.bci_fvep_viewpager);
+        ViewPager pager = (ViewPager) v.findViewById(R.id.universal_view_pager);
         pager.setAdapter(buildPagerAdapter());
         pager.setOffscreenPageLimit(3);
         pager.addOnPageChangeListener(this);
 
-        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.bci_fvep_tablayout);
+        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.universal_tablayout);
         tabLayout.setupWithViewPager(pager);
+        LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
+        tabStrip.setEnabled(false);
+        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setClickable(false);
+        }
 
         return v;
     }

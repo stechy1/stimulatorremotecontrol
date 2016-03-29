@@ -1,6 +1,5 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
@@ -31,19 +31,25 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         manager.setWorkingDirectory(getActivity().getFilesDir());
-        View v = inflater.inflate(R.layout.fragment_erp, container, false);
+        View v = inflater.inflate(R.layout.fragment_universal, container, false);
 
-        title = (TextView) v.findViewById(R.id.erp_title);
+        title = (TextView) v.findViewById(R.id.universal_title);
         titles = getResources().getStringArray(R.array.erp_screen_titles);
         title.setText(titles[0]);
 
-        ViewPager pager = (ViewPager) v.findViewById(R.id.erp_pager);
+        ViewPager pager = (ViewPager) v.findViewById(R.id.universal_view_pager);
         pager.setAdapter(buildAdapter());
         pager.setOffscreenPageLimit(Constants.ERP_SCREEN_COUNT);
         pager.addOnPageChangeListener(this);
 
-        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.erp_tablayout);
+        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.universal_tablayout);
         tabLayout.setupWithViewPager(pager);
+
+        LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
+        tabStrip.setEnabled(false);
+        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setClickable(false);
+        }
 
         return v;
     }

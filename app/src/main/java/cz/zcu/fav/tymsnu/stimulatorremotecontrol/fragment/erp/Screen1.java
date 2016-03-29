@@ -3,7 +3,6 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -16,8 +15,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -49,15 +48,14 @@ public final class Screen1 extends AScreen
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-        Button btnNewConfiguration = (Button) v.findViewById(R.id.universal_screen_1_btn_new_configuration);
+        ImageButton btnNewConfiguration = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_new_configuration);
         btnNewConfiguration.setOnClickListener(new NewSchemeListener());
-        btnNewConfiguration.setText(getString(R.string.erp_scren_1_new_scheme));
 
-        Button btnSaveAll = (Button) v.findViewById(R.id.universal_screen_1_btn_save_all);
+        ImageButton btnSaveAll = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_save_all);
         btnSaveAll.setOnClickListener(new SaveAllSchemesListener());
 
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.universal_screen_1_fab);
-        fab.setOnClickListener(this);
+        ImageButton buttonPlay = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_play);
+        buttonPlay.setOnClickListener(this);
 
         manager.addObserver(this);
 
