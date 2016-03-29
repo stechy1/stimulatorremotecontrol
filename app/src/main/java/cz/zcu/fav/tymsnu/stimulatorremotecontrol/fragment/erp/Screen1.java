@@ -42,20 +42,21 @@ public final class Screen1 extends AScreen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_erp_screen_1, container, false);
+        View v = inflater.inflate(R.layout.fragment_universal_screen_1, container, false);
 
-        listView = (ListView) v.findViewById(R.id.erp_screen_1_listview_scheme);
+        listView = (ListView) v.findViewById(R.id.universal_screen_1_container_listview);
         listView.setAdapter(buildAdapter());
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-        Button buttonNewScheme = (Button) v.findViewById(R.id.erp_screen_1_new_scheme);
-        buttonNewScheme.setOnClickListener(new NewSchemeListener());
+        Button btnNewConfiguration = (Button) v.findViewById(R.id.universal_screen_1_btn_new_configuration);
+        btnNewConfiguration.setOnClickListener(new NewSchemeListener());
+        btnNewConfiguration.setText(getString(R.string.erp_scren_1_new_scheme));
 
-        Button buttonSaveAll   = (Button) v.findViewById(R.id.erp_screen_1_save_all_schemes);
-        buttonSaveAll.setOnClickListener(new SaveAllSchemesListener());
+        Button btnSaveAll = (Button) v.findViewById(R.id.universal_screen_1_btn_save_all);
+        btnSaveAll.setOnClickListener(new SaveAllSchemesListener());
 
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.erp_fab);
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.universal_screen_1_fab);
         fab.setOnClickListener(this);
 
         manager.addObserver(this);
@@ -129,42 +130,6 @@ public final class Screen1 extends AScreen
                         }
                     }
                 });
-                /*final EditText input = new EditText(getContext());
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(R.string.context_set_name);
-                builder.setView(input);
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String schemeName = input.getText().toString();
-                        try {
-                            manager.rename(configuration, schemeName);
-                            Log.i(TAG, "Nazev schematu: " + schemeName);
-                        } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                final AlertDialog dialog = builder.show();
-
-                input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                        }
-                    }
-                });*/
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -253,48 +218,6 @@ public final class Screen1 extends AScreen
                     }
                 }
             });
-
-            /*final EditText input = new EditText(getContext());
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(R.string.context_set_name);
-            builder.setView(input);
-
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String schemeName = input.getText().toString();
-                    try {
-                        manager.create(schemeName, new Manager.Callback() {
-                            @Override
-                            public void callback(Object object) {
-                                ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
-                            }
-                        });
-                        Log.i(TAG, "Nazev schematu: " + schemeName);
-                    } catch (IllegalArgumentException ex) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            final AlertDialog dialog = builder.show();
-
-            input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                    }
-                }
-            });*/
         }
     }
 

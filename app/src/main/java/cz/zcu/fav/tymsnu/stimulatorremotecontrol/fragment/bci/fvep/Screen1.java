@@ -39,20 +39,21 @@ public class Screen1 extends AScreen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_bci_fvep_screen_1, container, false);
+        View v = inflater.inflate(R.layout.fragment_universal_screen_1, container, false);
 
-        listView = (ListView) v.findViewById(R.id.container_listview);
+        listView = (ListView) v.findViewById(R.id.universal_screen_1_container_listview);
         listView.setAdapter(buildAdapter());
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-        Button buttonNewConiguration = (Button) v.findViewById(R.id.btn_new_configuration);
+        Button buttonNewConiguration = (Button) v.findViewById(R.id.universal_screen_1_btn_new_configuration);
         buttonNewConiguration.setOnClickListener(new NewConfigurationListener());
+        buttonNewConiguration.setText(getString(R.string.bci_fvep_screen_1_new_configuration));
 
-        Button buttonSaveAll = (Button) v.findViewById(R.id.btn_save_all);
+        Button buttonSaveAll = (Button) v.findViewById(R.id.universal_screen_1_btn_save_all);
         buttonSaveAll.setOnClickListener(new SaveAllConfigurationsListener());
 
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.bci_fvep_fab);
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.universal_screen_1_fab);
         fab.setOnClickListener(this);
 
         manager.addObserver(this);
@@ -126,42 +127,6 @@ public class Screen1 extends AScreen
                         }
                     }
                 });
-                /*final EditText input = new EditText(getContext());
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(R.string.context_set_name);
-                builder.setView(input);
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String configName = input.getText().toString();
-                        try {
-                            manager.rename(configuration, configName);
-                            Log.i(TAG, "Nazev schematu: " + configName);
-                        } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                final AlertDialog dialog = builder.show();
-
-                input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                        }
-                    }
-                });*/
                 break;
         }
         return super.onContextItemSelected(item);
@@ -232,42 +197,6 @@ public class Screen1 extends AScreen
                     }
                 }
             });
-            /*final EditText input = new EditText(getContext());
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(R.string.context_set_name);
-            builder.setView(input);
-
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String configName = input.getText().toString();
-                    try {
-                        manager.create(configName);
-                        Log.i(TAG, "Nazev schematu: " + configName);
-                    } catch (IllegalArgumentException ex) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            final AlertDialog dialog = builder.show();
-
-            input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                    }
-                }
-            });*/
         }
     }
 
