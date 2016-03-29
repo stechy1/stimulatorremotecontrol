@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,15 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 
 public final class Screen3 extends AScreen
         implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
+
+    private static final String TAG = "screen3";
+
 
     private static final int PULSE_UP = 0;
     private static final int PULSE_DOWN = 1;
@@ -39,6 +44,7 @@ public final class Screen3 extends AScreen
     private LinearLayout outputs;
     private Spinner spinner;
     private int outputTypeIndex;
+    private boolean notifyLock = false;
 
     @Nullable
     @Override
@@ -64,6 +70,8 @@ public final class Screen3 extends AScreen
     // Při změně schématu
     @Override
     public void update(Observable observable, Object object) {
+        if (notifyLock) return;
+
         if (object == null) {
             inputs = new EditText[1];
             this.outputs.removeAllViews();
@@ -106,12 +114,16 @@ public final class Screen3 extends AScreen
 
     private void changeValues() {
         ConfigurationERP configuration = manager.getSelectedItem();
-        if (configuration == null)
+        if (configuration == null) {
+            Log.i(TAG, "Konfigurace == null");
             return;
+        }
 
         final Context context = getContext();
-        if (context == null)
+        if (context == null) {
+            Log.i(TAG, "Kontext == null");
             return;
+        }
 
         final List<Output> outputs = configuration.getOutputList();
         final LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
@@ -187,16 +199,24 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    output.puls.setUp(val);
-                    manager.notifySelectedItemInternalChange();
+                    output.puls.setUp(val, new AItem.OnValueChanged() {
+                        @Override
+                        public void changed() {
+                            notifyLock = true;
+                        }
+                    });
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    output.puls.setDown(val);
-                    manager.notifySelectedItemInternalChange();
+                    output.puls.setDown(val, new AItem.OnValueChanged() {
+                        @Override
+                        public void changed() {
+                            notifyLock = true;
+                        }
+                    });
                 }
                 break;
 
@@ -205,8 +225,12 @@ public final class Screen3 extends AScreen
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     if (output.canUpdateDistribution(outputs, val)) {
-                        output.distribution.setValue(val);
-                        manager.notifySelectedItemInternalChange();
+                        output.distribution.setValue(val, new AItem.OnValueChanged() {
+                            @Override
+                            public void changed() {
+                                notifyLock = true;
+                            }
+                        });
                     }
                     else
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
@@ -216,8 +240,12 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    output.distribution.setDelay(val);
-                    manager.notifySelectedItemInternalChange();
+                    output.distribution.setDelay(val, new AItem.OnValueChanged() {
+                        @Override
+                        public void changed() {
+                            notifyLock = true;
+                        }
+                    });
                 }
                 break;
 
@@ -225,10 +253,18 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    output.setBrightness(val);
-                    manager.notifySelectedItemInternalChange();
+                    output.setBrightness(val, new AItem.OnValueChanged() {
+                        @Override
+                        public void changed() {
+                            notifyLock = true;
+                        }
+                    });
                 }
                 break;
+        }
+        if (notifyLock) {
+            manager.notifySelectedItemInternalChange();
+            notifyLock = false;
         }
     }
 

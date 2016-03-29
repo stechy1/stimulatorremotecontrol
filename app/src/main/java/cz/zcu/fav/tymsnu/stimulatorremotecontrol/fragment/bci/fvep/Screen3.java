@@ -39,6 +39,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
     private LinearLayout outputs;
     private Spinner spinner;
     private int outputTypeIndex;
+    private boolean notifyLock = false;
 
     @Nullable
     @Override
@@ -186,7 +187,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     output.puls.setUp(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
-                            manager.notifySelectedItemInternalChange();
+                            notifyLock = true;
                         }
                     });
                 }
@@ -198,7 +199,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     output.puls.setDown(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
-                            manager.notifySelectedItemInternalChange();
+                            notifyLock = true;
                         }
                     });
                 }
@@ -212,7 +213,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                         output.setFrequency(val, new AItem.OnValueChanged() {
                             @Override
                             public void changed() {
-                                manager.notifySelectedItemInternalChange();
+                                notifyLock = true;
                             }
                         });
                     }
@@ -228,7 +229,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                         output.setDutyCycle(val, new AItem.OnValueChanged() {
                             @Override
                             public void changed() {
-                                manager.notifySelectedItemInternalChange();
+                                notifyLock = true;
                             }
                         });
                     }
@@ -244,11 +245,15 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                     output.setBrightness(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
-                            manager.notifySelectedItemInternalChange();
+                            notifyLock = true;
                         }
                     });
                 }
                 break;
+        }
+        if (notifyLock) {
+            manager.notifySelectedItemInternalChange();
+            notifyLock = false;
         }
     }
 
