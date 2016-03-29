@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private int actViewID = 0;
     private CharSequence title;
     private Menu menu;
+    private MenuItem selectedMenuItem;
 
     /**
      * Name of the connected device
@@ -85,13 +86,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         title = getTitle();
-        if (savedInstanceState == null)
-            displayView(R.id.nav_about);
-        else {
-            actViewID = -1;
-            int selected = savedInstanceState.getInt("fragment");
-            displayView(selected);
-        }
+        displayView(R.id.nav_about);
 
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
@@ -172,8 +167,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        if (item.equals(selectedMenuItem))
+            return false;
+
+        if (selectedMenuItem != null)
+            selectedMenuItem.setChecked(false);
+
         int id = item.getItemId();
         displayView(id);
+        item.setChecked(true);
+        selectedMenuItem = item;
 
         title = item.getTitle();
         setTitle(title);
