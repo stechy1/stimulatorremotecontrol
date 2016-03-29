@@ -59,6 +59,7 @@
     <string name="save_all">Save all</string>
     <string name="save_values">Save values</string>
     <string name="export">Export</string>
+    <string name="output_type">Parameter type</string>
 
     <string name="context_options">Options</string>
     <string name="context_set_name">Set name</string>
@@ -91,7 +92,6 @@
     <string name="erp_screen_2_output_count">Output count</string>
 
     <!-- ERP screen - 3 -->
-    <string name="erp_screen_3_output_type">Output type</string>
     <string-array name="erp_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>
@@ -109,11 +109,9 @@
         <item>@string/screen_title_output_settings</item>
     </string-array>
     <!-- BCI f-VEP screen - 1 -->
-    <string name="bci_fvep_screen_1_new_configuration">New configuration</string>
     <!-- BCI f-VEP screen - 2 -->
     <string name="bci_fvep_screen_2_output_count">Stimul count</string>
     <!-- BCI f-VEP screen - 3 -->
-    <string name="bci_fvep_screen_3_output_type">Parameter type</string>
     <string-array name="bci_fvep_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>

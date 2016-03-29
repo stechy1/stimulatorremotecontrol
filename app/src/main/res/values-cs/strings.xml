@@ -59,6 +59,7 @@
     <string name="save_all">Uložit vše</string>
     <string name="save_values">Uložit hodnoty</string>
     <string name="export">Exportovat</string>
+    <string name="output_type">Typ parametru</string>
 
     <string name="context_options">Možnosti</string>
     <string name="context_set_name">Zadejte název</string>
@@ -91,7 +92,6 @@
     <string name="erp_screen_2_output_count">Počet výstupů</string>
 
     <!-- ERP screen - 3 -->
-    <string name="erp_screen_3_output_type">Typ parametru</string>
     <string-array name="erp_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>
@@ -109,11 +109,9 @@
         <item>@string/screen_title_output_settings</item>
     </string-array>
     <!-- BCI f-VEP screen - 1 -->
-    <string name="bci_fvep_screen_1_new_configuration">Nová konfigurace</string>
     <!-- BCI f-VEP screen - 2 -->
     <string name="bci_fvep_screen_2_output_count">Počet stimulů</string>
     <!-- BCI f-VEP screen - 3 -->
-    <string name="bci_fvep_screen_3_output_type">Typ parametru</string>
     <string-array name="bci_fvep_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>
@@ -141,5 +139,6 @@
     <string name="configuration_saved">Konfigurace <xliff:g id="saved_conf">%1$s</xliff:g> byla uložena</string>
     <string name="configuration_was_deleted">Konfigurace byla smazána</string>
     <string name="count_saved_configuration">Počet uložených konfigurací: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
+
     <string name="values_were_saved">Hodnoty byly uloženy do: <xliff:g id="config_name">%1$s</xliff:g></string>
 </resources>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -44,15 +45,17 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_bci_fvep_screen_3, container, false);
+        View v = inflater.inflate(R.layout.fragment_universal_screen_3, container, false);
 
-        spinner = (Spinner) v.findViewById(R.id.bci_fvep_screen_3_spinner_output_type);
+        spinner = (Spinner) v.findViewById(R.id.universal_screen_3_spinner_output_type);
+        spinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.bci_fvep_screen_titles)));
         spinner.setOnItemSelectedListener(this);
 
-        Button btnSave = (Button) v.findViewById(R.id.bci_fvep_screen_3_button_save_output);
+        Button btnSave = (Button) v.findViewById(R.id.universal_screen_3_button_save_output);
         btnSave.setOnClickListener(this);
 
-        outputs = (LinearLayout) v.findViewById(R.id.bci_fvep_screen_3_linearlayout);
+        outputs = (LinearLayout) v.findViewById(R.id.universal_screen_3_linearlayout);
         inputs = new EditText[1];
 
         stimulText = getResources().getString(R.string.bci_fvep_screen_3_output);
