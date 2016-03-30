@@ -10,11 +10,20 @@ public class Packet {
     private Code code;
     private byte[] value;
 
+    /**
+     * Konstruktor pro bezdatové packety
+     * @param code typ packetu
+     */
     public Packet(Code code) {
         this.code = code;
         this.value = new byte[]{0x00, code.getCode(), 0x00};
     }
 
+    /**
+     * Konstruktor pro packety s daty
+     * @param code typ packetu
+     * @param data data packetu
+     */
     public Packet(Code code, byte[] data) {
         this.code = code;
         ByteBuffer buffer = ByteBuffer.allocate(2 + data.length)
@@ -34,6 +43,10 @@ public class Packet {
         return value.length + "B | " + code.getDescription() + " | " + sb.toString();
     }
 
+    /**
+     * Vrátí bajtové pole reprezentující packet, toto se používá při BT posílání
+     * @return bajtové pole
+     */
     public byte[] getValue() {
         return value;
     }
