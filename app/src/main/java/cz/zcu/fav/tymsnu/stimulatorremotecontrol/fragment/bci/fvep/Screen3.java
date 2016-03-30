@@ -23,7 +23,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFvep;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 
 public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
 
@@ -79,7 +79,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
 
     @Override
     public void onClick(View v) {
-        ConfigurationFvep configuration = manager.getSelectedItem();
+        ConfigurationFVEP configuration = manager.getSelectedItem();
         if (configuration == null)
             return;
 
@@ -94,7 +94,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
             this.outputs.removeAllViews();
             return;
         }
-        ConfigurationFvep configuration = (ConfigurationFvep) data;
+        ConfigurationFVEP configuration = (ConfigurationFVEP) data;
         spinner.setSelection(PULSE_UP);
 
         inputs = new EditText[configuration.getOutputCount()];
@@ -104,7 +104,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
     }
 
     private void changeValues() {
-        ConfigurationFvep configurationFvep = manager.getSelectedItem();
+        ConfigurationFVEP configurationFvep = manager.getSelectedItem();
         if (configurationFvep == null)
             return;
 
@@ -112,7 +112,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
         if (context == null)
             return;
 
-        final List<ConfigurationFvep.Output> outputs = configurationFvep.outputList;
+        final List<ConfigurationFVEP.Output> outputs = configurationFvep.outputList;
         final LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
         if (inputs[0] == null) {
@@ -141,52 +141,52 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
         readValues(outputs);
     }
 
-    private void readValues(List<ConfigurationFvep.Output> outputs) {
+    private void readValues(List<ConfigurationFVEP.Output> outputs) {
         int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
                 for (int i = 0; i < count; i++) {
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     inputs[i].setText("" + output.puls.getUp());
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     inputs[i].setText("" + output.puls.getDown());
                 }
                 break;
 
             case FREQUENCY:
                 for (int i = 0; i < count; i++) {
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     inputs[i].setText("" + output.getFrequency());
                 }
                 break;
 
             case DUTY_CYCLE:
                 for (int i = 0; i < count; i++) {
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     inputs[i].setText("" + output.getDutyCycle());
                 }
                 break;
 
             case BRIGHTNESS:
                 for (int i = 0; i < count; i++) {
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     inputs[i].setText("" + output.getBrightness());
                 }
                 break;
         }
     }
 
-    private void writeValues(List<ConfigurationFvep.Output> outputs) {
+    private void writeValues(List<ConfigurationFVEP.Output> outputs) {
         int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     output.puls.setUp(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -198,7 +198,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     output.puls.setDown(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -211,7 +211,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
             case FREQUENCY:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     if (output.isFrequencyInRange(val)) {
                         output.setFrequency(val, new AItem.OnValueChanged() {
                             @Override
@@ -227,7 +227,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
             case DUTY_CYCLE:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     if (output.isDutyCycleInRange(val)) {
                         output.setDutyCycle(val, new AItem.OnValueChanged() {
                             @Override
@@ -244,7 +244,7 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
             case BRIGHTNESS:
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
-                    ConfigurationFvep.Output output = outputs.get(i);
+                    ConfigurationFVEP.Output output = outputs.get(i);
                     output.setBrightness(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
