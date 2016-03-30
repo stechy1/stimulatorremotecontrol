@@ -1,4 +1,4 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,14 +10,15 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.AScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen1;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen3;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.SchemeManager;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class ERPPagerAdapter extends FragmentStatePagerAdapter {
 
     private final IBtCommunication iBtCommunication;
-    private final SchemeManager schemeManager;
+    private final Manager<ConfigurationERP> schemeManager;
 
-    public ERPPagerAdapter(FragmentManager fm, IBtCommunication iBtCommunication, SchemeManager schemeManager) {
+    public ERPPagerAdapter(FragmentManager fm, IBtCommunication iBtCommunication, Manager<ConfigurationERP> schemeManager) {
         super(fm);
 
         this.iBtCommunication = iBtCommunication;
@@ -42,7 +43,7 @@ public class ERPPagerAdapter extends FragmentStatePagerAdapter {
         }
 
         fragment.setBtCommunication(iBtCommunication);
-        fragment.setSchemeManager(schemeManager);
+        fragment.setManager(schemeManager);
 
         return fragment;
     }

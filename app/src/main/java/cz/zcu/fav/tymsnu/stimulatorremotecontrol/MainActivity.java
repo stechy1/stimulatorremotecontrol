@@ -29,9 +29,10 @@ import android.view.View;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.DeviceListActivity;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.AboutFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ERPFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.HomeFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SettingsFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.FVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.service.BluetoothCommunicationService;
 
 public class MainActivity extends AppCompatActivity
@@ -44,9 +45,10 @@ public class MainActivity extends AppCompatActivity
 
     private ASimpleFragment fragment;
     private ActionBarDrawerToggle mDrawerToggle;
-    private int actViewID;
+    private int actViewID = 0;
     private CharSequence title;
     private Menu menu;
+    private MenuItem selectedMenuItem;
 
     /**
      * Name of the connected device
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         title = getTitle();
-        displayView(Constants.Fragments.HOME);
+        displayView(R.id.nav_about);
 
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity
                         connectDevice(data);
 
                     } catch (Exception ex) {
-                        Snackbar.make(findViewById(android.R.id.content), "Zařízení nebylo rozpoznáno", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(findViewById(android.R.id.content), getString(R.string.unknown_device), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -165,8 +167,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        if (item.equals(selectedMenuItem))
+            return false;
+
+        if (selectedMenuItem != null)
+            selectedMenuItem.setChecked(false);
+
         int id = item.getItemId();
         displayView(id);
+        item.setChecked(true);
+        selectedMenuItem = item;
 
         title = item.getTitle();
         setTitle(title);
@@ -198,7 +208,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (actViewID != Constants.Fragments.HOME) {
+        if (actViewID != R.id.nav_about) {
             fragment.onBackButtonPressed(this);
         } else
             super.onBackPressed();
@@ -259,7 +269,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothCommunicationService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_disconnected));
+                            menu.getItem(0).setIcon(R.drawable.bluetooth_disconnected);
                             break;
                         case BluetoothCommunicationService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -267,7 +277,7 @@ public class MainActivity extends AppCompatActivity
                         case BluetoothCommunicationService.STATE_LISTEN:
                         case BluetoothCommunicationService.STATE_NONE:
                             setStatus(R.string.title_not_connected);
-                            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.bluetooth_off));
+                            menu.getItem(0).setIcon(R.drawable.bluetooth_off);
                             break;
                     }
                     break;
@@ -297,6 +307,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void displayView(int id) {
+        if (actViewID == id) {
+            return;
+        }
+
         Log.i("displayView()", "" + id);
         ASimpleFragment oldFragment = fragment;
         switch (id) {
@@ -307,7 +321,13 @@ public class MainActivity extends AppCompatActivity
                 fragment = new SettingsFragment();
                 break;
 
-            case R.id.nav_item_2:
+            case R.id.nav_about:
+                fragment = new AboutFragment();
+                break;
+
+            case R.id.nav_item_2_1:
+                fragment = new FVEPFragment();
+                break;
 
             case R.id.nav_item_3:
 
@@ -318,12 +338,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_item_6:
 
             default:
-                fragment = new HomeFragment();
-                id = Constants.Fragments.HOME;
+                fragment = new AboutFragment();
+                id = R.id.nav_about;
                 break;
         }
-        if (fragment == null)
-            return;
 
         fragment.setBtCommunication(mCommunicationService);
         actViewID = id;
@@ -348,8 +366,8 @@ public class MainActivity extends AppCompatActivity
                     case BluetoothAdapter.STATE_OFF:
                         Log.i(TAG, "Bluetooth off");
                         final Snackbar snackbar = Snackbar.make(self.findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
-                        snackbar.setText("Bluetooth byl vypnut");
-                        snackbar.setAction("Zapnout", new View.OnClickListener() {
+                        snackbar.setText(getString(R.string.bluetooth_off));
+                        snackbar.setAction(getString(R.string.turn_on), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 mBluetoothAdapter.enable();

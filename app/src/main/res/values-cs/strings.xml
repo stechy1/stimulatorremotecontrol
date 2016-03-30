@@ -29,61 +29,116 @@
     <string name="nav_text_item_5">Biosensor logger</string>
     <string name="nav_text_item_6">Test mode</string>
     <string name="nav_text_settings">Nastavení</string>
+    <string name="nav_text_about">O aplikaci</string>
     
     <!-- Activity - hledání a připojení zařízení-->
     <string name="select_device">vyberte zařízení pro připojení</string>
     <string name="none_paired">Žádné zařízení není spárované</string>
     <string name="title_paired_devices">Spárovaná zařízení</string>
 
+    <!-- Activity - home -->
+    <string name="version">Verze: <xliff:g id="app_version">%1$s</xliff:g></string>
+
     <!-- Activity - nastavení-->
     <string name="language_change">Změna jazyka</string>
 
+    <!-- Screen titles -->
+    <string name="screen_title_schema">Schéma</string>
+    <string name="screen_title_fvep">Konfigurace f-VEP</string>
+    <string name="screen_title_tvep">Konfigurace t-VEP</string>
+    <string name="screen_title_cvep">Konfigurace c-VEP</string>
+
+    <string name="screen_title_general_settings">Obecné nastavení</string>
+    <string name="screen_title_output_settings">Nastavení výstupů</string>
+
+    <string name="select">Vybrat</string>
+    <string name="duplicate">Duplikovat</string>
+    <string name="delete">Smazat</string>
+    <string name="rename">Přejmenovat</string>
+    <string name="save_as">Uložit jako</string>
+    <string name="save_all">Uložit vše</string>
+    <string name="save_values">Uložit hodnoty</string>
+    <string name="export">Exportovat</string>
+    <string name="output_type">Typ parametru</string>
+
+    <string name="context_options">Možnosti</string>
+    <string name="context_set_name">Zadejte název</string>
+
     <!-- ERP screens -->
     <string-array name="erp_screen_titles">
-        <item>Schema</item>
-        <item>Nastavení výstupů</item>
-        <item>Obecné nastavení</item>
+        <item>@string/screen_title_schema</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
     </string-array>
     <string name="erp_screen_select_schema">Vyberte schema pro spusteni stimulace</string>
     <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
 
     <!-- ERP screen - 1 -->
-    <string name="erp_screen_1_new_schema">Nové schéma</string>
-    <string name="erp_screen_1_select_schema">Vybrat</string>
-    <string name="erp_screen_1_delete_schema">Smazat</string>
-    <string name="erp_screen_1_save_schema">Uložit…</string>
-    <string name="erp_screen_1_export_schema">Export</string>
-    <string name="erp_screen_1_context_menu_title">Možnosti</string>
-    <string name="erp_screen_1_save_scheme_success">Schema bylo uloženo</string>
+    <string name="erp_scren_1_new_scheme">Nové schéma</string>
 
     <!-- ERP screen - 2 -->
-    <string-array name="erp_screen_2_output_types">
+    <string name="erp_screen_2_random">Náhodnost</string>
+    <string-array name="erp_screen_2_random_values">
+        <item>Vypnuto</item>
+        <item>Krátká</item>
+        <item>Dlouhá</item>
+        <item>Krátká i dlouhá</item>
+    </string-array>
+    <string name="erp_screen_2_edge">Hrana</string>
+    <string-array name="erp_screen_2_edge_values">
+        <item>Vzestupná</item>
+        <item>Sestupná</item>
+    </string-array>
+    <string name="erp_screen_2_output_count">Počet výstupů</string>
+
+    <!-- ERP screen - 3 -->
+    <string-array name="erp_screen_3_output_types">
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>
         <item>Distribution - value [%]</item>
         <item>Distribution - delay [%]</item>
         <item>Brightness [%]</item>
     </string-array>
-    <string name="erp_screen_2_output">. VÝSTUP:</string>
-    <string name="erp_screen_2_save_outputs">Uložit hodnoty</string>
+    <string name="erp_screen_3_output">. VÝSTUP:</string>
 
-    <!-- ERP screen - 3 -->
-    <string name="erp_screen_3_random">Náhodnost</string>
-    <string-array name="erp_screen_3_random_values">
-        <item>Vypnuto</item>
-        <item>Krátká</item>
-        <item>Dlouhá</item>
-        <item>Krátká i dlouhá</item>
+    <!-- BCI screens -->
+    <!-- BCI f-VEP screens -->
+    <string-array name="bci_fvep_screen_titles">
+        <item>@string/screen_title_fvep</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
     </string-array>
-    <string name="erp_screen_3_edge">Hrana</string>
-    <string-array name="erp_screen_3_edge_values">
-        <item>Vzestupná</item>
-        <item>Sestupná</item>
+    <!-- BCI f-VEP screen - 1 -->
+    <!-- BCI f-VEP screen - 2 -->
+    <string name="bci_fvep_screen_2_output_count">Počet stimulů</string>
+    <!-- BCI f-VEP screen - 3 -->
+    <string-array name="bci_fvep_screen_3_output_types">
+        <item>Pulse - up [ms]</item>
+        <item>Pulse - down [ms]</item>
+        <item>Frequency (0–255)</item>
+        <item>Duty cycle (0–255)</item>
+        <item>Brightness [%]</item>
     </string-array>
-    <string name="erp_screen_3_output_count">Počet výstupů</string>
-    <string name="erp_screen_3_output_count_save">Uložit</string>
+    <string name="bci_fvep_screen_3_output">. STIMUL</string>
 
     <!-- Exceptions -->
     <string name="exception_general">Akci se nepodařilo dokončit</string>
     <string name="exception_out_of_range">Hodnota je mimo rozsah</string>
+
+    <!-- Alerts -->
+    <string name="unknown_device">Zařízení nebylo rozpoznáno</string>
+    <string name="bluetooth_off">Bluetooth je vypnutý</string>
+    <string name="turn_on">Zapnout</string>
+
+    <string name="illegal_input">Nepovolené znaky</string>
+
+    <string name="schema_saved">Schéma <xliff:g id="saved_schema">%1$s</xliff:g> bylo uloženo</string>
+    <string name="schema_was_deleted">Schéma bylo smazáno</string>
+    <string name="count_saved_schemes">Počet uložených schémat: <xliff:g id="saved_scheme_count">%1$s</xliff:g></string>
+
+    <string name="configuration_saved">Konfigurace <xliff:g id="saved_conf">%1$s</xliff:g> byla uložena</string>
+    <string name="configuration_was_deleted">Konfigurace byla smazána</string>
+    <string name="count_saved_configuration">Počet uložených konfigurací: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
+
+    <string name="values_were_saved">Hodnoty byly uloženy do: <xliff:g id="config_name">%1$s</xliff:g></string>
 </resources>

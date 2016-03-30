@@ -1,4 +1,4 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file;
 
 import android.util.JsonWriter;
 
@@ -14,12 +14,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Output;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.Scheme;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class SchemeJSONHandler implements IReadWriteScheme {
+public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
 
-    // region variables
+    // region Variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
     private static final String TAG_EDGE = "edge";
     private static final String TAG_RANDOM = "random";
@@ -34,23 +35,18 @@ public class SchemeJSONHandler implements IReadWriteScheme {
     private static final String TAG_BRIGHTNESS = "brightness";
     // endregion
 
-
-    public SchemeJSONHandler() {}
-
-
-
-    // region write
+    // region Write
     @Override
-    public void write(OutputStream outputStream, Scheme scheme) throws IOException {
+    public void write(OutputStream outputStream, ConfigurationERP configuration) throws IOException {
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream));
         writer.setIndent("  ");
 
         writer.beginObject();
-        writer.name(TAG_OUTPUT_COUNT).value(scheme.getOutputCount());
-        writer.name(TAG_EDGE).value(scheme.getEdge().ordinal());
-        writer.name(TAG_RANDOM).value(scheme.getRandom().ordinal());
+        writer.name(TAG_OUTPUT_COUNT).value(configuration.getOutputCount());
+        writer.name(TAG_EDGE).value(configuration.getEdge().ordinal());
+        writer.name(TAG_RANDOM).value(configuration.getRandom().ordinal());
 
-        writeOutputs(writer, scheme.getOutputList());
+        writeOutputs(writer, configuration.getOutputList());
         writer.endObject();
 
         writer.close();
@@ -101,9 +97,9 @@ public class SchemeJSONHandler implements IReadWriteScheme {
     }
     // endregion
 
-    // region read
+    // region Read
     @Override
-    public void read(InputStream inputStream, Scheme scheme) throws IOException {
+    public void read(InputStream inputStream, ConfigurationERP configuration) throws IOException {
         StringBuilder builder = new StringBuilder();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -118,20 +114,20 @@ public class SchemeJSONHandler implements IReadWriteScheme {
         try {
             JSONObject schemeObject = new JSONObject(src);
 
-            scheme.setOutputCount(schemeObject.getInt(TAG_OUTPUT_COUNT));
-            scheme.setEdge(Scheme.Edge.valueOf(schemeObject.getInt(TAG_EDGE)));
-            scheme.setRandom(Scheme.Random.valueOf(schemeObject.getInt(TAG_RANDOM)));
+            configuration.setOutputCount(schemeObject.getInt(TAG_OUTPUT_COUNT));
+            configuration.setEdge(ConfigurationERP.Edge.valueOf(schemeObject.getInt(TAG_EDGE)));
+            configuration.setRandom(ConfigurationERP.Random.valueOf(schemeObject.getInt(TAG_RANDOM)));
 
             JSONArray outputArray = schemeObject.getJSONArray(TAG_OUTPUTS);
-            readOutputs(outputArray, scheme);
+            readOutputs(outputArray, configuration);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void readOutputs(JSONArray outputs, Scheme scheme) throws JSONException {
-        List<Output> outputList = scheme.getOutputList();
+    private void readOutputs(JSONArray outputs, ConfigurationERP configuration) throws JSONException {
+        List<Output> outputList = configuration.getOutputList();
         outputList.clear();
         int length = outputs.length();
         for (int i = 0; i < length; i++) {

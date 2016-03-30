@@ -3,27 +3,51 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
     android:paddingBottom="56dp">
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/erp_screen_2_random"/>
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/erp_screen_2_spinner_output_type"
-            android:entries="@array/erp_screen_2_output_types"/>
-        <Button
+            android:id="@+id/erp_screen_2_spinner_random"
+            android:background="@color/colorAlpha"
+            android:entries="@array/erp_screen_2_random_values"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/erp_screen_2_button_save_output"
-            android:text="@string/erp_screen_2_save_outputs"/>
+            android:text="@string/erp_screen_2_edge" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/erp_screen_2_spinner_edge"
+            android:background="@color/colorAlpha"
+            android:entries="@array/erp_screen_2_edge_values"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/erp_screen_2_linearlayout"
-            android:padding="5dp"
-            android:orientation="vertical" />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/erp_screen_2_output_count"
+                android:gravity="center" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/erp_screen_2_number_picker" />
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
