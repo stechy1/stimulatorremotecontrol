@@ -32,7 +32,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.ERPPacketH
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public final class Screen1 extends AScreen
-        implements AdapterView.OnItemClickListener, View.OnClickListener, Observer {
+        implements AdapterView.OnItemClickListener, Observer {
 
     private static final String TAG = "Screen1";
 
@@ -55,7 +55,7 @@ public final class Screen1 extends AScreen
         btnSaveAll.setOnClickListener(new SaveAllSchemesListener());
 
         ImageButton buttonPlay = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_play);
-        buttonPlay.setOnClickListener(this);
+        buttonPlay.setOnClickListener(new PlayConfigurationListener());
 
         manager.addObserver(this);
 
@@ -144,24 +144,6 @@ public final class Screen1 extends AScreen
         ((ERPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
-    // FAB onClick
-    @Override
-    public void onClick(View v) {
-        ConfigurationERP configuration = manager.getSelectedItem();
-        if (configuration == null)
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
-        else {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
-            List<Packet> packets = new ERPPacketHandler(configuration).getPackets();
-            for (Packet packet : packets) {
-                Log.i(TAG, packet.toString());
-                if (!iBtCommunication.write(packet.getValue())) {
-                    break;
-                }
-            }
-        }
-    }
-
     private void showInputDialog(final DialogCallback callback) {
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -230,6 +212,26 @@ public final class Screen1 extends AScreen
                     Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_schemes, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+    private final class PlayConfigurationListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            ConfigurationERP configuration = manager.getSelectedItem();
+            if (configuration == null)
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
+            else {
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
+                List<Packet> packets = new ERPPacketHandler(configuration).getPackets();
+                for (Packet packet : packets) {
+                    Log.i(TAG, packet.toString());
+                    if (!iBtCommunication.write(packet.getValue())) {
+                        break;
+                    }
+                }
+            }
         }
     }
 

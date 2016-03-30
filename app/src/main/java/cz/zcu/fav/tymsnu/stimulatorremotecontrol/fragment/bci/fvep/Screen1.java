@@ -20,16 +20,19 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.FVEPScreen1ListViewAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.FVEPPacketHandler;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class Screen1 extends AScreen
-        implements  AdapterView.OnItemClickListener, Observer, View.OnClickListener {
+        implements  AdapterView.OnItemClickListener, Observer {
 
     private static final String TAG = "fvep-Screen1";
 
@@ -52,7 +55,7 @@ public class Screen1 extends AScreen
         buttonSaveAll.setOnClickListener(new SaveAllConfigurationsListener());
 
         ImageButton buttonPlay = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_play);
-        buttonPlay.setOnClickListener(this);
+        buttonPlay.setOnClickListener(new PlayConfigurationListener());
 
         manager.addObserver(this);
 
@@ -140,12 +143,6 @@ public class Screen1 extends AScreen
         ((FVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
-    // FAB onClick
-    @Override
-    public void onClick(View v) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci", Snackbar.LENGTH_SHORT).show();
-    }
-
     private void showInputDialog(final DialogCallback callback) {
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -209,6 +206,26 @@ public class Screen1 extends AScreen
                     Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_configuration, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+    private final class PlayConfigurationListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            ConfigurationFVEP configuration = manager.getSelectedItem();
+            if (configuration == null)
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte konfiguraci pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
+            else {
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
+                List<Packet> packets = new FVEPPacketHandler(configuration).getPackets();
+                for (Packet packet : packets) {
+                    Log.i(TAG, packet.toString());
+                    if (!iBtCommunication.write(packet.getValue())) {
+                        break;
+                    }
+                }
+            }
         }
     }
 
