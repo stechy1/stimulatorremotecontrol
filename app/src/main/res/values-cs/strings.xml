@@ -116,7 +116,7 @@
         <item>Pulse - up [ms]</item>
         <item>Pulse - down [ms]</item>
         <item>Frequency (0–255)</item>
-        <item>Duty cycle (0–255)</item>
+        <item>Duty cycle [%]</item>
         <item>Brightness [%]</item>
     </string-array>
     <string name="bci_fvep_screen_3_output">. STIMUL</string>
