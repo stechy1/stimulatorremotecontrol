@@ -250,12 +250,18 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 for (int i = 0; i < count; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
                     int val = readValue(inputs[i], output.getBrightness());
-                    output.setBrightness(val, new AItem.OnValueChanged() {
-                        @Override
-                        public void changed() {
-                            notifyLock = true;
-                        }
-                    });
+                    if (output.isBrightnessInRange(val)) {
+                        output.setBrightness(val, new AItem.OnValueChanged() {
+                            @Override
+                            public void changed() {
+                                notifyLock = true;
+                            }
+                        });
+                    } else {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
+                        notifyLock = false;
+                        break;
+                    }
                 }
                 break;
         }

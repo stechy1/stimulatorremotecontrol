@@ -4,6 +4,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
+
 public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
 
     public static final int MIN_OUTPUT_COUNT = 1;
@@ -116,23 +118,12 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
         }
 
         /**
-         * Zjistí, zda-li je číslo v rozsahu
-         * @param val Kontrolovaná hodnota
-         * @param min Minimální hodnota (včetně)
-         * @param max Maximální hodnota (vyjma)
-         * @return True, pokud je číslo v rozsahu, jinak false
-         */
-        public boolean isInRange(int val, int min, int max) {
-            return val >= min && val < max;
-        }
-
-        /**
          * Zjistí, zda-li hodnota odpovídá frekvenčnímu rozsahu
          * @param val Kontrolovaná hodnota
          * @return True, pokud hodnota odpovídá frekvenčnímu rozsahu, jinak false
          */
         public boolean isFrequencyInRange(int val) {
-            return isInRange(val, 0, 256);
+            return RangeUtils.isInByteRange(val);
         }
 
         /**
@@ -141,7 +132,7 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
          * @return True, pokud hodnota odpovídá duty cycle rozsahu, jinak false
          */
         public boolean isDutyCycleInRange(int val) {
-            return isInRange(val, 0, 101);
+            return RangeUtils.isInPercentRange(val);
         }
 
         /**
@@ -150,7 +141,7 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
          * @return True, pokud hodnota odpovídá rozsahu jasu, jinak false
          */
         public boolean isBrightnessInRange(int val) {
-            return isInRange(val, 0, 256);
+            return RangeUtils.isInByteRange(val);
         }
 
         public String getName() {
