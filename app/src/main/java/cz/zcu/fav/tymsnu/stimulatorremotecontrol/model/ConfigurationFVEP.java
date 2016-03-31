@@ -141,7 +141,7 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
          * @return True, pokud hodnota odpovídá duty cycle rozsahu, jinak false
          */
         public boolean isDutyCycleInRange(int val) {
-            return isInRange(val, 0, 256);
+            return isInRange(val, 0, 101);
         }
 
         /**
