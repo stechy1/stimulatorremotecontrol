@@ -26,4 +26,9 @@
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
 
+    <declare-styleable name="PatternControl">
+        <attr name="bit_per_row" format="integer" />
+        <attr name="bit_count" format="integer" />
+        <attr name="value" format="integer" />
+    </declare-styleable>
 </resources>
