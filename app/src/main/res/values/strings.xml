@@ -121,6 +121,13 @@
     </string-array>
     <string name="bci_fvep_screen_3_output">. STIMUL</string>
 
+    <!-- BCI c-VEP screen - 1 -->
+    <string-array name="bci_cvep_screen_titles">
+        <item>@string/screen_title_cvep</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
+    </string-array>
+
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
     <string name="exception_out_of_range">Value is out of range</string>

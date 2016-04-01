@@ -19,5 +19,6 @@ public class Constants {
 
     public static final String FOLDER_BCI = "bci";
     public static final String FOLDER_FVEP = "fvep";
+    public static final String FOLDER_CVEP = "cvep";
 
 }
