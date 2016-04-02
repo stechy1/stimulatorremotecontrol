@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/cvep_pattern_control"
         app:bit_count="32"
-        app:bit_per_row="16"/>
+        app:bit_per_row="16"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
