@@ -173,6 +173,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
                 @Override
                 public void changed() {
                     manager.notifySelectedItemInternalChange();
+                    manager.notifyValueChanged();
                 }
             });
         }

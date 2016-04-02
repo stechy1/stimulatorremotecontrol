@@ -27,6 +27,31 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
         this.pulsSkew = pulsSkew;
         this.brightness = brightness;
         this.patternList = patternList;
+
+        for (int i = 0; i < outputCount; i++) {
+            patternList.add(new Pattern());
+        }
+    }
+    // endregion
+
+    // region Private methods
+    /**
+     * Upraví počet výstupů
+     * Pokud je jich víc, než je požadováno, tak odstraní poslední
+     * Pokud je jich méně, tak vytvoří nové
+     */
+    private void rearangeOutputs() {
+        int listCount = patternList.size();
+        if (outputCount > listCount) {
+            int delta = outputCount - listCount;
+            for (int i = 0; i < delta; i++) {
+                patternList.add(new Pattern());
+            }
+        } else {
+            for (int i = --listCount; i >= outputCount; i--) {
+                patternList.remove(i);
+            }
+        }
     }
     // endregion
 
@@ -63,6 +88,7 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
             return;
 
         this.outputCount = outputCount;
+        rearangeOutputs();
 
         if (onValueChanged != null)
             onValueChanged.changed();
@@ -194,17 +220,15 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
     public static final class Pattern {
 
         // region Variables
-        private int size;
         private int value;
         // endregion
 
         // region Constructors
         public Pattern() {
-            this(1, 0);
+            this(0);
         }
 
-        public Pattern(int size, int value) {
-            this.size = size;
+        public Pattern(int value) {
             this.value = value;
         }
         // endregion
@@ -213,36 +237,6 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
         // endregion
 
         // region Getters & Setters
-        /**
-         * Vrátí velikost patternu
-         * @return Velikost patternu
-         */
-        public int getSize() {
-            return size;
-        }
-
-        /**
-         * Nastaví velikost patternu. Velikost je v intervalu <1 - 16>
-         * okud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-         * @param size Nová velikost patternu
-         */
-        public void setSize(int size) {setSize(size, null);}
-        /**
-         * Nastaví velikost patternu. Velikost je v intervalu <1 - 16>
-         * okud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-         * @param size Nová velikost patternu
-         * @param onValueChanged Callback, který se zavolá po nastavení nové velikosti patternu
-         */
-        public void setSize(int size, OnValueChanged onValueChanged) {
-            if (this.size == size)
-                return;
-
-            this.size = size;
-
-            if (onValueChanged != null)
-                onValueChanged.changed();
-        }
-
         /**
          * Vrátí aktuální hodnotu patternu
          * @return Hodnota patternu
