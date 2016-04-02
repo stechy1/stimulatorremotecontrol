@@ -7,12 +7,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IBtCommunication;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep.AScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep.Screen1;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class TVEPPagerAdapter extends FragmentStatePagerAdapter {
 
-    private static final int PAGE_COUNT = 1;
+    private static final int PAGE_COUNT = 2;
 
 
     private final IBtCommunication btCommunication;
@@ -33,7 +34,7 @@ public class TVEPPagerAdapter extends FragmentStatePagerAdapter {
                 fragment = new Screen1();
                 break;
             case 1:
-                fragment = new Screen1();
+                fragment = new Screen2();
                 break;
             case 2:
                 fragment = new Screen1();
