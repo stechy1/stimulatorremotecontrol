@@ -75,7 +75,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
             return;
 
         configuration.setPulsLength(readValue(textViewPulsLength, configuration.getPulsLength()));
-        configuration.setPulsSkew(readValue(textViewPulsSkew, configuration.getPulsSkew()));
+        configuration.setBitShift(readValue(textViewPulsSkew, configuration.getBitShift()));
     }
 
 
@@ -116,7 +116,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
 
         numberPicker.setValue(configuration.getOutputCount());
         textViewPulsLength.setText(configuration.getPulsLength() + "");
-        textViewPulsSkew.setText(configuration.getPulsSkew() + "");
+        textViewPulsSkew.setText(configuration.getBitShift() + "");
         seekBar.setProgress(configuration.getBrightness());
 
     }
