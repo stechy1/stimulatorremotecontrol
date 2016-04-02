@@ -19,10 +19,9 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 public class CVEPFileJSONHandler implements IReadWrite<ConfigurationCVEP> {
 
     // region Variables
-
     private static final String TAG_OUTPUT_COUNT = "output_count";
     private static final String TAG_PULSE_LENGHT = "pulse_lenght";
-    private static final String TAG_BIT_SHIFT = "bit_shift"; //alias PULSE SKEW (
+    private static final String TAG_BIT_SHIFT = "bit_shift"; //alias PULSE SKEW (starý termín)
     private static final String TAG_BRIGHTNESS = "brightness";
     private static final String TAG_MAIN_PATTERN = "main_pattern";
     // endregion
@@ -40,7 +39,7 @@ public class CVEPFileJSONHandler implements IReadWrite<ConfigurationCVEP> {
         w.name(TAG_PULSE_LENGHT).value(item.getPulsLength());
 
         w.beginObject();
-        w.name(TAG_BIT_SHIFT).value(item.getPulsSkew());
+        w.name(TAG_BIT_SHIFT).value(item.getBitShift());
 
         w.beginObject();
         w.name(TAG_BRIGHTNESS).value(item.getBrightness());
@@ -68,7 +67,7 @@ public class CVEPFileJSONHandler implements IReadWrite<ConfigurationCVEP> {
 
             item.setOutputCount(itemObject.getInt(TAG_OUTPUT_COUNT));
             item.setPulsLength(itemObject.getInt(TAG_PULSE_LENGHT));
-            item.setPulsSkew(itemObject.getInt(TAG_BIT_SHIFT));
+            item.setBitShift(itemObject.getInt(TAG_BIT_SHIFT));
             item.setBrightness(itemObject.getInt(TAG_BRIGHTNESS));
             item.getMainPattern().setValue(itemObject.getInt(TAG_MAIN_PATTERN));
 

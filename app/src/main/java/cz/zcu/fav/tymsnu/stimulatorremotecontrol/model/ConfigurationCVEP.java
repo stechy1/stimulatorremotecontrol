@@ -8,7 +8,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
     // region Variables
     private int outputCount;
     private int pulsLength;
-    private int pulsSkew;
+    private int bitShift;
     private int brightness;
     private Pattern mainPattern;
     public final List<Pattern> patternList = new ArrayList<>();
@@ -23,7 +23,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         super(name);
         this.mainPattern = mainPattern;
         this.brightness = brightness;
-        this.pulsSkew = pulsSkew;
+        this.bitShift = pulsSkew;
         this.pulsLength = pulsLength;
         this.outputCount = outputCount;
     }
@@ -49,7 +49,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         int value = main.getValue();
 
         for (Pattern pattern : patternList) {
-            int shiftValue = Integer.rotateRight(value, pulsSkew);
+            int shiftValue = Integer.rotateRight(value, bitShift);
             pattern.setValue(shiftValue);
             value = shiftValue;
         }
@@ -131,16 +131,16 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
      * Vrátí číslo představující bitový posun, o který liší jednotlivé patterny
      * @return Bitový posun
      */
-    public int getPulsSkew() {
-        return pulsSkew;
+    public int getBitShift() {
+        return bitShift;
     }
 
     /**
      * Nastaví bitový posun patternu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-     * @param pulsSkew Bitový posun
+     * @param bitShift Bitový posun
      */
-    public void setPulsSkew(int pulsSkew) {setPulsSkew(pulsSkew, null);}
+    public void setBitShift(int bitShift) {setPulsSkew(bitShift, null);}
     /**
      * Nastaví bitový posun patternu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
@@ -148,10 +148,10 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
      * @param onValueChanged Callback, který se zavolá po nastavení bitového posunu
      */
     public void setPulsSkew(int pulsSkew, OnValueChanged onValueChanged) {
-        if (this.pulsSkew == pulsSkew)
+        if (this.bitShift == pulsSkew)
             return;
 
-        this.pulsSkew = pulsSkew;
+        this.bitShift = pulsSkew;
         recalculateOutputs();
 
         if (onValueChanged != null)
