@@ -167,9 +167,9 @@ public class PatternControl extends FlowLayout{
 
         int oldValue = this.mValue;
         if (value == 0)
-            this.mValue &= ~(1 << mBitCount - index);
+            this.mValue &= ~(1 << mBitCount - index - 1);
         else
-            this.mValue |= (1 << mBitCount - index);
+            this.mValue |= (1 << mBitCount - index - 1);
 
         updateCheckbox(index, value);
         if (mListener != null)
