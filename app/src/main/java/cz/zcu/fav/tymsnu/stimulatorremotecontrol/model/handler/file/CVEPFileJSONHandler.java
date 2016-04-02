@@ -33,18 +33,11 @@ public class CVEPFileJSONHandler implements IReadWrite<ConfigurationCVEP> {
         w.setIndent("  ");
 
         w.beginObject();
+
         w.name(TAG_OUTPUT_COUNT).value(item.getOutputCount());
-
-        w.beginObject();
         w.name(TAG_PULSE_LENGHT).value(item.getPulsLength());
-
-        w.beginObject();
         w.name(TAG_BIT_SHIFT).value(item.getBitShift());
-
-        w.beginObject();
         w.name(TAG_BRIGHTNESS).value(item.getBrightness());
-
-        w.beginObject();
         w.name(TAG_MAIN_PATTERN).value(item.getMainPattern().getValue());
 
         w.endObject();
