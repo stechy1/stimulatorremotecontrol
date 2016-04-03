@@ -140,14 +140,14 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param bitShift Bitový posun
      */
-    public void setBitShift(int bitShift) {setPulsSkew(bitShift, null);}
+    public void setBitShift(int bitShift) {setBitShift(bitShift, null);}
     /**
      * Nastaví bitový posun patternu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param pulsSkew Bitový posun
      * @param onValueChanged Callback, který se zavolá po nastavení bitového posunu
      */
-    public void setPulsSkew(int pulsSkew, OnValueChanged onValueChanged) {
+    public void setBitShift(int pulsSkew, OnValueChanged onValueChanged) {
         if (this.bitShift == pulsSkew)
             return;
 

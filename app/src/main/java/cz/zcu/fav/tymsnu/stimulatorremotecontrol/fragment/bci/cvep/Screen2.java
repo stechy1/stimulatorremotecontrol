@@ -2,6 +2,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.cvep;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,9 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
     private EditText textViewPulsLength;
     private EditText textViewPulsSkew;
     private SeekBar seekBar;
+
+    private boolean notifyLock;
+    private boolean editTextChanged;
 
     @Nullable
     @Override
@@ -60,6 +64,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
             @Override
             public void changed() {
+                notifyLock = true;
                 manager.notifySelectedItemInternalChange();
                 manager.notifyValueChanged();
             }
@@ -74,8 +79,27 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         if (configuration == null)
             return;
 
-        configuration.setPulsLength(readValue(textViewPulsLength, configuration.getPulsLength()));
-        configuration.setBitShift(readValue(textViewPulsSkew, configuration.getBitShift()));
+        configuration.setPulsLength(readValue(textViewPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
+            @Override
+            public void changed() {
+                notifyLock = true;
+                editTextChanged = true;
+                manager.notifySelectedItemInternalChange();
+            }
+        });
+        configuration.setBitShift(readValue(textViewPulsSkew, configuration.getBitShift()), new AItem.OnValueChanged() {
+            @Override
+            public void changed() {
+                notifyLock = true;
+                editTextChanged = true;
+                manager.notifySelectedItemInternalChange();
+            }
+        });
+
+        if (editTextChanged) {
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
+            editTextChanged = false;
+        }
     }
 
 
@@ -92,6 +116,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
         configuration.setBrightness(progress, new AItem.OnValueChanged() {
             @Override
             public void changed() {
+                notifyLock = true;
                 manager.notifySelectedItemInternalChange();
                 manager.notifyValueChanged();
             }
@@ -109,6 +134,11 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
     @Override
     public void update(Observable observable, Object data) {
         if (data == null) {
+            return;
+        }
+
+        if (notifyLock) {
+            notifyLock = false;
             return;
         }
 
