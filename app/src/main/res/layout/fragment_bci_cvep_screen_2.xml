@@ -26,7 +26,8 @@
             <NumberPicker
                 android:id="@+id/cvep_number_picker_output_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
 
         <TextView
@@ -43,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bci_cvep_screen_2_bit_skew" />
+            android:text="@string/bci_cvep_screen_2_bit_shift" />
 
         <EditText
             android:id="@+id/cvep_edit_text_puls_skew"
