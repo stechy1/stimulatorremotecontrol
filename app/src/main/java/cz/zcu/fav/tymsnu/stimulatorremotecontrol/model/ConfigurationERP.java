@@ -4,6 +4,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
+
 public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     // region Variables
@@ -79,11 +81,6 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
     // endregion
 
     // region Public methods
-    /**
-     * Metoda pro získání packetů, které reprezentují nastavení celého schématu a lze je postupně
-     * odeslat po sériové lince do stimulátoru
-     * @return list packetů
-     */
 
     // endregion
 
@@ -257,6 +254,15 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
             return sum + val <= 100;
 
         }
+
+        /**
+         * Zjistí, zda-li hodnota odpovídá rozsahu jasu
+         * @param val Kontrolovaná hodnota
+         * @return True, pokud hodnota odpovídá rozsahu jasu, jinak false
+         */
+        public boolean isBrightnessInRange(int val) {
+            return RangeUtils.isInPercentRange(val);
+        }
         // endregion
 
         // region Getters & Setters
@@ -396,6 +402,15 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
             public Distribution(Distribution source) {
                 this.value = source.value;
                 this.delay = source.delay;
+            }
+
+            /**
+             * Zdjistí, zda-li zadaná hodnota odpovídá distribution rozsahu
+             * @param value Kontrolovaná hodnota
+             * @return True, pokud hodnota odpovídá distribution rozsahu, jinak false
+             */
+            public boolean isValueInRange(int value){
+                return RangeUtils.isInPercentRange(value);
             }
 
             public int getValue() {

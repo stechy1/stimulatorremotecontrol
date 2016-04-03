@@ -112,7 +112,6 @@ public final class Screen3 extends AScreen
         final List<Output> outputs = configuration.getOutputList();
 
         writeValues(outputs);
-        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
     }
 
     private void changeValues() {
@@ -200,8 +199,8 @@ public final class Screen3 extends AScreen
         switch (outputTypeIndex) {
             case PULSE_UP:
                 for (int i = 0; i < count; i++) {
-                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
+                    int val = readValue(inputs[i], output.puls.getUp());
                     output.puls.setUp(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -212,8 +211,8 @@ public final class Screen3 extends AScreen
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < count; i++) {
-                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
+                    int val = readValue(inputs[i], output.puls.getDown());
                     output.puls.setDown(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -225,9 +224,9 @@ public final class Screen3 extends AScreen
 
             case DISTRIBUTION_VALUE:
                 for (int i = 0; i < count; i++) {
-                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    if (output.canUpdateDistribution(outputs, val)) {
+                    int val = readValue(inputs[i], output.distribution.getValue());
+                    if (output.distribution.isValueInRange(val) && output.canUpdateDistribution(outputs, val)) {
                         output.distribution.setValue(val, new AItem.OnValueChanged() {
                             @Override
                             public void changed() {
@@ -235,20 +234,23 @@ public final class Screen3 extends AScreen
                             }
                         });
                     }
-                    else
+                    else {
                         Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
+                        notifyLock = false;
+                        break;
+                    }
                 }
                 break;
             case DISTRIBUTION_DELAY:
                 for (int i = 0; i < count; i++) {
-                    int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    output.distribution.setDelay(val, new AItem.OnValueChanged() {
-                        @Override
-                        public void changed() {
-                            notifyLock = true;
-                        }
-                    });
+                    int val = readValue(inputs[i], output.distribution.getDelay());
+                        output.distribution.setDelay(val, new AItem.OnValueChanged() {
+                            @Override
+                            public void changed() {
+                                notifyLock = true;
+                            }
+                        });
                 }
                 break;
 
@@ -256,18 +258,25 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < count; i++) {
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    output.setBrightness(val, new AItem.OnValueChanged() {
-                        @Override
-                        public void changed() {
-                            notifyLock = true;
-                        }
-                    });
+                    if (output.isBrightnessInRange(val)) {
+                        output.setBrightness(val, new AItem.OnValueChanged() {
+                            @Override
+                            public void changed() {
+                                notifyLock = true;
+                            }
+                        });
+                    } else {
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
+                        notifyLock = false;
+                        break;
+                    }
                 }
                 break;
         }
         if (notifyLock) {
             manager.notifySelectedItemInternalChange();
             notifyLock = false;
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, manager.getSelectedItem().getName()), Snackbar.LENGTH_SHORT).show();
         }
     }
 
