@@ -25,6 +25,8 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
     private EditText editTextBitSkew;
     private SeekBar seekBarBrightness;
 
+    private boolean notifyLock;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
         configuration.setBrightness(progress, new AItem.OnValueChanged() {
             @Override
             public void changed() {
+                notifyLock = true;
                 manager.notifySelectedItemInternalChange();
             }
         });
@@ -91,12 +94,14 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
         configuration.setPulsLength(readValue(editTextPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
+                notifyLock = true;
                 manager.notifySelectedItemInternalChange();
             }
         });
         configuration.setPulsSkew(readValue(editTextBitSkew, configuration.getPulsSkew()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
+                notifyLock = true;
                 manager.notifySelectedItemInternalChange();
             }
         });
@@ -105,7 +110,11 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
     // Manager onUpdate
     @Override
     public void update(Observable observable, Object data) {
-        if (data == null) {
+        if (data == null)
+            return;
+
+        if (notifyLock) {
+            notifyLock = false;
             return;
         }
 
@@ -154,6 +163,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
             configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
+                    notifyLock = true;
                     manager.notifySelectedItemInternalChange();
                     manager.notifyValueChanged();
                 }
@@ -172,6 +182,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
             configuration.setPatternLength(newVal, new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
+                    notifyLock = true;
                     manager.notifySelectedItemInternalChange();
                     manager.notifyValueChanged();
                 }
