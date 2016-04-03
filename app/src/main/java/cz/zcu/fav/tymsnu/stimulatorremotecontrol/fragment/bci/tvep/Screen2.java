@@ -45,7 +45,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
         numberPickerPatternLength.setOnValueChangedListener(new OnNumberPickerPatternLengthListener());
 
         editTextPulsLength = (EditText) v.findViewById(R.id.bci_tvep_screen_2_edit_text_puls_length);
-        editTextBitSkew = (EditText) v.findViewById(R.id.bci_tvep_screen_2_bit_skew);
+        editTextBitSkew = (EditText) v.findViewById(R.id.bci_tvep_screen_2_time_between);
 
         seekBarBrightness = (SeekBar) v.findViewById(R.id.bci_tvep_screen_2_seek_bar_brightness);
         seekBarBrightness.setMax(100);
