@@ -41,6 +41,7 @@ public class CVEPFileJSONHandler implements IReadWrite<ConfigurationCVEP> {
         w.name(TAG_MAIN_PATTERN).value(item.getMainPattern().getValue());
 
         w.endObject();
+        w.close();
     }
 
     // region Read
