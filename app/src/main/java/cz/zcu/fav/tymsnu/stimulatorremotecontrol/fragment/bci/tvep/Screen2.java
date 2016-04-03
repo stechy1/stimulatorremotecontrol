@@ -2,6 +2,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
     private SeekBar seekBarBrightness;
 
     private boolean notifyLock;
+    private boolean editTextChanged;
 
     @Nullable
     @Override
@@ -95,6 +97,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
             @Override
             public void changed() {
                 notifyLock = true;
+                editTextChanged = true;
                 manager.notifySelectedItemInternalChange();
             }
         });
@@ -102,9 +105,15 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
             @Override
             public void changed() {
                 notifyLock = true;
+                editTextChanged = true;
                 manager.notifySelectedItemInternalChange();
             }
         });
+
+        if (editTextChanged) {
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
+            editTextChanged = false;
+        }
     }
 
     // Manager onUpdate
