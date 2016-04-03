@@ -118,7 +118,6 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
             public void changed() {
                 notifyLock = true;
                 manager.notifySelectedItemInternalChange();
-                manager.notifyValueChanged();
             }
         });
     }
