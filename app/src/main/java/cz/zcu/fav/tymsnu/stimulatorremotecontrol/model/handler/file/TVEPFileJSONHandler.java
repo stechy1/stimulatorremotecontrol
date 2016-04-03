@@ -28,7 +28,7 @@ public class TVEPFileJSONHandler implements IReadWrite<ConfigurationTVEP> {
     private static final String TAG_PULS_LENGHT = "puls_lenght";
     private static final String TAG_BRIGHTNESS = "brightness";
 
-    // region write
+    // region Write
     @Override
     public void write(OutputStream outputStream, ConfigurationTVEP item) throws IOException {
         JsonWriter w = new JsonWriter(new OutputStreamWriter(outputStream));
@@ -41,14 +41,14 @@ public class TVEPFileJSONHandler implements IReadWrite<ConfigurationTVEP> {
         w.name(TAG_PULS_LENGHT).value(item.getPulsLength());
         w.name(TAG_BRIGHTNESS).value(item.getBrightness());
 
-        writePatterns(w, item.getPatternList());
+        writePatterns(w, item.patternList);
         w.endObject();
 
         w.close();
     }
 
     /**
-     * zapíše všechny patterny
+     * Zapíše všechny patterny do souboru
      * @param w JSON writer
      * @param patterns Kolekce patternů
      * @throws IOException
@@ -67,8 +67,9 @@ public class TVEPFileJSONHandler implements IReadWrite<ConfigurationTVEP> {
 
         w.endArray();
     }
+    // endregion
 
-    // region read
+    // region Read
     @Override
     public void read(InputStream inputStream, ConfigurationTVEP item) throws IOException {
         StringBuilder builder = new StringBuilder();
@@ -100,13 +101,13 @@ public class TVEPFileJSONHandler implements IReadWrite<ConfigurationTVEP> {
     }
 
     /**
-     * přečte všechny patterny
+     * Načte všechny patterny
      * @param patterns JSON kolekce patternů
      * @param c konfigurace do které se načítá
      * @throws JSONException
      */
     private void readPatterns(JSONArray patterns, ConfigurationTVEP c) throws JSONException{
-        List<ConfigurationTVEP.Pattern> patternList = c.getPatternList();
+        List<ConfigurationTVEP.Pattern> patternList = c.patternList;
         patternList.clear();
 
         for (int i = 0; i < patterns.length(); i++) {
@@ -114,6 +115,6 @@ public class TVEPFileJSONHandler implements IReadWrite<ConfigurationTVEP> {
             patternList.add(new ConfigurationTVEP.Pattern(patternObject.getInt(TAG_PATTERN_VALUE)));
         }
     }
-
+    // endregion
 
 }
