@@ -131,6 +131,8 @@
 
     </string-array>
     <string name="bci_fvep_screen_3_output">. STIMUL</string>
+    <!-- BCI t-VEP screen - 2 -->
+    <string name="bci_tvep_screen_2_pattern_length">Pattern length</string>
 
     <!-- BCI c-VEP screen - 1 -->
     <string-array name="bci_cvep_screen_titles">
