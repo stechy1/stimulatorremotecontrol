@@ -337,6 +337,7 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_item_2_3:
                 fragment = new CVEPFragment();
+                break;
 
 
             case R.id.nav_item_3:
