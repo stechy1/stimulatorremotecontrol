@@ -126,14 +126,6 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
     }
 
     /**
-     * Vrátí list patternů
-     * @return list patternů
-     */
-    public List<Pattern> getPatternList() {
-        return patternList;
-    }
-
-    /**
      * Vrátí délku pulsu
      * @return Délka pulsu
      */
