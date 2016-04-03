@@ -51,6 +51,15 @@
     <string name="screen_title_general_settings">General settings</string>
     <string name="screen_title_output_settings">Output settings</string>
 
+    <!-- Output titles -->
+    <string name="output_title_puls_up">Pulse - up [ms]</string>
+    <string name="output_title_puls_down">Pulse - down [ms]</string>
+    <string name="output_title_distribution_value">Distribution - value [ms]</string>
+    <string name="output_title_distribution_delay">Distribution - delay [%]</string>
+    <string name="output_title_brightness">Brightness [%]</string>
+    <string name="output_title_frequency">Frequency (0 – 255)</string>
+    <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
+
     <string name="select">Select</string>
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
@@ -93,11 +102,12 @@
 
     <!-- ERP screen - 3 -->
     <string-array name="erp_screen_3_output_types">
-        <item>Pulse - up [ms]</item>
-        <item>Pulse - down [ms]</item>
-        <item>Distribution - value [%]</item>
-        <item>Distribution - delay</item>
-        <item>Brightness [%]</item>
+        <item>@string/output_title_puls_up</item>
+        <item>@string/output_title_puls_down</item>
+        <item>@string/output_title_distribution_value</item>
+        <item>@string/output_title_distribution_delay</item>
+        <item>@string/output_title_brightness</item>
+
     </string-array>
     <string name="erp_screen_3_output">. OUTPUT</string>
 
@@ -113,13 +123,24 @@
     <string name="bci_fvep_screen_2_output_count">Stimul count</string>
     <!-- BCI f-VEP screen - 3 -->
     <string-array name="bci_fvep_screen_3_output_types">
-        <item>Pulse - up [ms]</item>
-        <item>Pulse - down [ms]</item>
-        <item>Frequency (0–255)</item>
-        <item>Duty cycle [%]</item>
-        <item>Brightness [%]</item>
+        <item>@string/output_title_puls_up</item>
+        <item>@string/output_title_puls_down</item>
+        <item>@string/output_title_frequency</item>
+        <item>@string/output_title_duty_cycle</item>
+        <item>@string/output_title_brightness</item>
+
     </string-array>
     <string name="bci_fvep_screen_3_output">. STIMUL</string>
+
+    <!-- BCI c-VEP screen - 1 -->
+    <string-array name="bci_cvep_screen_titles">
+        <item>@string/screen_title_cvep</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
+    </string-array>
+    <!-- BCI c-VEP screen - 2 -->
+    <string name="bci_cvep_screen_2_puls_length">Puls length [ms]</string>
+    <string name="bci_cvep_screen_2_bit_shift">Bit shift (1 – 8)</string>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
