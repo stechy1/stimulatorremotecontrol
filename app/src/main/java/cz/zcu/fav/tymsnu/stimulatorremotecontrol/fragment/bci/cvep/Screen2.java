@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SeekBar;
 
 import com.vi.swipenumberpicker.OnValueChangeListener;
 import com.vi.swipenumberpicker.SwipeNumberPicker;
@@ -17,15 +16,17 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
 
-public class Screen2 extends AScreen implements OnValueChangeListener, View.OnClickListener, Observer, SeekBar.OnSeekBarChangeListener {
+public class Screen2 extends AScreen
+        implements OnValueChangeListener, View.OnClickListener, Observer, MySeekBar.OnMySeekBarValueChangeListener {
 
     private SwipeNumberPicker numberPicker;
     private EditText textViewPulsLength;
     private EditText textViewPulsSkew;
-    private SeekBar seekBar;
+    private MySeekBar seekBar;
 
     private boolean notifyLock;
     private boolean editTextChanged;
@@ -43,9 +44,8 @@ public class Screen2 extends AScreen implements OnValueChangeListener, View.OnCl
         textViewPulsLength = (EditText) v.findViewById(R.id.cvep_edit_text_puls_length);
         textViewPulsSkew = (EditText) v.findViewById(R.id.cvep_edit_text_puls_skew);
 
-        seekBar = (SeekBar) v.findViewById(R.id.cvep_seekbar_brightness);
-        seekBar.setMax(100);
-        seekBar.setOnSeekBarChangeListener(this);
+        seekBar = (MySeekBar) v.findViewById(R.id.cvep_seekbar_brightness);
+        seekBar.setOnMySeekBarValueChangeListener(this);
 
         Button btnSaveValues = (Button) v.findViewById(R.id.cvep_button_save_values);
         btnSaveValues.setOnClickListener(this);
@@ -109,15 +109,12 @@ public class Screen2 extends AScreen implements OnValueChangeListener, View.OnCl
 
     // region SeekBarListener
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (!fromUser)
-            return;
-
+    public void onChange(int value) {
         ConfigurationCVEP configuration = manager.getSelectedItem();
         if (configuration == null)
             return;
 
-        configuration.setBrightness(progress, new AItem.OnValueChanged() {
+        configuration.setBrightness(value, new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -125,12 +122,6 @@ public class Screen2 extends AScreen implements OnValueChangeListener, View.OnCl
             }
         });
     }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {}
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {}
     // endregion
 
     // Manager onUpdate
@@ -150,8 +141,7 @@ public class Screen2 extends AScreen implements OnValueChangeListener, View.OnCl
         numberPicker.setValue(configuration.getOutputCount(), false);
         textViewPulsLength.setText(configuration.getPulsLength() + "");
         textViewPulsSkew.setText(configuration.getBitShift() + "");
-        seekBar.setProgress(configuration.getBrightness());
-
+        seekBar.setValue(configuration.getBrightness());
     }
 
     /**

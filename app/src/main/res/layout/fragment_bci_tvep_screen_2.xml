@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="Brightness [%]" />
 
-        <SeekBar
+        <cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar
             android:id="@+id/bci_tvep_screen_2_seek_bar_brightness"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

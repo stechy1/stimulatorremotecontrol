@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SeekBar;
 
 import com.vi.swipenumberpicker.OnValueChangeListener;
 import com.vi.swipenumberpicker.SwipeNumberPicker;
@@ -17,16 +16,17 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
 
-public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChangeListener, View.OnClickListener {
+public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarValueChangeListener, View.OnClickListener {
 
     private SwipeNumberPicker numberPickerOutputCount;
     private SwipeNumberPicker numberPickerPatternLength;
     private EditText editTextPulsLength;
     private EditText editTextBitSkew;
-    private SeekBar seekBarBrightness;
+    private MySeekBar seekBarBrightness;
 
     private boolean notifyLock;
     private boolean editTextChanged;
@@ -49,9 +49,8 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
         editTextPulsLength = (EditText) v.findViewById(R.id.bci_tvep_screen_2_edit_text_puls_length);
         editTextBitSkew = (EditText) v.findViewById(R.id.bci_tvep_screen_2_time_between);
 
-        seekBarBrightness = (SeekBar) v.findViewById(R.id.bci_tvep_screen_2_seek_bar_brightness);
-        seekBarBrightness.setMax(100);
-        seekBarBrightness.setOnSeekBarChangeListener(this);
+        seekBarBrightness = (MySeekBar) v.findViewById(R.id.bci_tvep_screen_2_seek_bar_brightness);
+        seekBarBrightness.setOnMySeekBarValueChangeListener(this);
 
         Button btnSaveValues = (Button) v.findViewById(R.id.tvep_button_save_values);
         btnSaveValues.setOnClickListener(this);
@@ -63,15 +62,12 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
 
     // region SeekBarListener
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (!fromUser)
-            return;
-
+    public void onChange (int value) {
         ConfigurationTVEP configuration = manager.getSelectedItem();
         if (configuration == null)
             return;
 
-        configuration.setBrightness(progress, new AItem.OnValueChanged() {
+        configuration.setBrightness(value, new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -79,12 +75,6 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
             }
         });
     }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {}
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {}
     // endregion
 
     // Save all btn click
@@ -135,7 +125,7 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
         numberPickerPatternLength.setValue(configuration.getPatternLength(), false);
         editTextPulsLength.setText(configuration.getPulsLength() + "");
         editTextBitSkew.setText(configuration.getPulsSkew() + "");
-        seekBarBrightness.setProgress(configuration.getBrightness());
+        seekBarBrightness.setValue(configuration.getBrightness());
     }
 
     /**
