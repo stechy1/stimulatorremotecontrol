@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.SeekBar;
+
+import com.vi.swipenumberpicker.OnValueChangeListener;
+import com.vi.swipenumberpicker.SwipeNumberPicker;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -20,8 +22,8 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
 
 public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
-    private NumberPicker numberPickerOutputCount;
-    private NumberPicker numberPickerPatternLength;
+    private SwipeNumberPicker numberPickerOutputCount;
+    private SwipeNumberPicker numberPickerPatternLength;
     private EditText editTextPulsLength;
     private EditText editTextBitSkew;
     private SeekBar seekBarBrightness;
@@ -34,15 +36,15 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bci_tvep_screen_2, container, false);
 
-        numberPickerOutputCount = (NumberPicker) v.findViewById(R.id.bci_tvep_screen_2_number_picker_output_count);
+        numberPickerOutputCount = (SwipeNumberPicker) v.findViewById(R.id.bci_tvep_screen_2_swipe_number_picker_output_count);
         numberPickerOutputCount.setMinValue(1);
         numberPickerOutputCount.setMaxValue(8);
-        numberPickerOutputCount.setOnValueChangedListener(new OnNumberPickerOutputCountListener());
+        numberPickerOutputCount.setOnValueChangeListener(new OnNumberPickerOutputCountListener());
 
-        numberPickerPatternLength = (NumberPicker) v.findViewById(R.id.bci_tvep_screen_2_number_picker_pattern_length);
+        numberPickerPatternLength = (SwipeNumberPicker) v.findViewById(R.id.bci_tvep_screen_2_swipe_number_picker_pattern_length);
         numberPickerPatternLength.setMinValue(1);
         numberPickerPatternLength.setMaxValue(16);
-        numberPickerPatternLength.setOnValueChangedListener(new OnNumberPickerPatternLengthListener());
+        numberPickerPatternLength.setOnValueChangeListener(new OnNumberPickerPatternLengthListener());
 
         editTextPulsLength = (EditText) v.findViewById(R.id.bci_tvep_screen_2_edit_text_puls_length);
         editTextBitSkew = (EditText) v.findViewById(R.id.bci_tvep_screen_2_time_between);
@@ -129,8 +131,8 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
 
         ConfigurationTVEP configuration = (ConfigurationTVEP) data;
 
-        numberPickerOutputCount.setValue(configuration.getOutputCount());
-        numberPickerPatternLength.setValue(configuration.getPatternLength());
+        numberPickerOutputCount.setValue(configuration.getOutputCount(), false);
+        numberPickerPatternLength.setValue(configuration.getPatternLength(), false);
         editTextPulsLength.setText(configuration.getPulsLength() + "");
         editTextBitSkew.setText(configuration.getPulsSkew() + "");
         seekBarBrightness.setProgress(configuration.getBrightness());
@@ -161,13 +163,13 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
         }
     }
 
-    private final class OnNumberPickerOutputCountListener implements NumberPicker.OnValueChangeListener {
+    private final class OnNumberPickerOutputCountListener implements OnValueChangeListener {
 
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        public boolean onValueChange(SwipeNumberPicker picker, int oldVal, int newVal) {
             ConfigurationTVEP configuration = manager.getSelectedItem();
             if (configuration == null)
-                return;
+                return false;
 
             configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
                 @Override
@@ -177,16 +179,18 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
                     manager.notifyValueChanged();
                 }
             });
+
+            return true;
         }
     }
 
-    private final class OnNumberPickerPatternLengthListener implements NumberPicker.OnValueChangeListener {
+    private final class OnNumberPickerPatternLengthListener implements OnValueChangeListener {
 
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        public boolean onValueChange(SwipeNumberPicker picker, int oldVal, int newVal) {
             ConfigurationTVEP configuration = manager.getSelectedItem();
             if (configuration == null)
-                return;
+                return false;
 
             configuration.setPatternLength(newVal, new AItem.OnValueChanged() {
                 @Override
@@ -196,6 +200,8 @@ public class Screen2 extends AScreen implements Observer, SeekBar.OnSeekBarChang
                     manager.notifyValueChanged();
                 }
             });
+
+            return true;
         }
     }
 }

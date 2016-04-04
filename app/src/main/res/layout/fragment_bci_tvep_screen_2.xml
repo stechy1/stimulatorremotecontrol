@@ -18,25 +18,31 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/bci_fvep_screen_2_output_count" />
 
-            <NumberPicker
+            <com.vi.swipenumberpicker.SwipeNumberPicker
+                android:id="@+id/bci_tvep_screen_2_swipe_number_picker_output_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bci_tvep_screen_2_number_picker_output_count"/>
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/bci_tvep_screen_2_pattern_length" />
 
-            <NumberPicker
+            <com.vi.swipenumberpicker.SwipeNumberPicker
+                android:id="@+id/bci_tvep_screen_2_swipe_number_picker_pattern_length"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bci_tvep_screen_2_number_picker_pattern_length"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <TextView
@@ -46,10 +52,10 @@
             android:text="Puls length [ms]" />
 
         <EditText
+            android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"/>
+            android:inputType="numberSigned" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,10 +64,10 @@
             android:text="Time between [ms]" />
 
         <EditText
+            android:id="@+id/bci_tvep_screen_2_time_between"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:id="@+id/bci_tvep_screen_2_time_between"/>
+            android:inputType="numberSigned" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,18 +75,18 @@
             android:text="Brightness [%]" />
 
         <SeekBar
+            android:id="@+id/bci_tvep_screen_2_seek_bar_brightness"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bci_tvep_screen_2_seek_bar_brightness"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/tvep_button_save_values"
             style="?android:buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@string/save_values"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            android:gravity="left|bottom" />
+            android:gravity="left|bottom"
+            android:text="@string/save_values" />
     </LinearLayout>
 </ScrollView>

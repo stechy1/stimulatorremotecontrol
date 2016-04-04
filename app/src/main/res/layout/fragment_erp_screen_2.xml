@@ -42,11 +42,11 @@
                 android:text="@string/erp_screen_2_output_count"
                 android:gravity="center" />
 
-            <NumberPicker
+            <com.vi.swipenumberpicker.SwipeNumberPicker
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:id="@+id/erp_screen_2_number_picker" />
+                android:layout_marginLeft="10dp"
+                android:id="@+id/erp_screen_2_swipe_number_picker" />
         </LinearLayout>
 
     </LinearLayout>

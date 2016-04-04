@@ -27,8 +27,8 @@
                     android:gravity="center_vertical"
                     android:text="@string/erp_screen_2_output_count" />
 
-                <NumberPicker
-                    android:id="@+id/cvep_number_picker_output_count"
+                <com.vi.swipenumberpicker.SwipeNumberPicker
+                    android:id="@+id/cvep_swipe_number_picker_output_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp" />

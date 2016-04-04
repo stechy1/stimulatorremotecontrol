@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.SeekBar;
+
+import com.vi.swipenumberpicker.OnValueChangeListener;
+import com.vi.swipenumberpicker.SwipeNumberPicker;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -18,9 +20,9 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
 
-public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListener, View.OnClickListener, Observer, SeekBar.OnSeekBarChangeListener {
+public class Screen2 extends AScreen implements OnValueChangeListener, View.OnClickListener, Observer, SeekBar.OnSeekBarChangeListener {
 
-    private NumberPicker numberPicker;
+    private SwipeNumberPicker numberPicker;
     private EditText textViewPulsLength;
     private EditText textViewPulsSkew;
     private SeekBar seekBar;
@@ -33,10 +35,10 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bci_cvep_screen_2, container, false);
 
-        numberPicker = (NumberPicker) v.findViewById(R.id.cvep_number_picker_output_count);
+        numberPicker = (SwipeNumberPicker) v.findViewById(R.id.cvep_swipe_number_picker_output_count);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(8);
-        numberPicker.setOnValueChangedListener(this);
+        numberPicker.setOnValueChangeListener(this);
 
         textViewPulsLength = (EditText) v.findViewById(R.id.cvep_edit_text_puls_length);
         textViewPulsSkew = (EditText) v.findViewById(R.id.cvep_edit_text_puls_skew);
@@ -55,11 +57,11 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
 
     // Number picker onValueChange
     @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+    public boolean onValueChange(SwipeNumberPicker picker, int oldVal, int newVal) {
         ConfigurationCVEP configuration = manager.getSelectedItem();
 
         if (configuration == null)
-            return;
+            return false;
 
         configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
             @Override
@@ -69,6 +71,8 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
                 manager.notifyValueChanged();
             }
         });
+
+        return true;
     }
 
     // Save all onClick
@@ -143,7 +147,7 @@ public class Screen2 extends AScreen implements NumberPicker.OnValueChangeListen
 
         ConfigurationCVEP configuration = (ConfigurationCVEP) data;
 
-        numberPicker.setValue(configuration.getOutputCount());
+        numberPicker.setValue(configuration.getOutputCount(), false);
         textViewPulsLength.setText(configuration.getPulsLength() + "");
         textViewPulsSkew.setText(configuration.getBitShift() + "");
         seekBar.setProgress(configuration.getBrightness());

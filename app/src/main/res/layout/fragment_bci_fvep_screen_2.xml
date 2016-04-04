@@ -14,9 +14,9 @@
         android:gravity="center"
         android:layout_marginLeft="10dp"/>
 
-    <NumberPicker
+    <com.vi.swipenumberpicker.SwipeNumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fvep_screen_2_number_picker"
+        android:id="@+id/fvep_screen_2_swipe_number_picker"
         android:layout_gravity="center_horizontal"/>
 </FrameLayout>
