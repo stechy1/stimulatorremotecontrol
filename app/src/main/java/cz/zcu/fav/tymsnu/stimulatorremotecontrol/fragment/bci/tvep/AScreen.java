@@ -6,9 +6,9 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public abstract class AScreen extends ASimpleFragment {
 
-    protected Manager<ConfigurationTVEP> manager;
+    protected static Manager<ConfigurationTVEP> manager;
 
     public void setManager(Manager<ConfigurationTVEP> manager) {
-        this.manager = manager;
+        AScreen.manager = manager;
     }
 }
