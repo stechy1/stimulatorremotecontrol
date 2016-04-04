@@ -13,7 +13,9 @@
         android:icon="@drawable/logo_main"
         android:label="@string/app_title"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:replace="android:label">
         <activity android:name=".MainActivity"
             android:configChanges="screenSize">
             

@@ -28,4 +28,5 @@ dependencies {
     compile 'com.android.support:design:23.2.0'
     compile 'me.relex:circleindicator:1.1.8@aar'
     compile 'org.apmem.tools:layouts:1.10@aar'
+    compile 'com.github.supervital:swipenumberpicker:1.0.3'
 }
