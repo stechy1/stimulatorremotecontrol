@@ -1,0 +1,13 @@
+erp schéma : array
+    počet výstupů : int
+    hrana : int (0 - náběžná, 1 - sestupná)
+    náhodnost : int (0 - vyp, 1 - kratší, 2 - delší, 3 - kratší i delší)
+    výstupy : array
+        výstup : array
+            puls : array
+                up : int
+                down : int
+            distribution : array
+                value : int
+                delay : int
+            brightness : int

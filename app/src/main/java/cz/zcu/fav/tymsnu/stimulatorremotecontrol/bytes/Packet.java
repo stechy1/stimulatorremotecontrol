@@ -7,8 +7,14 @@ import java.nio.ByteBuffer;
  */
 public class Packet {
 
+    /**
+     * Pevná velikost packetu
+     */
+    private static final int PACKET_SIZE = 64;
+
     private Code code;
-    private byte[] value;
+    private byte[] value = new byte[PACKET_SIZE];
+    private int usedBytes;
 
     /**
      * Konstruktor pro bezdatové packety
@@ -16,7 +22,7 @@ public class Packet {
      */
     public Packet(Code code) {
         this.code = code;
-        this.value = new byte[]{0x00, code.getCode(), 0x00};
+        fillPacket(new byte[]{0x00, code.getCode()});
     }
 
     /**
@@ -29,18 +35,33 @@ public class Packet {
         ByteBuffer buffer = ByteBuffer.allocate(2 + data.length)
                 .put(ByteBuffer.allocate(2).put(1, code.getCode())).put((data));
 
-        buffer.put(0, (byte)(buffer.capacity() - 2));
-        this.value = buffer.array();
+        buffer.put(0, (byte) (buffer.capacity() - 2));
+        fillPacket(buffer.array());
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(byte a : value){
-            sb.append(String.format("0x%02X ", a));
+
+        for (int i = 0; i < usedBytes; i++) {
+            sb.append(String.format("0x%02X ", value[i]));
         }
 
-        return value.length + "B | " + code.getDescription() + " | " + sb.toString();
+        return usedBytes + "B | " + code.getDescription() + " | " + sb.toString();
+    }
+
+    /**
+     * Naplní packet obsahem a ostatní bajty nastaví na 0x00
+     * @param content nenulový obsah packetu
+     */
+    private void fillPacket(byte[] content){
+        usedBytes = content.length;
+        for (int i = 0; i < PACKET_SIZE; i++) {
+            if(i < usedBytes)
+                value[i] = content[i];
+            else
+                value[i] = 0x00;
+        }
     }
 
     /**
