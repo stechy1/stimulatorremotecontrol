@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Puls length [ms]" />
+            android:text="@string/puls_length" />
 
         <EditText
             android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Time between [ms]" />
+            android:text="@string/time_between" />
 
         <EditText
             android:id="@+id/bci_tvep_screen_2_time_between"
@@ -72,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Brightness [%]" />
+            android:text="@string/output_title_brightness" />
 
         <cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar
             android:id="@+id/bci_tvep_screen_2_seek_bar_brightness"

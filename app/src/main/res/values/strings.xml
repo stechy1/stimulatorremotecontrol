@@ -60,6 +60,10 @@
     <string name="output_title_frequency">Frequency (0 – 255)</string>
     <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
 
+    <string name="puls_length">Puls length [ms]</string>
+    <string name="bit_shift">Bit shift (1 – 8)</string>
+    <string name="time_between">Time between [ms]</string>
+
     <string name="select">Select</string>
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
@@ -141,8 +145,7 @@
         <item>@string/screen_title_output_settings</item>
     </string-array>
     <!-- BCI c-VEP screen - 2 -->
-    <string name="bci_cvep_screen_2_puls_length">Puls length [ms]</string>
-    <string name="bci_cvep_screen_2_bit_shift">Bit shift (1 – 8)</string>
+
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
