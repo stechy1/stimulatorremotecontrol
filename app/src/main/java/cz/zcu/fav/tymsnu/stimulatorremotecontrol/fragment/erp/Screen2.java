@@ -49,9 +49,23 @@ public final class Screen2 extends AScreen
         randomSpinner.setOnItemSelectedListener(randomSpinnerListener);
         edgeSpinner.setOnItemSelectedListener(edgeSpinnerListener);
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     private void readValues(ConfigurationERP configuration) {

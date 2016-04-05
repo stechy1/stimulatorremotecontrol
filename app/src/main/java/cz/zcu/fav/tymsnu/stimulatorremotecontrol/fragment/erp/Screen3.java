@@ -65,9 +65,23 @@ public final class Screen3 extends AScreen
 
         outText = getResources().getString(R.string.erp_screen_3_output);
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     // Při změně schématu

@@ -382,6 +382,9 @@ public class MainActivity extends AppCompatActivity
         fragment.setBtCommunication(mCommunicationService);
         actViewID = id;
 
+        if (fragment.equals(oldFragment))
+            return;
+
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (oldFragment != null)
             transaction.remove(oldFragment);

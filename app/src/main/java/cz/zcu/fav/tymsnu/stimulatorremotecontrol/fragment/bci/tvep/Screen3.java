@@ -32,9 +32,23 @@ public class Screen3 extends AScreen implements Observer {
 
         this.container = (LinearLayout) v.findViewById(R.id.bci_tvep_screen_3_container);
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     @Override

@@ -58,9 +58,23 @@ public class Screen1 extends AScreen
         ImageButton buttonPlay = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_play);
         buttonPlay.setOnClickListener(new PlayConfigurationListener());
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     // Kliknutí na položu v listView

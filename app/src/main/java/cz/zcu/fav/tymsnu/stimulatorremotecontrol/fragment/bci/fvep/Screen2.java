@@ -36,9 +36,23 @@ public class Screen2 extends AScreen implements OnValueChangeListener, Observer 
         if (configuration != null)
             readValues(configuration);
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     private void readValues(ConfigurationFVEP configuration) {

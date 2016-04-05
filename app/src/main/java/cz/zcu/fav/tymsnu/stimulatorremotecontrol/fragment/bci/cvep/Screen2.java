@@ -52,9 +52,23 @@ public class Screen2 extends AScreen
         Button btnSaveValues = (Button) v.findViewById(R.id.cvep_button_save_values);
         btnSaveValues.setOnClickListener(this);
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     // Save all onClick
