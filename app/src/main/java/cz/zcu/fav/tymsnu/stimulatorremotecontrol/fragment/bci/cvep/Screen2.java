@@ -21,11 +21,11 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
 
 public class Screen2 extends AScreen
-        implements OnValueChangeListener, View.OnClickListener, Observer, MySeekBar.OnMySeekBarValueChangeListener {
+        implements View.OnClickListener, Observer, MySeekBar.OnMySeekBarValueChangeListener {
 
     private SwipeNumberPicker numberPicker;
     private EditText textViewPulsLength;
-    private EditText textViewPulsSkew;
+    private SwipeNumberPicker numberPickerBitShift;
     private MySeekBar seekBar;
 
     private boolean notifyLock;
@@ -39,10 +39,12 @@ public class Screen2 extends AScreen
         numberPicker = (SwipeNumberPicker) v.findViewById(R.id.cvep_swipe_number_picker_output_count);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(8);
-        numberPicker.setOnValueChangeListener(this);
+        numberPicker.setOnValueChangeListener(new OutputCountValueListener());
 
         textViewPulsLength = (EditText) v.findViewById(R.id.cvep_edit_text_puls_length);
-        textViewPulsSkew = (EditText) v.findViewById(R.id.cvep_edit_text_puls_skew);
+
+        numberPickerBitShift = (SwipeNumberPicker) v.findViewById(R.id.cvep_swipe_number_picker_bit_shift);
+        numberPickerBitShift.setOnValueChangeListener(new BitShiftValueListener());
 
         seekBar = (MySeekBar) v.findViewById(R.id.cvep_seekbar_brightness);
         seekBar.setOnMySeekBarValueChangeListener(this);
@@ -53,26 +55,6 @@ public class Screen2 extends AScreen
         manager.addObserver(this);
 
         return v;
-    }
-
-    // Number picker onValueChange
-    @Override
-    public boolean onValueChange(SwipeNumberPicker picker, int oldVal, int newVal) {
-        ConfigurationCVEP configuration = manager.getSelectedItem();
-
-        if (configuration == null)
-            return false;
-
-        configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                manager.notifySelectedItemInternalChange();
-                manager.notifyValueChanged();
-            }
-        });
-
-        return true;
     }
 
     // Save all onClick
@@ -91,14 +73,6 @@ public class Screen2 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setBitShift(readValue(textViewPulsSkew, configuration.getBitShift()), new AItem.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                editTextChanged = true;
-                manager.notifySelectedItemInternalChange();
-            }
-        });
 
         if (editTextChanged) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
@@ -106,8 +80,7 @@ public class Screen2 extends AScreen
         }
     }
 
-
-    // region SeekBarListener
+    // Seekbar onChange listener
     @Override
     public void onChange(int value) {
         ConfigurationCVEP configuration = manager.getSelectedItem();
@@ -122,7 +95,6 @@ public class Screen2 extends AScreen
             }
         });
     }
-    // endregion
 
     // Manager onUpdate
     @Override
@@ -140,7 +112,7 @@ public class Screen2 extends AScreen
 
         numberPicker.setValue(configuration.getOutputCount(), false);
         textViewPulsLength.setText(configuration.getPulsLength() + "");
-        textViewPulsSkew.setText(configuration.getBitShift() + "");
+        numberPickerBitShift.setText(configuration.getBitShift() + "");
         seekBar.setValue(configuration.getBrightness());
     }
 
@@ -169,4 +141,46 @@ public class Screen2 extends AScreen
         }
     }
 
+    private class OutputCountValueListener implements OnValueChangeListener {
+        @Override
+        public boolean onValueChange(SwipeNumberPicker view, int oldValue, int newValue) {
+            ConfigurationCVEP configuration = manager.getSelectedItem();
+
+            if (configuration == null)
+                return false;
+
+            configuration.setOutputCount(newValue, new AItem.OnValueChanged() {
+                @Override
+                public void changed() {
+                    notifyLock = true;
+                    manager.notifySelectedItemInternalChange();
+                    manager.notifyValueChanged();
+                }
+            });
+
+            return true;
+        }
+    }
+
+    private class BitShiftValueListener implements OnValueChangeListener {
+
+        @Override
+        public boolean onValueChange(SwipeNumberPicker view, int oldValue, int newValue) {
+            ConfigurationCVEP configuration = manager.getSelectedItem();
+
+            if (configuration == null)
+                return false;
+
+            configuration.setBitShift(newValue, new AItem.OnValueChanged() {
+                @Override
+                public void changed() {
+                    notifyLock = true;
+                    manager.notifySelectedItemInternalChange();
+                    manager.notifyValueChanged();
+                }
+            });
+
+            return true;
+        }
+    }
 }

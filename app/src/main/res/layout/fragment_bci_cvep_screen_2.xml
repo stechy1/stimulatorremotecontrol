@@ -23,15 +23,14 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="@string/erp_screen_2_output_count" />
 
                 <com.vi.swipenumberpicker.SwipeNumberPicker
                     android:id="@+id/cvep_swipe_number_picker_output_count"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <TextView
@@ -45,16 +44,21 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberSigned" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bci_cvep_screen_2_bit_shift" />
-
-            <EditText
-                android:id="@+id/cvep_edit_text_puls_skew"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberSigned" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bci_cvep_screen_2_bit_shift" />
+
+                <com.vi.swipenumberpicker.SwipeNumberPicker
+                    android:id="@+id/cvep_swipe_number_picker_bit_shift"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,8 +69,6 @@
                 android:id="@+id/cvep_seekbar_brightness"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-
         </LinearLayout>
     </ScrollView>
 
