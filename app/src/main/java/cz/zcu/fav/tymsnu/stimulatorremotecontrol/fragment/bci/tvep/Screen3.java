@@ -42,6 +42,14 @@ public class Screen3 extends AScreen implements Observer {
         super.onResume();
 
         manager.addObserver(this);
+
+        ConfigurationTVEP configuration = manager.getSelectedItem();
+        if (configuration == null) return;
+
+        patternControls = new PatternControl[configuration.getOutputCount()];
+
+        container.removeAllViews();
+        changeValues();
     }
 
     @Override
