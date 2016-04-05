@@ -64,6 +64,9 @@ public class Screen3 extends AScreen implements Observer {
         if (data == null)
             return;
 
+        if (notifyLock)
+            return;
+
         ConfigurationTVEP configuration = (ConfigurationTVEP) data;
         patternControls = new PatternControl[configuration.getOutputCount()];
 
@@ -122,7 +125,9 @@ public class Screen3 extends AScreen implements Observer {
             pattern.setValue(newValue, new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
+                    notifyLock = true;
                     manager.notifySelectedItemInternalChange();
+                    notifyLock = false;
                 }
             });
         }
