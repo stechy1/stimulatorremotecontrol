@@ -63,6 +63,7 @@
     <string name="puls_length">Délka pulsu [ms]</string>
     <string name="bit_shift">Bitový posun (1 – 8)</string>
     <string name="time_between">Časová prodleva [ms]</string>
+    <string name="pattern_32_bit">Pattern 32 bitů</string>
 
     <string name="select">Vybrat</string>
     <string name="duplicate">Duplikovat</string>
