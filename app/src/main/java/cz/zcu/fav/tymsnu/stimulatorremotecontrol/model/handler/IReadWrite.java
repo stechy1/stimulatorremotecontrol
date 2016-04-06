@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 
-public interface IReadWrite<T extends AItem> {
+public interface IReadWrite<T extends AItem<T>> {
 
     void write(OutputStream outputStream, T item) throws IOException;
 

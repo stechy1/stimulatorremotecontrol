@@ -18,7 +18,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.IFactory;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class Manager<T extends AItem> extends Observable {
+public class Manager<T extends AItem<T>> extends Observable {
 
     // region Variables
     private static final String TAG = "Manager";
@@ -73,7 +73,7 @@ public class Manager<T extends AItem> extends Observable {
      * Načte item ze souboru
      * @param item Reference na načítaný item
      */
-    private void loadItem(AItem item)  {
+    private void loadItem(T item)  {
         if (item.loaded) return;
 
         try {
@@ -311,7 +311,7 @@ public class Manager<T extends AItem> extends Observable {
         notifyValueChanged();
     }
 
-    public <T extends AItem<T>> T duplicate(T source, String newName) {
+    public T duplicate(T source, String newName) {
         return source.duplicate(newName);
     }
 
