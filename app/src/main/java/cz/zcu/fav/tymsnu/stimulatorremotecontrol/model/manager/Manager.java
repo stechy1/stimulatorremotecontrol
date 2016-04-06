@@ -16,7 +16,6 @@ import java.util.Observable;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.IFactory;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
 public class Manager<T extends AItem<T>> extends Observable {
 
@@ -142,8 +141,7 @@ public class Manager<T extends AItem<T>> extends Observable {
             File outFile = new File(workingDirectory, name);
             outFile.createNewFile();
             FileOutputStream out = new FileOutputStream(outFile);
-            IReadWrite readWrite = factory.getReadWriteAcces();
-            readWrite.write(out, item);
+            factory.getReadWriteAcces().write(out, item);
             item.changed = false;
 
             if (callback != null)
