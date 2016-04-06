@@ -57,7 +57,7 @@ public class SchemeFileXMLHandler implements IReadWrite {
         writeValue(s, TAG_RANDOM, String.valueOf(configuration.getRandom().ordinal()));
 
         // Zápis všech výstupů
-        writeOutputs(s, configuration.getOutputList());
+        writeOutputs(s, configuration.outputList);
 
         s.endTag(NAMESPACE, TAG_ROOT);
         s.endDocument();

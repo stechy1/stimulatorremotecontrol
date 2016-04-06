@@ -46,7 +46,7 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
         writer.name(TAG_EDGE).value(configuration.getEdge().ordinal());
         writer.name(TAG_RANDOM).value(configuration.getRandom().ordinal());
 
-        writeOutputs(writer, configuration.getOutputList());
+        writeOutputs(writer, configuration.outputList);
         writer.endObject();
 
         writer.close();
@@ -127,7 +127,7 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
     }
 
     private void readOutputs(JSONArray outputs, ConfigurationERP configuration) throws JSONException {
-        List<Output> outputList = configuration.getOutputList();
+        List<Output> outputList = configuration.outputList;
         outputList.clear();
         int length = outputs.length();
         for (int i = 0; i < length; i++) {

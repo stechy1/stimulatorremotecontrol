@@ -118,9 +118,7 @@ public final class Screen3 extends AScreen
         if (configuration == null)
             return;
 
-        final List<Output> outputs = configuration.getOutputList();
-
-        writeValues(outputs);
+        writeValues(configuration.outputList);
     }
 
     private void changeValues() {
@@ -130,7 +128,7 @@ public final class Screen3 extends AScreen
             return;
         }
 
-        final List<Output> outputs = configuration.getOutputList();
+        final List<Output> outputs = configuration.outputList;
         int outputCount = configuration.getOutputCount();
 
         if (outputCount != visible)

@@ -21,7 +21,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
     // Nastavení náhodnosti (žádná/krátká/dlouhá/krátká i dlouhá)
     private Random random;
     // Kolekce udržující výstupy
-    private final List<Output> outputList;
+    public final List<Output> outputList;
     // endregion
 
     // region Constructors
@@ -104,10 +104,6 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
         if (onValueChanged != null)
             onValueChanged.changed();
-    }
-
-    public List<Output> getOutputList() {
-        return outputList;
     }
 
     public Edge getEdge() {
