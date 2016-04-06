@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +39,15 @@ public final class Screen3 extends AScreen
 
     private String outText;
 
-    private EditText[] inputs;
+    //private EditText[] inputs;
+    private final EditText[] inputs = new EditText[8];
+    private final View[] views = new View[8];
 
-    private LinearLayout outputs;
+    private LinearLayout outputContainer;
     private Spinner spinner;
     private int outputTypeIndex;
     private boolean notifyLock = false;
+    private int visible = 0;
 
     @Nullable
     @Override
@@ -60,12 +62,12 @@ public final class Screen3 extends AScreen
         Button btnSave = (Button) v.findViewById(R.id.universal_screen_3_button_save_output);
         btnSave.setOnClickListener(this);
 
-        outputs = (LinearLayout) v.findViewById(R.id.universal_screen_3_linearlayout);
-        inputs = new EditText[1];
+        outputContainer = (LinearLayout) v.findViewById(R.id.universal_screen_3_linearlayout);
+        //inputs = new EditText[1];
 
         outText = getResources().getString(R.string.erp_screen_3_output);
 
-        //manager.addObserver(this);
+        fillInputs();
 
         return v;
     }
@@ -89,17 +91,10 @@ public final class Screen3 extends AScreen
     public void update(Observable observable, Object object) {
         if (notifyLock) return;
 
-        if (object == null) {
-            inputs = new EditText[1];
-            this.outputs.removeAllViews();
-            return;
-        }
-        ConfigurationERP configuration = (ConfigurationERP) object;
-        spinner.setSelection(PULSE_UP);
+        if (object == null) return;
 
-        inputs = new EditText[configuration.getOutputCount()];
+        spinner.setSelection(outputTypeIndex);
 
-        outputs.removeAllViews();
         changeValues();
     }
 
@@ -135,72 +130,76 @@ public final class Screen3 extends AScreen
             return;
         }
 
-        final Context context = getContext();
-        if (context == null) {
-            Log.i(TAG, "Kontext == null");
-            return;
-        }
-
         final List<Output> outputs = configuration.getOutputList();
-        final LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        int outputCount = configuration.getOutputCount();
 
-        if (inputs[0] == null) {
-            if (inputs.length != configuration.getOutputCount())
-                inputs = new EditText[configuration.getOutputCount()];
-
-            for (int i = 0; i < configuration.getOutputCount(); i++) {
-                LinearLayout layout = new LinearLayout(context);
-                layout.setOrientation(LinearLayout.HORIZONTAL);
-
-                TextView textView = new TextView(context);
-                textView.setText(i + outText);
-
-                EditText editText = new EditText(context);
-                editText.setLayoutParams(textLayoutParams);
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                inputs[i] = editText;
-
-                layout.addView(textView);
-                layout.addView(editText);
-
-                this.outputs.addView(layout);
-            }
-        }
+        if (outputCount != visible)
+            rearangeInputs(outputCount);
 
         readValues(outputs);
     }
 
+    private void rearangeInputs(int configOutputCount) {
+        if (configOutputCount > visible) {
+            for (int i = visible; i < configOutputCount; i++) {
+                views[i].setVisibility(View.VISIBLE);
+            }
+        } else {
+            for (int i = --visible; i >= configOutputCount; i--) {
+                views[i].setVisibility(View.INVISIBLE);
+            }
+        }
+
+        visible = configOutputCount;
+    }
+
+    private void fillInputs() {
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        for (int i = 0; i < 8; i++) {
+            LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.control_labeled_input, null);
+            TextView title = (TextView) layout.findViewById(R.id.labeled_input_title);
+            EditText input = (EditText) layout.findViewById(R.id.labeled_input_value);
+
+            title.setText(i + outText);
+
+            views[i] = layout;
+            inputs[i] = input;
+
+            outputContainer.addView(layout);
+        }
+    }
+
     private void readValues(List<Output> outputs) {
-        int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     inputs[i].setText("" + output.puls.getUp());
                 }
                 break;
             case PULSE_DOWN:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     inputs[i].setText("" + output.puls.getDown());
                 }
                 break;
 
             case DISTRIBUTION_VALUE:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     inputs[i].setText("" + output.distribution.getValue());
                 }
                 break;
             case DISTRIBUTION_DELAY:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     inputs[i].setText("" + output.distribution.getDelay());
                 }
                 break;
 
             case BRIGHTNESS:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     inputs[i].setText("" + output.getBrightness());
                 }
@@ -209,10 +208,9 @@ public final class Screen3 extends AScreen
     }
 
     private void writeValues(List<Output> outputs) {
-        int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = readValue(inputs[i], output.puls.getUp());
                     output.puls.setUp(val, new AItem.OnValueChanged() {
@@ -224,7 +222,7 @@ public final class Screen3 extends AScreen
                 }
                 break;
             case PULSE_DOWN:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = readValue(inputs[i], output.puls.getDown());
                     output.puls.setDown(val, new AItem.OnValueChanged() {
@@ -237,7 +235,7 @@ public final class Screen3 extends AScreen
                 break;
 
             case DISTRIBUTION_VALUE:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = readValue(inputs[i], output.distribution.getValue());
                     if (output.distribution.isValueInRange(val) && output.canUpdateDistribution(outputs, val)) {
@@ -256,7 +254,7 @@ public final class Screen3 extends AScreen
                 }
                 break;
             case DISTRIBUTION_DELAY:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = readValue(inputs[i], output.distribution.getDelay());
                         output.distribution.setDelay(val, new AItem.OnValueChanged() {
@@ -269,7 +267,7 @@ public final class Screen3 extends AScreen
                 break;
 
             case BRIGHTNESS:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     int val = readValue(inputs[i]);
                     Output output = outputs.get(i);
                     if (output.isBrightnessInRange(val)) {
