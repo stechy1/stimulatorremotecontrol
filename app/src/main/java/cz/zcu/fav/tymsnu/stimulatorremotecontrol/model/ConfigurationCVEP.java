@@ -65,7 +65,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         int bitShift = this.bitShift;
         int brightness = this.brightness;
 
-        Pattern mainPattern = this.mainPattern;
+        Pattern mainPattern = new Pattern(this.mainPattern);
 
         return new ConfigurationCVEP(newName, mainPattern, brightness, bitShift, pulsLength, outputCount);
     }
@@ -240,6 +240,11 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         public Pattern() {
             this(0);
         }
+
+        public Pattern(Pattern source){
+            this(source.getValue());
+        }
+
         public Pattern(int value) {
             this.value = value;
         }
@@ -297,6 +302,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
             if (onValueChanged != null)
                 onValueChanged.changed();
         }
+
         // endregion
         
         // region Getters & Setters
