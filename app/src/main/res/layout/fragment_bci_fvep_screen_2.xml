@@ -8,11 +8,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bci_fvep_screen_2_output_count"
-        android:layout_marginLeft="10dp"/>
+        android:text="@string/bci_fvep_screen_2_output_count"/>
 
     <com.vi.swipenumberpicker.SwipeNumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fvep_screen_2_swipe_number_picker"/>
+        android:id="@+id/fvep_screen_2_swipe_number_picker"
+        android:layout_marginLeft="@dimen/input_margin_left"/>
 </LinearLayout>

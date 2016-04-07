@@ -61,7 +61,7 @@
     <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
 
     <string name="puls_length">Puls length [ms]</string>
-    <string name="bit_shift">Bit shift (1 – 8)</string>
+    <string name="bit_shift">Bit shift</string>
     <string name="time_between">Time between [ms]</string>
     <string name="pattern">. Pattern</string>
     <string name="pattern_32_bit">Pattern 32 bit</string>
