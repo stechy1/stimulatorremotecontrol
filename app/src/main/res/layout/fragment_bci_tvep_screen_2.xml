@@ -59,31 +59,44 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/puls_length"
-                android:layout_marginTop="@dimen/layout_children_margin_top"/>
-
-            <EditText
-                android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberSigned" />
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/layout_children_margin_top">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/puls_length"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/time_between"
-                android:layout_marginTop="@dimen/layout_children_margin_top"/>
+                <EditText
+                    android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned"
+                    android:layout_marginLeft="@dimen/input_margin_left"/>
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/bci_tvep_screen_2_time_between"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberSigned" />
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/layout_children_margin_top">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/time_between"/>
+
+                <EditText
+                    android:id="@+id/bci_tvep_screen_2_time_between"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned"
+                    android:layout_marginLeft="@dimen/input_margin_left"/>
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,7 +107,8 @@
             <cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar
                 android:id="@+id/bci_tvep_screen_2_seek_bar_brightness"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"/>
         </LinearLayout>
     </ScrollView>
 
