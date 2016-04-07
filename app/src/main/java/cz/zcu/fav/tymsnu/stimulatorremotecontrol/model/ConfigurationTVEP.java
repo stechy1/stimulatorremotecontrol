@@ -58,7 +58,18 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
     // region Public methods
     @Override
     public ConfigurationTVEP duplicate(String newName) {
-        return null;
+        int outputCount = this.outputCount;
+        int patternLength = this.patternLength;
+        int pulsLength = this.pulsLength;
+        int pulsSkew = this.pulsSkew;
+        int brightness = this.brightness;
+
+        List<Pattern> patternList = new ArrayList<>();
+
+        for(Pattern a : this.patternList){
+            patternList.add(new Pattern(a.getValue()));
+        }
+        return new ConfigurationTVEP(newName, outputCount, patternLength, pulsLength, pulsSkew, brightness, patternList);
     }
     // endregion
 
