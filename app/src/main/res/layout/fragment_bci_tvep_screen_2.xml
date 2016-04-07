@@ -1,92 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:fillViewport="true">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/bci_fvep_screen_2_output_count" />
+
+                <com.vi.swipenumberpicker.SwipeNumberPicker
+                    android:id="@+id/bci_tvep_screen_2_swipe_number_picker_output_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/bci_tvep_screen_2_pattern_length" />
+
+                <com.vi.swipenumberpicker.SwipeNumberPicker
+                    android:id="@+id/bci_tvep_screen_2_swipe_number_picker_pattern_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/puls_length" />
+
+            <EditText
+                android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/time_between" />
+
+            <EditText
+                android:id="@+id/bci_tvep_screen_2_time_between"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/output_title_brightness" />
+
+            <cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar
+                android:id="@+id/bci_tvep_screen_2_seek_bar_brightness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/tvep_button_save_values"
+        style="?android:buttonBarButtonStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/bci_fvep_screen_2_output_count" />
-
-            <com.vi.swipenumberpicker.SwipeNumberPicker
-                android:id="@+id/bci_tvep_screen_2_swipe_number_picker_output_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/bci_tvep_screen_2_pattern_length" />
-
-            <com.vi.swipenumberpicker.SwipeNumberPicker
-                android:id="@+id/bci_tvep_screen_2_swipe_number_picker_pattern_length"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/puls_length" />
-
-        <EditText
-            android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/time_between" />
-
-        <EditText
-            android:id="@+id/bci_tvep_screen_2_time_between"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/output_title_brightness" />
-
-        <cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar
-            android:id="@+id/bci_tvep_screen_2_seek_bar_brightness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/tvep_button_save_values"
-            style="?android:buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="left|bottom"
-            android:text="@string/save_values" />
-    </LinearLayout>
-</ScrollView>
+        android:layout_marginTop="10dp"
+        android:text="@string/save_values" />
+</LinearLayout>
