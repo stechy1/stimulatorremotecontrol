@@ -26,7 +26,7 @@ public class Screen3 extends AScreen implements Observer {
     private LinearLayout outputContainer;
     private String outText;
     private boolean notifyLock = false;
-    private int visible = 0;
+    private int visible = 8;
 
     @Nullable
     @Override
