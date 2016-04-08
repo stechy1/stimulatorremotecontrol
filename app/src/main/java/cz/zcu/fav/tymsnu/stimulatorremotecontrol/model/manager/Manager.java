@@ -374,6 +374,13 @@ public class Manager<T extends AItem<T>> extends Observable {
     public T getSelectedItem() {
         return selectedItem;
     }
+
+    /**
+     * Nastaví nový pracovní adresář
+     * Nesmí se jednat o soubor
+     * @param workingDirectory Reference na složku s pracovním adresářem
+     */
+    public void setWorkingDirectory(File workingDirectory) {setWorkingDirectory(workingDirectory, null);}
     /**
      * Nastaví nový pracovní adresář
      * Nesmí se jednat o soubor
