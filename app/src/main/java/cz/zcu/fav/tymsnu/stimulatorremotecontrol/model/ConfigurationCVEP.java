@@ -16,14 +16,14 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
 
     // region Constructors
     public ConfigurationCVEP(String name) {
-        this(name, new Pattern("Main pattern"), 0, 0, 0, 1);
+        this(name, new Pattern(), 0, 0, 0, 1);
     }
 
-    public ConfigurationCVEP(String name, Pattern mainPattern, int brightness, int pulsSkew, int pulsLength, int outputCount) {
+    public ConfigurationCVEP(String name, Pattern mainPattern, int brightness, int bitShift, int pulsLength, int outputCount) {
         super(name);
         this.mainPattern = mainPattern;
         this.brightness = brightness;
-        this.bitShift = pulsSkew;
+        this.bitShift = bitShift;
         this.pulsLength = pulsLength;
         this.outputCount = outputCount;
     }
@@ -35,7 +35,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         if (outputCount > listCount) {
             int delta = outputCount - listCount;
             for (int i = 0; i < delta; i++) {
-                patternList.add(new Pattern("Pattern" + i + outputCount));
+                patternList.add(new Pattern());
             }
         } else {
             for (int i = --listCount; i >= outputCount; i--) {
@@ -59,7 +59,15 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
     // region Public methods
     @Override
     public ConfigurationCVEP duplicate(String newName) {
-        return null;
+
+        int outputCount = this.outputCount;
+        int pulsLength = this.pulsLength;
+        int bitShift = this.bitShift;
+        int brightness = this.brightness;
+
+        Pattern mainPattern = new Pattern(this.mainPattern);
+
+        return new ConfigurationCVEP(newName, mainPattern, brightness, bitShift, pulsLength, outputCount);
     }
     // endregion
     
@@ -225,16 +233,19 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         
         // region Variables
         public static final int DEF_SHIFT = 1;
-        private String name;
         private int value;
         // endregion
 
         // region Constructors
-        public Pattern(String name) {
-            this(name, 0);
+        public Pattern() {
+            this(0);
         }
-        public Pattern(String name, int value) {
-            this.name = name;
+
+        public Pattern(Pattern source){
+            this(source.getValue());
+        }
+
+        public Pattern(int value) {
             this.value = value;
         }
         // endregion
@@ -291,38 +302,10 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
             if (onValueChanged != null)
                 onValueChanged.changed();
         }
+
         // endregion
         
         // region Getters & Setters
-
-        /**
-         * Vrátí název patternu
-         * @return Název patternu
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * Nastaví název patternu
-         * @param name Nový název patternu
-         */
-        public void setName(String name) {setName(name, null);}
-        /**
-         * Nastaví název patternu
-         * @param name Nový název patternu
-         * @param onValueChanged Callback, který se zavolá po nastavení nového názvu patternu
-         */
-        public void setName(String name, OnValueChanged onValueChanged) {
-            if (this.name.equals(name) || name.isEmpty())
-                return;
-
-            this.name = name;
-
-            if (onValueChanged != null)
-                onValueChanged.changed();
-        }
-
         /**
          * Vrátí aktuální hodnotu patternu
          * @return Hodnota patternu

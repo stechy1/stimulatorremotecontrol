@@ -32,6 +32,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.AboutFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ERPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SettingsFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.TestFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.CVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.FVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.TVEPFragment;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IViewSwitcher {
 
     private static final String TAG = "MainActivity";
+    private static final String TAG_FRAGMENT = "fragment";
 
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     private CharSequence title;
     private Menu menu;
     private MenuItem selectedMenuItem;
+    private boolean flag_restore_fragment = false;
 
     /**
      * Name of the connected device
@@ -88,7 +91,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         title = getTitle();
-        displayView(R.id.nav_about);
+        if (savedInstanceState != null) {
+            actViewID = 0;
+            int fragmentID = savedInstanceState.getInt("fragment", 0);
+            flag_restore_fragment = true;
+            displayView(fragmentID);
+            flag_restore_fragment = false;
+        } else
+            displayView(R.id.nav_about);
 
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
@@ -107,6 +117,13 @@ public class MainActivity extends AppCompatActivity
         } else if (mCommunicationService == null) {
             setupCommunication();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("fragment", actViewID);
     }
 
     @Override
@@ -314,53 +331,64 @@ public class MainActivity extends AppCompatActivity
         }
 
         Log.i("displayView()", "" + id);
+        FragmentManager fragmentManager = getSupportFragmentManager();
         ASimpleFragment oldFragment = fragment;
-        switch (id) {
-            case R.id.nav_item_1:
-                fragment = new ERPFragment();
-                break;
-            case R.id.nav_settings:
-                fragment = new SettingsFragment();
-                break;
+        if (!flag_restore_fragment) {
 
-            case R.id.nav_about:
-                fragment = new AboutFragment();
-                break;
+            switch (id) {
+                case R.id.nav_item_1:
+                    fragment = new ERPFragment();
+                    break;
+                case R.id.nav_settings:
+                    fragment = new SettingsFragment();
+                    break;
 
-            case R.id.nav_item_2_1:
-                fragment = new FVEPFragment();
-                break;
+                case R.id.nav_about:
+                    fragment = new AboutFragment();
+                    break;
 
-            case R.id.nav_item_2_2:
-                fragment = new TVEPFragment();
-                break;
+                case R.id.nav_item_2_1:
+                    fragment = new FVEPFragment();
+                    break;
 
-            case R.id.nav_item_2_3:
-                fragment = new CVEPFragment();
-                break;
+                case R.id.nav_item_2_2:
+                    fragment = new TVEPFragment();
+                    break;
+
+                case R.id.nav_item_2_3:
+                    fragment = new CVEPFragment();
+                    break;
 
 
-            case R.id.nav_item_3:
+                case R.id.nav_item_3:
+                    fragment = new TestFragment();
+                    break;
 
-            case R.id.nav_item_4:
+                case R.id.nav_item_4:
 
-            case R.id.nav_item_5:
+                case R.id.nav_item_5:
 
-            case R.id.nav_item_6:
+                case R.id.nav_item_6:
 
-            default:
-                fragment = new AboutFragment();
-                id = R.id.nav_about;
-                break;
+                default:
+                    fragment = new AboutFragment();
+                    id = R.id.nav_about;
+                    break;
+            }
+        } else {
+            fragment = (ASimpleFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT);
         }
 
         fragment.setBtCommunication(mCommunicationService);
         actViewID = id;
-        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (fragment.equals(oldFragment))
+            return;
+
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (oldFragment != null)
             transaction.remove(oldFragment);
-        transaction.replace(R.id.frame_container, fragment).commit();
+        transaction.replace(R.id.frame_container, fragment, TAG_FRAGMENT).commit();
     }
 
     Activity self = this;

@@ -34,7 +34,7 @@ public class ERPPacketHandler implements IPacketable {
 
         int vystup = 0; //index výstupu, slouží pro odfiltrování jasu kvůli sdružení u LED 5 a 7
 
-        for(Output a : configuration.getOutputList()){
+        for(Output a : configuration.outputList){
             packets.add(new Packet(actualDURATION, DataConvertor.milisecondsTo2B(a.puls.getUp())));
             packets.add(new Packet(actualPAUSE, DataConvertor.milisecondsTo2B(a.puls.getDown())));
             packets.add(new Packet(actualDISTRIBUTION, DataConvertor.intTo1B(a.distribution.getValue()))); //TODO u distribution parametru ještě neposíláme delay

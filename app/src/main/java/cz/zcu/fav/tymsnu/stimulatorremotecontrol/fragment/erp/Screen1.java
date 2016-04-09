@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Observable;
@@ -37,6 +38,7 @@ public final class Screen1 extends AScreen
     private static final String TAG = "Screen1";
 
     private ListView listView;
+    private boolean canDismiss;
 
     @Nullable
     @Override
@@ -57,9 +59,23 @@ public final class Screen1 extends AScreen
         ImageButton buttonPlay = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_play);
         buttonPlay.setOnClickListener(new PlayConfigurationListener());
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     // ListView onItemClick
@@ -101,8 +117,11 @@ public final class Screen1 extends AScreen
                             ConfigurationERP duplicated = manager.duplicate(configuration, res);
                             manager.add(duplicated);
                             manager.notifyValueChanged();
+                            canDismiss = true;
                         } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
+                            canDismiss = false;
                         }
                     }
                 });
@@ -111,7 +130,7 @@ public final class Screen1 extends AScreen
                 manager.delete(configuration, new Manager.Callback() {
                     @Override
                     public void callback(Object object) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_was_deleted), Snackbar.LENGTH_SHORT).show();
                         listView.requestLayout();
                     }
                 });
@@ -123,8 +142,11 @@ public final class Screen1 extends AScreen
                         try {
                             manager.rename(configuration, newName);
                             Log.i(TAG, "Nazev schematu: " + newName);
+                            canDismiss = true;
                         } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
+                            canDismiss = false;
                         }
                     }
                 });
@@ -145,6 +167,7 @@ public final class Screen1 extends AScreen
     }
 
     private void showInputDialog(final DialogCallback callback) {
+        canDismiss = true;
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
 
@@ -152,21 +175,20 @@ public final class Screen1 extends AScreen
         builder.setTitle(R.string.context_set_name);
         builder.setView(input);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String name = input.getText().toString();
-                callback.callback(name);
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setPositiveButton("OK", null);
+        builder.setNegativeButton("Cancel", null);
 
         final AlertDialog dialog = builder.show();
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = input.getText().toString();
+                callback.callback(name);
+
+                if (canDismiss)
+                    dialog.dismiss();
+            }
+        });
 
         input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -193,8 +215,11 @@ public final class Screen1 extends AScreen
                             }
                         });
                         Log.i(TAG, "Nazev schematu: " + newName);
+                        canDismiss = true;
                     } catch (IllegalArgumentException ex) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                        //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
+                        canDismiss = false;
                     }
                 }
             });
@@ -209,7 +234,7 @@ public final class Screen1 extends AScreen
                 @Override
                 public void callback(Object object) {
                     Integer count = (Integer) object;
-                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_schemes, count), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_configuration, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }

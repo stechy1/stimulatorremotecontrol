@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.File;
+
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager.ERPPagerAdapter;
@@ -30,7 +32,7 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        manager.setWorkingDirectory(getActivity().getFilesDir());
+        manager.setWorkingDirectory(createWorkingDirectory());
         View v = inflater.inflate(R.layout.fragment_universal, container, false);
 
         title = (TextView) v.findViewById(R.id.universal_title);
@@ -56,6 +58,14 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
 
     private PagerAdapter buildAdapter() {
         return(new ERPPagerAdapter(getChildFragmentManager(), iBtCommunication, manager));
+    }
+
+    private File createWorkingDirectory() {
+        File baseFolder = getActivity().getFilesDir();
+        File erpFolder = new File(baseFolder, Constants.FOLDER_ERP);
+        erpFolder.mkdirs();
+
+        return erpFolder;
     }
 
     // region ViewPager page changed

@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Observable;
@@ -37,6 +38,7 @@ public class Screen1 extends AScreen
     private static final String TAG = "fvep-Screen1";
 
     private ListView listView;
+    private boolean canDismiss;
 
     @Nullable
     @Override
@@ -57,9 +59,23 @@ public class Screen1 extends AScreen
         ImageButton buttonPlay = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_play);
         buttonPlay.setOnClickListener(new PlayConfigurationListener());
 
-        manager.addObserver(this);
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     // Kliknutí na položu v listView
@@ -101,8 +117,11 @@ public class Screen1 extends AScreen
                             ConfigurationFVEP duplicated = manager.duplicate(configuration, res);
                             manager.add(duplicated);
                             manager.notifyValueChanged();
+                            canDismiss = true;
                         } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
+                            canDismiss = false;
                         }
                     }
                 });
@@ -123,8 +142,11 @@ public class Screen1 extends AScreen
                         try {
                             manager.rename(configuration, configName);
                             Log.i(TAG, "Nazev schematu: " + configName);
+                            canDismiss = true;
                         } catch (IllegalArgumentException ex) {
-                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
+                            canDismiss = false;
                         }
                     }
                 });
@@ -151,21 +173,20 @@ public class Screen1 extends AScreen
         builder.setTitle(R.string.context_set_name);
         builder.setView(input);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String name = input.getText().toString();
-                callback.callback(name);
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setPositiveButton("OK", null);
+        builder.setNegativeButton("Cancel", null);
 
         final AlertDialog dialog = builder.show();
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = input.getText().toString();
+                callback.callback(name);
+
+                if (canDismiss)
+                    dialog.dismiss();
+            }
+        });
 
         input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -187,8 +208,11 @@ public class Screen1 extends AScreen
                     try {
                         manager.create(configName);
                         Log.i(TAG, "Nazev schematu: " + configName);
+                        canDismiss = true;
                     } catch (IllegalArgumentException ex) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                        //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
+                        canDismiss = false;
                     }
                 }
             });

@@ -2,12 +2,17 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.NumberPicker;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.vi.swipenumberpicker.OnValueChangeListener;
+import com.vi.swipenumberpicker.SwipeNumberPicker;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -15,50 +20,63 @@ import java.util.Observer;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
 public final class Screen2 extends AScreen
-        implements NumberPicker.OnValueChangeListener, Observer {
+        implements Observer, OnValueChangeListener, View.OnClickListener {
 
     private static final String TAG = "Screen2";
 
+    private EditText outEditText;
+    private EditText waitEditText;
     private Spinner randomSpinner;
     private Spinner edgeSpinner;
-    private NumberPicker numberPicker;
+    private SwipeNumberPicker numberPicker;
+
+    private boolean notifyLock;
+    private boolean editTextChanged;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_erp_screen_2, container, false);
 
+        outEditText = (EditText) v.findViewById(R.id.erp_screen_2_eidt_text_out);
+        waitEditText = (EditText) v.findViewById(R.id.erp_screen_2_edit_text_wait);
+
         randomSpinner = (Spinner) v.findViewById(R.id.erp_screen_2_spinner_random);
         edgeSpinner = (Spinner) v.findViewById(R.id.erp_screen_2_spinner_edge);
 
-        numberPicker = (NumberPicker) v.findViewById(R.id.erp_screen_2_number_picker);
+        randomSpinner.setOnItemSelectedListener(new RandomSpinnerListener());
+        edgeSpinner.setOnItemSelectedListener(new EdgeSpinnerListener());
+
+        numberPicker = (SwipeNumberPicker) v.findViewById(R.id.erp_screen_2_swipe_number_picker);
         numberPicker.setMaxValue(8);
         numberPicker.setMinValue(1);
-        numberPicker.setValue(1);
-        numberPicker.setOnValueChangedListener(this);
+        numberPicker.setValue(1, false);
+        numberPicker.setOnValueChangeListener(this);
 
-        ConfigurationERP configuration = manager.getSelectedItem();
-
-        if (configuration != null)
-            readValues(configuration);
-
-        randomSpinner.setOnItemSelectedListener(randomSpinnerListener);
-        edgeSpinner.setOnItemSelectedListener(edgeSpinnerListener);
-
-        manager.addObserver(this);
+        Button btnSaveAll = (Button) v.findViewById(R.id.erp_screen_2_button_save_all);
+        btnSaveAll.setOnClickListener(this);
 
         return v;
     }
 
-    private void readValues(ConfigurationERP configuration) {
-        randomSpinner.setSelection(configuration.getRandom().ordinal());
-        edgeSpinner.setSelection(configuration.getEdge().ordinal());
-        numberPicker.setValue(configuration.getOutputCount());
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
     }
 
-    private final AdapterView.OnItemSelectedListener randomSpinnerListener = new AdapterView.OnItemSelectedListener() {
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
+    }
+
+    private final class RandomSpinnerListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ConfigurationERP configuration = manager.getSelectedItem();
@@ -69,6 +87,7 @@ public final class Screen2 extends AScreen
             configuration.setRandom(ConfigurationERP.Random.valueOf(position), new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
+                    notifyLock = true;
                     manager.notifySelectedItemInternalChange();
                 }
             });
@@ -79,9 +98,9 @@ public final class Screen2 extends AScreen
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
-    };
+    }
 
-    private final AdapterView.OnItemSelectedListener edgeSpinnerListener = new AdapterView.OnItemSelectedListener() {
+    private final class EdgeSpinnerListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ConfigurationERP configuration = manager.getSelectedItem();
@@ -92,6 +111,7 @@ public final class Screen2 extends AScreen
             configuration.setEdge(ConfigurationERP.Edge.valueOf(position), new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
+                    notifyLock = true;
                     manager.notifySelectedItemInternalChange();
                 }
             });
@@ -101,33 +121,75 @@ public final class Screen2 extends AScreen
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
-    };
+    }
 
     @Override
     public void update(Observable observable, Object object) {
-        if (object == null) {
-            numberPicker.setValue(1);
+        if (object == null)
+            return;
+
+        if (notifyLock) {
+            notifyLock = false;
             return;
         }
 
         ConfigurationERP configuration = (ConfigurationERP) object;
 
-        readValues(configuration);
+        outEditText.setText(String.valueOf(configuration.getOut()));
+        waitEditText.setText(String.valueOf(configuration.getWait()));
+        randomSpinner.setSelection(configuration.getRandom().ordinal());
+        edgeSpinner.setSelection(configuration.getEdge().ordinal());
+        numberPicker.setValue(configuration.getOutputCount(), true);
     }
 
     @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+    public boolean onValueChange(SwipeNumberPicker view, int oldValue, int newValue) {
         ConfigurationERP configuration = manager.getSelectedItem();
 
         if (configuration == null)
-            return;
+            return false;
 
-        configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
+        configuration.setOutputCount(newValue, new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 manager.notifySelectedItemInternalChange();
                 manager.notifyValueChanged();
             }
         });
+
+        return true;
     }
+
+    @Override
+    public void onClick(View v) {
+        ConfigurationERP configuration = manager.getSelectedItem();
+
+        if (configuration == null)
+            return;
+
+        configuration.setOut(EditTextReader.readValue(outEditText, configuration.getOut()), new AItem.OnValueChanged() {
+            @Override
+            public void changed() {
+                notifyLock = true;
+                editTextChanged = true;
+                manager.notifySelectedItemInternalChange();
+            }
+        });
+
+        configuration.setWait(EditTextReader.readValue(waitEditText, configuration.getWait()), new AItem.OnValueChanged() {
+            @Override
+            public void changed() {
+                notifyLock = true;
+                editTextChanged = true;
+                manager.notifySelectedItemInternalChange();
+            }
+        });
+
+        if (editTextChanged) {
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
+            editTextChanged = false;
+        }
+    }
+
+
 }

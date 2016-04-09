@@ -42,6 +42,13 @@ public class MySeekBar extends RelativeLayout implements SeekBar.OnSeekBarChange
 
     }
 
+    public void setValue(int val) {
+        if (mSeekBar.getProgress() == val)
+            return;
+
+        mSeekBar.setProgress(val);
+    }
+
     public void setOnMySeekBarValueChangeListener(OnMySeekBarValueChangeListener listener) {
         mListener = listener;
     }

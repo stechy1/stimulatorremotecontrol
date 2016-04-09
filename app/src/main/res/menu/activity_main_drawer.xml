@@ -17,15 +17,15 @@
         <menu>
             <item
                 android:id="@+id/nav_item_2_1"
-                android:title="f-VEP"
+                android:title="@string/screen_title_fvep"
                 android:icon="@drawable/pulse" />
             <item
                 android:id="@+id/nav_item_2_2"
-                android:title="t-VEP"
+                android:title="@string/screen_title_tvep"
                 android:icon="@drawable/pulse" />
             <item
                 android:id="@+id/nav_item_2_3"
-                android:title="c-VEP"
+                android:title="@string/screen_title_cvep"
                 android:icon="@drawable/pulse" />
         </menu>
     </item>

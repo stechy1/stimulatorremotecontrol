@@ -27,9 +27,30 @@ public class Screen3 extends AScreen implements Observer, PatternControl.ValueCh
         patternControl = (PatternControl) v.findViewById(R.id.cvep_pattern_control);
         patternControl.setOnValueChangeListener(this);
 
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         manager.addObserver(this);
 
-        return v;
+        displayValues();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
+    }
+
+    private void displayValues() {
+        ConfigurationCVEP configuration = manager.getSelectedItem();
+        if (configuration == null) return;
+
+        patternControl.setValue(configuration.getMainPattern().getValue());
     }
 
     @Override
@@ -37,9 +58,7 @@ public class Screen3 extends AScreen implements Observer, PatternControl.ValueCh
         if (data == null)
             return;
 
-        ConfigurationCVEP configuration = (ConfigurationCVEP) data;
-
-        patternControl.setValue(configuration.getMainPattern().getValue());
+        displayValues();
     }
 
     @Override

@@ -16,9 +16,8 @@ import java.util.Observable;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.IFactory;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
-public class Manager<T extends AItem> extends Observable {
+public class Manager<T extends AItem<T>> extends Observable {
 
     // region Variables
     private static final String TAG = "Manager";
@@ -28,7 +27,7 @@ public class Manager<T extends AItem> extends Observable {
     private File workingDirectory;
     // Přiznak označující, zda-li byl pracoví adresář proskenován
     private boolean scanned = false;
-
+    // Továrna pro itemy a handler pro čtení a zápis do souboru
     private IFactory<T> factory;
 
     // Reference na aktuálně zvolený item
@@ -38,20 +37,25 @@ public class Manager<T extends AItem> extends Observable {
     public final List<T> itemList = new ArrayList<>();
     // endregion
 
-
+    // region Constructors
     public Manager(IFactory<T> factory) {
         this.factory = factory;
     }
+    // endregion
 
     // region Private methods
+
     /**
      * Načte všechny itemy do paměti
      * Načte pouze jejich názvy
+     * @return Pole o dvou prvcích. První prvek obsahuje počet úspěšně načtených itemů,
+     *         druhý prvek počet neúspěšně načtených itemů
      */
-    private void loadItems()  {
+    private int[] loadItems()  {
         if (scanned || workingDirectory == null)
-            return;
+            return null;
 
+        int[] result = new int[2];
         itemList.clear();
 
         String[] items = workingDirectory.list(new FilenameFilter() {
@@ -63,17 +67,25 @@ public class Manager<T extends AItem> extends Observable {
 
         for (String name : items) {
             name = name.substring(0, name.indexOf(EXTENTION));
-            itemList.add(factory.build(name));
+
+            try {
+                itemList.add(factory.build(name));
+                result[0]++;
+            } catch (IllegalArgumentException ex) {
+                result[1]++;
+            }
         }
 
         scanned = true;
+
+        return result;
     }
 
     /**
      * Načte item ze souboru
      * @param item Reference na načítaný item
      */
-    private void loadItem(AItem item)  {
+    private void loadItem(T item)  {
         if (item.loaded) return;
 
         try {
@@ -111,7 +123,18 @@ public class Manager<T extends AItem> extends Observable {
             callback.callback(item);
     }
 
+    /**
+     * Přidá item do seznamu načtených
+     * @param item Item pro přidání
+     * @throws IllegalArgumentException Pokud item již v kolekci existuje
+     */
     public void add(T item) throws IllegalArgumentException {add(item, null);}
+    /**
+     * Přidá item do seznamu načtených
+     * @param item Item pro přidání
+     * @param callback Callback, který se zavolá po úspěšném přidání do kolekce
+     * @throws IllegalArgumentException Pokud item již v kolekci existuje
+     */
     public void add(T item, Callback callback) throws IllegalArgumentException {
         if (itemList.contains(item))
             throw new IllegalArgumentException();
@@ -140,10 +163,8 @@ public class Manager<T extends AItem> extends Observable {
                 name += EXTENTION;
 
             File outFile = new File(workingDirectory, name);
-            outFile.createNewFile();
             FileOutputStream out = new FileOutputStream(outFile);
-            IReadWrite readWrite = factory.getReadWriteAcces();
-            readWrite.write(out, item);
+            factory.getReadWriteAcces().write(out, item);
             item.changed = false;
 
             if (callback != null)
@@ -189,7 +210,7 @@ public class Manager<T extends AItem> extends Observable {
      * @param item Item pro přejmenování
      * @param newName Nové jméno itemu
      */
-    public void rename(T item, String newName) {
+    public void rename(T item, String newName) throws IllegalArgumentException {
         rename(item, newName, null);
     }
     /**
@@ -198,22 +219,22 @@ public class Manager<T extends AItem> extends Observable {
      * @param newName Nové jméno itemu
      * @param callback Callback, který se zavolá po přejmenování itemu
      */
-    public void rename(T item, String newName, Callback callback) {
-        String itemName = item.getName();
-        if (!itemName.contains(EXTENTION))
-            itemName += EXTENTION;
-        String newFileName = newName;
-        if (!newFileName.contains(EXTENTION))
-            newFileName += EXTENTION;
+    public void rename(T item, String newName, Callback callback) throws IllegalArgumentException {
+        String oldName = item.getName();
+        String itemName = oldName + EXTENTION;
+        String newFileName = newName + EXTENTION;
 
         File oldFile = new File(workingDirectory, itemName);
         File newFile = new File(workingDirectory, newFileName);
-        boolean success = oldFile.renameTo(newFile);
-        if (success) {
-            item.setName(newName);
+
+        item.setName(newName);
+
+        if (oldFile.renameTo(newFile)) {
             if (callback != null)
                 callback.callback(item);
             notifyValueChanged();
+        } else {
+            item.setName(oldName);
         }
     }
 
@@ -311,7 +332,13 @@ public class Manager<T extends AItem> extends Observable {
         notifyValueChanged();
     }
 
-    public <T extends AItem<T>> T duplicate(T source, String newName) {
+    /**
+     * Vytvoří hlubokou kopii objektu
+     * @param source Zdrojový objekt
+     * @param newName Nový název objektu
+     * @return Hlubokou kopii
+     */
+    public T duplicate(T source, String newName) {
         return source.duplicate(newName);
     }
 
@@ -340,21 +367,44 @@ public class Manager<T extends AItem> extends Observable {
     // endregion
 
     // region Getters & Setters
+    /**
+     * Vrátí vybraný item
+     * @return Vybraný item
+     */
     public T getSelectedItem() {
         return selectedItem;
     }
+
     /**
      * Nastaví nový pracovní adresář
      * Nesmí se jednat o soubor
      * @param workingDirectory Reference na složku s pracovním adresářem
      */
-    public void setWorkingDirectory(File workingDirectory) {
+    public void setWorkingDirectory(File workingDirectory) {setWorkingDirectory(workingDirectory, null);}
+    /**
+     * Nastaví nový pracovní adresář
+     * Nesmí se jednat o soubor
+     * @param workingDirectory Reference na složku s pracovním adresářem
+     * @param callback Callback, který se zavolá po úspěšném načtení itemů.
+     *                 Do callbacku se vloží pole s počtem úspěšně a neúspěšně načtených itemů.
+     *                 [0] - počet úspěšně načtených itemů
+     *                 [1] - počet neúspěšně načtených itemů
+     */
+    public void setWorkingDirectory(File workingDirectory, Callback callback) {
+        if (workingDirectory == null) return;
+        if (workingDirectory.equals(this.workingDirectory)) return;
+
         this.workingDirectory = workingDirectory;
 
-        loadItems();
+        int[] res = loadItems();
+        if (res == null) return;
+
+        Log.i(TAG, "Items loaded - Succesfully: " + res[0] + "; Unsuccesfully: " + res[1]);
+
+        if (callback != null)
+            callback.callback(res);
     }
     // endregion
-
 
     /**
      * Rozhraní pro zpětné volání
