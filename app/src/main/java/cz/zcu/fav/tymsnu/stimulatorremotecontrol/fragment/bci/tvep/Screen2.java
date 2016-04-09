@@ -19,6 +19,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
 public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarValueChangeListener, View.OnClickListener {
 
@@ -99,7 +100,7 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
         if (configuration == null)
             return;
 
-        configuration.setPulsLength(readValue(editTextPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
+        configuration.setPulsLength(EditTextReader.readValue(editTextPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -107,7 +108,7 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setPulsSkew(readValue(editTextBitSkew, configuration.getPulsSkew()), new AItem.OnValueChanged() {
+        configuration.setPulsSkew(EditTextReader.readValue(editTextBitSkew, configuration.getPulsSkew()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -137,34 +138,9 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
 
         numberPickerOutputCount.setValue(configuration.getOutputCount(), false);
         numberPickerPatternLength.setValue(configuration.getPatternLength(), false);
-        editTextPulsLength.setText(configuration.getPulsLength() + "");
-        editTextBitSkew.setText(configuration.getPulsSkew() + "");
+        editTextPulsLength.setText(String.valueOf(configuration.getPulsLength()));
+        editTextBitSkew.setText(String.valueOf(configuration.getPulsSkew()));
         seekBarBrightness.setValue(configuration.getBrightness());
-    }
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí 0
-     * @param input Vstup
-     * @return číslo
-     */
-    private int readValue(EditText input) {return readValue(input, 0);}
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí výchozí hodnotu
-     * @param input Vstup
-     * @param def Výchozí hodnota
-     * @return číslo
-     */
-    private int readValue(EditText input, int def) {
-        String text = input.getText().toString();
-        try {
-            return Integer.parseInt(text);
-        } catch (Exception ex) {
-            input.setText("" + def);
-            return def;
-        }
     }
 
     private final class OnNumberPickerOutputCountListener implements OnValueChangeListener {

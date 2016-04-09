@@ -19,6 +19,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
 public class Screen2 extends AScreen
         implements View.OnClickListener, Observer, MySeekBar.OnMySeekBarValueChangeListener {
@@ -79,7 +80,7 @@ public class Screen2 extends AScreen
         if (configuration == null)
             return;
 
-        configuration.setPulsLength(readValue(textViewPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
+        configuration.setPulsLength(EditTextReader.readValue(textViewPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -125,34 +126,9 @@ public class Screen2 extends AScreen
         ConfigurationCVEP configuration = (ConfigurationCVEP) data;
 
         numberPicker.setValue(configuration.getOutputCount(), false);
-        textViewPulsLength.setText(configuration.getPulsLength() + "");
-        numberPickerBitShift.setText(configuration.getBitShift() + "");
+        textViewPulsLength.setText(String.valueOf(configuration.getPulsLength()));
+        numberPickerBitShift.setText(String.valueOf(configuration.getBitShift()));
         seekBar.setValue(configuration.getBrightness());
-    }
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí 0
-     * @param input Vstup
-     * @return číslo
-     */
-    private int readValue(EditText input) {return readValue(input, 0);}
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí výchozí hodnotu
-     * @param input Vstup
-     * @param def Výchozí hodnota
-     * @return číslo
-     */
-    private int readValue(EditText input, int def) {
-        String text = input.getText().toString();
-        try {
-            return Integer.parseInt(text);
-        } catch (Exception ex) {
-            input.setText("" + def);
-            return def;
-        }
     }
 
     private class OutputCountValueListener implements OnValueChangeListener {

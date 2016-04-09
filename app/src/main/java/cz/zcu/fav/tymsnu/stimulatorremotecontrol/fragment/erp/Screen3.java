@@ -24,6 +24,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
 public final class Screen3 extends AScreen
         implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
@@ -159,7 +160,7 @@ public final class Screen3 extends AScreen
             TextView title = (TextView) layout.findViewById(R.id.labeled_input_title);
             EditText input = (EditText) layout.findViewById(R.id.labeled_input_value);
 
-            title.setText(i + outText);
+            title.setText(String.valueOf(i + outText));
 
             views[i] = layout;
             inputs[i] = input;
@@ -173,33 +174,33 @@ public final class Screen3 extends AScreen
             case PULSE_UP:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    inputs[i].setText("" + output.puls.getUp());
+                    inputs[i].setText(String.valueOf(output.puls.getUp()));
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    inputs[i].setText("" + output.puls.getDown());
+                    inputs[i].setText(String.valueOf(output.puls.getDown()));
                 }
                 break;
 
             case DISTRIBUTION_VALUE:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    inputs[i].setText("" + output.distribution.getValue());
+                    inputs[i].setText(String.valueOf(output.distribution.getValue()));
                 }
                 break;
             case DISTRIBUTION_DELAY:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    inputs[i].setText("" + output.distribution.getDelay());
+                    inputs[i].setText(String.valueOf(output.distribution.getDelay()));
                 }
                 break;
 
             case BRIGHTNESS:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    inputs[i].setText("" + output.getBrightness());
+                    inputs[i].setText(String.valueOf(output.getBrightness()));
                 }
                 break;
         }
@@ -210,7 +211,7 @@ public final class Screen3 extends AScreen
             case PULSE_UP:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.puls.getUp());
+                    int val = EditTextReader.readValue(inputs[i], output.puls.getUp());
                     output.puls.setUp(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -222,7 +223,7 @@ public final class Screen3 extends AScreen
             case PULSE_DOWN:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.puls.getDown());
+                    int val = EditTextReader.readValue(inputs[i], output.puls.getDown());
                     output.puls.setDown(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -235,7 +236,7 @@ public final class Screen3 extends AScreen
             case DISTRIBUTION_VALUE:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.distribution.getValue());
+                    int val = EditTextReader.readValue(inputs[i], output.distribution.getValue());
                     if (output.distribution.isValueInRange(val) && output.canUpdateDistribution(outputs, val)) {
                         output.distribution.setValue(val, new AItem.OnValueChanged() {
                             @Override
@@ -254,7 +255,7 @@ public final class Screen3 extends AScreen
             case DISTRIBUTION_DELAY:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.distribution.getDelay());
+                    int val = EditTextReader.readValue(inputs[i], output.distribution.getDelay());
                         output.distribution.setDelay(val, new AItem.OnValueChanged() {
                             @Override
                             public void changed() {
@@ -266,7 +267,7 @@ public final class Screen3 extends AScreen
 
             case BRIGHTNESS:
                 for (int i = 0; i < visible; i++) {
-                    int val = readValue(inputs[i]);
+                    int val = EditTextReader.readValue(inputs[i]);
                     Output output = outputs.get(i);
                     if (output.isBrightnessInRange(val)) {
                         output.setBrightness(val, new AItem.OnValueChanged() {
@@ -289,30 +290,4 @@ public final class Screen3 extends AScreen
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, manager.getSelectedItem().getName()), Snackbar.LENGTH_SHORT).show();
         }
     }
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí 0
-     * @param input Vstup
-     * @return číslo
-     */
-    private int readValue(EditText input) {return readValue(input, 0);}
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí výchozí hodnotu
-     * @param input Vstup
-     * @param def Výchozí hodnota
-     * @return číslo
-     */
-    private int readValue(EditText input, int def) {
-        String text = input.getText().toString();
-        try {
-            return Integer.parseInt(text);
-        } catch (Exception ex) {
-            input.setText("" + def);
-            return def;
-        }
-    }
-
 }

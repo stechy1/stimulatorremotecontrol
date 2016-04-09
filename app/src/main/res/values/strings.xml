@@ -24,6 +24,9 @@
 
     <string name="nav_text_item_1">ERP</string>
     <string name="nav_text_item_2">BCI</string>
+    <string name="nav_text_item_2_1">f-VEP</string>
+    <string name="nav_text_item_2_2">t-VEP</string>
+    <string name="nav_text_item_2_3">c-VEP</string>
     <string name="nav_text_item_3">Reaction experiment</string>
     <string name="nav_text_item_4">Autostimulation</string>
     <string name="nav_text_item_5">Biosensor logger</string>

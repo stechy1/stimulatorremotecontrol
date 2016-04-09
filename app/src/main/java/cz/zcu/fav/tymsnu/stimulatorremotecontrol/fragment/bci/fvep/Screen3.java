@@ -23,6 +23,7 @@ import java.util.Observer;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
 public class Screen3 extends AScreen
         implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
@@ -151,7 +152,7 @@ public class Screen3 extends AScreen
             TextView title = (TextView) layout.findViewById(R.id.labeled_input_title);
             EditText input = (EditText) layout.findViewById(R.id.labeled_input_value);
 
-            title.setText(i + stimulText);
+            title.setText(String.valueOf(i + stimulText));
 
             views[i] = layout;
             inputs[i] = input;
@@ -165,34 +166,34 @@ public class Screen3 extends AScreen
             case PULSE_UP:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.puls.getUp());
+                    inputs[i].setText(String.valueOf(output.puls.getUp()));
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.puls.getDown());
+                    inputs[i].setText(String.valueOf(output.puls.getDown()));
                 }
                 break;
 
             case FREQUENCY:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.getFrequency());
+                    inputs[i].setText(String.valueOf(output.getFrequency()));
                 }
                 break;
 
             case DUTY_CYCLE:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.getDutyCycle());
+                    inputs[i].setText(String.valueOf(output.getDutyCycle()));
                 }
                 break;
 
             case BRIGHTNESS:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.getBrightness());
+                    inputs[i].setText(String.valueOf(output.getBrightness()));
                 }
                 break;
         }
@@ -203,7 +204,7 @@ public class Screen3 extends AScreen
             case PULSE_UP:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.puls.getUp());
+                    int val = EditTextReader.readValue(inputs[i], output.puls.getUp());
                     output.puls.setUp(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -215,7 +216,7 @@ public class Screen3 extends AScreen
             case PULSE_DOWN:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.puls.getDown());
+                    int val = EditTextReader.readValue(inputs[i], output.puls.getDown());
                     output.puls.setDown(val, new AItem.OnValueChanged() {
                         @Override
                         public void changed() {
@@ -228,7 +229,7 @@ public class Screen3 extends AScreen
             case FREQUENCY:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.getFrequency());
+                    int val = EditTextReader.readValue(inputs[i], output.getFrequency());
                     if (output.isFrequencyInRange(val)) {
                         output.setFrequency(val, new AItem.OnValueChanged() {
                             @Override
@@ -247,7 +248,7 @@ public class Screen3 extends AScreen
             case DUTY_CYCLE:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.getDutyCycle());
+                    int val = EditTextReader.readValue(inputs[i], output.getDutyCycle());
                     if (output.isDutyCycleInRange(val)) {
                         output.setDutyCycle(val, new AItem.OnValueChanged() {
                             @Override
@@ -267,7 +268,7 @@ public class Screen3 extends AScreen
             case BRIGHTNESS:
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.getBrightness());
+                    int val = EditTextReader.readValue(inputs[i], output.getBrightness());
                     if (output.isBrightnessInRange(val)) {
                         output.setBrightness(val, new AItem.OnValueChanged() {
                             @Override
@@ -287,31 +288,6 @@ public class Screen3 extends AScreen
             manager.notifySelectedItemInternalChange();
             notifyLock = false;
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, manager.getSelectedItem().getName()), Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí 0
-     * @param input Vstup
-     * @return číslo
-     */
-    private int readValue(EditText input) {return readValue(input, 0);}
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí výchozí hodnotu
-     * @param input Vstup
-     * @param def Výchozí hodnota
-     * @return číslo
-     */
-    private int readValue(EditText input, int def) {
-        String text = input.getText().toString();
-        try {
-            return Integer.parseInt(text);
-        } catch (Exception ex) {
-            input.setText("" + def);
-            return def;
         }
     }
 }

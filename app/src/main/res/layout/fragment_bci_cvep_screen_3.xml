@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pattern_32_bit"
-        android:layout_gravity="left" />
+        android:layout_gravity="start" />
 
     <cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.PatternControl
         android:layout_width="match_parent"

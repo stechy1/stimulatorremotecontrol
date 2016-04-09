@@ -108,7 +108,7 @@ public class Screen3 extends AScreen implements Observer {
             TextView title = (TextView) layout.findViewById(R.id.labeled_pattern_title);
             PatternControl input = (PatternControl) layout.findViewById(R.id.labeled_pattern_control);
 
-            title.setText(i + outText);
+            title.setText(String.valueOf(i + outText));
 
             views[i] = layout;
             patternControls[i] = input;
