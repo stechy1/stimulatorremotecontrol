@@ -6,7 +6,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.ERPFileJSONH
 
 public class ERPFactory implements IFactory<ConfigurationERP> {
 
-    private final IReadWrite handler = new ERPFileJSONHandler();
+    private final IReadWrite<ConfigurationERP> handler = new ERPFileJSONHandler();
 
     @Override
     public ConfigurationERP build(String name) {
@@ -14,7 +14,7 @@ public class ERPFactory implements IFactory<ConfigurationERP> {
     }
 
     @Override
-    public IReadWrite getReadWriteAcces() {
+    public IReadWrite<ConfigurationERP> getReadWriteAcces() {
         return handler;
     }
 }

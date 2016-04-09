@@ -15,7 +15,7 @@ public class CVEPFactory implements IFactory<ConfigurationCVEP> {
     }
 
     @Override
-    public IReadWrite getReadWriteAcces() {
+    public IReadWrite<ConfigurationCVEP> getReadWriteAcces() {
         return handler;
     }
 }

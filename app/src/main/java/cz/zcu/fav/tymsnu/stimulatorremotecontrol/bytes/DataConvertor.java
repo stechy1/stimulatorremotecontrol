@@ -30,7 +30,7 @@ public final class DataConvertor {
     /**
      * Metoda pro převod [0.1 ms] na 2 bajty
      * @param number číslo reprezentující počet 0.1 ms např 30.6 ms => 306*0.1 ms
-     * @return
+     * @return pole od dvou bajtech
      */
     public static byte[] milisecondsTo2B(double number){
         return intTo2B((int)(10 * number));

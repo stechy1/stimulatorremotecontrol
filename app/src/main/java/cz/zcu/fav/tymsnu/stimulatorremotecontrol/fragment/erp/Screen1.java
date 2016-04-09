@@ -130,7 +130,7 @@ public final class Screen1 extends AScreen
                 manager.delete(configuration, new Manager.Callback() {
                     @Override
                     public void callback(Object object) {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.schema_was_deleted), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.configuration_was_deleted), Snackbar.LENGTH_SHORT).show();
                         listView.requestLayout();
                     }
                 });
@@ -234,7 +234,7 @@ public final class Screen1 extends AScreen
                 @Override
                 public void callback(Object object) {
                     Integer count = (Integer) object;
-                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_schemes, count), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.count_saved_configuration, count), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }

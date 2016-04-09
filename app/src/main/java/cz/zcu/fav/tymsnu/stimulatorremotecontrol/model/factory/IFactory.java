@@ -8,7 +8,7 @@ public interface IFactory<T extends AItem<T>> {
     /**
      * Sestavý objekt
      * @param name Název
-     * @return
+     * @return Sestavený objekt
      */
     T build(String name);
 
