@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/universal_screen_1_btn_play"
-            android:src="@drawable/fab_run_stimulator"
+            android:src="@drawable/run_stimulator"
             style="?android:buttonBarButtonStyle"
             android:layout_gravity="end"
             android:layout_weight="1"/>

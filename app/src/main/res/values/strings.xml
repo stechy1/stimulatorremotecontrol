@@ -46,7 +46,7 @@
     <string name="language_change">Change language</string>
 
     <!-- Screen titles -->
-    <string name="screen_title_schema">Schema</string>
+    <string name="screen_title_schema">Configuration ERP</string>
     <string name="screen_title_fvep">Configuration f-VEP</string>
     <string name="screen_title_tvep">Configuration t-VEP</string>
     <string name="screen_title_cvep">Configuration c-VEP</string>
@@ -71,11 +71,9 @@
     <string name="pattern">. Pattern</string>
     <string name="pattern_32_bit">Pattern 32 bit</string>
 
-    <string name="select">Select</string>
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
     <string name="rename">Rename</string>
-    <string name="save_as">Save as</string>
     <string name="save_all">Save all</string>
     <string name="save_values">Save values</string>
     <string name="export">Export</string>
@@ -90,11 +88,8 @@
         <item>@string/screen_title_general_settings</item>
         <item>@string/screen_title_output_settings</item>
     </string-array>
-    <string name="erp_screen_select_schema">Select schema for stimulation</string>
-    <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
 
     <!-- ERP screen - 1 -->
-    <string name="erp_scren_1_new_scheme">New scheme</string>
 
     <!-- ERP screen - 2 -->
     <string name="erp_screen_2_random">Random</string>
@@ -165,11 +160,6 @@
     
     <string name="illegal_input">Illegal input</string>
 
-    <string name="schema_saved">Schema <xliff:g id="saved_schema">%1$s</xliff:g> was saved</string>
-    <string name="schema_was_deleted">Schema was deleted</string>
-    <string name="count_saved_schemes">Count of saved schemes: <xliff:g id="saved_scheme_count">%1$s</xliff:g></string>
-
-    <string name="configuration_saved">Configuration <xliff:g id="saved_conf">%1$s</xliff:g> was saved</string>
     <string name="configuration_was_deleted">Configuration was deleted</string>
     <string name="count_saved_configuration">Count of saved configurations: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
 

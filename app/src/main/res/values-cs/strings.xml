@@ -43,7 +43,7 @@
     <string name="language_change">Změna jazyka</string>
 
     <!-- Screen titles -->
-    <string name="screen_title_schema">Schéma</string>
+    <string name="screen_title_schema">Konfigurace ERP</string>
     <string name="screen_title_fvep">Konfigurace f-VEP</string>
     <string name="screen_title_tvep">Konfigurace t-VEP</string>
     <string name="screen_title_cvep">Konfigurace c-VEP</string>
@@ -68,11 +68,9 @@
     <string name="pattern">. Pattern</string>
     <string name="pattern_32_bit">Pattern 32 bitů</string>
 
-    <string name="select">Vybrat</string>
     <string name="duplicate">Duplikovat</string>
     <string name="delete">Smazat</string>
     <string name="rename">Přejmenovat</string>
-    <string name="save_as">Uložit jako</string>
     <string name="save_all">Uložit vše</string>
     <string name="save_values">Uložit hodnoty</string>
     <string name="export">Exportovat</string>
@@ -87,11 +85,8 @@
         <item>@string/screen_title_general_settings</item>
         <item>@string/screen_title_output_settings</item>
     </string-array>
-    <string name="erp_screen_select_schema">Vyberte schema pro spusteni stimulace</string>
-    <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
 
     <!-- ERP screen - 1 -->
-    <string name="erp_scren_1_new_scheme">Nové schéma</string>
 
     <!-- ERP screen - 2 -->
     <string name="erp_screen_2_random">Náhodnost</string>
@@ -162,11 +157,6 @@
 
     <string name="illegal_input">Nepovolené znaky</string>
 
-    <string name="schema_saved">Schéma <xliff:g id="saved_schema">%1$s</xliff:g> bylo uloženo</string>
-    <string name="schema_was_deleted">Schéma bylo smazáno</string>
-    <string name="count_saved_schemes">Počet uložených schémat: <xliff:g id="saved_scheme_count">%1$s</xliff:g></string>
-
-    <string name="configuration_saved">Konfigurace <xliff:g id="saved_conf">%1$s</xliff:g> byla uložena</string>
     <string name="configuration_was_deleted">Konfigurace byla smazána</string>
     <string name="count_saved_configuration">Počet uložených konfigurací: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
 
