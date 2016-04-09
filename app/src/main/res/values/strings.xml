@@ -60,6 +60,8 @@
     <string name="output_title_frequency">Frequency (0 – 255)</string>
     <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
 
+    <string name="out">Out</string>
+    <string name="wait">Wait</string>
     <string name="puls_length">Puls length [ms]</string>
     <string name="bit_shift">Bit shift</string>
     <string name="time_between">Time between [ms]</string>

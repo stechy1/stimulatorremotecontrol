@@ -22,6 +22,8 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
 
     // region Variables
     private static final String TAG_OUTPUT_COUNT = "output-count";
+    private static final String TAG_OUT = "out";
+    private static final String TAG_WAIT = "wait";
     private static final String TAG_EDGE = "edge";
     private static final String TAG_RANDOM = "random";
     private static final String TAG_OUTPUTS = "outputs";
@@ -43,6 +45,8 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
 
         writer.beginObject();
         writer.name(TAG_OUTPUT_COUNT).value(configuration.getOutputCount());
+        writer.name(TAG_OUT).value(configuration.getOut());
+        writer.name(TAG_WAIT).value(configuration.getWait());
         writer.name(TAG_EDGE).value(configuration.getEdge().ordinal());
         writer.name(TAG_RANDOM).value(configuration.getRandom().ordinal());
 
@@ -115,6 +119,8 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
             JSONObject schemeObject = new JSONObject(src);
 
             configuration.setOutputCount(schemeObject.getInt(TAG_OUTPUT_COUNT));
+            configuration.setOut(schemeObject.getInt(TAG_OUT));
+            configuration.setWait(schemeObject.getInt(TAG_WAIT));
             configuration.setEdge(ConfigurationERP.Edge.valueOf(schemeObject.getInt(TAG_EDGE)));
             configuration.setRandom(ConfigurationERP.Random.valueOf(schemeObject.getInt(TAG_RANDOM)));
 

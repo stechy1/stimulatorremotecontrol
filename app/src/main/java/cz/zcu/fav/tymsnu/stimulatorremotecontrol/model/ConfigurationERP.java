@@ -16,6 +16,8 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     // Počet výstupů
     private int outputCount;
+    private int out;
+    private int wait;
     // Nastavení hrany (náběžná/sestupná)
     private Edge edge;
     // Nastavení náhodnosti (žádná/krátká/dlouhá/krátká i dlouhá)
@@ -32,7 +34,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
      * @param name Název schématu
      */
     public ConfigurationERP(String name) {
-        this(name, DEF_OUTPUT_COUNT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
+        this(name, DEF_OUTPUT_COUNT, 0, 0, Edge.FALLING, Random.OFF, new ArrayList<Output>());
 
         for (int i = 0; i < outputCount; i++) {
             outputList.add(new Output("Output" + i));
@@ -48,10 +50,12 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
      * @param random Náhodnost
      * @param outputList Reference na kolekci výstupů
      */
-    public ConfigurationERP(String name, int outputCount, Edge edge, Random random, List<Output> outputList) {
+    public ConfigurationERP(String name, int outputCount, int out, int wait, Edge edge, Random random, List<Output> outputList) {
         super(name);
 
         this.outputCount = outputCount;
+        this.out = out;
+        this.wait = wait;
         this.edge = edge;
         this.random = random;
         this.outputList = outputList;
@@ -106,6 +110,63 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
             onValueChanged.changed();
     }
 
+    /**
+     * Vrátí hodnotu parametru out
+     * @return Hodnota parametru out
+     */
+    public int getOut() {
+        return out;
+    }
+
+    /**
+     * Nastaví parametr out
+     * @param out Číslo
+     */
+    public void setOut(int out) {setOut(out, null);}
+    /**
+     * Nastaví parametr out
+     * @param out Číslo
+     * @param onValueChanged Callback, který se zavolá po změně hodnoty
+     */
+    public void setOut(int out, OnValueChanged onValueChanged) {
+        if (this.out == out)
+            return;
+
+
+        this.out = out;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
+    /**
+     * Vrátí hodnotu parametru wait
+     * @return Hodnota parametru wait
+     */
+    public int getWait() {
+        return wait;
+    }
+
+    /**
+     * Nastaví parametr wait
+     * @param wait Číslo
+     */
+    public void setWait(int wait) {setWait(wait, null);}
+    /**
+     * Nastaví parametr wait
+     * @param wait Číslo
+     * @param onValueChanged Callback, který se zavolá po změně hodnoty
+     */
+    public void setWait(int wait, OnValueChanged onValueChanged) {
+        if (this.wait == wait)
+            return;
+
+        this.wait = wait;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
     public Edge getEdge() {
         return edge;
     }
@@ -141,6 +202,8 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
     @Override
     public ConfigurationERP duplicate(String newName) {
         int outputCount = this.outputCount;
+        int out = this.out;
+        int wait = this.wait;
         Edge edge = Edge.valueOf(this.random.ordinal());
         Random random = Random.valueOf(this.random.ordinal());
         List<Output> outputs = new ArrayList<>(outputCount);
@@ -149,7 +212,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
             outputs.add(new Output(this.outputList.get(i)));
         }
 
-        return new ConfigurationERP(newName, outputCount, edge, random, outputs);
+        return new ConfigurationERP(newName, outputCount, out, wait, edge, random, outputs);
     }
 
     // region Enums
