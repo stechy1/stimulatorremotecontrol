@@ -87,8 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/input_margin_left"
-                    android:layout_marginRight="@dimen/input_margin_left">
+                    android:layout_marginLeft="@dimen/input_margin_left">
 
                     <EditText
                         android:id="@+id/bci_tvep_screen_2_edit_text_puls_length"
