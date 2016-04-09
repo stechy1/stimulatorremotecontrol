@@ -105,7 +105,8 @@
                     android:id="@+id/erp_screen_2_swipe_number_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/input_margin_left" />
+                    android:layout_marginLeft="@dimen/input_margin_left"
+                    android:layout_marginRight="@dimen/input_margin_left"/>
             </LinearLayout>
 
         </LinearLayout>
