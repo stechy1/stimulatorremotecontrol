@@ -85,26 +85,50 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
     // endregion
 
     // region Public methods
+    @Override
+    public ConfigurationERP duplicate(String newName) {
+        int outputCount = this.outputCount;
+        int out = this.out;
+        int wait = this.wait;
+        Edge edge = Edge.valueOf(this.random.ordinal());
+        Random random = Random.valueOf(this.random.ordinal());
+        List<Output> outputs = new ArrayList<>(outputCount);
 
+        for (int i = 0; i < outputCount; i++) {
+            outputs.add(new Output(this.outputList.get(i)));
+        }
+
+        return new ConfigurationERP(newName, outputCount, out, wait, edge, random, outputs);
+    }
     // endregion
 
     // region Getters & Setters
+    /**
+     * Vrátí počet výstupů
+     * @return Počet výstupů
+     */
     public int getOutputCount() {
         return outputCount;
     }
 
+    /**
+     * Nastaví počet výstupů
+     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+     * @param outputCount Počet výstupů
+     */
     public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
-        if (outputCount < MIN_OUTPUT_COUNT || outputCount > MAX_OUTPUT_COUNT)
-            throw new IllegalArgumentException();
-
+    /**
+     * Nastaví počet výstupů
+     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+     * @param outputCount Počet výstupů
+     * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
+     */
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
         if (this.outputCount == outputCount)
             return;
 
         this.outputCount = outputCount;
-
-        if (outputList.size() != outputCount)
-            rearangeOutputs();
+        rearangeOutputs();
 
         if (onValueChanged != null)
             onValueChanged.changed();
@@ -198,22 +222,6 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
     }
 
     // endregion
-
-    @Override
-    public ConfigurationERP duplicate(String newName) {
-        int outputCount = this.outputCount;
-        int out = this.out;
-        int wait = this.wait;
-        Edge edge = Edge.valueOf(this.random.ordinal());
-        Random random = Random.valueOf(this.random.ordinal());
-        List<Output> outputs = new ArrayList<>(outputCount);
-
-        for (int i = 0; i < outputCount; i++) {
-            outputs.add(new Output(this.outputList.get(i)));
-        }
-
-        return new ConfigurationERP(newName, outputCount, out, wait, edge, random, outputs);
-    }
 
     // region Enums
     public enum Edge {
@@ -335,22 +343,27 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
         }
 
         /**
-         * Vrátí intenzitu jasu
-         * @return intenzita jasu
+         * Vrátí jas všech výstupů
+         * @return Jas výstupů
          */
         public int getBrightness() {
             return brightness;
         }
 
+        /**
+         * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
+         * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+         * @param brightness Jas výstupů
+         */
         public void setBrightness(int brightness) {setBrightness(brightness, null);}
         /**
-         * Nastaví intenzitu jasu
-         * Hodnota musí být v rozmězí <0-100>
-         * Pokud bude hodnota jiná, nic se nenastaví
-         * @param brightness Intenzita jasu
+         * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
+         * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+         * @param brightness Jas výstupů
+         * @param onValueChanged Callback, který se zavolá po nastavení jasu výstupů
          */
         public void setBrightness(int brightness, OnValueChanged onValueChanged) {
-            if (brightness < 0 || brightness > 100)
+            if (this.brightness == brightness)
                 return;
 
             this.brightness = brightness;
@@ -446,8 +459,8 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
             /**
              * Konstruktor rozdělení
              * Vytvoří nové rozdělení na základě parametrů
-             * @param value
-             * @param delay
+             * @param value Patametr value
+             * @param delay Patametr delay
              */
             public Distribution(int value, int delay) {
                 this.value = value;
