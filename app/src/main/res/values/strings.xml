@@ -50,11 +50,16 @@
     <string name="screen_title_fvep">Configuration f-VEP</string>
     <string name="screen_title_tvep">Configuration t-VEP</string>
     <string name="screen_title_cvep">Configuration c-VEP</string>
+    <string name="screen_title_rea">Configuration reaction exp.</string>
 
     <string name="screen_title_general_settings">General settings</string>
     <string name="screen_title_output_settings">Output settings</string>
+    <string name="screen_title_settings_1">Settings 1</string>
+    <string name="screen_title_settings_2">Settings 2</string>
 
     <!-- Output titles -->
+    <string name="output_title_count">Output count</string>
+    <string name="output_title_stimul_count">Stimul count</string>
     <string name="output_title_puls_up">Pulse - up [ms]</string>
     <string name="output_title_puls_down">Pulse - down [ms]</string>
     <string name="output_title_distribution_value">Distribution - value [ms]</string>
@@ -62,6 +67,10 @@
     <string name="output_title_brightness">Brightness [%]</string>
     <string name="output_title_frequency">Frequency (0 – 255)</string>
     <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
+    <string name="output_title_cycle_count">Cycle count</string>
+    <string name="output_title_wait_fixed">Wait - fixed</string>
+    <string name="output_title_wait_random">Wait - random</string>
+    <string name="output_title_miss_time">Miss time [ms]</string>
 
     <string name="out">Out</string>
     <string name="wait">Wait</string>
@@ -104,7 +113,7 @@
         <item>Leading</item>
         <item>Falling</item>
     </string-array>
-    <string name="erp_screen_2_output_count">Output count</string>
+
 
     <!-- ERP screen - 3 -->
     <string-array name="erp_screen_3_output_types">
@@ -126,7 +135,7 @@
     </string-array>
     <!-- BCI f-VEP screen - 1 -->
     <!-- BCI f-VEP screen - 2 -->
-    <string name="bci_fvep_screen_2_output_count">Stimul count</string>
+
     <!-- BCI f-VEP screen - 3 -->
     <string-array name="bci_fvep_screen_3_output_types">
         <item>@string/output_title_puls_up</item>
@@ -148,6 +157,12 @@
     </string-array>
     <!-- BCI c-VEP screen - 2 -->
 
+    <!-- Reaction experiments -->
+    <string-array name="rea_screen_titles">
+        <item>@string/screen_title_rea</item>
+        <item>@string/screen_title_settings_1</item>
+        <item>@string/screen_title_settings_2</item>
+    </string-array>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
