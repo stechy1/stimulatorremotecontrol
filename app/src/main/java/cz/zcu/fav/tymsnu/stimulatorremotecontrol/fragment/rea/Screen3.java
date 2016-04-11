@@ -76,18 +76,19 @@ public class Screen3 extends AScreen
 
     @Override
     public void update(Observable observable, Object data) {
+        if (data == null)
+            return;
+
         if (notifyLock) {
             notifyLock = false;
             return;
         }
 
-        if (data == null) return;
-
         ConfigurationREA configuration = (ConfigurationREA) data;
 
         spinner.setSelection(configuration.getOnFail());
-        checkBox1.setSelected(configuration.getM());
-        checkBox2.setSelected(configuration.getF());
+        checkBox1.setChecked(configuration.getM());
+        checkBox2.setChecked(configuration.getF());
         editText1.setText(String.valueOf(configuration.getA()));
         editText2.setText(String.valueOf(configuration.getW()));
         editText3.setText(String.valueOf(configuration.getH()));
@@ -129,7 +130,7 @@ public class Screen3 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setW(EditTextReader.readValue(editText1, configuration.getW()), new AItem.OnValueChanged() {
+        configuration.setW(EditTextReader.readValue(editText2, configuration.getW()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -137,7 +138,7 @@ public class Screen3 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setH(EditTextReader.readValue(editText1, configuration.getH()), new AItem.OnValueChanged() {
+        configuration.setH(EditTextReader.readValue(editText3, configuration.getH()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -167,7 +168,6 @@ public class Screen3 extends AScreen
                 public void changed() {
                     notifyLock = true;
                     manager.notifySelectedItemInternalChange();
-                    notifyLock = false;
                 }
             });
         }
@@ -187,7 +187,6 @@ public class Screen3 extends AScreen
                 public void changed() {
                     notifyLock = true;
                     manager.notifySelectedItemInternalChange();
-                    notifyLock = false;
                 }
             });
         }

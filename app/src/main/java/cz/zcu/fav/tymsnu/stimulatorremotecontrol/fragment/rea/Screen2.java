@@ -118,7 +118,7 @@ public class Screen2 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setWaitRandom(EditTextReader.readValue(editText2, configuration.getWaitRandom()), new AItem.OnValueChanged() {
+        configuration.setWaitRandom(EditTextReader.readValue(editText3, configuration.getWaitRandom()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -126,7 +126,7 @@ public class Screen2 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setMissTime(EditTextReader.readValue(editText2, configuration.getMissTime()), new AItem.OnValueChanged() {
+        configuration.setMissTime(EditTextReader.readValue(editText4, configuration.getMissTime()), new AItem.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
