@@ -68,6 +68,9 @@
     <string name="output_title_wait_fixed">Wait - fixed</string>
     <string name="output_title_wait_random">Wait - random</string>
     <string name="output_title_miss_time">Miss time [ms]</string>
+    <string name="output_title_on_fail">On fail</string>
+    <string name="output_title_on_fail_continue">Continue</string>
+    <string name="output_title_on_fail_wait">Wait</string>
 
     <string name="out">Out</string>
     <string name="wait">Wait</string>

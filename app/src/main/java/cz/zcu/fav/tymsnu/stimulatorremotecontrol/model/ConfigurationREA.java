@@ -2,12 +2,18 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 public class ConfigurationREA extends AItem<ConfigurationREA> {
 
+    // region Variables
     private int outputCount;
     private int cycleCount;
     private int waitFixed;
     private int waitRandom;
     private int missTime;
     private int brightness;
+
+    private int onFail;
+    private boolean m, f;
+    private int a, h, w;
+    // endregion
 
     // region Constructors
     public ConfigurationREA(String name) {
@@ -154,6 +160,96 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
             return;
 
         this.brightness = brightness;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
+    public int getOnFail() {
+        return onFail;
+    }
+
+    public void setOnFail(int onFail) {setOnFail(onFail, null);}
+    public void setOnFail(int onFail, OnValueChanged onValueChanged) {
+        if (this.onFail == onFail)
+            return;
+
+        this.onFail = onFail;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
+    public boolean getM() {
+        return m;
+    }
+
+    public void setM(boolean m) {setM(m, null);}
+    public void setM(boolean m, OnValueChanged onValueChanged) {
+        if (this.m == m)
+            return;
+
+        this.m = m;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
+    public boolean getF() {
+        return f;
+    }
+
+    public void setF(boolean f) {setF(f, null);}
+    public void setF(boolean f, OnValueChanged onValueChanged) {
+        if (this.f == f)
+            return;
+
+        this.f = f;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {setA(a, null);}
+    public void setA(int a, OnValueChanged onValueChanged) {
+        if (this.a == a)
+            return;
+
+        this.a = a;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public void setH(int h) {setH(h, null);}
+    public void setH(int h, OnValueChanged onValueChanged) {
+        if (this.h == h)
+            return;
+
+        this.h = h;
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public void setW(int w) {setW(w, null);}
+    public void setW(int w, OnValueChanged onValueChanged) {
+        if (this.w == w)
+            return;
+
+        this.w = w;
 
         if (onValueChanged != null)
             onValueChanged.changed();
