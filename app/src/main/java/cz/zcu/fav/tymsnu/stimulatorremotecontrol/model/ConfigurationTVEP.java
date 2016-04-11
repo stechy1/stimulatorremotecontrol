@@ -6,6 +6,8 @@ import java.util.List;
 public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
 
     // region Variables
+    public static final int DEF_OUTPUT_COUNT = 4;
+
     private int outputCount;
     private int patternLength;
     private int pulsLength;
@@ -16,7 +18,7 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
 
     // region Constructors
     public ConfigurationTVEP(String name) {
-        this(name, 1, 1, 0, 0, 0, new ArrayList<Pattern>());
+        this(name, DEF_OUTPUT_COUNT, 1, 0, 0, 0, new ArrayList<Pattern>());
     }
 
     public ConfigurationTVEP(String name, int outputCount, int patternLength, int pulsLength, int pulsSkew, int brightness, List<Pattern> patternList) {

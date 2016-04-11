@@ -39,7 +39,7 @@ public class TVEPFragment extends ASimpleFragment
         View v = inflater.inflate(R.layout.fragment_universal, container, false);
 
         title = (TextView) v.findViewById(R.id.universal_title);
-        titles = getResources().getStringArray(R.array.bci_fvep_screen_titles);
+        titles = getResources().getStringArray(R.array.bci_tvep_screen_titles);
         title.setText(titles[0]);
 
         ViewPager pager = (ViewPager) v.findViewById(R.id.universal_view_pager);

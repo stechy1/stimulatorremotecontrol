@@ -3,6 +3,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 public class ConfigurationREA extends AItem<ConfigurationREA> {
 
     // region Variables
+    public static final int DEF_OUTPUT_COUNT = 4;
+
     private int outputCount;
     private int cycleCount;
     private int waitFixed;
@@ -17,7 +19,7 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
 
     // region Constructors
     public ConfigurationREA(String name) {
-        this(name, 1, 0, 0, 0, 0, 0, 0, false, false, 0, 0, 0);
+        this(name, DEF_OUTPUT_COUNT, 0, 0, 0, 0, 0, 0, false, false, 0, 0, 0);
     }
 
     public ConfigurationREA(String name, int outputCount, int cycleCount, int waitFixed, int waitRandom, int missTime, int brightness, int onFail,

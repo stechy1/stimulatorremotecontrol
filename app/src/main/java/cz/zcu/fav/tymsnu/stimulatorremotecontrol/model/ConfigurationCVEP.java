@@ -6,6 +6,8 @@ import java.util.List;
 public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
 
     // region Variables
+    public static final int DEF_OUTPUT_COUNT = 4;
+
     private int outputCount;
     private int pulsLength;
     private int bitShift;
@@ -16,16 +18,16 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
 
     // region Constructors
     public ConfigurationCVEP(String name) {
-        this(name, new Pattern(), 0, 0, 0, 1);
+        this(name, new Pattern(), DEF_OUTPUT_COUNT, 0, 0, 0);
     }
 
-    public ConfigurationCVEP(String name, Pattern mainPattern, int brightness, int bitShift, int pulsLength, int outputCount) {
+    public ConfigurationCVEP(String name, Pattern mainPattern, int outputCount, int brightness, int bitShift, int pulsLength) {
         super(name);
         this.mainPattern = mainPattern;
+        this.outputCount = outputCount;
         this.brightness = brightness;
         this.bitShift = bitShift;
         this.pulsLength = pulsLength;
-        this.outputCount = outputCount;
     }
     // endregion
     
