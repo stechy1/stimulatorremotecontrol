@@ -17,10 +17,11 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
 
     // region Constructors
     public ConfigurationREA(String name) {
-        this(name, 1, 0, 0, 0, 0, 0);
+        this(name, 1, 0, 0, 0, 0, 0, 0, false, false, 0, 0, 0);
     }
 
-    public ConfigurationREA(String name, int outputCount, int cycleCount, int waitFixed, int waitRandom, int missTime, int brightness) {
+    public ConfigurationREA(String name, int outputCount, int cycleCount, int waitFixed, int waitRandom, int missTime, int brightness, int onFail,
+                            boolean m, boolean f, int a, int h, int w) {
         super(name);
         this.outputCount = outputCount;
         this.cycleCount = cycleCount;
@@ -28,6 +29,12 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
         this.waitRandom = waitRandom;
         this.missTime = missTime;
         this.brightness = brightness;
+        this.onFail = onFail;
+        this.m = m;
+        this.f = f;
+        this.a = a;
+        this.h = h;
+        this.w = w;
     }
 
     // endregion
@@ -38,10 +45,22 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
     // region Public methods
     @Override
     public ConfigurationREA duplicate(String newName) {
-        return null;
+
+        int outputCount = this.outputCount;
+        int cycleCount = this.cycleCount;
+        int waitFixed = this.waitFixed;
+        int waitRandom = this.waitRandom;
+        int missTime = this.missTime;
+        int brightness = this.brightness;
+        int onFail = this.onFail;
+        boolean m = this.m;
+        boolean f = this.f;
+        int a = this.a;
+        int h = this.h;
+        int w = this.w;
+
+        return new ConfigurationREA(newName, outputCount, cycleCount, waitFixed, waitRandom, missTime, brightness, onFail, m, f, a, h, w);
     }
-
-
     // endregion
 
     // region Getters & Setters
