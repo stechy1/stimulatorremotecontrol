@@ -42,7 +42,8 @@ public class Screen3 extends AScreen
         View v = inflater.inflate(R.layout.fragment_rea_screen_3, container, false);
 
         spinner = (Spinner) v.findViewById(R.id.rea_screen3_spinner_fail);
-        spinner.setAdapter(ArrayAdapter.createFromResource(getContext(), R.array.rea_screen_3_fail_type, android.R.layout.simple_spinner_dropdown_item));
+        spinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.rea_screen_3_fail_type)));
         spinner.setOnItemSelectedListener(this);
 
         checkBox1 = (CheckBox) v.findViewById(R.id.rea_screen_3_checkbox_m);
