@@ -24,7 +24,7 @@ public class REAFileJSONHandler implements IReadWrite<ConfigurationREA> {
     private static final String TAG_WAIT_RANDOM = "wait-random";
     private static final String TAG_MISS_TIME = "miss-time";
     private static final String TAG_BRIGHTNESS = "brightness";
-    private static final String TAG_ON_FAIL = "output-count";
+    private static final String TAG_ON_FAIL = "on_fail";
     private static final String TAG_M = "m";
     private static final String TAG_F = "f";
     private static final String TAG_A = "a";
