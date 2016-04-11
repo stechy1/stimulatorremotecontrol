@@ -30,9 +30,8 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
         this.brightness = brightness;
         this.patternList = patternList;
 
-        for (int i = 0; i < outputCount; i++) {
-            patternList.add(new Pattern());
-        }
+        if (this.outputCount != this.patternList.size())
+            rearangeOutputs();
     }
     // endregion
 
@@ -69,7 +68,7 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
         List<Pattern> patternList = new ArrayList<>();
 
         for(Pattern a : this.patternList){
-            patternList.add(new Pattern(a.getValue()));
+            patternList.add(new Pattern(a));
         }
         return new ConfigurationTVEP(newName, outputCount, patternLength, pulsLength, pulsSkew, brightness, patternList);
     }
@@ -243,6 +242,10 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
 
         public Pattern(int value) {
             this.value = value;
+        }
+
+        public Pattern(Pattern source) {
+            this.value = source.value;
         }
         // endregion
 
