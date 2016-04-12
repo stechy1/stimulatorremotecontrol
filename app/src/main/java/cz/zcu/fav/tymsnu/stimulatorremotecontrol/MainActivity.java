@@ -31,6 +31,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.DeviceListActivity;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.AboutFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ERPFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.HelpFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ReactionFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SettingsFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.CVEPFragment;
@@ -359,9 +360,12 @@ public class MainActivity extends AppCompatActivity
                     fragment = new CVEPFragment();
                     break;
 
-
                 case R.id.nav_item_3:
                     fragment = new ReactionFragment();
+                    break;
+
+                case R.id.nav_help:
+                    fragment = new HelpFragment();
                     break;
 
                 case R.id.nav_item_4:
