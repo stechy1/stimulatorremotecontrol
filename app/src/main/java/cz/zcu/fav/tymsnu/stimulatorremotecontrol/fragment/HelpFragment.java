@@ -38,7 +38,7 @@ public class HelpFragment extends ASimpleFragment {
     private HashMap<String, List<String>> getChildren() {
         HashMap<String, List<String>> childrens = new HashMap<>(2);
 
-        childrens.put("ERP", Arrays.asList("Sub1", "Sub2", "Sub3"));
+        childrens.put("ERP", Arrays.asList(getResources().getStringArray(R.array.help_erp_childs)));
         childrens.put("BCI", Arrays.asList("Sub4", "Sub5", "Sub6"));
         childrens.put("Reaction experiment", Arrays.asList("Sub7", "Sub8", "Sub9"));
 

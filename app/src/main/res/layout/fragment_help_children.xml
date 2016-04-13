@@ -10,7 +10,6 @@
         android:id="@+id/help_child"
         android:layout_marginLeft="@dimen/input_margin_left"
         android:layout_marginRight="@dimen/input_margin_left"
-        android:text="Temp child text"
         android:textSize="18sp"/>
 
 </LinearLayout>
