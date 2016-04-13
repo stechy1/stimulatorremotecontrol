@@ -203,4 +203,68 @@
     <string name="count_saved_configuration">Count of saved configurations: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
 
     <string name="values_were_saved">Values were saved to: <xliff:g id="config_name">%1$s</xliff:g></string>
+
+    <!-- Nápověda -->
+    <string name="help_erp">popis ERP...</string>
+    <string name="help_erp_hrana">Hrana = Sestupně: ..., Vzestupně: ...</string>
+    <string name="help_erp_value">Value = OUT: ..., WAIT: ...</string>
+    <string name="help_erp_nahodnost">Náhodnost: Vypnuto: ..., Krátká: ..., Dlouhá: ..., Krátká i Dlouhá: ...</string>
+    <string name="help_erp_pulse_up">Pulse - UP: doba v [ms] po kterou je výstup aktivní</string>
+    <string name="help_erp_pulse_down">Pulse - DOWN: doba v [ms] po kterou je výstup neaktivní</string>
+    <string name="help_erp_distribution_value">Distribution-value:ozdělení pravděpodobnosti v [%], počet bliknutí výstupu je odvozen z této hodnoty, mezi n-výstupů je rozděleno 100 %</string>
+    <string name="help_erp_distribution_delay">Distribution-delay: ...</string>
+    <string name="help_erp_brightness">Brightness: nastavuje jas v [%] pro jednotlivé výstupy, každý výstup může mít jinou hodnotu jasu</string>
+
+    <string name="help_bci_fvep">popis BCI f-VEP...</string>
+    <string name="help_bci_fvep_pulse_up">Pulse - UP: ...</string>
+    <string name="help_bci_fvep_pulse_down">Pulse - DOWN: ...</string>
+    <string name="help_bci_fvep_frequency">Frequency: ...</string>
+    <string name="help_bci_fvep_duty_cycle">Duty cycle: hodonta v procentech (1-99), určuje délku pulzu při nastavení frekvence</string>
+    <string name="help_bci_fvep_brightness">Brightness: ...</string>
+
+    <string name="help_bci_tvep">popis BCI t-VEP...</string>
+    <string name="help_bci_tvep_pattern_lenght">Pattern - lenght: ...</string>
+    <string name="help_bci_tvep_pattern_skew">Pattern - skew: ...</string>
+    <string name="help_bci_tvep_brightness">Brightness: ...</string>
+    <string name="help_bci_tvep_info">Pattern pro jednotlivé výstupy: </string>
+
+    <string name="help_bci_cvep">popis BCI c-VEP...</string>
+    <string name="help_bci_cvep_info">Význam 32bit patternu: ...</string>
+    <string name="help_bci_cvep_puls_skew">Bitový posun / Puls - skew: ...</string>
+    <string name="help_bci_cvep_puls_lenght">Puls - Lenght: ...</string>
+    <string name="help_bci_cvep_puls_brightness">Brightness: ...</string>
+
+    <string name="help_rea">popis Reakčních experimentů...</string>
+    <string name="help_rea_cycle_count">Cycle count: ...</string>
+    <string name="help_rea_wait_fixed">Wait - fixed: ...</string>
+    <string name="help_rea_wait_random">Wait - random: ...</string>
+    <string name="help_rea_on_fail">On fail = Continue: ..., Wait: ...</string>
+    <string name="help_rea_M">M: ...</string>
+    <string name="help_rea_F">F: ...</string>
+    <string name="help_rea_A">A: ...</string>
+    <string name="help_rea_W">W: ...</string>
+    <string name="help_rea_H">H: ...</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </resources>
