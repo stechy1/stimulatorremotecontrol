@@ -30,7 +30,7 @@ public class HelpFragment extends ASimpleFragment {
 
     private List<String> getParentItems() {
         List<String> parents = new ArrayList<>(3);
-        parents.addAll(Arrays.asList("One", "Two", "Three"));
+        parents.addAll(Arrays.asList(getResources().getStringArray(R.array.help_parents)));
 
         return parents;
     }
@@ -38,9 +38,9 @@ public class HelpFragment extends ASimpleFragment {
     private HashMap<String, List<String>> getChildren() {
         HashMap<String, List<String>> childrens = new HashMap<>(2);
 
-        childrens.put("One", Arrays.asList("Sub1", "Sub2", "Sub3"));
-        childrens.put("Two", Arrays.asList("Sub4", "Sub5", "Sub6"));
-        childrens.put("Three", Arrays.asList("Sub7", "Sub8", "Sub9"));
+        childrens.put("ERP", Arrays.asList("Sub1", "Sub2", "Sub3"));
+        childrens.put("BCI", Arrays.asList("Sub4", "Sub5", "Sub6"));
+        childrens.put("Reaction experiment", Arrays.asList("Sub7", "Sub8", "Sub9"));
 
         return childrens;
     }

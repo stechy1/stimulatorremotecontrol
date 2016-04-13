@@ -35,8 +35,9 @@ public class HelpAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mChildItem.get(mParentItem.get(groupPosition))
-                .size();
+        List<String> childrenList = mChildItem.get(mParentItem.get(groupPosition));
+
+        return (childrenList == null) ? 0 : childrenList.size();
     }
 
     @Override
@@ -83,6 +84,7 @@ public class HelpAdapter extends BaseExpandableListAdapter {
         }
 
         holder.textView.setText(listTitle);
+        holder.textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, isExpanded ? R.drawable.arrow_up : R.drawable.arrow_down, 0);
 
         return convertView;
     }

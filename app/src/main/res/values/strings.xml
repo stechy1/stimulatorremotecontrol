@@ -42,6 +42,16 @@
     <!-- Activity - home -->
     <string name="version">Version: <xliff:g id="app_version">%1$s</xliff:g></string>
 
+    <!-- Activity - help -->
+    <string-array name="help_parents">
+        <item>@string/nav_text_item_1</item>
+        <item>@string/nav_text_item_2</item>
+        <item>@string/nav_text_item_3</item>
+        <item>@string/nav_text_item_4</item>
+        <item>@string/nav_text_item_5</item>
+        <item>@string/nav_text_item_6</item>
+    </string-array>
+
     <!-- Activity - nastavení-->
     <string name="language_change">Change language</string>
 
