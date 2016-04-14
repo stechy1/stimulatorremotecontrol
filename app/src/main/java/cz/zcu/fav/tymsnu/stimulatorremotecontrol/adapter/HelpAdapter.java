@@ -1,6 +1,7 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,10 @@ public class HelpAdapter extends BaseExpandableListAdapter {
         final String expandedListText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.fragment_help_children, parent, false);
+            if (childPosition == 0)
+                convertView = mInflater.inflate(R.layout.fragment_help_first_children, parent, false);
+            else
+                convertView = mInflater.inflate(R.layout.fragment_help_children, parent, false);
 
             holder = new ChildrenHolder();
             holder.textView = (TextView) convertView.findViewById(R.id.help_child);
@@ -107,6 +111,7 @@ public class HelpAdapter extends BaseExpandableListAdapter {
             holder = (ChildrenHolder) convertView.getTag();
         }
 
+        Log.i("HelpAdapter", expandedListText);
         holder.textView.setText(expandedListText);
 
         return convertView;

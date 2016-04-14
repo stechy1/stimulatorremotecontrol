@@ -25,8 +25,7 @@ public class REAFileJSONHandler implements IReadWrite<ConfigurationREA> {
     private static final String TAG_MISS_TIME = "miss-time";
     private static final String TAG_BRIGHTNESS = "brightness";
     private static final String TAG_ON_FAIL = "on_fail";
-    private static final String TAG_M = "m";
-    private static final String TAG_F = "f";
+    private static final String TAG_SEX = "sex";
     private static final String TAG_A = "a";
     private static final String TAG_H = "h";
     private static final String TAG_W = "w";
@@ -46,8 +45,7 @@ public class REAFileJSONHandler implements IReadWrite<ConfigurationREA> {
         w.name(TAG_MISS_TIME).value(item.getMissTime());
         w.name(TAG_BRIGHTNESS).value(item.getBrightness());
         w.name(TAG_ON_FAIL).value(item.getOnFail());
-        w.name(TAG_M).value(item.getM());
-        w.name(TAG_F).value(item.getF());
+        w.name(TAG_SEX).value(item.getSex().ordinal());
         w.name(TAG_A).value(item.getA());
         w.name(TAG_H).value(item.getH());
         w.name(TAG_W).value(item.getW());
@@ -80,8 +78,7 @@ public class REAFileJSONHandler implements IReadWrite<ConfigurationREA> {
             item.setMissTime(itemObject.getInt(TAG_MISS_TIME));
             item.setBrightness(itemObject.getInt(TAG_BRIGHTNESS));
             item.setOnFail(itemObject.getInt(TAG_ON_FAIL));
-            item.setM(itemObject.getBoolean(TAG_M));
-            item.setF(itemObject.getBoolean(TAG_F));
+            item.setSex(ConfigurationREA.Sex.valueOf(itemObject.getInt(TAG_SEX)));
             item.setA(itemObject.getInt(TAG_A));
             item.setH(itemObject.getInt(TAG_H));
             item.setW(itemObject.getInt(TAG_W));

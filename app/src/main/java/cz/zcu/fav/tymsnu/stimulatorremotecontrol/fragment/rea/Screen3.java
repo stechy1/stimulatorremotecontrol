@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -26,9 +24,10 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 public class Screen3 extends AScreen
         implements Observer, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private Spinner spinner;
-    private CheckBox checkBox1;
-    private CheckBox checkBox2;
+    private Spinner spinner1;
+    private Spinner spinner2;
+//    private CheckBox checkBox1;
+//    private CheckBox checkBox2;
     private EditText editText1;
     private EditText editText2;
     private EditText editText3;
@@ -41,15 +40,17 @@ public class Screen3 extends AScreen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_rea_screen_3, container, false);
 
-        spinner = (Spinner) v.findViewById(R.id.rea_screen3_spinner_fail);
-        spinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.rea_screen_3_fail_type)));
-        spinner.setOnItemSelectedListener(this);
+        spinner2 = (Spinner) v.findViewById(R.id.rea_screen_3_spinner_sex);
+        spinner1 = (Spinner) v.findViewById(R.id.rea_screen_3_spinner_fail);
 
-        checkBox1 = (CheckBox) v.findViewById(R.id.rea_screen_3_checkbox_m);
-        checkBox1.setOnCheckedChangeListener(new CheckBox1OnChangeListener());
-        checkBox2 = (CheckBox) v.findViewById(R.id.rea_screen_3_checkbox_f);
-        checkBox2.setOnCheckedChangeListener(new CheckBox2OnChangeListener());
+        spinner1.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.rea_screen_3_fail_type)));
+        spinner2.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.rea_screen_3_sex)));
+
+        spinner1.setOnItemSelectedListener(new Spinner1ItemSelectedListener());
+        spinner2.setOnItemSelectedListener(new Spinner2ItemSelectedListener());
+
 
         editText1 = (EditText) v.findViewById(R.id.rea_screen_3_edit_text_a);
         editText2 = (EditText) v.findViewById(R.id.rea_screen_3_edit_text_w);
@@ -87,29 +88,17 @@ public class Screen3 extends AScreen
 
         ConfigurationREA configuration = (ConfigurationREA) data;
 
-        spinner.setSelection(configuration.getOnFail());
-        checkBox1.setChecked(configuration.getM());
-        checkBox2.setChecked(configuration.getF());
+        spinner1.setSelection(configuration.getOnFail());
+
         editText1.setText(String.valueOf(configuration.getA()));
         editText2.setText(String.valueOf(configuration.getW()));
         editText3.setText(String.valueOf(configuration.getH()));
     }
 
-    // On spinner item selected
+    // On spinner1 item selected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        ConfigurationREA configuration = manager.getSelectedItem();
 
-        if (configuration == null)
-            return;
-
-        configuration.setOnFail(position, new AItem.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                manager.notifySelectedItemInternalChange();
-            }
-        });
     }
 
     @Override
@@ -155,16 +144,16 @@ public class Screen3 extends AScreen
     }
 
 
-    private final class CheckBox1OnChangeListener implements CheckBox.OnCheckedChangeListener {
+    private final class Spinner1ItemSelectedListener implements Spinner.OnItemSelectedListener {
 
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ConfigurationREA configuration = manager.getSelectedItem();
 
             if (configuration == null)
                 return;
 
-            configuration.setM(isChecked, new AItem.OnValueChanged() {
+            configuration.setOnFail(position, new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;
@@ -172,24 +161,34 @@ public class Screen3 extends AScreen
                 }
             });
         }
-    }
-
-    private final class CheckBox2OnChangeListener implements CheckBox.OnCheckedChangeListener {
 
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
+    private final class Spinner2ItemSelectedListener implements Spinner.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ConfigurationREA configuration = manager.getSelectedItem();
 
             if (configuration == null)
                 return;
 
-            configuration.setF(isChecked, new AItem.OnValueChanged() {
+            configuration.setSex(ConfigurationREA.Sex.valueOf(position), new AItem.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;
                     manager.notifySelectedItemInternalChange();
                 }
             });
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
         }
     }
 }

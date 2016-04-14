@@ -13,17 +13,17 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
     private int brightness;
 
     private int onFail;
-    private boolean m, f;
+    private Sex sex;
     private int a, h, w;
     // endregion
 
     // region Constructors
     public ConfigurationREA(String name) {
-        this(name, DEF_OUTPUT_COUNT, 0, 0, 0, 0, 0, 0, false, false, 0, 0, 0);
+        this(name, DEF_OUTPUT_COUNT, 0, 0, 0, 0, 0, 0, Sex.MALE, 0, 0, 0);
     }
 
     public ConfigurationREA(String name, int outputCount, int cycleCount, int waitFixed, int waitRandom, int missTime, int brightness, int onFail,
-                            boolean m, boolean f, int a, int h, int w) {
+                            Sex sex, int a, int h, int w) {
         super(name);
         this.outputCount = outputCount;
         this.cycleCount = cycleCount;
@@ -32,8 +32,7 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
         this.missTime = missTime;
         this.brightness = brightness;
         this.onFail = onFail;
-        this.m = m;
-        this.f = f;
+        this.sex = sex;
         this.a = a;
         this.h = h;
         this.w = w;
@@ -47,7 +46,6 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
     // region Public methods
     @Override
     public ConfigurationREA duplicate(String newName) {
-
         int outputCount = this.outputCount;
         int cycleCount = this.cycleCount;
         int waitFixed = this.waitFixed;
@@ -55,13 +53,12 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
         int missTime = this.missTime;
         int brightness = this.brightness;
         int onFail = this.onFail;
-        boolean m = this.m;
-        boolean f = this.f;
+        Sex sex = this.sex;
         int a = this.a;
         int h = this.h;
         int w = this.w;
 
-        return new ConfigurationREA(newName, outputCount, cycleCount, waitFixed, waitRandom, missTime, brightness, onFail, m, f, a, h, w);
+        return new ConfigurationREA(newName, outputCount, cycleCount, waitFixed, waitRandom, missTime, brightness, onFail, sex, a, h, w);
     }
     // endregion
 
@@ -201,31 +198,16 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
             onValueChanged.changed();
     }
 
-    public boolean getM() {
-        return m;
+    public Sex getSex() {
+        return sex;
     }
 
-    public void setM(boolean m) {setM(m, null);}
-    public void setM(boolean m, OnValueChanged onValueChanged) {
-        if (this.m == m)
+    public void setSex(Sex sex) {setSex(sex, null);}
+    public void setSex(Sex sex, OnValueChanged onValueChanged) {
+        if (this.sex == sex)
             return;
 
-        this.m = m;
-
-        if (onValueChanged != null)
-            onValueChanged.changed();
-    }
-
-    public boolean getF() {
-        return f;
-    }
-
-    public void setF(boolean f) {setF(f, null);}
-    public void setF(boolean f, OnValueChanged onValueChanged) {
-        if (this.f == f)
-            return;
-
-        this.f = f;
+        this.sex = sex;
 
         if (onValueChanged != null)
             onValueChanged.changed();
@@ -277,4 +259,19 @@ public class ConfigurationREA extends AItem<ConfigurationREA> {
     }
 
     // endregion
+
+    public enum Sex {
+        MALE, FEMALE;
+
+        public static Sex valueOf(int index) {
+            switch (index) {
+                case 0:
+                    return MALE;
+                case 1:
+                    return FEMALE;
+                default:
+                    return MALE;
+            }
+        }
+    }
 }

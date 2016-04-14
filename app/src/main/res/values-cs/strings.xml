@@ -71,6 +71,9 @@
     <string name="output_title_on_fail">On fail</string>
     <string name="output_title_on_fail_continue">Continue</string>
     <string name="output_title_on_fail_wait">Wait</string>
+    <string name="output_title_sex">Pohlaví</string>
+    <string name="output_title_sex_male">Muž</string>
+    <string name="output_title_sex_female">Žena</string>
 
     <string name="out">Out</string>
     <string name="wait">Wait</string>

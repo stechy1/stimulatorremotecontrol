@@ -23,29 +23,24 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rea_screen3_spinner_fail"
+                android:id="@+id/rea_screen_3_spinner_fail"
                 android:background="@color/colorAlpha"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/layout_children_margin_top"
-                android:layout_marginLeft="@dimen/input_margin_left">
+                android:orientation="vertical"
+                android:padding="5dp">
 
-                <CheckBox
-                    android:id="@+id/rea_screen_3_checkbox_m"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="M" />
-
-                <CheckBox
-                    android:id="@+id/rea_screen_3_checkbox_f"
-                    android:layout_width="wrap_content"
+                    android:text="@string/output_title_sex"/>
+                <Spinner
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="F"
-                    android:layout_marginLeft="@dimen/input_margin_left"/>
+                    android:id="@+id/rea_screen_3_spinner_sex"
+                    android:background="@color/colorAlpha"/>
             </LinearLayout>
 
             <LinearLayout

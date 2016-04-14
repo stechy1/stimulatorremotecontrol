@@ -84,6 +84,9 @@
     <string name="output_title_on_fail">On fail</string>
     <string name="output_title_on_fail_continue">Continue</string>
     <string name="output_title_on_fail_wait">Wait</string>
+    <string name="output_title_sex">Sex</string>
+    <string name="output_title_sex_male">Male</string>
+    <string name="output_title_sex_female">Female</string>
 
 
     <string name="out">Out</string>
@@ -187,6 +190,10 @@
         <item>@string/output_title_on_fail_continue</item>
         <item>@string/output_title_on_fail_wait</item>
     </string-array>
+    <string-array name="rea_screen_3_sex">
+        <item>@string/output_title_sex_male</item>
+        <item>@string/output_title_sex_female</item>
+    </string-array>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
@@ -206,7 +213,7 @@
 
     <!-- Nápověda -->
     <string name="help_erp">popis ERP...\n</string>
-    <string name="help_erp_hrana">Hrana = Sestupně: ..., Vzestupně: ...</string>
+    <string name="help_erp_hrana"><b><i>Hrana</i></b> = Sestupně: ..., Vzestupně: ...</string>
     <string name="help_erp_value">Value = OUT: ..., WAIT: ...</string>
     <string name="help_erp_nahodnost">Náhodnost: Vypnuto: ..., Krátká: ..., Dlouhá: ..., Krátká i Dlouhá: ...</string>
     <string name="help_erp_pulse_up">Pulse - UP: doba v [ms] po kterou je výstup aktivní</string>
