@@ -29,6 +29,7 @@
     <string name="nav_text_item_5">Biosensor logger</string>
     <string name="nav_text_item_6">Test mode</string>
     <string name="nav_text_settings">Nastavení</string>
+    <string name="nav_text_help">Nápověda</string>
     <string name="nav_text_about">O aplikaci</string>
     
     <!-- Activity - hledání a připojení zařízení-->
