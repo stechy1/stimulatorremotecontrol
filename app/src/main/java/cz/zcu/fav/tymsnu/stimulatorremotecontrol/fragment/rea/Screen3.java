@@ -89,6 +89,7 @@ public class Screen3 extends AScreen
         ConfigurationREA configuration = (ConfigurationREA) data;
 
         spinner1.setSelection(configuration.getOnFail());
+        spinner2.setSelection(configuration.getSex().ordinal());
 
         editText1.setText(String.valueOf(configuration.getA()));
         editText2.setText(String.valueOf(configuration.getW()));
