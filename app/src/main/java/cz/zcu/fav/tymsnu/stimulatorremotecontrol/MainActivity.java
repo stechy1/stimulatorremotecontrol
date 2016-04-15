@@ -228,6 +228,7 @@ public class MainActivity extends AppCompatActivity
         
         if (actViewID != Constants.FRAGMENT_ABOUT) {
             fragment.onBackButtonPressed(this);
+            selectedMenuItem = null;
         } else {
             super.onBackPressed();
         }
