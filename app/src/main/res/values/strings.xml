@@ -261,8 +261,7 @@
     <string name="help_rea_wait_fixed">Wait - fixed: ...</string>
     <string name="help_rea_wait_random">Wait - random: ...</string>
     <string name="help_rea_on_fail">On fail = Continue: ..., Wait: ...</string>
-    <string name="help_rea_M">M: ...</string>
-    <string name="help_rea_F">F: ...</string>
+    <string name="help_rea_sex">Vyznam pohlavi: ...</string>
     <string name="help_rea_A">A: ...</string>
     <string name="help_rea_W">W: ...</string>
     <string name="help_rea_H">H: ...</string>
@@ -279,6 +278,41 @@
         <item>@string/help_erp_brightness</item>
     </string-array>
 
+    <string-array name="help_bci_fvep_childs">
+        <item>@string/help_bci_fvep</item>
+        <item>@string/help_bci_fvep_pulse_up</item>
+        <item>@string/help_bci_fvep_pulse_down</item>
+        <item>@string/help_bci_fvep_frequency</item>
+        <item>@string/help_bci_fvep_duty_cycle</item>
+        <item>@string/help_bci_fvep_brightness</item>
+    </string-array>
 
+    <string-array name="help_bci_tvep_childs">
+        <item>@string/help_bci_tvep</item>
+        <item>@string/help_bci_tvep_pattern_lenght</item>
+        <item>@string/help_bci_tvep_pattern_skew</item>
+        <item>@string/help_bci_tvep_brightness</item>
+        <item>@string/help_bci_tvep_info</item>
+    </string-array>
+
+    <string-array name="help_bci_cvep_childs">
+        <item>@string/help_bci_cvep</item>
+        <item>@string/help_bci_cvep_info</item>
+        <item>@string/help_bci_cvep_puls_skew</item>
+        <item>@string/help_bci_cvep_puls_lenght</item>
+        <item>@string/help_bci_cvep_puls_brightness</item>
+    </string-array>
+
+    <string-array name="help_rea_childs">
+        <item>@string/help_rea</item>
+        <item>@string/help_rea_cycle_count</item>
+        <item>@string/help_rea_wait_fixed</item>
+        <item>@string/help_rea_wait_random</item>
+        <item>@string/help_rea_on_fail</item>
+        <item>@string/help_rea_sex</item>
+        <item>@string/help_rea_A</item>
+        <item>@string/help_rea_W</item>
+        <item>@string/help_rea_H</item>
+    </string-array>
 
 </resources>
