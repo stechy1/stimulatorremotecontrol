@@ -6,6 +6,8 @@ import java.util.List;
 public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
 
     // region Variables
+    public static final int DEF_OUTPUT_COUNT = 4;
+
     private int outputCount;
     private int patternLength;
     private int pulsLength;
@@ -16,7 +18,7 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
 
     // region Constructors
     public ConfigurationTVEP(String name) {
-        this(name, 1, 1, 0, 0, 0, new ArrayList<Pattern>());
+        this(name, DEF_OUTPUT_COUNT, 1, 0, 0, 0, new ArrayList<Pattern>());
     }
 
     public ConfigurationTVEP(String name, int outputCount, int patternLength, int pulsLength, int pulsSkew, int brightness, List<Pattern> patternList) {
@@ -28,9 +30,8 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
         this.brightness = brightness;
         this.patternList = patternList;
 
-        for (int i = 0; i < outputCount; i++) {
-            patternList.add(new Pattern());
-        }
+        if (this.outputCount != this.patternList.size())
+            rearangeOutputs();
     }
     // endregion
 
@@ -67,7 +68,7 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
         List<Pattern> patternList = new ArrayList<>();
 
         for(Pattern a : this.patternList){
-            patternList.add(new Pattern(a.getValue()));
+            patternList.add(new Pattern(a));
         }
         return new ConfigurationTVEP(newName, outputCount, patternLength, pulsLength, pulsSkew, brightness, patternList);
     }
@@ -241,6 +242,10 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
 
         public Pattern(int value) {
             this.value = value;
+        }
+
+        public Pattern(Pattern source) {
+            this.value = source.value;
         }
         // endregion
 

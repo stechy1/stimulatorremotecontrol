@@ -9,10 +9,8 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     // region Variables
-    // Výchozí počet výstupů (stará verze 4)
-    public static final int MIN_OUTPUT_COUNT = 1;
+    // Výchozí počet výstupů
     public static final int DEF_OUTPUT_COUNT = 4;
-    public static final int MAX_OUTPUT_COUNT = 8;
 
     // Počet výstupů
     private int outputCount;

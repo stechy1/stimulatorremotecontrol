@@ -1,4 +1,5 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci;
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment;
+
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,19 +16,17 @@ import java.io.File;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager.TVEPPagerAdapter;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.TVEPFactory;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.pager.REAPagerAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationREA;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.REAFactory;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
-
-public class TVEPFragment extends ASimpleFragment
+public class ReactionFragment extends ASimpleFragment
         implements ViewPager.OnPageChangeListener {
 
-    private static final String TAG = "FVEPFragment";
+    private static final String TAG = "ERPFragment";
 
-    private final Manager<ConfigurationTVEP> manager = new Manager<>(new TVEPFactory());
+    private final Manager<ConfigurationREA> manager = new Manager<>(new REAFactory());
 
     private TextView title;
     private String[] titles;
@@ -39,16 +38,17 @@ public class TVEPFragment extends ASimpleFragment
         View v = inflater.inflate(R.layout.fragment_universal, container, false);
 
         title = (TextView) v.findViewById(R.id.universal_title);
-        titles = getResources().getStringArray(R.array.bci_tvep_screen_titles);
+        titles = getResources().getStringArray(R.array.rea_screen_titles);
         title.setText(titles[0]);
 
         ViewPager pager = (ViewPager) v.findViewById(R.id.universal_view_pager);
-        pager.setAdapter(buildPagerAdapter());
-        pager.setOffscreenPageLimit(3);
+        pager.setAdapter(buildAdapter());
+        pager.setOffscreenPageLimit(Constants.ERP_SCREEN_COUNT);
         pager.addOnPageChangeListener(this);
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.universal_tablayout);
         tabLayout.setupWithViewPager(pager);
+
         LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
         tabStrip.setEnabled(false);
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
@@ -58,20 +58,19 @@ public class TVEPFragment extends ASimpleFragment
         return v;
     }
 
-    private PagerAdapter buildPagerAdapter() {
-        return new TVEPPagerAdapter(getChildFragmentManager(), iBtCommunication, manager);
+    private PagerAdapter buildAdapter() {
+        return(new REAPagerAdapter(getChildFragmentManager(), iBtCommunication, manager));
     }
 
     private File createWorkingDirectory() {
         File baseFolder = getActivity().getFilesDir();
-        File bciFolder = new File(baseFolder, Constants.FOLDER_BCI);
-        File fvepFolder = new File(bciFolder, Constants.FOLDER_TVEP);
-        fvepFolder.mkdirs();
+        File erpFolder = new File(baseFolder, Constants.FOLDER_REA);
+        erpFolder.mkdirs();
 
-        return fvepFolder;
+        return erpFolder;
     }
 
-
+    // region ViewPager page changed
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -86,5 +85,6 @@ public class TVEPFragment extends ASimpleFragment
     public void onPageScrollStateChanged(int state) {
 
     }
+    // endregion
 
 }

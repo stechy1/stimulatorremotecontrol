@@ -143,8 +143,9 @@ public class PatternControl extends FlowLayout{
      * Důležitá je binární podoba čísla
      * 1 - aktivní, 0 - neaktivní
      * @param value Hodnota patternu
+     * @param propagate True, pokud se má změna hodnoty propagovat i do listeneru
      */
-    public void setValue(int value) {
+    public void setValue(int value, boolean propagate) {
         if (this.mValue == value)
             return;
 
@@ -152,6 +153,10 @@ public class PatternControl extends FlowLayout{
         this.mValue = value;
 
         updateView();
+
+        if (!propagate)
+            return;
+
         if (mListener != null)
             mListener.change(oldValue, value);
     }

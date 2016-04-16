@@ -32,7 +32,22 @@
     <string name="nav_text_item_5">Biosensor logger</string>
     <string name="nav_text_item_6">Test mode</string>
     <string name="nav_text_settings">Settings</string>
+    <string name="nav_text_help">Help</string>
     <string name="nav_text_about">About</string>
+
+    <string-array name="nav_text_array">
+        <item>@string/nav_text_item_1</item>
+        <item>@string/nav_text_item_2_1</item>
+        <item>@string/nav_text_item_2_2</item>
+        <item>@string/nav_text_item_2_3</item>
+        <item>@string/nav_text_item_3</item>
+        <item>@string/nav_text_item_4</item>
+        <item>@string/nav_text_item_5</item>
+        <item>@string/nav_text_item_6</item>
+        <item>@string/nav_text_settings</item>
+        <item>@string/nav_text_help</item>
+        <item>@string/nav_text_about</item>
+    </string-array>
     
     <!-- Activity - hledání a připojení zařízení-->
     <string name="select_device">select a device to connect</string>
@@ -42,6 +57,16 @@
     <!-- Activity - home -->
     <string name="version">Version: <xliff:g id="app_version">%1$s</xliff:g></string>
 
+    <!-- Activity - help -->
+    <string-array name="help_parents">
+        <item>@string/nav_text_item_1</item>
+        <item>@string/nav_text_item_2</item>
+        <item>@string/nav_text_item_3</item>
+        <item>@string/nav_text_item_4</item>
+        <item>@string/nav_text_item_5</item>
+        <item>@string/nav_text_item_6</item>
+    </string-array>
+
     <!-- Activity - nastavení-->
     <string name="language_change">Change language</string>
 
@@ -50,11 +75,16 @@
     <string name="screen_title_fvep">Configuration f-VEP</string>
     <string name="screen_title_tvep">Configuration t-VEP</string>
     <string name="screen_title_cvep">Configuration c-VEP</string>
+    <string name="screen_title_rea">Configuration reaction exp.</string>
 
     <string name="screen_title_general_settings">General settings</string>
     <string name="screen_title_output_settings">Output settings</string>
+    <string name="screen_title_settings_1">Settings 1</string>
+    <string name="screen_title_settings_2">Settings 2</string>
 
     <!-- Output titles -->
+    <string name="output_title_count">Output count</string>
+    <string name="output_title_stimul_count">Stimul count</string>
     <string name="output_title_puls_up">Pulse - up [ms]</string>
     <string name="output_title_puls_down">Pulse - down [ms]</string>
     <string name="output_title_distribution_value">Distribution - value [ms]</string>
@@ -62,6 +92,17 @@
     <string name="output_title_brightness">Brightness [%]</string>
     <string name="output_title_frequency">Frequency (0 – 255)</string>
     <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
+    <string name="output_title_cycle_count">Cycle count</string>
+    <string name="output_title_wait_fixed">Wait - fixed</string>
+    <string name="output_title_wait_random">Wait - random</string>
+    <string name="output_title_miss_time">Miss time [ms]</string>
+    <string name="output_title_on_fail">On fail</string>
+    <string name="output_title_on_fail_continue">Continue</string>
+    <string name="output_title_on_fail_wait">Wait</string>
+    <string name="output_title_sex">Sex</string>
+    <string name="output_title_sex_male">Male</string>
+    <string name="output_title_sex_female">Female</string>
+
 
     <string name="out">Out</string>
     <string name="wait">Wait</string>
@@ -104,7 +145,7 @@
         <item>Leading</item>
         <item>Falling</item>
     </string-array>
-    <string name="erp_screen_2_output_count">Output count</string>
+
 
     <!-- ERP screen - 3 -->
     <string-array name="erp_screen_3_output_types">
@@ -126,7 +167,7 @@
     </string-array>
     <!-- BCI f-VEP screen - 1 -->
     <!-- BCI f-VEP screen - 2 -->
-    <string name="bci_fvep_screen_2_output_count">Stimul count</string>
+
     <!-- BCI f-VEP screen - 3 -->
     <string-array name="bci_fvep_screen_3_output_types">
         <item>@string/output_title_puls_up</item>
@@ -138,6 +179,11 @@
     </string-array>
     <string name="bci_fvep_screen_3_output">. STIMUL</string>
     <!-- BCI t-VEP screen - 2 -->
+    <string-array name="bci_tvep_screen_titles">
+        <item>@string/screen_title_tvep</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
+    </string-array>
     <string name="bci_tvep_screen_2_pattern_length">Pattern length</string>
 
     <!-- BCI c-VEP screen - 1 -->
@@ -148,6 +194,21 @@
     </string-array>
     <!-- BCI c-VEP screen - 2 -->
 
+    <!-- Reaction experiments -->
+    <string-array name="rea_screen_titles">
+        <item>@string/screen_title_rea</item>
+        <item>@string/screen_title_settings_1</item>
+        <item>@string/screen_title_settings_2</item>
+    </string-array>
+    <!-- Reaction experiments screen - 3 -->
+    <string-array name="rea_screen_3_fail_type">
+        <item>@string/output_title_on_fail_continue</item>
+        <item>@string/output_title_on_fail_wait</item>
+    </string-array>
+    <string-array name="rea_screen_3_sex">
+        <item>@string/output_title_sex_male</item>
+        <item>@string/output_title_sex_female</item>
+    </string-array>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
@@ -164,4 +225,94 @@
     <string name="count_saved_configuration">Count of saved configurations: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
 
     <string name="values_were_saved">Values were saved to: <xliff:g id="config_name">%1$s</xliff:g></string>
+
+    <!-- Nápověda -->
+    <string name="help_erp">popis ERP...\n</string>
+    <string name="help_erp_hrana"><b><i>Hrana</i></b> = Sestupně: ..., Vzestupně: ...</string>
+    <string name="help_erp_value">Value = OUT: ..., WAIT: ...</string>
+    <string name="help_erp_nahodnost">Náhodnost: Vypnuto: ..., Krátká: ..., Dlouhá: ..., Krátká i Dlouhá: ...</string>
+    <string name="help_erp_pulse_up">Pulse - UP: doba v [ms] po kterou je výstup aktivní</string>
+    <string name="help_erp_pulse_down">Pulse - DOWN: doba v [ms] po kterou je výstup neaktivní</string>
+    <string name="help_erp_distribution_value">Distribution-value:ozdělení pravděpodobnosti v [%], počet bliknutí výstupu je odvozen z této hodnoty, mezi n-výstupů je rozděleno 100 %</string>
+    <string name="help_erp_distribution_delay">Distribution-delay: ...</string>
+    <string name="help_erp_brightness">Brightness: nastavuje jas v [%] pro jednotlivé výstupy, každý výstup může mít jinou hodnotu jasu</string>
+
+    <string name="help_bci_fvep">popis BCI f-VEP...</string>
+    <string name="help_bci_fvep_pulse_up">Pulse - UP: ...</string>
+    <string name="help_bci_fvep_pulse_down">Pulse - DOWN: ...</string>
+    <string name="help_bci_fvep_frequency">Frequency: ...</string>
+    <string name="help_bci_fvep_duty_cycle">Duty cycle: hodonta v procentech (1-99), určuje délku pulzu při nastavení frekvence</string>
+    <string name="help_bci_fvep_brightness">Brightness: ...</string>
+
+    <string name="help_bci_tvep">popis BCI t-VEP...</string>
+    <string name="help_bci_tvep_pattern_lenght">Pattern - lenght: ...</string>
+    <string name="help_bci_tvep_pattern_skew">Pattern - skew: ...</string>
+    <string name="help_bci_tvep_brightness">Brightness: ...</string>
+    <string name="help_bci_tvep_info">Pattern pro jednotlivé výstupy: </string>
+
+    <string name="help_bci_cvep">popis BCI c-VEP...</string>
+    <string name="help_bci_cvep_info">Význam 32bit patternu: ...</string>
+    <string name="help_bci_cvep_puls_skew">Bitový posun / Puls - skew: ...</string>
+    <string name="help_bci_cvep_puls_lenght">Puls - Lenght: ...</string>
+    <string name="help_bci_cvep_puls_brightness">Brightness: ...</string>
+
+    <string name="help_rea">popis Reakčních experimentů...</string>
+    <string name="help_rea_cycle_count">Cycle count: ...</string>
+    <string name="help_rea_wait_fixed">Wait - fixed: ...</string>
+    <string name="help_rea_wait_random">Wait - random: ...</string>
+    <string name="help_rea_on_fail">On fail = Continue: ..., Wait: ...</string>
+    <string name="help_rea_sex">Vyznam pohlavi: ...</string>
+    <string name="help_rea_A">A: ...</string>
+    <string name="help_rea_W">W: ...</string>
+    <string name="help_rea_H">H: ...</string>
+
+    <string-array name="help_erp_childs">
+        <item>@string/help_erp</item>
+        <item>@string/help_erp_hrana</item>
+        <item>@string/help_erp_value</item>
+        <item>@string/help_erp_nahodnost</item>
+        <item>@string/help_erp_pulse_up</item>
+        <item>@string/help_erp_pulse_down</item>
+        <item>@string/help_erp_distribution_value</item>
+        <item>@string/help_erp_distribution_delay</item>
+        <item>@string/help_erp_brightness</item>
+    </string-array>
+
+    <string-array name="help_bci_fvep_childs">
+        <item>@string/help_bci_fvep</item>
+        <item>@string/help_bci_fvep_pulse_up</item>
+        <item>@string/help_bci_fvep_pulse_down</item>
+        <item>@string/help_bci_fvep_frequency</item>
+        <item>@string/help_bci_fvep_duty_cycle</item>
+        <item>@string/help_bci_fvep_brightness</item>
+    </string-array>
+
+    <string-array name="help_bci_tvep_childs">
+        <item>@string/help_bci_tvep</item>
+        <item>@string/help_bci_tvep_pattern_lenght</item>
+        <item>@string/help_bci_tvep_pattern_skew</item>
+        <item>@string/help_bci_tvep_brightness</item>
+        <item>@string/help_bci_tvep_info</item>
+    </string-array>
+
+    <string-array name="help_bci_cvep_childs">
+        <item>@string/help_bci_cvep</item>
+        <item>@string/help_bci_cvep_info</item>
+        <item>@string/help_bci_cvep_puls_skew</item>
+        <item>@string/help_bci_cvep_puls_lenght</item>
+        <item>@string/help_bci_cvep_puls_brightness</item>
+    </string-array>
+
+    <string-array name="help_rea_childs">
+        <item>@string/help_rea</item>
+        <item>@string/help_rea_cycle_count</item>
+        <item>@string/help_rea_wait_fixed</item>
+        <item>@string/help_rea_wait_random</item>
+        <item>@string/help_rea_on_fail</item>
+        <item>@string/help_rea_sex</item>
+        <item>@string/help_rea_A</item>
+        <item>@string/help_rea_W</item>
+        <item>@string/help_rea_H</item>
+    </string-array>
+
 </resources>

@@ -16,10 +16,38 @@
             android:orientation="vertical"
             android:padding="5dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/output_title_on_fail"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rea_screen_3_spinner_fail"
+                android:background="@color/colorAlpha"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/output_title_sex"/>
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rea_screen_3_spinner_sex"
+                    android:background="@color/colorAlpha"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/layout_children_margin_top">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -31,14 +59,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/out" />
+                        android:text="A" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/wait" />
+                        android:text="W" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="H" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -49,71 +84,34 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/erp_screen_2_eidt_text_out"
+                        android:id="@+id/rea_screen_3_edit_text_a"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:inputType="numberSigned" />
 
                     <EditText
-                        android:id="@+id/erp_screen_2_edit_text_wait"
+                        android:id="@+id/rea_screen_3_edit_text_w"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="numberSigned" />
+
+                    <EditText
+                        android:id="@+id/rea_screen_3_edit_text_h"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:inputType="numberSigned" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/erp_screen_2_random" />
-
-            <Spinner
-                android:id="@+id/erp_screen_2_spinner_random"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAlpha"
-                android:entries="@array/erp_screen_2_random_values" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_children_margin_top"
-                android:text="@string/erp_screen_2_edge" />
-
-            <Spinner
-                android:id="@+id/erp_screen_2_spinner_edge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAlpha"
-                android:entries="@array/erp_screen_2_edge_values" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_children_margin_top"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/output_title_count" />
-
-                <com.vi.swipenumberpicker.SwipeNumberPicker
-                    android:id="@+id/erp_screen_2_swipe_number_picker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/input_margin_left"
-                    android:layout_marginRight="@dimen/input_margin_left"/>
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
     <Button
-        android:id="@+id/erp_screen_2_button_save_all"
+        android:id="@+id/rea_screen_3_button_save_all"
         style="?android:buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

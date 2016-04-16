@@ -17,15 +17,15 @@
         <menu>
             <item
                 android:id="@+id/nav_item_2_1"
-                android:title="@string/screen_title_fvep"
+                android:title="@string/nav_text_item_2_1"
                 android:icon="@drawable/pulse" />
             <item
                 android:id="@+id/nav_item_2_2"
-                android:title="@string/screen_title_tvep"
+                android:title="@string/nav_text_item_2_2"
                 android:icon="@drawable/pulse" />
             <item
                 android:id="@+id/nav_item_2_3"
-                android:title="@string/screen_title_cvep"
+                android:title="@string/nav_text_item_2_3"
                 android:icon="@drawable/pulse" />
         </menu>
     </item>
@@ -46,17 +46,21 @@
         android:id="@+id/nav_item_6"
         android:title="@string/nav_text_item_6"
         android:icon="@drawable/pulse"/>
-
-    <item android:title="@string/nav_drawer_title_2">
-        <menu>
-            <item
-                android:id="@+id/nav_settings"
-                android:title="@string/nav_text_settings"
-                android:icon="@android:drawable/ic_menu_manage"/>
-            <item
-                android:id="@+id/nav_about"
-                android:title="@string/nav_text_about"
-                android:icon="@drawable/help"/>
-        </menu>
-    </item>
+<item android:title="@string/nav_drawer_title_2">
+    <menu>
+        <item
+            android:id="@+id/nav_settings"
+            android:title="@string/nav_text_settings"
+            android:icon="@android:drawable/ic_menu_manage"/>
+        <item
+            android:id="@+id/nav_help"
+            android:title="Help"
+            android:icon="@drawable/help"
+            />
+        <item
+            android:id="@+id/nav_about"
+            android:title="@string/nav_text_about"
+            android:icon="@drawable/info"/>
+    </menu>
+</item>
 </menu>

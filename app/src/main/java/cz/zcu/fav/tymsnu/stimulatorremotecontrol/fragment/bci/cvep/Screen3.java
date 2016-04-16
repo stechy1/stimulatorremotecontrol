@@ -50,7 +50,7 @@ public class Screen3 extends AScreen implements Observer, PatternControl.ValueCh
         ConfigurationCVEP configuration = manager.getSelectedItem();
         if (configuration == null) return;
 
-        patternControl.setValue(configuration.getMainPattern().getValue());
+        patternControl.setValue(configuration.getMainPattern().getValue(), false);
     }
 
     @Override

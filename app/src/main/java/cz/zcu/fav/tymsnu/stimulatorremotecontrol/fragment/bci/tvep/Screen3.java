@@ -123,7 +123,7 @@ public class Screen3 extends AScreen implements Observer {
         for (ConfigurationTVEP.Pattern pattern : patternList) {
             PatternControl patternControl = patternControls[i];
             patternControl.setBitCount(configurationTVEP.getPatternLength());
-            patternControl.setValue(pattern.getValue());
+            patternControl.setValue(pattern.getValue(), false);
             patternControl.setOnValueChangeListener(new OnPatternValueChangeListener(pattern));
 
             i++;

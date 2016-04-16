@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -23,7 +24,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -31,8 +31,9 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.DeviceListActivity;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.AboutFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ERPFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.HelpFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ReactionFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SettingsFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.TestFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.CVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.FVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.TVEPFragment;
@@ -49,11 +50,16 @@ public class MainActivity extends AppCompatActivity
 
     private ASimpleFragment fragment;
     private ActionBarDrawerToggle mDrawerToggle;
-    private int actViewID = 0;
     private CharSequence title;
+    private DrawerLayout mDrawer;
     private Menu menu;
     private MenuItem selectedMenuItem;
+    private CoordinatorLayout mainLayout;
+
+    private String[] navTitles;
     private boolean flag_restore_fragment = false;
+    private int actViewID = -1;
+
 
     /**
      * Name of the connected device
@@ -75,6 +81,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        mainLayout = (CoordinatorLayout) findViewById(R.id.app_main_layout);
+
+        navTitles = getResources().getStringArray(R.array.nav_text_array);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,29 +91,28 @@ public class MainActivity extends AppCompatActivity
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         setStatus(getString(R.string.title_not_connected));
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_main_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.activity_drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+                this, mDrawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         mDrawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        if (navigationView != null)
+            navigationView.setNavigationItemSelectedListener(this);
 
         title = getTitle();
+
         if (savedInstanceState != null) {
             actViewID = 0;
             int fragmentID = savedInstanceState.getInt("fragment", 0);
             flag_restore_fragment = true;
             displayView(fragmentID);
-            flag_restore_fragment = false;
-        } else
+        } else {
             displayView(R.id.nav_about);
+        }
 
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
-
-        //SchemeManager sm = SchemeManager.getINSTANCE();
-        //sm.setWorkingDirectory(getFilesDir());
     }
 
     @Override
@@ -128,9 +136,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
         this.menu = menu;
-        inflater.inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -164,7 +171,7 @@ public class MainActivity extends AppCompatActivity
                         connectDevice(data);
 
                     } catch (Exception ex) {
-                        Snackbar.make(findViewById(android.R.id.content), getString(R.string.unknown_device), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mainLayout, getString(R.string.unknown_device), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -177,7 +184,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     // User did not enable Bluetooth or an error occurred
                     Log.d(TAG, "BT not enabled");
-                    Snackbar.make(findViewById(android.R.id.content), R.string.bt_not_enabled_leaving, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mainLayout, R.string.bt_not_enabled_leaving, Snackbar.LENGTH_SHORT).show();
                     finish();
                 }
                 break;
@@ -189,26 +196,13 @@ public class MainActivity extends AppCompatActivity
         if (item.equals(selectedMenuItem))
             return false;
 
-        if (selectedMenuItem != null)
-            selectedMenuItem.setChecked(false);
-
-        int id = item.getItemId();
+        int id = transformIdFromMenu(item.getItemId());
         displayView(id);
         item.setChecked(true);
         selectedMenuItem = item;
 
-        title = item.getTitle();
-        setTitle(title);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_main_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        mDrawerToggle.syncState();
     }
 
     @Override
@@ -227,10 +221,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (actViewID != R.id.nav_about) {
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+        
+        if (actViewID != Constants.FRAGMENT_ABOUT) {
             fragment.onBackButtonPressed(this);
-        } else
+            selectedMenuItem = null;
+        } else {
             super.onBackPressed();
+        }
     }
 
     /**
@@ -314,7 +315,7 @@ public class MainActivity extends AppCompatActivity
                     break;
 
                 case Constants.MESSAGE_SHOW:
-                    Snackbar.make(findViewById(android.R.id.content), msg.getData().getString(Constants.TOAST), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mainLayout, msg.getData().getString(Constants.TOAST), Snackbar.LENGTH_SHORT).show();
                     break;
             }
 
@@ -324,11 +325,43 @@ public class MainActivity extends AppCompatActivity
 
     private final Handler handler = new Handler(callback);
 
+    private int transformIdFromMenu(int id) {
+        switch (id) {
+            case R.id.nav_item_1:
+                return Constants.FRAGMENT_ERP;
+            case R.id.nav_item_2_1:
+                return Constants.FRAGMENT_FVEP;
+            case R.id.nav_item_2_2:
+                return Constants.FRAGMENT_TVEP;
+            case R.id.nav_item_2_3:
+                return Constants.FRAGMENT_CVEP;
+            case R.id.nav_item_3:
+                return Constants.FRAGMENT_REA;
+            case R.id.nav_item_4:
+                return Constants.FRAGMENT_AUT;
+            case R.id.nav_item_5:
+                return Constants.FRAGMENT_BIO;
+            case R.id.nav_item_6:
+                return Constants.FRAGMENT_TEST;
+            case R.id.nav_settings:
+                return Constants.FRAGMENT_SETTINGS;
+            case R.id.nav_help:
+                return Constants.FRAGMENT_HELP;
+            case R.id.nav_about:
+                return Constants.FRAGMENT_ABOUT;
+            default:
+                return Constants.FRAGMENT_ABOUT;
+        }
+    }
+
     @Override
     public void displayView(int id) {
         if (actViewID == id) {
             return;
         }
+
+        if (selectedMenuItem != null)
+            selectedMenuItem.setChecked(false);
 
         Log.i("displayView()", "" + id);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -336,32 +369,35 @@ public class MainActivity extends AppCompatActivity
         if (!flag_restore_fragment) {
 
             switch (id) {
-                case R.id.nav_item_1:
+                case Constants.FRAGMENT_ERP:
                     fragment = new ERPFragment();
                     break;
-                case R.id.nav_settings:
+                case Constants.FRAGMENT_SETTINGS:
                     fragment = new SettingsFragment();
                     break;
 
-                case R.id.nav_about:
+                case Constants.FRAGMENT_ABOUT:
                     fragment = new AboutFragment();
                     break;
 
-                case R.id.nav_item_2_1:
+                case Constants.FRAGMENT_FVEP:
                     fragment = new FVEPFragment();
                     break;
 
-                case R.id.nav_item_2_2:
+                case Constants.FRAGMENT_TVEP:
                     fragment = new TVEPFragment();
                     break;
 
-                case R.id.nav_item_2_3:
+                case Constants.FRAGMENT_CVEP:
                     fragment = new CVEPFragment();
                     break;
 
+                case Constants.FRAGMENT_REA:
+                    fragment = new ReactionFragment();
+                    break;
 
-                case R.id.nav_item_3:
-                    fragment = new TestFragment();
+                case Constants.FRAGMENT_HELP:
+                    fragment = new HelpFragment();
                     break;
 
                 case R.id.nav_item_4:
@@ -372,11 +408,12 @@ public class MainActivity extends AppCompatActivity
 
                 default:
                     fragment = new AboutFragment();
-                    id = R.id.nav_about;
+                    id = Constants.FRAGMENT_ABOUT;
                     break;
             }
         } else {
             fragment = (ASimpleFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT);
+            flag_restore_fragment = false;
         }
 
         fragment.setBtCommunication(mCommunicationService);
@@ -389,6 +426,9 @@ public class MainActivity extends AppCompatActivity
         if (oldFragment != null)
             transaction.remove(oldFragment);
         transaction.replace(R.id.frame_container, fragment, TAG_FRAGMENT).commit();
+
+        title = navTitles[id];
+        setTitle(title);
     }
 
     Activity self = this;
