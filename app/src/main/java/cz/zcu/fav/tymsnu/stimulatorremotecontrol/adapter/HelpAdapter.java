@@ -16,6 +16,8 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 
 public class HelpAdapter extends BaseExpandableListAdapter {
 
+    private static final String TAG = "HelpAdapter";
+
     private final Context mContext;
     private final List<String> mParentItem;
     private final HashMap<String, List<String>> mChildItem;
@@ -39,6 +41,16 @@ public class HelpAdapter extends BaseExpandableListAdapter {
         List<String> childrenList = mChildItem.get(mParentItem.get(groupPosition));
 
         return (childrenList == null) ? 0 : childrenList.size();
+    }
+
+    @Override
+    public int getChildTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getChildType(int groupPosition, int childPosition) {
+        return (childPosition == 0) ? 0 : 1;
     }
 
     @Override
@@ -97,8 +109,10 @@ public class HelpAdapter extends BaseExpandableListAdapter {
         final String expandedListText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            if (childPosition == 0)
+            if (childPosition == 0) {
                 convertView = mInflater.inflate(R.layout.fragment_help_first_children, parent, false);
+                Log.i(TAG, "Prvni prvek: " + expandedListText);
+            }
             else
                 convertView = mInflater.inflate(R.layout.fragment_help_children, parent, false);
 
@@ -111,7 +125,6 @@ public class HelpAdapter extends BaseExpandableListAdapter {
             holder = (ChildrenHolder) convertView.getTag();
         }
 
-        Log.i("HelpAdapter", expandedListText);
         holder.textView.setText(expandedListText);
 
         return convertView;
