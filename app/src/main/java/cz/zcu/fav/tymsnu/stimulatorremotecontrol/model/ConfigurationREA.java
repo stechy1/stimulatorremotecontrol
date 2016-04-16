@@ -1,6 +1,6 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
-public class ConfigurationREA extends AItem<ConfigurationREA> {
+public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
 
     // region Variables
     public static final int DEF_OUTPUT_COUNT = 4;

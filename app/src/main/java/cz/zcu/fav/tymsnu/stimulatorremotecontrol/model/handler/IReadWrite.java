@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 
-public interface IReadWrite<T extends AItem<T>> {
+public interface IReadWrite<T extends AConfiguration<T>> {
 
     void write(OutputStream outputStream, T item) throws IOException;
 

@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
@@ -42,7 +42,7 @@ public class SchemeFileXMLHandler implements IReadWrite {
 
     // region write
     @Override
-    public void write(OutputStream outputStream, AItem item) throws IOException {
+    public void write(OutputStream outputStream, AConfiguration item) throws IOException {
         ConfigurationERP configuration = (ConfigurationERP) item;
         XmlSerializer s = Xml.newSerializer();
         s.setOutput(outputStream, "UTF-8");
@@ -130,7 +130,7 @@ public class SchemeFileXMLHandler implements IReadWrite {
 
     // region read
     @Override
-    public void read(InputStream inputStream, AItem item) throws IOException {
+    public void read(InputStream inputStream, AConfiguration item) throws IOException {
         ConfigurationERP configuration = (ConfigurationERP) item;
         XmlPullParser pullParser = Xml.newPullParser();
         try {

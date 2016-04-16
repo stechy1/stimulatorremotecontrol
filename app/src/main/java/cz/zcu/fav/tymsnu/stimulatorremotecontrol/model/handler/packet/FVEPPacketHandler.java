@@ -30,7 +30,7 @@ public class FVEPPacketHandler implements IPacketable{
         Code actualMiddlePeriod = Codes.OUTPUT0_MIDDLE_PERIOD; //TODO Duty cycle ?
         Code actualBrightness = Codes.OUTPUT0_BRIGHTNESS;
 
-        for(Output a : configuration.getOutputList()){
+        for(Output a : configuration.outputList){
             packets.add(new Packet(actualDuration, DataConvertor.milisecondsTo2B(a.puls.getUp())));
             packets.add(new Packet(actualPause, DataConvertor.milisecondsTo2B(a.puls.getDown())));
             packets.add(new Packet(actualFrequency, DataConvertor.intTo1B(a.getFrequency())));

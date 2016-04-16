@@ -12,7 +12,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.PatternControl;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
 
 public class Screen3 extends AScreen implements Observer, PatternControl.ValueChangeListener {
@@ -68,7 +68,7 @@ public class Screen3 extends AScreen implements Observer, PatternControl.ValueCh
         if (configuration == null)
             return;
 
-        configuration.setMainPattern(newValue, new AItem.OnValueChanged() {
+        configuration.setMainPattern(newValue, new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 manager.notifySelectedItemInternalChange();

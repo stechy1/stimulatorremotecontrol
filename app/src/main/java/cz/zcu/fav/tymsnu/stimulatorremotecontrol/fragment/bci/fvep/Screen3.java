@@ -21,7 +21,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
@@ -205,7 +205,7 @@ public class Screen3 extends AScreen
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.puls.getUp());
-                    output.puls.setUp(val, new AItem.OnValueChanged() {
+                    output.puls.setUp(val, new AConfiguration.OnValueChanged() {
                         @Override
                         public void changed() {
                             notifyLock = true;
@@ -217,7 +217,7 @@ public class Screen3 extends AScreen
                 for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.puls.getDown());
-                    output.puls.setDown(val, new AItem.OnValueChanged() {
+                    output.puls.setDown(val, new AConfiguration.OnValueChanged() {
                         @Override
                         public void changed() {
                             notifyLock = true;
@@ -231,7 +231,7 @@ public class Screen3 extends AScreen
                     ConfigurationFVEP.Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.getFrequency());
                     if (output.isFrequencyInRange(val)) {
-                        output.setFrequency(val, new AItem.OnValueChanged() {
+                        output.setFrequency(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
@@ -250,7 +250,7 @@ public class Screen3 extends AScreen
                     ConfigurationFVEP.Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.getDutyCycle());
                     if (output.isDutyCycleInRange(val)) {
-                        output.setDutyCycle(val, new AItem.OnValueChanged() {
+                        output.setDutyCycle(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
@@ -270,7 +270,7 @@ public class Screen3 extends AScreen
                     ConfigurationFVEP.Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.getBrightness());
                     if (output.isBrightnessInRange(val)) {
-                        output.setBrightness(val, new AItem.OnValueChanged() {
+                        output.setBrightness(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;

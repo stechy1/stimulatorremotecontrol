@@ -17,7 +17,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationREA;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
@@ -113,7 +113,7 @@ public class Screen3 extends AScreen
         if (configuration == null)
             return;
 
-        configuration.setA(EditTextReader.readValue(editText1, configuration.getA()), new AItem.OnValueChanged() {
+        configuration.setA(EditTextReader.readValue(editText1, configuration.getA()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -121,7 +121,7 @@ public class Screen3 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setW(EditTextReader.readValue(editText2, configuration.getW()), new AItem.OnValueChanged() {
+        configuration.setW(EditTextReader.readValue(editText2, configuration.getW()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -129,7 +129,7 @@ public class Screen3 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setH(EditTextReader.readValue(editText3, configuration.getH()), new AItem.OnValueChanged() {
+        configuration.setH(EditTextReader.readValue(editText3, configuration.getH()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -154,7 +154,7 @@ public class Screen3 extends AScreen
             if (configuration == null)
                 return;
 
-            configuration.setOnFail(position, new AItem.OnValueChanged() {
+            configuration.setOnFail(position, new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;
@@ -178,7 +178,7 @@ public class Screen3 extends AScreen
             if (configuration == null)
                 return;
 
-            configuration.setSex(ConfigurationREA.Sex.valueOf(position), new AItem.OnValueChanged() {
+            configuration.setSex(ConfigurationREA.Sex.valueOf(position), new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;

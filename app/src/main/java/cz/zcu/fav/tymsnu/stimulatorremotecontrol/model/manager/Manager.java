@@ -14,10 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.IFactory;
 
-public class Manager<T extends AItem<T>> extends Observable {
+public class Manager<T extends AConfiguration<T>> extends Observable {
 
     // region Variables
     private static final String TAG = "Manager";

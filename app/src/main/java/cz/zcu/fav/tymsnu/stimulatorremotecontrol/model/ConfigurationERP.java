@@ -6,21 +6,21 @@ import java.util.List;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
-public final class ConfigurationERP extends AItem<ConfigurationERP> {
+public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
 
     // region Variables
-    // Výchozí počet výstupů
-    public static final int DEF_OUTPUT_COUNT = 4;
+    // Výchozí hodnota parametru out
+    public static final int DEF_OUT = 0;
+    // Výchozí hodnota parametru wait
+    public static final int DEF_WAIT = 0;
 
-    // Počet výstupů
-    private int outputCount;
     private int out;
     private int wait;
     // Nastavení hrany (náběžná/sestupná)
     private Edge edge;
     // Nastavení náhodnosti (žádná/krátká/dlouhá/krátká i dlouhá)
     private Random random;
-    // Kolekce udržující výstupy
+    // Kolekce všech výstupů
     public final List<Output> outputList;
     // endregion
 
@@ -32,11 +32,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
      * @param name Název schématu
      */
     public ConfigurationERP(String name) {
-        this(name, DEF_OUTPUT_COUNT, 0, 0, Edge.FALLING, Random.OFF, new ArrayList<Output>());
-
-        for (int i = 0; i < outputCount; i++) {
-            outputList.add(new Output("Output" + i));
-        }
+        this(name, DEF_OUTPUT_COUNT, DEF_OUT, DEF_WAIT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
     }
 
     /**
@@ -49,14 +45,17 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
      * @param outputList Reference na kolekci výstupů
      */
     public ConfigurationERP(String name, int outputCount, int out, int wait, Edge edge, Random random, List<Output> outputList) {
-        super(name);
+        super(name, outputCount);
 
-        this.outputCount = outputCount;
-        this.out = out;
-        this.wait = wait;
-        this.edge = edge;
-        this.random = random;
         this.outputList = outputList;
+
+        setOut(out);
+        setWait(wait);
+        setEdge(edge);
+        setRandom(random);
+
+        if (this.outputCount != this.outputList.size())
+            rearangeOutputs();
     }
     // endregion
 
@@ -72,7 +71,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
         if (outputCount > listCount) {
             int delta = outputCount - listCount;
             for (int i = 0; i < delta; i++) {
-                outputList.add(new Output("Output" + i + outputCount));
+                outputList.add(new Output());
             }
         } else {
             for (int i = --listCount; i >= outputCount; i--) {
@@ -101,20 +100,6 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
     // endregion
 
     // region Getters & Setters
-    /**
-     * Vrátí počet výstupů
-     * @return Počet výstupů
-     */
-    public int getOutputCount() {
-        return outputCount;
-    }
-
-    /**
-     * Nastaví počet výstupů
-     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-     * @param outputCount Počet výstupů
-     */
-    public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
     /**
      * Nastaví počet výstupů
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
@@ -195,7 +180,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     public void setEdge(Edge edge) {setEdge(edge, null);}
     public void setEdge(Edge edge, OnValueChanged onValueChanged) {
-        if (this.edge.equals(edge))
+        if (this.edge != null && this.edge.equals(edge))
             return;
 
         this.edge = edge;
@@ -210,7 +195,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     public void setRandom(Random random) {setRandom(random, null);}
     public void setRandom(Random random, OnValueChanged onValueChanged) {
-        if (this.random.equals(random))
+        if (this.random != null && this.random.equals(random))
             return;
 
         this.random = random;
@@ -221,7 +206,6 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
     // endregion
 
-    // region Enums
     public enum Edge {
         LEADING, FALLING;
 
@@ -255,13 +239,12 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
             }
         }
     }
-    // endregion
 
     public static final class Output {
 
         // region Variables
-        // Název výstupu
-        private final String name;
+        // Výchozí hodnota jasu výstupu
+        public static final int DEF_BRIGHTNESS = 0;
         // Reference pro nastavení pulsu
         public final Puls puls;
         // Reference pro nastavení rozdělení
@@ -277,27 +260,24 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
          * Vytvoří nový výstup s výchozími hodnotami
          * @param name Název výstupu
          */
-        public Output(String name) {
-            this(name, new Puls(), new Distribution(), 0);
+        public Output() {
+            this(new Puls(), new Distribution(), DEF_BRIGHTNESS);
         }
 
         /**
          * Konstruktor výstupu
          * Vytvoří nový výstup na zákadě parametrů
-         * @param name Název výstupu
          * @param puls Reference na nastavení pulsu
          * @param distribution Reference na nastavení rozdělení
          * @param brightness Intenzita jasu [%](0-100)
          */
-        public Output(String name, Puls puls, Distribution distribution, int brightness) {
-            this.name = name;
+        public Output(Puls puls, Distribution distribution, int brightness) {
             this.puls = puls;
             this.distribution = distribution;
             this.brightness = brightness;
         }
 
         public Output(Output source) {
-            this.name = source.name;
             this.puls = new Puls(source.puls);
             this.distribution = new Distribution(source.distribution);
             this.brightness = source.brightness;
@@ -331,15 +311,6 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
         // endregion
 
         // region Getters & Setters
-
-        /**
-         * Vrátí jméno
-         * @return jméno
-         */
-        public String getName() {
-            return name;
-        }
-
         /**
          * Vrátí jas všech výstupů
          * @return Jas výstupů
@@ -372,13 +343,20 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
 
         // endregion
 
-        // region Classes
         public static final class Puls {
+            // region Variables
+            // Výchozí hodnota parametru up
+            public static final int DEF_UP = 0;
+            // Výchozí hodnota parametru down
+            public static final int DEF_DOWN = 0;
+
             // Doba, po kterou jsou výstupy aktivní
             private int up;
             // Doba, po kterou jsou výstupy neaktivní
             private int down;
+            // endregion
 
+            // region Constructors
             /**
              * Konstruktor pulsu
              * Vytvoří nový puls s výchozími hodnotami
@@ -386,7 +364,15 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
              * Down - 0
              */
             public Puls() {
-                this(0, 0);
+                this(DEF_UP, DEF_DOWN);
+            }
+
+            /**
+             * Vytvoří kopii objektu
+             * @param source Zdroj kopie
+             */
+            public Puls(Puls source) {
+                this(source.up, source.down);
             }
 
             /**
@@ -396,24 +382,31 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
              * @param down Doba, po kterou jsou výstupy neaktivní
              */
             public Puls(int up, int down) {
-                this.up = up;
-                this.down = down;
+                setUp(up);
+                setDown(down);
             }
+            // endregion
 
+            // region Getters & Setters
             /**
-             * Vytvoří kopii objektu
-             * @param source Zdroj kopie
+             * Vrátí dobu [ms] po kterou je výstup aktivní
+             * @return Doba [ms] po kterou je výstup aktivní
              */
-            public Puls(Puls source) {
-                this.up = source.up;
-                this.down = source.down;
-            }
-
             public int getUp() {
                 return up;
             }
 
+            /**
+             * Nastaví dobu [ms], po kterou je výstup aktivní
+             * @param up Doba [ms] po kterou je výstup aktivní
+             */
             public void setUp(int up) {setUp(up, null);}
+
+            /**
+             * Nastaví dobu [ms], po kterou je výstup aktivní
+             * @param up Doba [ms] po kterou je výstup aktivní
+             * @param onValueChanged Callback, který se zavolá po nastavení parametru
+             */
             public void setUp(int up, OnValueChanged onValueChanged) {
                 if (this.up == up)
                     return;
@@ -424,11 +417,24 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
                     onValueChanged.changed();
             }
 
+            /**
+             * Vrátí dobu [ms] po kterou je výstup neaktivní
+             * @return Doba [ms] po kterou je výstup neaktivní
+             */
             public int getDown() {
                 return down;
             }
 
+            /**
+             * Nastaví dobu [ms] po kterou je výstup neaktivní
+             * @param down Doba [ms] po kterou je výstup neaktivní
+             */
             public void setDown(int down) {setDown(down, null);}
+            /**
+             * Nastaví dobu [ms] po kterou je výstup neaktivní
+             * @param down Doba [ms] po kterou je výstup neaktivní
+             * @param onValueChanged Callback, který se zavolá po nastavení parametru
+             */
             public void setDown(int down, OnValueChanged onValueChanged) {
                 if (this.down == down)
                     return;
@@ -438,12 +444,23 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
                 if (onValueChanged != null)
                     onValueChanged.changed();
             }
+            // endregion
         }
 
         public static final class Distribution {
+            // region Variables
+            // Výchozí hodnota parametru value
+            public static final int DEF_VALUE = 0;
+            // Výchozí hodnota parametru delay
+            public static final int DEF_DELAY = 0;
+            // Rozdělení pravděpodobnosti, počet bliknutí výstupu je odvozen z této hodnoty.
+            // Mezi n výstupů je rozděleno 100%
             private int value;
-            private int delay;
 
+            private int delay;
+            // endregion
+
+            // region Constructors
             /**
              * Konstruktor rozdělení
              * Vytvoří nové rozdělení s výchozími hodnotami
@@ -451,7 +468,15 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
              * Delay - 0
              */
             public Distribution() {
-                this(0, 0);
+                this(DEF_VALUE, DEF_DELAY);
+            }
+
+            /**
+             * Vytvoří kopii objektu
+             * @param source Zdroj kopie
+             */
+            public Distribution(Distribution source) {
+                this(source.value, source.delay);
             }
 
             /**
@@ -461,19 +486,12 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
              * @param delay Patametr delay
              */
             public Distribution(int value, int delay) {
-                this.value = value;
-                this.delay = delay;
+                setValue(value);
+                setDelay(delay);
             }
+            // endregion
 
-            /**
-             * Vytvoří kopii objektu
-             * @param source Zdroj kopie
-             */
-            public Distribution(Distribution source) {
-                this.value = source.value;
-                this.delay = source.delay;
-            }
-
+            // region Getters & Setters
             /**
              * Zdjistí, zda-li zadaná hodnota odpovídá distribution rozsahu
              * @param value Kontrolovaná hodnota
@@ -512,7 +530,7 @@ public final class ConfigurationERP extends AItem<ConfigurationERP> {
                 if (onValueChanged != null)
                     onValueChanged.changed();
             }
+            // endregion
         }
-        // endregion
     }
 }

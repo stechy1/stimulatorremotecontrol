@@ -21,7 +21,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP.Output;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
@@ -212,7 +212,7 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.puls.getUp());
-                    output.puls.setUp(val, new AItem.OnValueChanged() {
+                    output.puls.setUp(val, new AConfiguration.OnValueChanged() {
                         @Override
                         public void changed() {
                             notifyLock = true;
@@ -224,7 +224,7 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.puls.getDown());
-                    output.puls.setDown(val, new AItem.OnValueChanged() {
+                    output.puls.setDown(val, new AConfiguration.OnValueChanged() {
                         @Override
                         public void changed() {
                             notifyLock = true;
@@ -238,7 +238,7 @@ public final class Screen3 extends AScreen
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.distribution.getValue());
                     if (output.distribution.isValueInRange(val) && output.canUpdateDistribution(outputs, val)) {
-                        output.distribution.setValue(val, new AItem.OnValueChanged() {
+                        output.distribution.setValue(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
@@ -256,7 +256,7 @@ public final class Screen3 extends AScreen
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.distribution.getDelay());
-                        output.distribution.setDelay(val, new AItem.OnValueChanged() {
+                        output.distribution.setDelay(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
@@ -270,7 +270,7 @@ public final class Screen3 extends AScreen
                     int val = EditTextReader.readValue(inputs[i]);
                     Output output = outputs.get(i);
                     if (output.isBrightnessInRange(val)) {
-                        output.setBrightness(val, new AItem.OnValueChanged() {
+                        output.setBrightness(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;

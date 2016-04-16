@@ -3,12 +3,14 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
+public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
 
     // region Variables
-    public static final int DEF_OUTPUT_COUNT = 4;
+    public static final int DEF_PATTERN_LENGTH = 1;
+    public static final int DEF_PULS_LENGTH = 0;
+    public static final int DEF_PULS_SKEW = 0;
+    public static final int DEF_BRIGHTNESS = 0;
 
-    private int outputCount;
     private int patternLength;
     private int pulsLength;
     private int pulsSkew;
@@ -18,17 +20,18 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
 
     // region Constructors
     public ConfigurationTVEP(String name) {
-        this(name, DEF_OUTPUT_COUNT, 1, 0, 0, 0, new ArrayList<Pattern>());
+        this(name, DEF_OUTPUT_COUNT, DEF_PATTERN_LENGTH, DEF_PULS_LENGTH, DEF_PULS_SKEW, DEF_BRIGHTNESS, new ArrayList<Pattern>());
     }
 
     public ConfigurationTVEP(String name, int outputCount, int patternLength, int pulsLength, int pulsSkew, int brightness, List<Pattern> patternList) {
-        super(name);
-        this.outputCount = outputCount;
-        this.patternLength = patternLength;
-        this.pulsLength = pulsLength;
-        this.pulsSkew = pulsSkew;
-        this.brightness = brightness;
+        super(name, outputCount);
+
         this.patternList = patternList;
+
+        setPatternLength(patternLength);
+        setPulsLength(pulsLength);
+        setPulsSkew(pulsSkew);
+        setBrightness(brightness);
 
         if (this.outputCount != this.patternList.size())
             rearangeOutputs();
@@ -75,31 +78,15 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
     // endregion
 
     // region Getters & Setters
-    /**
-     * Vrátí počet výstupů
-     * @return Počet výstupů
-     */
-    public int getOutputCount() {
-        return outputCount;
-    }
-
-    /**
-     * Nastaví počet výstupů
-     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-     * @param outputCount Počet výstupů
-     */
-    public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
-    /**
+        /**
      * Nastaví počet výstupů
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
      */
     public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
-        if (this.outputCount == outputCount)
-            return;
+        super.setOutputCount(outputCount, null);
 
-        this.outputCount = outputCount;
         rearangeOutputs();
 
         if (onValueChanged != null)
@@ -232,20 +219,34 @@ public class ConfigurationTVEP extends AItem<ConfigurationTVEP> {
     public static final class Pattern {
 
         // region Variables
+        public static final int DEF_VALUE = 0;
+        // Hodnota patternu
         private int value;
         // endregion
 
         // region Constructors
+        /**
+         * Konstruktor třídy Pattern s výchozí hodnotou
+         */
         public Pattern() {
-            this(0);
+            this(DEF_VALUE);
         }
 
+        /**
+         * Konstruktor třídy Pattern
+         * Vytvoří kopii podle předlohy
+         * @param source Předloha
+         */
+        public Pattern(Pattern source) {
+            this(source.value);
+        }
+
+        /**
+         * Konstruktor třídy pattern
+         * @param value Hodnota patternu
+         */
         public Pattern(int value) {
             this.value = value;
-        }
-
-        public Pattern(Pattern source) {
-            this.value = source.value;
         }
         // endregion
 

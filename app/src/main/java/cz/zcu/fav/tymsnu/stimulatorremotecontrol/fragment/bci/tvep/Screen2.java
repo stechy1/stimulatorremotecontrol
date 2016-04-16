@@ -17,7 +17,7 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
@@ -82,7 +82,7 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
         if (configuration == null)
             return;
 
-        configuration.setBrightness(value, new AItem.OnValueChanged() {
+        configuration.setBrightness(value, new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -100,7 +100,7 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
         if (configuration == null)
             return;
 
-        configuration.setPulsLength(EditTextReader.readValue(editTextPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
+        configuration.setPulsLength(EditTextReader.readValue(editTextPulsLength, configuration.getPulsLength()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -108,7 +108,7 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setPulsSkew(EditTextReader.readValue(editTextBitSkew, configuration.getPulsSkew()), new AItem.OnValueChanged() {
+        configuration.setPulsSkew(EditTextReader.readValue(editTextBitSkew, configuration.getPulsSkew()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -151,7 +151,7 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
             if (configuration == null)
                 return false;
 
-            configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
+            configuration.setOutputCount(newVal, new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;
@@ -172,7 +172,7 @@ public class Screen2 extends AScreen implements Observer, MySeekBar.OnMySeekBarV
             if (configuration == null)
                 return false;
 
-            configuration.setPatternLength(newVal, new AItem.OnValueChanged() {
+            configuration.setPatternLength(newVal, new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;

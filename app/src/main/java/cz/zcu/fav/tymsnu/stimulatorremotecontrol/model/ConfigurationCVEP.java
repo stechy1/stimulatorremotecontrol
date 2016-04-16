@@ -3,34 +3,38 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
+public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
 
     // region Variables
-    public static final int DEF_OUTPUT_COUNT = 4;
+    // Výchozí hodnota parametru brightness
+    public static final int DEF_BRIGHTNESS = 0;
+    // Výchozí hodnota parametru bit shift
+    public static final int DEF_BIT_SHIFT = 1;
+    // Výchozí hodnota parametru puls length
+    public static final int DEF_PULS_LENGTH = 0;
 
-    private int outputCount;
     private int pulsLength;
     private int bitShift;
     private int brightness;
-    private Pattern mainPattern;
+    private final Pattern mainPattern = new Pattern();
     public final List<Pattern> patternList = new ArrayList<>();
     // endregion
 
     // region Constructors
     public ConfigurationCVEP(String name) {
-        this(name, new Pattern(), DEF_OUTPUT_COUNT, 0, 0, 0);
+        this(name, new Pattern(), DEF_OUTPUT_COUNT, DEF_BRIGHTNESS, DEF_BIT_SHIFT, DEF_PULS_LENGTH);
     }
 
     public ConfigurationCVEP(String name, Pattern mainPattern, int outputCount, int brightness, int bitShift, int pulsLength) {
-        super(name);
-        this.mainPattern = mainPattern;
-        this.outputCount = outputCount;
-        this.brightness = brightness;
-        this.bitShift = bitShift;
-        this.pulsLength = pulsLength;
+        super(name, outputCount);
+
+        setMainPattern(mainPattern.value);
+        setBrightness(brightness);
+        setBitShift(bitShift);
+        setPulsLength(pulsLength);
     }
     // endregion
-    
+
     // region Private methods
     private void rearangeOutputs() {
         int listCount = patternList.size();
@@ -74,21 +78,6 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
     // endregion
     
     // region Getters & Setters
-
-    /**
-     * Vrátí počet výstupů
-     * @return Počet výstupů
-     */
-    public int getOutputCount() {
-        return outputCount;
-    }
-
-    /**
-     * Nastaví počet výstupů
-     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-     * @param outputCount Počet výstupů
-     */
-    public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
     /**
      * Nastaví počet výstupů
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
@@ -96,10 +85,8 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
      */
     public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
-        if (this.outputCount == outputCount)
-            return;
+        super.setOutputCount(outputCount, null);
 
-        this.outputCount = outputCount;
         rearangeOutputs();
 
         if (onValueChanged != null)
@@ -234,19 +221,32 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
     public static final class Pattern {
         
         // region Variables
-        public static final int DEF_SHIFT = 1;
+        public static final int DEF_VALUE = 0;
+        // Hodnota patternu
         private int value;
         // endregion
 
         // region Constructors
+        /**
+         * Konstruktor třídy Pattern s výchozí hodnotou
+         */
         public Pattern() {
-            this(0);
+            this(DEF_VALUE);
         }
 
+        /**
+         * Konstruktor třídy Pattern
+         * Vytvoří kopii podle předlohy
+         * @param source Předloha
+         */
         public Pattern(Pattern source){
             this(source.getValue());
         }
 
+        /**
+         * Konstruktor třídy Pattern
+         * @param value Hodnota patternu
+         */
         public Pattern(int value) {
             this.value = value;
         }
@@ -256,7 +256,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         /**
          * Provede cyklický bitový posun doleva o jeden bit
          */
-        public void shiftLeft() {shiftLeft(DEF_SHIFT);}
+        public void shiftLeft() {shiftLeft(DEF_BIT_SHIFT);}
         /**
          * Provede cyklický bitový posun doleva
          * @param index O kolik se má číslo posunout. Hodnota musí být větší než 0, jinak se nic nestane
@@ -282,7 +282,7 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
         /**
          * Provede cyklický bitový posun doprava
          */
-        public void shiftRight() {shiftRight(DEF_SHIFT);}
+        public void shiftRight() {shiftRight(DEF_BIT_SHIFT);}
         /**
          * Provede cyklický bitový posun doprava
          * @param index O kolik se má číslo posunout. Hodnota musí být větší než 0, jinak se nic nestane
@@ -304,7 +304,6 @@ public class ConfigurationCVEP extends AItem<ConfigurationCVEP> {
             if (onValueChanged != null)
                 onValueChanged.changed();
         }
-
         // endregion
         
         // region Getters & Setters
