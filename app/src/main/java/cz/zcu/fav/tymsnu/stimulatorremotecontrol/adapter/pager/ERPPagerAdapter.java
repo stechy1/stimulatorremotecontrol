@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IBtCommunication;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.AScreen;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen1;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SimpleConfigurationFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.erp.Screen3;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
@@ -27,10 +27,10 @@ public class ERPPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        AScreen fragment;
+        ASimpleScreen<ConfigurationERP> fragment;
         switch (position) {
             case 0:
-                fragment = new Screen1();
+                fragment = new SimpleConfigurationFragment<>();
                 break;
             case 1:
                 fragment = new Screen2();
@@ -39,7 +39,7 @@ public class ERPPagerAdapter extends FragmentStatePagerAdapter {
                 fragment = new Screen3();
                 break;
             default:
-                fragment = new Screen1();
+                fragment = new SimpleConfigurationFragment<>();
         }
 
         fragment.setBtCommunication(iBtCommunication);

@@ -65,8 +65,6 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
     private void writeOutput(JsonWriter w, Output output) throws IOException {
         w.beginObject();
 
-        w.name(TAG_OUTPUT_NAME).value(output.getName());
-
         w.name(TAG_PULS);
         w.beginObject();
         w.name(TAG_PULS_UP).value(output.puls.getUp());
@@ -143,7 +141,6 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
     }
 
     private void readOutput(JSONObject outputObject, List<Output> outputList) throws JSONException {
-        String name = outputObject.getString(TAG_OUTPUT_NAME);
 
         JSONObject pulsObject = outputObject.getJSONObject(TAG_PULS);
         JSONObject distObject = outputObject.getJSONObject(TAG_DISTRIBUTION);
@@ -158,7 +155,7 @@ public class ERPFileJSONHandler implements IReadWrite<ConfigurationERP> {
 
         int brightness = outputObject.getInt(TAG_BRIGHTNESS);
 
-        Output output = new Output(name, puls, dist, brightness);
+        Output output = new Output(puls, dist, brightness);
         outputList.add(output);
     }
     // endregion

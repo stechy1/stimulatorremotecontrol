@@ -14,10 +14,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 
-public class Screen2 extends AScreen implements OnValueChangeListener, Observer {
+public class Screen2 extends ASimpleScreen<ConfigurationFVEP>
+        implements OnValueChangeListener, Observer {
 
     private SwipeNumberPicker numberPicker;
 
@@ -69,7 +71,7 @@ public class Screen2 extends AScreen implements OnValueChangeListener, Observer 
         if (configuration == null)
             return false;
 
-        configuration.setOutputCount(newVal, new AItem.OnValueChanged() {
+        configuration.setOutputCount(newVal, new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 manager.notifySelectedItemInternalChange();

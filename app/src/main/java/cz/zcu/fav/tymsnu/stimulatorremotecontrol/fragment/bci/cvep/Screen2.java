@@ -17,11 +17,12 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public class Screen2 extends AScreen
+public class Screen2 extends ASimpleScreen<ConfigurationCVEP>
         implements View.OnClickListener, Observer, MySeekBar.OnMySeekBarValueChangeListener {
 
     private SwipeNumberPicker numberPicker;
@@ -80,7 +81,7 @@ public class Screen2 extends AScreen
         if (configuration == null)
             return;
 
-        configuration.setPulsLength(EditTextReader.readValue(textViewPulsLength, configuration.getPulsLength()), new AItem.OnValueChanged() {
+        configuration.setPulsLength(EditTextReader.readValue(textViewPulsLength, configuration.getPulsLength()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -102,7 +103,7 @@ public class Screen2 extends AScreen
         if (configuration == null)
             return;
 
-        configuration.setBrightness(value, new AItem.OnValueChanged() {
+        configuration.setBrightness(value, new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -139,7 +140,7 @@ public class Screen2 extends AScreen
             if (configuration == null)
                 return false;
 
-            configuration.setOutputCount(newValue, new AItem.OnValueChanged() {
+            configuration.setOutputCount(newValue, new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;
@@ -161,7 +162,7 @@ public class Screen2 extends AScreen
             if (configuration == null)
                 return false;
 
-            configuration.setBitShift(newValue, new AItem.OnValueChanged() {
+            configuration.setBitShift(newValue, new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;

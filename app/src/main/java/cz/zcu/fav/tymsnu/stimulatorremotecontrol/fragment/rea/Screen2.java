@@ -17,11 +17,12 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationREA;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public class Screen2 extends AScreen
+public class Screen2 extends ASimpleScreen<ConfigurationREA>
         implements Observer, View.OnClickListener, OnValueChangeListener, MySeekBar.OnMySeekBarValueChangeListener {
 
     private SwipeNumberPicker swipeNumberPicker;
@@ -102,7 +103,7 @@ public class Screen2 extends AScreen
         if (configuration == null)
             return;
 
-        configuration.setCycleCount(EditTextReader.readValue(editText1, configuration.getCycleCount()), new AItem.OnValueChanged() {
+        configuration.setCycleCount(EditTextReader.readValue(editText1, configuration.getCycleCount()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -110,7 +111,7 @@ public class Screen2 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setWaitFixed(EditTextReader.readValue(editText2, configuration.getWaitFixed()), new AItem.OnValueChanged() {
+        configuration.setWaitFixed(EditTextReader.readValue(editText2, configuration.getWaitFixed()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -118,7 +119,7 @@ public class Screen2 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setWaitRandom(EditTextReader.readValue(editText3, configuration.getWaitRandom()), new AItem.OnValueChanged() {
+        configuration.setWaitRandom(EditTextReader.readValue(editText3, configuration.getWaitRandom()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -126,7 +127,7 @@ public class Screen2 extends AScreen
                 manager.notifySelectedItemInternalChange();
             }
         });
-        configuration.setMissTime(EditTextReader.readValue(editText4, configuration.getMissTime()), new AItem.OnValueChanged() {
+        configuration.setMissTime(EditTextReader.readValue(editText4, configuration.getMissTime()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -149,7 +150,7 @@ public class Screen2 extends AScreen
         if (configuration == null)
             return false;
 
-        configuration.setOutputCount(newValue, new AItem.OnValueChanged() {
+        configuration.setOutputCount(newValue, new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -168,7 +169,7 @@ public class Screen2 extends AScreen
         if (configuration == null)
             return;
 
-        configuration.setBrightness(value, new AItem.OnValueChanged() {
+        configuration.setBrightness(value, new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;

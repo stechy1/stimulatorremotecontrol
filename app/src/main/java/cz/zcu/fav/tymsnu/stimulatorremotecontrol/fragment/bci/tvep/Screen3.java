@@ -15,10 +15,12 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.PatternControl;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
 
-public class Screen3 extends AScreen implements Observer {
+public class Screen3 extends ASimpleScreen<ConfigurationTVEP>
+        implements Observer {
 
     private final PatternControl[] patternControls = new PatternControl[8];
     private final View[] views = new View[8];
@@ -140,7 +142,7 @@ public class Screen3 extends AScreen implements Observer {
 
         @Override
         public void change(int oldValue, int newValue) {
-            pattern.setValue(newValue, new AItem.OnValueChanged() {
+            pattern.setValue(newValue, new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;

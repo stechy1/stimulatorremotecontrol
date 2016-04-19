@@ -18,11 +18,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public final class Screen2 extends AScreen
+public final class Screen2 extends ASimpleScreen<ConfigurationERP>
         implements Observer, OnValueChangeListener, View.OnClickListener {
 
     private static final String TAG = "Screen2";
@@ -84,7 +85,7 @@ public final class Screen2 extends AScreen
             if (configuration == null)
                 return;
 
-            configuration.setRandom(ConfigurationERP.Random.valueOf(position), new AItem.OnValueChanged() {
+            configuration.setRandom(ConfigurationERP.Random.valueOf(position), new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;
@@ -108,7 +109,7 @@ public final class Screen2 extends AScreen
             if (configuration == null)
                 return;
 
-            configuration.setEdge(ConfigurationERP.Edge.valueOf(position), new AItem.OnValueChanged() {
+            configuration.setEdge(ConfigurationERP.Edge.valueOf(position), new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
                     notifyLock = true;
@@ -149,7 +150,7 @@ public final class Screen2 extends AScreen
         if (configuration == null)
             return false;
 
-        configuration.setOutputCount(newValue, new AItem.OnValueChanged() {
+        configuration.setOutputCount(newValue, new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 manager.notifySelectedItemInternalChange();
@@ -167,7 +168,7 @@ public final class Screen2 extends AScreen
         if (configuration == null)
             return;
 
-        configuration.setOut(EditTextReader.readValue(outEditText, configuration.getOut()), new AItem.OnValueChanged() {
+        configuration.setOut(EditTextReader.readValue(outEditText, configuration.getOut()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;
@@ -176,7 +177,7 @@ public final class Screen2 extends AScreen
             }
         });
 
-        configuration.setWait(EditTextReader.readValue(waitEditText, configuration.getWait()), new AItem.OnValueChanged() {
+        configuration.setWait(EditTextReader.readValue(waitEditText, configuration.getWait()), new AConfiguration.OnValueChanged() {
             @Override
             public void changed() {
                 notifyLock = true;

@@ -56,8 +56,6 @@ public class FVEPFileJSONHandler implements IReadWrite<ConfigurationFVEP> {
     private void writeOutput(JsonWriter w, ConfigurationFVEP.Output output) throws IOException {
         w.beginObject();
 
-        w.name(TAG_OUTPUT_NAME).value(output.getName());
-
         w.name(TAG_PULS);
         w.beginObject();
         w.name(TAG_PULS_UP).value(output.puls.getUp());
@@ -116,8 +114,6 @@ public class FVEPFileJSONHandler implements IReadWrite<ConfigurationFVEP> {
     }
 
     private void readOutput(JSONObject outputObject, List<ConfigurationFVEP.Output> outputs) throws JSONException {
-        String name = outputObject.getString(TAG_OUTPUT_NAME);
-
         JSONObject pulsObject = outputObject.getJSONObject(TAG_PULS);
 
         int pulsUp = pulsObject.getInt(TAG_PULS_UP);
@@ -128,7 +124,7 @@ public class FVEPFileJSONHandler implements IReadWrite<ConfigurationFVEP> {
         int dutyCycle = outputObject.getInt(TAG_DUTY_CYCLE);
         int brightness = outputObject.getInt(TAG_BRIGHTNESS);
 
-        ConfigurationFVEP.Output output = new ConfigurationFVEP.Output(name, puls, frequency, dutyCycle, brightness);
+        ConfigurationFVEP.Output output = new ConfigurationFVEP.Output(puls, frequency, dutyCycle, brightness);
         outputs.add(output);
     }
     private void readOutputs(JSONArray outputs, ConfigurationFVEP c) throws JSONException {
