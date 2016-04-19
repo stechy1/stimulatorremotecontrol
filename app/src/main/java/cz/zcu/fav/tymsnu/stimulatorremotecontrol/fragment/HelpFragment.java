@@ -47,7 +47,7 @@ public class HelpFragment extends ASimpleFragment {
 
         childrens.put(parentTitles[0], Arrays.asList(res.getStringArray(R.array.help_erp_childs)));
         childrens.put(parentTitles[1], Arrays.asList(res.getStringArray(R.array.help_bci_fvep_childs)));
-        childrens.put(parentTitles[4], Arrays.asList(res.getStringArray(R.array.help_rea_childs)));
+        childrens.put(parentTitles[2], Arrays.asList(res.getStringArray(R.array.help_rea_childs)));
 
         return childrens;
     }
