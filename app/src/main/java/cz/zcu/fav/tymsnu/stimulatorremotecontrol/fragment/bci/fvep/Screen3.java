@@ -21,11 +21,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public class Screen3 extends AScreen
+public class Screen3 extends ASimpleScreen<ConfigurationFVEP>
         implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
 
     private static final int PULSE_UP = 0;

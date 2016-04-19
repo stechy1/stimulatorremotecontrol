@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IBtCommunication;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.cvep.AScreen;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.cvep.Screen1;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SimpleConfigurationFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.cvep.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.cvep.Screen3;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
@@ -30,10 +30,10 @@ public class CVEPPageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        AScreen fragment;
+        ASimpleScreen<ConfigurationCVEP> fragment;
         switch (position) {
             case 0:
-                fragment = new Screen1();
+                fragment = new SimpleConfigurationFragment<>();
                 break;
             case 1:
                 fragment = new Screen2();
@@ -42,7 +42,7 @@ public class CVEPPageAdapter extends FragmentStatePagerAdapter {
                 fragment = new Screen3();
                 break;
             default:
-                fragment = new Screen1();
+                fragment = new SimpleConfigurationFragment<>();
                 break;
         }
 

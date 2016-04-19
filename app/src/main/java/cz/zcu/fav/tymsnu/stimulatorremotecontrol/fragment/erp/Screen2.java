@@ -18,11 +18,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public final class Screen2 extends AScreen
+public final class Screen2 extends ASimpleScreen<ConfigurationERP>
         implements Observer, OnValueChangeListener, View.OnClickListener {
 
     private static final String TAG = "Screen2";

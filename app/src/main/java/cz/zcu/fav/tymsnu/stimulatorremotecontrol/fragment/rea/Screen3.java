@@ -17,11 +17,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationREA;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public class Screen3 extends AScreen
+public class Screen3 extends ASimpleScreen<ConfigurationREA>
         implements Observer, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner spinner1;

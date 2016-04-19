@@ -17,11 +17,12 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.MySeekBar;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public class Screen2 extends AScreen
+public class Screen2 extends ASimpleScreen<ConfigurationCVEP>
         implements View.OnClickListener, Observer, MySeekBar.OnMySeekBarValueChangeListener {
 
     private SwipeNumberPicker numberPicker;

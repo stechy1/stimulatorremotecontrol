@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IBtCommunication;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep.AScreen;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep.Screen1;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.SimpleConfigurationFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep.Screen2;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.tvep.Screen3;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
@@ -29,10 +29,10 @@ public class TVEPPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        AScreen fragment;
+        ASimpleScreen<ConfigurationTVEP> fragment;
         switch (position) {
             case 0:
-                fragment = new Screen1();
+                fragment = new SimpleConfigurationFragment<>();
                 break;
             case 1:
                 fragment = new Screen2();
@@ -41,7 +41,7 @@ public class TVEPPagerAdapter extends FragmentStatePagerAdapter {
                 fragment = new Screen3();
                 break;
             default:
-                fragment = new Screen1();
+                fragment = new SimpleConfigurationFragment<>();
                 break;
         }
 

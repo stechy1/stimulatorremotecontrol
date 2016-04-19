@@ -1,5 +1,4 @@
-package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.bci.cvep;
-
+package cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,28 +14,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.CVEPScreen1ListViewAdapter;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEP;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.packet.CVEPPacketHandler;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.SimpleConfigurationAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
-public class Screen1 extends AScreen 
-        implements  AdapterView.OnItemClickListener, Observer {
+public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends ASimpleScreen<T>
+        implements AdapterView.OnItemClickListener, Observer {
 
-    private static final String TAG = "fvep-Screen1";
+    private static final String TAG = "SimpleConfigFragment";
 
     private ListView listView;
     private boolean canDismiss;
@@ -51,16 +47,14 @@ public class Screen1 extends AScreen
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-        ImageButton buttonNewConiguration = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_new_configuration);
-        buttonNewConiguration.setOnClickListener(new NewConfigurationListener());
+        ImageButton btnNewConfiguration = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_new_configuration);
+        btnNewConfiguration.setOnClickListener(new NewSchemeListener());
 
-        ImageButton buttonSaveAll = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_save_all);
-        buttonSaveAll.setOnClickListener(new SaveAllConfigurationsListener());
+        ImageButton btnSaveAll = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_save_all);
+        btnSaveAll.setOnClickListener(new SaveAllSchemesListener());
 
         ImageButton buttonPlay = (ImageButton) v.findViewById(R.id.universal_screen_1_btn_play);
         buttonPlay.setOnClickListener(new PlayConfigurationListener());
-
-        //manager.addObserver(this);
 
         return v;
     }
@@ -79,11 +73,11 @@ public class Screen1 extends AScreen
         manager.deleteObserver(this);
     }
 
-    // Kliknutí na položu v listView
+    // ListView onItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-        ConfigurationCVEP configuration = (ConfigurationCVEP) listView.getItemAtPosition(position);
-        manager.select(configuration, new Manager.Callback() {
+        T selected = (T) listView.getItemAtPosition(position);
+        manager.select(selected, new Manager.Callback() {
             @Override
             public void callback(Object object) {
                 ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
@@ -91,7 +85,7 @@ public class Screen1 extends AScreen
             }
         });
 
-        ((CVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+        ((SimpleConfigurationAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     // ListView onCreateContextMenu
@@ -107,7 +101,7 @@ public class Screen1 extends AScreen
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         final int listPosition = info.position;
-        final ConfigurationCVEP configuration = manager.itemList.get(listPosition);
+        final T configuration = manager.itemList.get(listPosition);
 
         switch (item.getItemId()) {
             case R.id.context_duplicate:
@@ -115,7 +109,7 @@ public class Screen1 extends AScreen
                     @Override
                     public void callback(String res) {
                         try {
-                            ConfigurationCVEP duplicated = manager.duplicate(configuration, res);
+                            T duplicated = manager.duplicate(configuration, res);
                             manager.add(duplicated);
                             manager.notifyValueChanged();
                             canDismiss = true;
@@ -139,10 +133,10 @@ public class Screen1 extends AScreen
             case R.id.context_rename:
                 showInputDialog(new DialogCallback() {
                     @Override
-                    public void callback(String configName) {
+                    public void callback(String newName) {
                         try {
-                            manager.rename(configuration, configName);
-                            Log.i(TAG, "Nazev schematu: " + configName);
+                            manager.rename(configuration, newName);
+                            Log.i(TAG, "Nazev schematu: " + newName);
                             canDismiss = true;
                         } catch (IllegalArgumentException ex) {
                             //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
@@ -151,22 +145,24 @@ public class Screen1 extends AScreen
                         }
                     }
                 });
-                break;
+                return true;
         }
         return super.onContextItemSelected(item);
     }
 
-    private ListAdapter buildAdapter() {
-        return new CVEPScreen1ListViewAdapter(getContext(), manager.itemList);
+    private ArrayAdapter<T> buildAdapter() {
+        return new SimpleConfigurationAdapter<>(getContext(), manager.itemList);
     }
 
     // Při aktualizaci datasetu v manageru (Změna schématu, změna nastavení výstupů...)
     @Override
-    public void update(Observable observable, Object data) {
-        ((CVEPScreen1ListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+    public void update(Observable observable, Object object) {
+        Log.i(TAG, "Data update");
+        ((SimpleConfigurationAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     private void showInputDialog(final DialogCallback callback) {
+        canDismiss = true;
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
 
@@ -199,16 +195,21 @@ public class Screen1 extends AScreen
         });
     }
 
-    private final class NewConfigurationListener implements View.OnClickListener {
+    private final class NewSchemeListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
             showInputDialog(new DialogCallback() {
                 @Override
-                public void callback(String configName) {
+                public void callback(String newName) {
                     try {
-                        manager.create(configName);
-                        Log.i(TAG, "Nazev schematu: " + configName);
+                        manager.create(newName, new Manager.Callback() {
+                            @Override
+                            public void callback(Object object) {
+                                ((SimpleConfigurationAdapter) listView.getAdapter()).notifyDataSetChanged();
+                            }
+                        });
+                        Log.i(TAG, "Nazev schematu: " + newName);
                         canDismiss = true;
                     } catch (IllegalArgumentException ex) {
                         //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
@@ -220,7 +221,7 @@ public class Screen1 extends AScreen
         }
     }
 
-    private final class SaveAllConfigurationsListener implements View.OnClickListener {
+    private final class SaveAllSchemesListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -238,18 +239,18 @@ public class Screen1 extends AScreen
 
         @Override
         public void onClick(View v) {
-            ConfigurationCVEP configuration = manager.getSelectedItem();
+            T configuration = manager.getSelectedItem();
             if (configuration == null)
-                Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte konfiguraci pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
             else {
                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
-                List<Packet> packets = new CVEPPacketHandler(configuration).getPackets();
+                /*List<Packet> packets = new ERPPacketHandler(configuration).getPackets();
                 for (Packet packet : packets) {
                     Log.i(TAG, packet.toString());
                     if (!iBtCommunication.write(packet.getValue())) {
                         break;
                     }
-                }
+                }*/
             }
         }
     }
@@ -257,5 +258,4 @@ public class Screen1 extends AScreen
     private interface DialogCallback {
         void callback(String res);
     }
-    
 }
