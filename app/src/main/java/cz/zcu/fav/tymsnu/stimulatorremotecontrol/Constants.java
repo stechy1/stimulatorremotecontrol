@@ -35,5 +35,6 @@ public class Constants {
     public static final String FOLDER_CVEP = "cvep";
     public static final String FOLDER_TVEP = "tvep";
     public static final String FOLDER_REA  = "rea";
+    public static final String FILE_HELP   = "help.html";
 
 }
