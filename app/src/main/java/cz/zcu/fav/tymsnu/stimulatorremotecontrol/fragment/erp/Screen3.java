@@ -67,7 +67,7 @@ public final class Screen3 extends ASimpleScreen<ConfigurationERP>
         outputContainer = (LinearLayout) v.findViewById(R.id.universal_screen_3_linearlayout);
         //inputs = new EditText[1];
 
-        outText = getResources().getString(R.string.erp_screen_3_output);
+        outText = getResources().getString(R.string.output_title);
 
         fillInputs();
 

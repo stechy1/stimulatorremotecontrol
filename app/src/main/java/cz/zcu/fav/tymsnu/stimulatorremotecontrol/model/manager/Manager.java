@@ -249,7 +249,7 @@ public class Manager<T extends AConfiguration<T>> extends Observable {
      * @param callback Callback který se zavolá po úspěšném smazání schématu
      */
     public void delete(T item, Callback callback) {
-        Log.i(TAG, "Mazu schema: " + item);
+        Log.i(TAG, "Mazu konfiguraci: " + item);
 
         String name = item.getName();
         if (!name.contains(EXTENTION))

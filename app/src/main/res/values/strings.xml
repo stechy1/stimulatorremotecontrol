@@ -83,8 +83,8 @@
     <string name="screen_title_settings_2">Settings 2</string>
 
     <!-- Output titles -->
+    <string name="output_title">. OUTPUT</string>
     <string name="output_title_count">Output count</string>
-    <string name="output_title_stimul_count">Stimul count</string>
     <string name="output_title_puls_up">Pulse - up [ms]</string>
     <string name="output_title_puls_down">Pulse - down [ms]</string>
     <string name="output_title_distribution_value">Distribution - value [ms]</string>
@@ -156,7 +156,7 @@
         <item>@string/output_title_brightness</item>
 
     </string-array>
-    <string name="erp_screen_3_output">. OUTPUT</string>
+
 
     <!-- BCI screens -->
     <!-- BCI f-VEP screens -->

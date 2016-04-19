@@ -56,8 +56,8 @@
     <string name="screen_title_settings_2">Nastavení 2</string>
 
     <!-- Output titles -->
+    <string name="output_title">. VÝSTUP</string>
     <string name="output_title_count">Počet výstupů</string>
-    <string name="output_title_stimul_count">Počet stimulů</string>
     <string name="output_title_puls_up">Pulse - up [ms]</string>
     <string name="output_title_puls_down">Pulse - down [ms]</string>
     <string name="output_title_distribution_value">Distribution - value [ms]</string>
@@ -116,7 +116,7 @@
 
     <!-- ERP screen - 3 -->
 
-    <string name="erp_screen_3_output">. VÝSTUP:</string>
+
 
     <!-- BCI screens -->
     <!-- BCI f-VEP screens -->

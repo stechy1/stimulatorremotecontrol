@@ -35,7 +35,7 @@ public class Screen3 extends ASimpleScreen<ConfigurationFVEP>
     private static final int DUTY_CYCLE = 3;
     private static final int BRIGHTNESS = 4;
 
-    private String stimulText;
+    private String outputText;
 
     private final EditText[] inputs = new EditText[8];
     private final View[] views = new View[8];
@@ -62,7 +62,7 @@ public class Screen3 extends ASimpleScreen<ConfigurationFVEP>
         outputContainer = (LinearLayout) v.findViewById(R.id.universal_screen_3_linearlayout);
         //inputs = new EditText[1];
 
-        stimulText = getResources().getString(R.string.bci_fvep_screen_3_output);
+        outputText = getResources().getString(R.string.output_title);
 
         fillInputs();
 
@@ -153,7 +153,7 @@ public class Screen3 extends ASimpleScreen<ConfigurationFVEP>
             TextView title = (TextView) layout.findViewById(R.id.labeled_input_title);
             EditText input = (EditText) layout.findViewById(R.id.labeled_input_value);
 
-            title.setText(String.valueOf(i + stimulText));
+            title.setText(String.valueOf(i + outputText));
 
             views[i] = layout;
             inputs[i] = input;

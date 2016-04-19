@@ -114,7 +114,6 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
                             manager.notifyValueChanged();
                             canDismiss = true;
                         } catch (IllegalArgumentException ex) {
-                            //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
                             Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
                             canDismiss = false;
                         }
@@ -139,7 +138,6 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
                             Log.i(TAG, "Nazev schematu: " + newName);
                             canDismiss = true;
                         } catch (IllegalArgumentException ex) {
-                            //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
                             Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
                             canDismiss = false;
                         }
@@ -212,7 +210,6 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
                         Log.i(TAG, "Nazev schematu: " + newName);
                         canDismiss = true;
                     } catch (IllegalArgumentException ex) {
-                        //Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.illegal_input), Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
                         canDismiss = false;
                     }
@@ -241,9 +238,9 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
         public void onClick(View v) {
             T configuration = manager.getSelectedItem();
             if (configuration == null)
-                Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte schema pro spusteni stimulace", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte konfiguraci pro spuštění experimentu", Snackbar.LENGTH_LONG).show();
             else {
-                Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím stimulaci...", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím experiment...", Snackbar.LENGTH_LONG).show();
                 /*List<Packet> packets = new ERPPacketHandler(configuration).getPackets();
                 for (Packet packet : packets) {
                     Log.i(TAG, packet.toString());
