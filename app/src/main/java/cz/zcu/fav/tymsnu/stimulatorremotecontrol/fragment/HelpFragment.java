@@ -16,8 +16,7 @@ public class HelpFragment extends ASimpleFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_help, container, false);
 
-        WebView browser = (WebView) v;
-
+        WebView browser = (WebView)v.findViewById(R.id.webView);
         browser.loadUrl("file:///android_asset/help.html");
 
         return v;
