@@ -270,4 +270,32 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
         }
         // endregion
     }
+
+    public static final class Builder{
+        private List<Output> outputList = new ArrayList<>();
+        private String name;
+        private int outputCount = DEF_OUTPUT_COUNT;
+
+        public Builder(String name){
+            this.name = name;
+        }
+
+        public Builder outpuCount(int outputCount){
+            this.outputCount = outputCount;
+            return this;
+        }
+
+        public Builder outputList(List<Output> outputList){
+            if(outputList == null) return this;
+
+            this.outputList = outputList;
+            return this;
+        }
+
+        public ConfigurationFVEP build(){
+            return new ConfigurationFVEP(this.name, this.outputCount, this.outputList);
+        }
+
+
+    }
 }
