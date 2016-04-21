@@ -4,6 +4,10 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Code;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Codes;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.DataConvertor;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
 public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
@@ -60,6 +64,34 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
         }
 
         return new ConfigurationFVEP(newName, outputCount, outputList);
+    }
+
+    @Override
+    public ArrayList<Packet> getPackets() {
+
+        ArrayList<Packet> packets = new ArrayList<>();
+
+        Code actualDuration = Codes.OUTPUT0_DURATION; //TODO Pulse-up?
+        Code actualPause = Codes.OUTPUT0_PAUSE; //TODO Pulse-down?
+        Code actualFrequency = Codes.OUTPUT0_FREQ;
+        Code actualMiddlePeriod = Codes.OUTPUT0_MIDDLE_PERIOD; //TODO Duty cycle ?
+        Code actualBrightness = Codes.OUTPUT0_BRIGHTNESS;
+
+        for(Output a : outputList){
+            packets.add(new Packet(actualDuration, DataConvertor.milisecondsTo2B(a.puls.up)));
+            packets.add(new Packet(actualPause, DataConvertor.milisecondsTo2B(a.puls.down)));
+            packets.add(new Packet(actualFrequency, DataConvertor.intTo1B(a.frequency)));
+            packets.add(new Packet(actualMiddlePeriod, DataConvertor.intTo1B(a.duty_cycle)));
+            packets.add(new Packet(actualBrightness, DataConvertor.intTo1B(a.brightness)));
+
+            actualDuration = actualDuration.getNext();
+            actualPause = actualPause.getNext();
+            actualFrequency = actualFrequency.getNext();
+            actualMiddlePeriod = actualMiddlePeriod.getNext();
+            actualBrightness = actualBrightness.getNext();
+        }
+
+        return packets;
     }
     // endregion
 

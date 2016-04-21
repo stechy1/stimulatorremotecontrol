@@ -1,5 +1,9 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
+import java.util.ArrayList;
+
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
+
 public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
 
     // region Variables
@@ -60,6 +64,12 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
 
         return new ConfigurationREA(newName, outputCount, cycleCount, waitFixed, waitRandom, missTime, brightness, onFail, sex, a, h, w);
     }
+
+    @Override
+    public ArrayList<Packet> getPackets() {
+        return new ArrayList<>();
+    }
+
     // endregion
 
     // region Getters & Setters

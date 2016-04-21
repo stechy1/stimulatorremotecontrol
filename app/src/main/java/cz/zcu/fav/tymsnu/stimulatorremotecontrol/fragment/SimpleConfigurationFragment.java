@@ -21,11 +21,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.SimpleConfigurationAdapter;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
@@ -241,13 +243,13 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Vyberte konfiguraci pro spuštění experimentu", Snackbar.LENGTH_LONG).show();
             else {
                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Spouštím experiment...", Snackbar.LENGTH_LONG).show();
-                /*List<Packet> packets = new ERPPacketHandler(configuration).getPackets();
+                List<Packet> packets = configuration.getPackets();
                 for (Packet packet : packets) {
                     Log.i(TAG, packet.toString());
                     if (!iBtCommunication.write(packet.getValue())) {
                         break;
                     }
-                }*/
+                }
             }
         }
     }
