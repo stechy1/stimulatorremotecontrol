@@ -192,7 +192,7 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
          * @return True, pokud hodnota odpovídá rozsahu jasu, jinak false
          */
         public boolean isBrightnessInRange(int val) {
-            return RangeUtils.isInByteRange(val);
+            return RangeUtils.isInPercentRange(val);
         }
 
         @Override
@@ -227,7 +227,7 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
 
         public void setFrequency(int frequency) throws IllegalArgumentException {setFrequency(frequency, null);}
         public void setFrequency(int frequency, OnValueChanged onValueChanged) throws IllegalArgumentException {
-            if (!isFrequencyInRange(duty_cycle))
+            if (!isFrequencyInRange(frequency))
                 throw new IllegalArgumentException();
 
             if (this.frequency == frequency)
