@@ -2,11 +2,14 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runners.Parameterized;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 
 /**
@@ -14,12 +17,6 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class ConfigurationERPTest {
-
-    @Parameterized.Parameter
-    public int brightnessInRangeValue;
-    @Parameterized.Parameter(value = 1)
-    public boolean brightnessInRangeExpected;
-
     private static final String CONFIG_NAME = "default";
 
     private ConfigurationERP configuration;
@@ -27,6 +24,24 @@ public class ConfigurationERPTest {
     @Before
     public void setUp() throws Exception {
         configuration = new ConfigurationERP(CONFIG_NAME);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructNegative1() throws Exception {
+        new ConfigurationERP("argException", 1, 0, 0, null, ConfigurationERP.Random.OFF, new ArrayList<ConfigurationERP.Output>());
+        System.out.println("Chyba: byla očekávána vyjímka IllegalArgumentException, protože parametr Edge je null");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructNegative2() throws Exception {
+        new ConfigurationERP("argException", 1, 0, 0, ConfigurationERP.Edge.FALLING, null, new ArrayList<ConfigurationERP.Output>());
+        System.out.println("Chyba: byla očekávána vyjímka IllegalArgumentException, protože parametr Random je null");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructNegative3() throws Exception {
+        new ConfigurationERP("argException", 1, 0, 0, ConfigurationERP.Edge.FALLING, ConfigurationERP.Random.OFF, null);
+        System.out.println("Chyba: byla očekávána vyjímka IllegalArgumentException, protože parametr outputList je null");
     }
 
     @Test
@@ -115,44 +130,69 @@ public class ConfigurationERPTest {
     }
 
     @Test
-    public void testOutputCanUpdateDistribution() throws Exception {
-        ConfigurationERP config = new ConfigurationERP(
-                "config",
-                2,
-                ConfigurationERP.DEF_OUT,
-                ConfigurationERP.DEF_WAIT,
-                ConfigurationERP.Edge.FALLING,
-                ConfigurationERP.Random.OFF,
-                Arrays.asList(
-                        new ConfigurationERP.Output(
-                                new ConfigurationERP.Output.Puls(
-                                        ConfigurationERP.Output.Puls.DEF_UP,
-                                        ConfigurationERP.Output.Puls.DEF_DOWN),
-                                new ConfigurationERP.Output.Distribution(
-                                        50,
-                                        ConfigurationERP.Output.Distribution.DEF_DELAY
-                                ), ConfigurationERP.Output.DEF_BRIGHTNESS),
-                        new ConfigurationERP.Output(
-                                new ConfigurationERP.Output.Puls(
-                                        ConfigurationERP.Output.Puls.DEF_UP,
-                                        ConfigurationERP.Output.Puls.DEF_DOWN),
-                                new ConfigurationERP.Output.Distribution(
-                                        50,
-                                        ConfigurationERP.Output.Distribution.DEF_DELAY
-                                ), ConfigurationERP.Output.DEF_BRIGHTNESS)
-                )
-        );
+    public void testBuilderPositive1() throws Exception {
+        int outputCount = 1;
+        int out = 5;
+        int wait = 45;
+        ConfigurationERP.Edge edge = ConfigurationERP.Edge.FALLING;
+        ConfigurationERP.Random random = ConfigurationERP.Random.LONG;
+        ConfigurationERP config = new ConfigurationERP.Builder("builder")
+                .outputCount(outputCount)
+                .out(out)
+                .wait(wait)
+                .edge(edge)
+                .random(random)
+                .outputList(Collections.singletonList(
+                        new ConfigurationERP.Output.Builder().build()
+                ))
+                .build();
 
+        assertEquals("Chyba: počet výstupů neodpovídá nastavené hodnotě", outputCount, config.getOutputCount());
+        assertEquals("Chyba: hodnota parametru out neodpovídá nastavené hodnotě", out, config.getOut());
+        assertEquals("Chyba: hodnota parametru wait neodpovídá nastavené hodnotě", wait, config.getWait());
+        assertEquals("Chyba: hodnota prametru edge neodpovídá nastavené hodnotě", edge, config.getEdge());
+        assertEquals("Chyba: hodnota parametru random neodpovídá nastavené hodnotě", random, config.getRandom());
+        assertEquals("Chyba: velikost kolekce výstupů neodpovídá nastavené hodnotě", outputCount, config.outputList.size());
+
+    }
+
+    @Test
+    public void testBuilderPositive2() throws Exception {
+        List<ConfigurationERP.Output> singleList = Collections.singletonList(new ConfigurationERP.Output());
+        ConfigurationERP config = new ConfigurationERP.Builder("builder")
+                .random(null)
+                .edge(null)
+                .outputList(null)
+                .build();
+
+        assertEquals("Chyba: hodnota parametru edge se nastavila na null", ConfigurationERP.Edge.FALLING, config.getEdge());
+        assertEquals("Chyba: hodnota parametru random se nastavila na null", ConfigurationERP.Random.OFF, config.getRandom());
+        assertEquals("Chyba: hodnota parametru outputList se nastavila na null", singleList, config.outputList);
+    }
+
+    @Test
+    public void testOutputCanUpdateDistribution() throws Exception {
+        ConfigurationERP config = new ConfigurationERP.Builder("config")
+                .outputCount(2)
+                .outputList(Arrays.asList(
+                        new ConfigurationERP.Output.Builder()
+                                .distribution(new ConfigurationERP.Output.Distribution(50, 0))
+                                .build(),
+                        new ConfigurationERP.Output.Builder()
+                                .distribution(new ConfigurationERP.Output.Distribution(50, 0))
+                                .build()
+                ))
+                .build();
         assertEquals("Chyba: hodnota distribution se může nastavit tak, aby nevyhovovala předpisům",
                 false, config.outputList.get(1).canUpdateDistribution(config.outputList, 51));
     }
 
     @Test
-    public void testOutputSetBrightness() throws Exception {
-        ConfigurationERP.Output output = new ConfigurationERP.Output();
-        int newValue = 20;
-        output.setBrightness(newValue);
-        assertEquals("Chyba: nastavila se špatná hodnota jasu", newValue, output.getBrightness());
+    public void testOutputSetBrightnessPositive1() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output.Builder().brightness(5).build();
+        int sameValue = 20;
+        output.setBrightness(sameValue);
+        assertEquals("Chyba: nastavila se špatná hodnota jasu", sameValue, output.getBrightness());
     }
 
     @Test
@@ -185,5 +225,32 @@ public class ConfigurationERPTest {
         int delay = 15;
         output.distribution.setDelay(delay);
         assertEquals("Chyba: nastavila se špatná hodnota parametru delay", delay, output.distribution.getDelay());
+    }
+
+    @Test
+    public void testOutputBuilderPositive1() throws Exception {
+        ConfigurationERP.Output.Puls puls = new ConfigurationERP.Output.Puls();
+        ConfigurationERP.Output.Distribution distribution = new ConfigurationERP.Output.Distribution();
+        int brightness = 50;
+        ConfigurationERP.Output output = new ConfigurationERP.Output.Builder()
+                .puls(puls)
+                .distribution(distribution)
+                .brightness(brightness)
+                .build();
+
+        assertEquals("Chyba: hodnota parametru puls neodpovídá nastavené hodnotě", puls, output.puls);
+        assertEquals("Chyba: hodnota parametru distribution neodpovídá nastavené hodnotě", distribution, output.distribution);
+        assertEquals("Chyba: hodnota parametru brightness neodpovídá nastavené hodnotě", brightness, output.getBrightness());
+    }
+
+    @Test
+    public void testOutputBuilderPositive2() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output.Builder()
+                .puls(null)
+                .distribution(null)
+                .build();
+
+        assertNotEquals("Chyba: hodnota parametru puls se nastavila na null", null, output.puls);
+        assertNotEquals("Chyba: hodnota parametru distribution se nastavila na null", null, output.distribution);
     }
 }

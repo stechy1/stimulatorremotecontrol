@@ -23,6 +23,12 @@ public class AConfigurationTest {
         configuration = new ConfigurationImpl(CONFIG_NAME);
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void testDuplicatePositive() throws Exception {
+        configuration.duplicate("duplicate");
+
+    }
+
     @Test
     public void testGetNamePositive() throws Exception {
         assertEquals("Chyba, metoda nevrátila očekávané jméno", CONFIG_NAME, configuration.getName());
@@ -77,25 +83,25 @@ public class AConfigurationTest {
         assertEquals("Chyba: metoda nenastavila požadovaný počet výstupů", newCount, configuration.getOutputCount());
     }
 
+    @Test
+    public void testSetOutputCountPositive2() throws Exception {
+        int sameValue = configuration.getOutputCount();
+        configuration.setOutputCount(sameValue);
+        assertEquals("Chyba: metoda nastavila špatný počet výstupů", sameValue, configuration.getOutputCount());
+    }
+
     @Test(expected = IllegalArgumentException.class)
-    public void testSetOutputCountNegative2() throws Exception {
+    public void testSetOutputCountNegative1() throws Exception {
         int newCount = AConfiguration.MIN_OUTPUT_COUNT - 1;
         configuration.setOutputCount(newCount);
         System.out.println("Chyba: metoda nastavila nulový počet výstupů");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetOutputCountNegative3() throws Exception {
+    public void testSetOutputCountNegative2() throws Exception {
         int newCount = AConfiguration.MAX_OUTPUT_COUNT + 1;
         configuration.setOutputCount(newCount);
         System.out.println("Chyba: metoda nastavila počet výstupů, který je mimo rozsah");
-    }
-
-    @Test
-    public void testDuplicatePositive() throws Exception {
-        String newName = "duplicated";
-        ConfigurationImpl duplicated = configuration.duplicate(newName);
-        assertEquals("Chyba: duplikovaná konfigurace nemá stejný počet výstupů", duplicated.outputCount, configuration.outputCount);
     }
 
     @Test
@@ -110,10 +116,9 @@ public class AConfigurationTest {
     }
 
     @Test
-    public void testEqualsPositive3() throws Exception {
+    public void testEqualsNegative() throws Exception {
         ConfigurationImpl config = new ConfigurationImpl("config");
         assertNotEquals("Chyba: objekty se schodují", configuration, config);
-
     }
 
     @Test
@@ -133,15 +138,6 @@ public class AConfigurationTest {
 
         public ConfigurationImpl(String name) {
             super(name);
-        }
-
-        public ConfigurationImpl(String name, int outputCount) {
-            super(name, outputCount);
-        }
-
-        @Override
-        public ConfigurationImpl duplicate(String newName) {
-            return new ConfigurationImpl(newName, this.outputCount);
         }
     }
 }

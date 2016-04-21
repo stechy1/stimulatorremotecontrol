@@ -71,6 +71,11 @@ public abstract class AConfiguration<T extends AConfiguration<T>> implements IDu
 
     // region Public methods
     @Override
+    public T duplicate(String newName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
