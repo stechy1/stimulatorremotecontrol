@@ -618,8 +618,11 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
                 return value;
             }
 
-            public void setValue(int value) {setValue(value, null);}
-            public void setValue(int value, OnValueChanged onValueChanged) {
+            public void setValue(int value) throws IllegalArgumentException {setValue(value, null);}
+            public void setValue(int value, OnValueChanged onValueChanged) throws IllegalArgumentException {
+                if (!isValueInRange(value))
+                    throw new IllegalArgumentException();
+
                 if (this.value == value)
                     return;
 

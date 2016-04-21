@@ -9,7 +9,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -92,27 +94,30 @@ public class ConfigurationERPTest {
         assertEquals("Chyba: nastavila se špatná hodnota počtu výstupů", sameValue, configuration.getOutputCount());
     }
 
-    @Test
-    public void testSetEdgePositive() throws Exception {
-        ConfigurationERP.Edge old = configuration.getEdge();
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEdgeNegative() throws Exception {
         configuration.setEdge(null);
-        assertEquals("Chyba: parametr Edge se nastavil na null", old, configuration.getEdge());
+        System.out.println("Chyba: parametr Edge se nastavil na null");
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testSetRandomNegative() throws Exception {
-        ConfigurationERP.Random old = configuration.getRandom();
         configuration.setRandom(null);
-        assertEquals("Chyba: parametr Random se nastavil na null", old, configuration.getRandom());
+        System.out.println("Chyba: parametr Random se nastavil na null");
     }
 
     @Test
     public void testEdgeValueOfPositive1() throws Exception {
-        assertEquals("Chyba: metoda nevrátila správnou hranu", ConfigurationERP.Edge.FALLING, ConfigurationERP.Edge.valueOf(ConfigurationERP.Edge.FALLING.ordinal()));
+        assertEquals("Chyba: metoda nevrátila správnou hranu", ConfigurationERP.Edge.LEADING, ConfigurationERP.Edge.valueOf(ConfigurationERP.Edge.LEADING.ordinal()));
     }
 
     @Test
     public void testEdgeValueOfPositive2() throws Exception {
+        assertEquals("Chyba: metoda nevrátila správnou hranu", ConfigurationERP.Edge.FALLING, ConfigurationERP.Edge.valueOf(ConfigurationERP.Edge.FALLING.ordinal()));
+    }
+
+    @Test
+    public void testEdgeValueOfPositive3() throws Exception {
         assertEquals("Chyba: metoda nevrátila správnou hodnotu", ConfigurationERP.Edge.LEADING, ConfigurationERP.Edge.valueOf(2));
     }
 
@@ -167,6 +172,7 @@ public class ConfigurationERPTest {
     public void testBuilderNegative() throws Exception {
         List<ConfigurationERP.Output> singleList = Collections.singletonList(new ConfigurationERP.Output());
         ConfigurationERP config = new ConfigurationERP.Builder("builder")
+                .outputCount(1)
                 .random(null)
                 .edge(null)
                 .outputList(null)
@@ -175,6 +181,18 @@ public class ConfigurationERPTest {
         assertEquals("Chyba: hodnota parametru edge se nastavila na null", ConfigurationERP.Edge.FALLING, config.getEdge());
         assertEquals("Chyba: hodnota parametru random se nastavila na null", ConfigurationERP.Random.OFF, config.getRandom());
         assertEquals("Chyba: hodnota parametru outputList se nastavila na null", singleList, config.outputList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputConstructNegative1() throws Exception {
+        new ConfigurationERP.Output(null, new ConfigurationERP.Output.Distribution(), ConfigurationERP.Output.DEF_BRIGHTNESS);
+        System.out.println("Chyba: byla očekávána vyjímka IllegalArgumentException, protože parametr Puls je null");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputConstructNegative2() throws Exception {
+        new ConfigurationERP.Output(new ConfigurationERP.Output.Puls(), null, ConfigurationERP.Output.DEF_BRIGHTNESS);
+        System.out.println("Chyba: byla očekávána vyjímka IllegalArgumentException, protože parametr Puls je null");
     }
 
     @Test
@@ -190,8 +208,8 @@ public class ConfigurationERPTest {
                                 .build()
                 ))
                 .build();
-        assertEquals("Chyba: hodnota distribution se může nastavit tak, aby nevyhovovala předpisům",
-                false, config.outputList.get(1).canUpdateDistribution(config.outputList, 50));
+        assertTrue("Chyba: hodnota distribution se může nastavit tak, aby nevyhovovala předpisům",
+                config.outputList.get(1).canUpdateDistribution(config.outputList, 50));
     }
 
     @Test
@@ -207,16 +225,48 @@ public class ConfigurationERPTest {
                                 .build()
                 ))
                 .build();
-        assertEquals("Chyba: hodnota distribution se může nastavit tak, aby nevyhovovala předpisům",
-                false, config.outputList.get(1).canUpdateDistribution(config.outputList, 51));
+        assertFalse("Chyba: hodnota distribution se může nastavit tak, aby nevyhovovala předpisům",
+                config.outputList.get(1).canUpdateDistribution(config.outputList, 51));
     }
 
     @Test
-    public void testOutputSetBrightnessPositive() throws Exception {
-        ConfigurationERP.Output output = new ConfigurationERP.Output.Builder().brightness(5).build();
-        int sameValue = 20;
-        output.setBrightness(sameValue);
-        assertEquals("Chyba: nastavila se špatná hodnota jasu", sameValue, output.getBrightness());
+    public void testOutputSetBrightnessPositive1() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int newValue = 0;
+        output.setBrightness(newValue);
+        assertEquals("Chyba: nastavila se špatná hodnota jasu", newValue, output.getBrightness());
+    }
+
+    @Test
+    public void testOutputSetBrightnessPositive2() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int newValue = 50;
+        output.setBrightness(newValue);
+        assertEquals("Chyba: nastavila se špatná hodnota jasu", newValue, output.getBrightness());
+    }
+
+    @Test
+    public void testOutputSetBrightnessPositive3() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int newValue = 100;
+        output.setBrightness(newValue);
+        assertEquals("Chyba: nastavila se špatná hodnota jasu", newValue, output.getBrightness());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputSetBrightnessNegative1() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int newValue = -1;
+        output.setBrightness(newValue);
+        System.out.println("Chyba: jas byl nastaven na hodnotu mimo rozsah");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputSetBrightnessNegative2() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int newValue = 101;
+        output.setBrightness(newValue);
+        System.out.println("Chyba: jas byl nastaven na hodnotu mimo rozsah");
     }
 
     @Test
@@ -236,11 +286,43 @@ public class ConfigurationERPTest {
     }
 
     @Test
-    public void testOutputSetValuePositive() throws Exception {
+    public void testOutputSetValuePositive1() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
-        int value = 15;
+        int value = 0;
         output.distribution.setValue(value);
         assertEquals("Chyba: nastavila se špatná hodnota parametru value", value, output.distribution.getValue());
+    }
+
+    @Test
+    public void testOutputSetValuePositive2() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int value = 50;
+        output.distribution.setValue(value);
+        assertEquals("Chyba: nastavila se špatná hodnota parametru value", value, output.distribution.getValue());
+    }
+
+    @Test
+    public void testOutputSetValuePositive3() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int value = 100;
+        output.distribution.setValue(value);
+        assertEquals("Chyba: nastavila se špatná hodnota parametru value", value, output.distribution.getValue());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputSetValueNegative1() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int value = -1;
+        output.distribution.setValue(value);
+        assertEquals("Chyba: hodnota byla nastavena na hodnotu mimo rozsah", value, output.distribution.getValue());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputSetValueNegative2() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int value = 101;
+        output.distribution.setValue(value);
+        assertEquals("Chyba: hodnota byla nastavena na hodnotu mimo rozsah", value, output.distribution.getValue());
     }
 
     @Test
