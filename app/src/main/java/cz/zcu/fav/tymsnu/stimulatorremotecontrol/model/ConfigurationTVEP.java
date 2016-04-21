@@ -3,10 +3,14 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
+
 public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
 
     // region Variables
     public static final int DEF_PATTERN_LENGTH = 1;
+    public static final int MIN_PATTERN_LENGTH = 1;
+    public static final int MAX_PATTERN_LENGTH = 16;
     public static final int DEF_PULS_LENGTH = 0;
     public static final int DEF_PULS_SKEW = 0;
     public static final int DEF_BRIGHTNESS = 0;
@@ -19,12 +23,30 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
     // endregion
 
     // region Constructors
+    /**
+     * Konstruktor třídy s výchozími parametry
+     * @param name Název konfigurace
+     */
     public ConfigurationTVEP(String name) {
         this(name, DEF_OUTPUT_COUNT, DEF_PATTERN_LENGTH, DEF_PULS_LENGTH, DEF_PULS_SKEW, DEF_BRIGHTNESS, new ArrayList<Pattern>());
     }
 
-    public ConfigurationTVEP(String name, int outputCount, int patternLength, int pulsLength, int pulsSkew, int brightness, List<Pattern> patternList) {
+    /**
+     * Konstruktor třídy s parametry
+     * @param name Název konfigurace
+     * @param outputCount Počet výstupů
+     * @param patternLength Délka paternu
+     * @param pulsLength Délka pulzu
+     * @param pulsSkew Délka mezery mezi dvěma pulzy
+     * @param brightness
+     * @param patternList Kolekce výstupů
+     * @throws IllegalArgumentException Pokud je parametr outputList null
+     */
+    public ConfigurationTVEP(String name, int outputCount, int patternLength, int pulsLength, int pulsSkew, int brightness, List<Pattern> patternList) throws IllegalArgumentException {
         super(name, outputCount);
+
+        if (patternList == null)
+            throw new IllegalArgumentException();
 
         this.patternList = patternList;
 
@@ -60,6 +82,52 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
     // endregion
 
     // region Public methods
+
+    /**
+     * Zjistí, zda-li je hodnota v povoleném intervalu
+     * @param value Testovaná hodnota
+     * @return True, pokud je hodnota v povoleném intervalu, jinak false
+     */
+    public boolean isPatternLengthInRange(int value) {
+        return RangeUtils.isInRange(value, MIN_OUTPUT_COUNT, MAX_OUTPUT_COUNT);
+    }
+
+    /**
+     * Zjistí, zda-li hodnota odpovídá rozsahu jasu
+     * @param val Kontrolovaná hodnota
+     * @return True, pokud hodnota odpovídá rozsahu jasu, jinak false
+     */
+    public boolean isBrightnessInRange(int val) {
+        return RangeUtils.isInPercentRange(val);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ConfigurationTVEP that = (ConfigurationTVEP) o;
+
+        if (patternLength != that.patternLength) return false;
+        if (pulsLength != that.pulsLength) return false;
+        if (pulsSkew != that.pulsSkew) return false;
+        if (brightness != that.brightness) return false;
+        return patternList.equals(that.patternList);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + patternLength;
+        result = 31 * result + pulsLength;
+        result = 31 * result + pulsSkew;
+        result = 31 * result + brightness;
+        result = 31 * result + patternList.hashCode();
+        return result;
+    }
+
     @Override
     public ConfigurationTVEP duplicate(String newName) {
         int outputCount = this.outputCount;
@@ -78,13 +146,14 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
     // endregion
 
     // region Getters & Setters
-        /**
+    /**
      * Nastaví počet výstupů
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
+     * @throws IllegalArgumentException Pokud počet výstupů není v povoleném rozsahu
      */
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
         super.setOutputCount(outputCount, null);
 
         rearangeOutputs();
@@ -105,16 +174,21 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
      * Nastaví délku Patternu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param patternLength Dálka Patternu
+     * @throws IllegalArgumentException Pokud délka paternu není v povoleném intervalu
      */
-    public void setPatternLength(int patternLength) {
+    public void setPatternLength(int patternLength) throws IllegalArgumentException {
         setPatternLength(patternLength, null);}
     /**
      * Nastaví délku Patternu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param patternLength Délka Patternu
      * @param onValueChanged Callback, který se zavolá po nastavení délky Patternu
+     * @throws IllegalArgumentException Pokud délka paternu není v povoleném intervalu
      */
-    public void setPatternLength(int patternLength, OnValueChanged onValueChanged) {
+    public void setPatternLength(int patternLength, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (!isPatternLengthInRange(patternLength))
+            throw new IllegalArgumentException();
+
         if (this.patternLength == patternLength)
             return;
 
@@ -196,15 +270,20 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
      * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param brightness Jas výstupů
+     * @throws IllegalArgumentException Pokud jas není v povoleném intervalu
      */
-    public void setBrightness(int brightness) {setBrightness(brightness, null);}
+    public void setBrightness(int brightness) throws IllegalArgumentException {setBrightness(brightness, null);}
     /**
      * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param brightness Jas výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení jasu výstupů
+     * @throws IllegalArgumentException Pokud jas není v povoleném intervalu
      */
-    public void setBrightness(int brightness, OnValueChanged onValueChanged) {
+    public void setBrightness(int brightness, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (!isBrightnessInRange(brightness))
+            throw new IllegalArgumentException();
+
         if (this.brightness == brightness)
             return;
 
@@ -246,11 +325,28 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
          * @param value Hodnota patternu
          */
         public Pattern(int value) {
-            this.value = value;
+            setValue(value);
         }
         // endregion
 
         // region Public methods
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Pattern pattern = (Pattern) o;
+
+            return value == pattern.value;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return value;
+        }
+
         // endregion
 
         // region Getters & Setters
@@ -323,7 +419,8 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
         }
 
         public Builder patternList(List<Pattern> patternList){
-            if(patternList == null) return this;
+            if(patternList == null)
+                return this;
 
             this.patternList = patternList;
             return this;
