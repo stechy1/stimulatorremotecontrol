@@ -194,6 +194,38 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
                 onValueChanged.changed();
         }
         // endregion
+
+
+        public static final class Builder {
+            private Puls puls = new Puls();
+            private int frequency = DEF_FREQUENCY;
+            private int duty_cycle = DEF_DUTY_CYCLE;
+            private int brightness = DEF_BRIGHTNESS;
+
+            public Builder puls(Puls puls) {
+                this.puls = puls;
+                return this;
+            }
+
+            public Builder frequency(int frequency) {
+                this.frequency = frequency;
+                return this;
+            }
+
+            public Builder duty_cycle(int duty_cycle) {
+                this.duty_cycle = duty_cycle;
+                return this;
+            }
+
+            public Builder brightness(int brightness) {
+                this.brightness = brightness;
+                return this;
+            }
+
+            public Output build() {
+                return new Output(puls, frequency, duty_cycle, brightness);
+            }
+        }
     }
 
     public static final class Puls {
@@ -269,9 +301,27 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
                 onValueChanged.changed();
         }
         // endregion
+
+        public static final class Builder {
+            private int up;
+            private int down;
+
+            public Builder up(int up) {
+                this.up = up;
+                return this;
+            }
+            public Builder down(int down) {
+                this.down = down;
+                return this;
+            }
+
+            public Puls build() {
+                return new Puls(up, down);
+            }
+        }
     }
 
-    public static final class Builder{
+    public static final class Builder {
         private List<Output> outputList = new ArrayList<>();
         private String name;
         private int outputCount = DEF_OUTPUT_COUNT;
@@ -286,7 +336,8 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
         }
 
         public Builder outputList(List<Output> outputList){
-            if(outputList == null) return this;
+            if(outputList == null)
+                return this;
 
             this.outputList = outputList;
             return this;
