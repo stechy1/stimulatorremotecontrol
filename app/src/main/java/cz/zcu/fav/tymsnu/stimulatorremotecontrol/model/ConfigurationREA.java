@@ -26,24 +26,49 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
     // endregion
 
     // region Constructors
+
+    /**
+     * Konstruktor třídy s výchozími parametry
+     * @param name Název konfigurace
+     */
     public ConfigurationREA(String name) {
         this(name, DEF_OUTPUT_COUNT, 0, 0, 0, 0, 0, 0, Sex.MALE, 0, 0, 0);
     }
 
+    /**
+     * Konstruktor třídy s parametry
+     * @param name Název konfigurace
+     * @param outputCount Počet výstupů
+     * @param cycleCount Počet cyklů
+     * @param waitFixed
+     * @param waitRandom
+     * @param missTime
+     * @param brightness Jas výstupů
+     * @param onFail Co se má stán pří failu
+     * @param sex Pohlaví subjektu
+     * @param a Věk subjektu
+     * @param h Výška subjektu
+     * @param w Váha subjektu
+     * @throws IllegalArgumentException
+     */
     public ConfigurationREA(String name, int outputCount, int cycleCount, int waitFixed, int waitRandom, int missTime, int brightness, int onFail,
-                            Sex sex, int a, int h, int w) {
+                            Sex sex, int a, int h, int w) throws IllegalArgumentException {
         super(name);
+
+        if (sex == null)
+            throw new IllegalArgumentException();
+
         this.outputCount = outputCount;
-        this.cycleCount = cycleCount;
-        this.waitFixed = waitFixed;
-        this.waitRandom = waitRandom;
-        this.missTime = missTime;
-        this.brightness = brightness;
-        this.onFail = onFail;
-        this.sex = sex;
-        this.a = a;
-        this.h = h;
-        this.w = w;
+        setCycleCount(cycleCount);
+        setWaitFixed(waitFixed);
+        setWaitRandom(waitRandom);
+        setMissTime(missTime);
+        setBrightness(brightness);
+        setOnFail(onFail);
+        setSex(sex);
+        setA(a);
+        setH(h);
+        setW(w);
     }
 
     // endregion
@@ -68,6 +93,46 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
 
         return new ConfigurationREA(newName, outputCount, cycleCount, waitFixed, waitRandom, missTime, brightness, onFail, sex, a, h, w);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ConfigurationREA that = (ConfigurationREA) o;
+
+        if (outputCount != that.outputCount) return false;
+        if (cycleCount != that.cycleCount) return false;
+        if (waitFixed != that.waitFixed) return false;
+        if (waitRandom != that.waitRandom) return false;
+        if (missTime != that.missTime) return false;
+        if (brightness != that.brightness) return false;
+        if (onFail != that.onFail) return false;
+        if (a != that.a) return false;
+        if (h != that.h) return false;
+        if (w != that.w) return false;
+        return sex == that.sex;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + outputCount;
+        result = 31 * result + cycleCount;
+        result = 31 * result + waitFixed;
+        result = 31 * result + waitRandom;
+        result = 31 * result + missTime;
+        result = 31 * result + brightness;
+        result = 31 * result + onFail;
+        result = 31 * result + sex.hashCode();
+        result = 31 * result + a;
+        result = 31 * result + h;
+        result = 31 * result + w;
+        return result;
+    }
+
     // endregion
 
     // region Getters & Setters
@@ -83,19 +148,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
      * Nastaví počet výstupů
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
-     */
-    public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
-    /**
-     * Nastaví počet výstupů
-     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-     * @param outputCount Počet výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
+     * @throws IllegalArgumentException Pokud počet výstupů není v povoleném rozsahu
      */
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
-        if (this.outputCount == outputCount)
-            return;
-
-        this.outputCount = outputCount;
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        super.setOutputCount(outputCount, null);
 
         if (onValueChanged != null)
             onValueChanged.changed();
@@ -210,8 +267,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return sex;
     }
 
-    public void setSex(Sex sex) {setSex(sex, null);}
-    public void setSex(Sex sex, OnValueChanged onValueChanged) {
+    public void setSex(Sex sex) throws IllegalArgumentException {setSex(sex, null);}
+    public void setSex(Sex sex, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (sex == null)
+            throw new IllegalArgumentException();
+
         if (this.sex == sex)
             return;
 
@@ -337,6 +397,9 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         }
 
         public Builder sex(Sex sex){
+            if (sex == null)
+                return this;
+
             this.sex = sex;
             return this;
         }

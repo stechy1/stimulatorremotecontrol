@@ -21,14 +21,27 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
     // endregion
 
     // region Constructors
+    /**
+     * Konstruktor třídy s výchozími parametry
+     * @param name Název konfigurace
+     */
     public ConfigurationCVEP(String name) {
-        this(name, new Pattern(), DEF_OUTPUT_COUNT, DEF_BRIGHTNESS, DEF_BIT_SHIFT, DEF_PULS_LENGTH);
+        this(name, Pattern.DEF_VALUE, DEF_OUTPUT_COUNT, DEF_BRIGHTNESS, DEF_BIT_SHIFT, DEF_PULS_LENGTH);
     }
 
-    public ConfigurationCVEP(String name, Pattern mainPattern, int outputCount, int brightness, int bitShift, int pulsLength) {
+    /**
+     * Konstruktor třídy s parametry
+     * @param name Název konfigurace
+     * @param patternValue Hodnota hlavního patternu
+     * @param outputCount Počet výstupů
+     * @param brightness Jas výstupů
+     * @param bitShift Bitový posun ostatních výstupů
+     * @param pulsLength Délka pulsu
+     */
+    public ConfigurationCVEP(String name, int patternValue, int outputCount, int brightness, int bitShift, int pulsLength) {
         super(name, outputCount);
 
-        setMainPattern(mainPattern.value);
+        setMainPattern(patternValue);
         setBrightness(brightness);
         setBitShift(bitShift);
         setPulsLength(pulsLength);
@@ -70,11 +83,38 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
         int pulsLength = this.pulsLength;
         int bitShift = this.bitShift;
         int brightness = this.brightness;
+        int patternValue = this.mainPattern.value;
 
-        Pattern mainPattern = new Pattern(this.mainPattern);
-
-        return new ConfigurationCVEP(newName, mainPattern, brightness, bitShift, pulsLength, outputCount);
+        return new ConfigurationCVEP(newName, patternValue, brightness, bitShift, pulsLength, outputCount);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ConfigurationCVEP that = (ConfigurationCVEP) o;
+
+        if (pulsLength != that.pulsLength) return false;
+        if (bitShift != that.bitShift) return false;
+        if (brightness != that.brightness) return false;
+        if (!mainPattern.equals(that.mainPattern)) return false;
+        return patternList.equals(that.patternList);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + pulsLength;
+        result = 31 * result + bitShift;
+        result = 31 * result + brightness;
+        result = 31 * result + mainPattern.hashCode();
+        result = 31 * result + patternList.hashCode();
+        return result;
+    }
+
     // endregion
     
     // region Getters & Setters
@@ -83,8 +123,9 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
+     * @throws IllegalArgumentException Pokud počet výstupů není v povoleném rozsahu
      */
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
         super.setOutputCount(outputCount, null);
 
         rearangeOutputs();
@@ -304,6 +345,23 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
             if (onValueChanged != null)
                 onValueChanged.changed();
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Pattern pattern = (Pattern) o;
+
+            return value == pattern.value;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return value;
+        }
+
         // endregion
         
         // region Getters & Setters
@@ -344,7 +402,7 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
         private int pulsLength = DEF_PULS_LENGTH;
         private int bitShift = DEF_BIT_SHIFT;
         private int brightness = DEF_BRIGHTNESS;
-        private Pattern mainPattern = new Pattern();
+        private int patternValue = Pattern.DEF_VALUE;
 
         public Builder(String name){
             this.name = name;
@@ -370,15 +428,13 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
             return this;
         }
 
-        public Builder mainPattern(Pattern mainPattern){
-            if(mainPattern == null) return this;
-
-            this.mainPattern = mainPattern;
+        public Builder mainPattern(int patternValue){
+            this.patternValue = patternValue;
             return this;
         }
 
         public ConfigurationCVEP build(){
-            return new ConfigurationCVEP(this.name, this.mainPattern, this.outputCount, this.brightness,
+            return new ConfigurationCVEP(this.name, this.patternValue, this.outputCount, this.brightness,
                     this.bitShift, this.pulsLength);
         }
     }
