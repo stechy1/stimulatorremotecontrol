@@ -11,7 +11,7 @@ public final class DataConvertor {
 
     /**
      * Metoda převádí Int na jeden bajt
-     * @param number číslo pro převod < 256
+     * @param number číslo pro převod < 2^8
      * @return pole o jednom bajtu
      */
     public static byte[] intTo1B(int number){
