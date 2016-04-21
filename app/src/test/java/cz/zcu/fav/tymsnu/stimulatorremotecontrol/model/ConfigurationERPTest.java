@@ -314,7 +314,7 @@ public class ConfigurationERPTest {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int value = -1;
         output.distribution.setValue(value);
-        assertEquals("Chyba: hodnota byla nastavena na hodnotu mimo rozsah", value, output.distribution.getValue());
+        System.out.println("Chyba: hodnota byla nastavena na hodnotu mimo rozsah");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -322,7 +322,7 @@ public class ConfigurationERPTest {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int value = 101;
         output.distribution.setValue(value);
-        assertEquals("Chyba: hodnota byla nastavena na hodnotu mimo rozsah", value, output.distribution.getValue());
+        System.out.println("Chyba: hodnota byla nastavena na hodnotu mimo rozsah");
     }
 
     @Test
