@@ -3,7 +3,16 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
 
     // region Variables
-    public static final int DEF_OUTPUT_COUNT = 4;
+    public static final int DEF_CYCLE_COUNT = 0;
+    public static final int DEF_WAIT_FIXED = 0;
+    public static final int DEF_WAIT_RANDOM = 0;
+    public static final int DEF_MISS_TIME = 0;
+    public static final int DEF_BRIGHTNESS = 0;
+    public static final int DEF_ON_FAIL = 0;
+    public static final Sex DEF_SEX = Sex.MALE;
+    public static final int DEF_A = 0;
+    public static final int DEF_H = 0;
+    public static final int DEF_W = 0;
 
     private int outputCount;
     private int cycleCount;
@@ -11,7 +20,6 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
     private int waitRandom;
     private int missTime;
     private int brightness;
-
     private int onFail;
     private Sex sex;
     private int a, h, w;
@@ -272,6 +280,85 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
                 default:
                     return MALE;
             }
+        }
+    }
+
+    public static final class Builder{
+        private String name;
+        private int outputCount = DEF_OUTPUT_COUNT;
+        private int cycleCount = DEF_CYCLE_COUNT;
+        private int waitFixed = DEF_WAIT_FIXED;
+        private int waitRandom = DEF_WAIT_RANDOM;
+        private int missTime = DEF_MISS_TIME;
+        private int brightness = DEF_BRIGHTNESS;
+        private int onFail = DEF_ON_FAIL;
+        private Sex sex = DEF_SEX;
+        private int a = DEF_A;
+        private int h = DEF_H;
+        private int w = DEF_W;
+
+        public Builder(String name){
+            this.name = name;
+        }
+
+        public Builder outputCount(int outputCount){
+            this.outputCount = outputCount;
+            return this;
+        }
+
+        public Builder cycleCount(int cycleCount){
+            this.cycleCount = cycleCount;
+            return this;
+        }
+
+        public Builder waitFixed(int waitFixed){
+            this.waitFixed = waitFixed;
+            return this;
+        }
+
+        public Builder waitRandom(int waitRandom){
+            this.waitRandom = waitRandom;
+            return this;
+        }
+
+        public Builder missTime(int missTime){
+            this.missTime = missTime;
+            return this;
+        }
+
+        public Builder brightness(int brightness){
+            this.brightness = brightness;
+            return this;
+        }
+
+        public Builder onFail(int onFail){
+            this.onFail = onFail;
+            return this;
+        }
+
+        public Builder sex(Sex sex){
+            this.sex = sex;
+            return this;
+        }
+
+        public Builder a(int a){
+            this.a = a;
+            return this;
+        }
+
+        public Builder h(int h){
+            this.h = h;
+            return this;
+        }
+
+        public Builder w(int w){
+            this.w = w;
+            return this;
+        }
+
+        public ConfigurationREA build(){
+            return new ConfigurationREA(this.name, this.outputCount, this.cycleCount, this.waitFixed, this.waitRandom, this.missTime,
+                    this.brightness, this.onFail, this.sex, this.a, this.h, this.w);
         }
     }
 }

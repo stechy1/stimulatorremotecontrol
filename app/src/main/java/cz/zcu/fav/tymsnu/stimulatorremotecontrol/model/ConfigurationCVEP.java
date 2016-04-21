@@ -337,4 +337,49 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
         }
         // endregion
     }
+
+    public static final class Builder {
+        private String name;
+        private int outputCount = DEF_OUTPUT_COUNT;
+        private int pulsLength = DEF_PULS_LENGTH;
+        private int bitShift = DEF_BIT_SHIFT;
+        private int brightness = DEF_BRIGHTNESS;
+        private Pattern mainPattern = new Pattern();
+
+        public Builder(String name){
+            this.name = name;
+        }
+
+        public Builder outputCount(int outputCount){
+            this.outputCount = outputCount;
+            return this;
+        }
+
+        public Builder pulsLength(int pulsLength){
+            this.pulsLength = pulsLength;
+            return this;
+        }
+
+        public Builder bitShift(int bitShift){
+            this.bitShift = bitShift;
+            return this;
+        }
+
+        public Builder brightness(int brightness){
+            this.brightness = brightness;
+            return this;
+        }
+
+        public Builder mainPattern(Pattern mainPattern){
+            if(mainPattern == null) return this;
+
+            this.mainPattern = mainPattern;
+            return this;
+        }
+
+        public ConfigurationCVEP build(){
+            return new ConfigurationCVEP(this.name, this.mainPattern, this.outputCount, this.brightness,
+                    this.bitShift, this.pulsLength);
+        }
+    }
 }

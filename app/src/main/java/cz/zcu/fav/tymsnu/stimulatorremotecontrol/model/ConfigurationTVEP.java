@@ -283,4 +283,55 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
         }
         // endregion
     }
+
+    public static final class Builder{
+        private String name;
+        private int outputCount = DEF_OUTPUT_COUNT;
+        private int patternLength = DEF_PATTERN_LENGTH;
+        private int pulsLength = DEF_PULS_LENGTH;
+        private int pulsSkew = DEF_PULS_SKEW;
+        private int brightness = DEF_BRIGHTNESS;
+        private List<Pattern> patternList = new ArrayList<>();
+
+        public Builder(String name){
+            this.name = name;
+        }
+
+        public Builder outputCount(int outputCount){
+            this.outputCount = outputCount;
+            return this;
+        }
+
+        public Builder patternLength(int patternLength){
+            this.patternLength = patternLength;
+            return this;
+        }
+
+        public Builder pulsLength(int pulsLength){
+            this.pulsLength = pulsLength;
+            return this;
+        }
+
+        public Builder pulsSkew(int pulsSkew){
+            this.pulsSkew = pulsSkew;
+            return this;
+        }
+
+        public Builder brightness(int brightness){
+            this.brightness = brightness;
+            return this;
+        }
+
+        public Builder patternList(List<Pattern> patternList){
+            if(patternList == null) return this;
+
+            this.patternList = patternList;
+            return this;
+        }
+
+        public ConfigurationTVEP build(){
+            return new ConfigurationTVEP(this.name, this.outputCount, this.patternLength,
+                    this.pulsLength, this.pulsSkew, this.brightness, this.patternList);
+        }
+    }
 }

@@ -258,7 +258,6 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         /**
          * Konstruktor výstupu
          * Vytvoří nový výstup s výchozími hodnotami
-         * @param name Název výstupu
          */
         public Output() {
             this(new Puls(), new Distribution(), DEF_BRIGHTNESS);
@@ -531,6 +530,95 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
                     onValueChanged.changed();
             }
             // endregion
+        }
+
+        public static final class Builder {
+            private Puls puls = new Puls();
+            private Distribution distribution = new Distribution();
+            private int brightness = DEF_BRIGHTNESS;
+
+            public Builder puls(Puls puls) {
+                if (puls == null)
+                    return this;
+
+                this.puls = puls;
+                return this;
+            }
+
+            public Builder distribution(Distribution distribution) {
+                if (distribution == null)
+                    return this;
+
+                this.distribution = distribution;
+                return this;
+            }
+
+            public Builder brightness(int brightness) {
+                this.brightness = brightness;
+                return this;
+            }
+
+            public Output build() {
+                return new Output(puls, distribution, brightness);
+            }
+        }
+
+    }
+
+    public static final class Builder {
+        private String name;
+        private int outputCount = AConfiguration.DEF_OUTPUT_COUNT;
+        private int out = DEF_OUT;
+        private int wait = DEF_WAIT;
+        private Edge edge = Edge.FALLING;
+        private Random random = Random.OFF;
+        private List<Output> outputList = new ArrayList<>();
+
+        public Builder(String name) {
+            this.name = name;
+        }
+
+        public Builder outputCount(int outputCount) {
+            this.outputCount = outputCount;
+            return this;
+        }
+
+        public Builder out(int out) {
+            this.out = out;
+            return this;
+        }
+
+        public Builder wait (int wait) {
+            this.wait = wait;
+            return this;
+        }
+
+        public Builder edge (Edge edge) {
+            if (edge == null)
+                return this;
+
+            this.edge = edge;
+            return this;
+        }
+
+        public Builder random (Random random) {
+            if (random == null)
+                return this;
+
+            this.random = random;
+            return this;
+        }
+
+        public Builder outputList (List<Output> outputList) {
+            if (outputList == null)
+                return this;
+
+            this.outputList = outputList;
+            return this;
+        }
+
+        public ConfigurationERP build() {
+            return new ConfigurationERP(name, outputCount, out, wait, edge, random, outputList);
         }
     }
 }
