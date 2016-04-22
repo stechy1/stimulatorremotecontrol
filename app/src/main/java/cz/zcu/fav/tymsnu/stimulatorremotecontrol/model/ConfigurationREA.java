@@ -14,7 +14,6 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
     public static final int DEF_H = 0;
     public static final int DEF_W = 0;
 
-    private int outputCount;
     private int cycleCount;
     private int waitFixed;
     private int waitRandom;
@@ -53,12 +52,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
      */
     public ConfigurationREA(String name, int outputCount, int cycleCount, int waitFixed, int waitRandom, int missTime, int brightness, int onFail,
                             Sex sex, int a, int h, int w) throws IllegalArgumentException {
-        super(name);
+        super(name, outputCount);
 
         if (sex == null)
             throw new IllegalArgumentException();
 
-        this.outputCount = outputCount;
         setCycleCount(cycleCount);
         setWaitFixed(waitFixed);
         setWaitRandom(waitRandom);
@@ -136,28 +134,6 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
     // endregion
 
     // region Getters & Setters
-    /**
-     * Vrátí počet výstupů
-     * @return Počet výstupů
-     */
-    public int getOutputCount() {
-        return outputCount;
-    }
-
-    /**
-     * Nastaví počet výstupů
-     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-     * @param outputCount Počet výstupů
-     * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
-     * @throws IllegalArgumentException Pokud počet výstupů není v povoleném rozsahu
-     */
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
-        super.setOutputCount(outputCount, null);
-
-        if (onValueChanged != null)
-            onValueChanged.changed();
-    }
-
     public int getCycleCount() {
         return cycleCount;
     }

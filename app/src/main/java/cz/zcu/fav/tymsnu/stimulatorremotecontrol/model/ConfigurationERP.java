@@ -393,7 +393,7 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
          * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
          * @param brightness Jas výstupů
          * @param onValueChanged Callback, který se zavolá po nastavení jasu výstupů
-         * @throws IllegalArgumentException Pokud parametr nevyhovuje intervalue
+         * @throws IllegalArgumentException Pokud parametr nevyhovuje intervalu
          */
         public void setBrightness(int brightness, OnValueChanged onValueChanged) throws IllegalArgumentException {
             if (!isBrightnessInRange(brightness))

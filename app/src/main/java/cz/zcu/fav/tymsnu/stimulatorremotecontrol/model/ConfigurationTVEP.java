@@ -89,7 +89,7 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
      * @return True, pokud je hodnota v povoleném intervalu, jinak false
      */
     public boolean isPatternLengthInRange(int value) {
-        return RangeUtils.isInRange(value, MIN_OUTPUT_COUNT, MAX_OUTPUT_COUNT);
+        return RangeUtils.isInRange(value, MIN_PATTERN_LENGTH, MAX_PATTERN_LENGTH);
     }
 
     /**
