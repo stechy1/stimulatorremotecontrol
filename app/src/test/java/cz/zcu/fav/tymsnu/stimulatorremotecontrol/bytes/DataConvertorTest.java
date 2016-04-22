@@ -3,11 +3,12 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by Vrbik on 21.04.2016.
+ * Třída pro otestování třídy DataConvertor
  */
 public class DataConvertorTest {
 
@@ -15,11 +16,11 @@ public class DataConvertorTest {
     public void testDataConvertorConstruct() throws Exception{
         Constructor<DataConvertor> c = DataConvertor.class.getDeclaredConstructor();
         c.setAccessible(true);
-        DataConvertor instance = c.newInstance();
+        c.newInstance();
         System.out.println("Chyba: lze vytvořit privátní konstruktor");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = InvocationTargetException.class)
     public void testIntTo1B1negative() throws Exception {
         DataConvertor.intTo1B(256);
         System.out.println("Chyba: lze převést číslo 256 na bajt, což je větší než 1B");

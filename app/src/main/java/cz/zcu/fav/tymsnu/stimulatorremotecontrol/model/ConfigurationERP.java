@@ -30,6 +30,7 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
      * Konstruktor schématu
      * Vytvoří nové schéma s výchozími hodnotami
      * @param name Název schématu
+     * @throws IllegalArgumentException Pokud je nějaký parametr null
      */
     public ConfigurationERP(String name) {
         this(name, DEF_OUTPUT_COUNT, DEF_OUT, DEF_WAIT, Edge.FALLING, Random.OFF, new ArrayList<Output>());
@@ -43,9 +44,13 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
      * @param edge Typ hrany
      * @param random Náhodnost
      * @param outputList Reference na kolekci výstupů
+     * @throws IllegalArgumentException Pokud je nějaký parametr null
      */
-    public ConfigurationERP(String name, int outputCount, int out, int wait, Edge edge, Random random, List<Output> outputList) {
+    public ConfigurationERP(String name, int outputCount, int out, int wait, Edge edge, Random random, List<Output> outputList) throws IllegalArgumentException {
         super(name, outputCount);
+
+        if (edge == null || random == null || outputList == null)
+            throw new IllegalArgumentException();
 
         this.outputList = outputList;
 
@@ -87,7 +92,7 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         int outputCount = this.outputCount;
         int out = this.out;
         int wait = this.wait;
-        Edge edge = Edge.valueOf(this.random.ordinal());
+        Edge edge = Edge.valueOf(this.edge.ordinal());
         Random random = Random.valueOf(this.random.ordinal());
         List<Output> outputs = new ArrayList<>(outputCount);
 
@@ -97,6 +102,34 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
 
         return new ConfigurationERP(newName, outputCount, out, wait, edge, random, outputs);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ConfigurationERP that = (ConfigurationERP) o;
+
+        if (out != that.out) return false;
+        if (wait != that.wait) return false;
+        if (edge != that.edge) return false;
+        if (random != that.random) return false;
+        return outputList.equals(that.outputList);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + out;
+        result = 31 * result + wait;
+        result = 31 * result + edge.hashCode();
+        result = 31 * result + random.hashCode();
+        result = 31 * result + outputList.hashCode();
+        return result;
+    }
+
     // endregion
 
     // region Getters & Setters
@@ -105,12 +138,11 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
+     * @throws IllegalArgumentException Pokud počet výstupů není v povoleném rozsahu
      */
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
-        if (this.outputCount == outputCount)
-            return;
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        super.setOutputCount(outputCount, null);
 
-        this.outputCount = outputCount;
         rearangeOutputs();
 
         if (onValueChanged != null)
@@ -138,7 +170,6 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
     public void setOut(int out, OnValueChanged onValueChanged) {
         if (this.out == out)
             return;
-
 
         this.out = out;
 
@@ -178,8 +209,11 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         return edge;
     }
 
-    public void setEdge(Edge edge) {setEdge(edge, null);}
-    public void setEdge(Edge edge, OnValueChanged onValueChanged) {
+    public void setEdge(Edge edge) throws IllegalArgumentException {setEdge(edge, null);}
+    public void setEdge(Edge edge, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (edge == null)
+            throw new IllegalArgumentException();
+
         if (this.edge != null && this.edge.equals(edge))
             return;
 
@@ -193,8 +227,11 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         return random;
     }
 
-    public void setRandom(Random random) {setRandom(random, null);}
-    public void setRandom(Random random, OnValueChanged onValueChanged) {
+    public void setRandom(Random random) throws IllegalArgumentException {setRandom(random, null);}
+    public void setRandom(Random random, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (random == null)
+            throw new IllegalArgumentException();
+
         if (this.random != null && this.random.equals(random))
             return;
 
@@ -256,11 +293,18 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         // region Constructors
 
         /**
-         * Konstruktor výstupu
          * Vytvoří nový výstup s výchozími hodnotami
          */
         public Output() {
             this(new Puls(), new Distribution(), DEF_BRIGHTNESS);
+        }
+
+        /**
+         * Vytvoří kopii třídy
+         * @param source Kopírovaná třída
+         */
+        public Output(Output source) {
+            this(new Puls(source.puls), new Distribution(source.distribution), source.brightness);
         }
 
         /**
@@ -270,16 +314,13 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
          * @param distribution Reference na nastavení rozdělení
          * @param brightness Intenzita jasu [%](0-100)
          */
-        public Output(Puls puls, Distribution distribution, int brightness) {
+        public Output(Puls puls, Distribution distribution, int brightness) throws IllegalArgumentException {
+            if (puls == null || distribution == null)
+                throw new IllegalArgumentException();
+
             this.puls = puls;
             this.distribution = distribution;
-            this.brightness = brightness;
-        }
-
-        public Output(Output source) {
-            this.puls = new Puls(source.puls);
-            this.distribution = new Distribution(source.distribution);
-            this.brightness = source.brightness;
+            setBrightness(brightness);
         }
         // endregion
 
@@ -307,6 +348,28 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         public boolean isBrightnessInRange(int val) {
             return RangeUtils.isInPercentRange(val);
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Output output = (Output) o;
+
+            if (brightness != output.brightness) return false;
+            if (!puls.equals(output.puls)) return false;
+            return distribution.equals(output.distribution);
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = puls.hashCode();
+            result = 31 * result + distribution.hashCode();
+            result = 31 * result + brightness;
+            return result;
+        }
+
         // endregion
 
         // region Getters & Setters
@@ -322,15 +385,20 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
          * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
          * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
          * @param brightness Jas výstupů
+         * @throws IllegalArgumentException Pokud parametr nevyhovuje intervalue
          */
-        public void setBrightness(int brightness) {setBrightness(brightness, null);}
+        public void setBrightness(int brightness) throws IllegalArgumentException {setBrightness(brightness, null);}
         /**
          * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
          * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
          * @param brightness Jas výstupů
          * @param onValueChanged Callback, který se zavolá po nastavení jasu výstupů
+         * @throws IllegalArgumentException Pokud parametr nevyhovuje intervalu
          */
-        public void setBrightness(int brightness, OnValueChanged onValueChanged) {
+        public void setBrightness(int brightness, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (!isBrightnessInRange(brightness))
+                throw new IllegalArgumentException();
+
             if (this.brightness == brightness)
                 return;
 
@@ -384,6 +452,29 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
                 setUp(up);
                 setDown(down);
             }
+            // endregion
+
+            // region Public methods
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+
+                Puls puls = (Puls) o;
+
+                if (up != puls.up) return false;
+                return down == puls.down;
+
+            }
+
+            @Override
+            public int hashCode() {
+                int result = up;
+                result = 31 * result + down;
+                return result;
+            }
+
             // endregion
 
             // region Getters & Setters
@@ -490,6 +581,29 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
             }
             // endregion
 
+            // region Public methods
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+
+                Distribution that = (Distribution) o;
+
+                if (value != that.value) return false;
+                return delay == that.delay;
+
+            }
+
+            @Override
+            public int hashCode() {
+                int result = value;
+                result = 31 * result + delay;
+                return result;
+            }
+
+            // endregion
+
             // region Getters & Setters
             /**
              * Zdjistí, zda-li zadaná hodnota odpovídá distribution rozsahu
@@ -504,8 +618,11 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
                 return value;
             }
 
-            public void setValue(int value) {setValue(value, null);}
-            public void setValue(int value, OnValueChanged onValueChanged) {
+            public void setValue(int value) throws IllegalArgumentException {setValue(value, null);}
+            public void setValue(int value, OnValueChanged onValueChanged) throws IllegalArgumentException {
+                if (!isValueInRange(value))
+                    throw new IllegalArgumentException();
+
                 if (this.value == value)
                     return;
 

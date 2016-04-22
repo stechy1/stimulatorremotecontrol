@@ -4,7 +4,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfigurationTest;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEPTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERPTest;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEPTest;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationREATest;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEPTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtilsParametrizedTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtilsSingleTest;
 
@@ -15,6 +19,10 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtilsSingleTest;
 @Suite.SuiteClasses({
         AConfigurationTest.class,
         ConfigurationERPTest.class,
+        ConfigurationFVEPTest.class,
+        ConfigurationTVEPTest.class,
+        ConfigurationCVEPTest.class,
+        ConfigurationREATest.class,
         RangeUtilsSingleTest.class,
         RangeUtilsParametrizedTest.class
 })
