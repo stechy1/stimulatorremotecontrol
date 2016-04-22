@@ -30,6 +30,11 @@ public class ConfigurationTVEPTest {
     }
 
     @Test
+    public void testOutputCountValidityPositive() throws Exception {
+        assertEquals("Chyba: parametr velikost kolekce s výstupy neodpovídá parametru output count", configuration.getOutputCount(), configuration.patternList.size());
+    }
+
+    @Test
     public void testDuplicatePositive() throws Exception {
         ConfigurationTVEP duplicated = configuration.duplicate("duplicated");
 

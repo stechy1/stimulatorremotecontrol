@@ -29,6 +29,11 @@ public class ConfigurationFVEPTest {
     }
 
     @Test
+    public void testOutputCountValidityPositive() throws Exception {
+        assertEquals("Chyba: parametr velikost kolekce s výstupy neodpovídá parametru output count", configuration.getOutputCount(), configuration.outputList.size());
+    }
+
+    @Test
     public void testDuplicate() throws Exception {
         ConfigurationFVEP duplicated = configuration.duplicate("duplicated");
         assertEquals("Chyba: počet výstupů není stejný", configuration.getOutputCount(), duplicated.getOutputCount());
