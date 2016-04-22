@@ -7,7 +7,9 @@ import java.nio.ByteBuffer;
  * používá se např. při reprezentaci čísel
  */
 public final class DataConvertor {
-    private DataConvertor(){}
+    private DataConvertor(){
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Metoda převádí Int na jeden bajt

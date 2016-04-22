@@ -6,7 +6,9 @@ public final class RangeUtils {
      * Privátní konstruktor
      * Nepotřeujeme žádnou instanci třídy
      */
-    private RangeUtils() {}
+    private RangeUtils() {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Zjistí, zda-li je číslo v intervalu <min, max>

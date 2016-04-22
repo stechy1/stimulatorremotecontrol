@@ -257,11 +257,27 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
                 onValueChanged.changed();
         }
 
+        /**
+         * Vrátí jas všech výstupů
+         * @return Jas výstupů
+         */
         public int getBrightness() {
             return brightness;
         }
 
+        /**
+         * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
+         * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+         * @param brightness Jas výstupů
+         */
         public void setBrightness(int brightness) throws IllegalArgumentException {setBrightness(brightness, null);}
+        /**
+         * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
+         * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+         * @param brightness Jas výstupů
+         * @param onValueChanged Callback, který se zavolá po nastavení jasu výstupů
+         * @throws IllegalArgumentException Pokud parametr nevyhovuje intervalu
+         */
         public void setBrightness(int brightness, OnValueChanged onValueChanged) throws IllegalArgumentException {
             if (!isBrightnessInRange(brightness))
                 throw new IllegalArgumentException();

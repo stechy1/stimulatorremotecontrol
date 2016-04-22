@@ -3,9 +3,12 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
+
 public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
 
     // region Variables
+    public static final int PATTERN_LENGTH = 32;
     // Výchozí hodnota parametru brightness
     public static final int DEF_BRIGHTNESS = 0;
     // Výchozí hodnota parametru bit shift
@@ -45,6 +48,8 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
         setBrightness(brightness);
         setBitShift(bitShift);
         setPulsLength(pulsLength);
+
+        rearangeOutputs();
     }
     // endregion
 
@@ -76,6 +81,15 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
     // endregion
 
     // region Public methods
+    /**
+     * Zjistí, zda-li hodnota odpovídá rozsahu jasu
+     * @param val Kontrolovaná hodnota
+     * @return True, pokud hodnota odpovídá rozsahu jasu, jinak false
+     */
+    public boolean isBrightnessInRange(int val) {
+        return RangeUtils.isInPercentRange(val);
+    }
+
     @Override
     public ConfigurationCVEP duplicate(String newName) {
 
@@ -85,7 +99,7 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
         int brightness = this.brightness;
         int patternValue = this.mainPattern.value;
 
-        return new ConfigurationCVEP(newName, patternValue, brightness, bitShift, pulsLength, outputCount);
+        return new ConfigurationCVEP(newName, patternValue, outputCount, brightness, bitShift, pulsLength);
     }
 
     @Override
@@ -209,14 +223,18 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param brightness Jas výstupů
      */
-    public void setBrightness(int brightness) {setBrightness(brightness, null);}
+    public void setBrightness(int brightness) throws IllegalArgumentException {setBrightness(brightness, null);}
     /**
      * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param brightness Jas výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení jasu výstupů
+     * @throws IllegalArgumentException Pokud parametr nevyhovuje intervalu
      */
-    public void setBrightness(int brightness, OnValueChanged onValueChanged) {
+    public void setBrightness(int brightness, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (!isBrightnessInRange(brightness))
+            throw new IllegalArgumentException();
+
         if (this.brightness == brightness)
             return;
 
@@ -302,7 +320,7 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
          * Provede cyklický bitový posun doleva
          * @param index O kolik se má číslo posunout. Hodnota musí být větší než 0, jinak se nic nestane
          */
-        public void shiftLeft(int index) {
+        public void shiftLeft(int index) throws IllegalArgumentException {
             shiftLeft(index, null);
         }
         /**
@@ -310,9 +328,9 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
          * @param index O kolik se má číslo posunout. Hodnota musí být větší než 0, jinak se nic nestane
          * @param onValueChanged Callback, který se zavolá po bitovém posuvu
          */
-        public void shiftLeft(int index, OnValueChanged onValueChanged) {
-            if (index <= 0)
-                return;
+        public void shiftLeft(int index, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (!RangeUtils.isInRange(index, 0, PATTERN_LENGTH - 1))
+                throw new IllegalArgumentException();
             
             value = Integer.rotateLeft(value, index);
             
@@ -328,7 +346,7 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
          * Provede cyklický bitový posun doprava
          * @param index O kolik se má číslo posunout. Hodnota musí být větší než 0, jinak se nic nestane
          */
-        public void shiftRight(int index) {
+        public void shiftRight(int index) throws IllegalArgumentException {
             shiftRight(index, null);
         }
         /**
@@ -336,9 +354,9 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
          * @param index O kolik se má číslo posunout. Hodnota musí být větší než 0, jinak se nic nestane
          * @param onValueChanged Callback, který se zavolá po bitovém posuvu
          */
-        public void shiftRight(int index, OnValueChanged onValueChanged) {
-            if (index <= 0)
-                return;
+        public void shiftRight(int index, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (!RangeUtils.isInRange(index, 0, PATTERN_LENGTH - 1))
+                throw new IllegalArgumentException();
             
             value = Integer.rotateRight(value, index);
             
