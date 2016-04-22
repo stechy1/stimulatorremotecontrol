@@ -19,6 +19,13 @@ public class ConfigurationREATest {
         configuration = new ConfigurationREA(CONFIG_NAME);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructNegative() throws Exception {
+        new ConfigurationREA("argException", 1, 0, 0, 0, 0, 0, 0, null, 0, 0, 0);
+        System.out.println("Chyba: pohlaví je nastaveno na null");
+
+    }
+
     @Test
     public void testDuplicate() throws Exception {
         String name = "duplicated";
