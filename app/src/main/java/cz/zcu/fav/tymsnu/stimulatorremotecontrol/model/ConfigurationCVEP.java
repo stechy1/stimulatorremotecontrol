@@ -3,6 +3,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
+
 public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
 
     // region Variables
@@ -75,6 +77,12 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
 
         return new ConfigurationCVEP(newName, mainPattern, brightness, bitShift, pulsLength, outputCount);
     }
+
+    @Override
+    public ArrayList<Packet> getPackets() {
+        return new ArrayList<>();
+    }
+
     // endregion
     
     // region Getters & Setters
