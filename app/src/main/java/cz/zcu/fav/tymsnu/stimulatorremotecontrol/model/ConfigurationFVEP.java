@@ -4,33 +4,35 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Code;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Codes;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.DataConvertor;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
-public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
+public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
 
-    public static final int MIN_OUTPUT_COUNT = 1;
-    public static final int DEF_OUTPUT_COUNT = 4;
-    public static final int MAX_OUTPUT_COUNT = 8;
-
-    private int outputCount;
-
+    // region Variables
+    // Kolekce všech výstupů
     public final List<Output> outputList;
+    // endregion
 
+    // region Constructors
     public ConfigurationFVEP(String name) {
         this(name, DEF_OUTPUT_COUNT, new ArrayList<Output>());
-
-        for (int i = 0; i < outputCount; i++) {
-            outputList.add(new Output(i + ". stimul"));
-        }
     }
 
     public ConfigurationFVEP(String name, int outputCount, List<Output> outputList) {
-        super(name);
+        super(name, outputCount);
 
-        this.outputCount = outputCount;
         this.outputList = outputList;
-    }
 
+        if (this.outputCount != this.outputList.size())
+            rearangeOutputs();
+    }
+    // endregion
+
+    // region Private methods
     /**
      * Upraví počet výstupů
      * Pokud je jich víc, než je požadováno, tak odstraní poslední
@@ -41,7 +43,7 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
         if (outputCount > listCount) {
             int delta = outputCount - listCount;
             for (int i = 0; i < delta; i++) {
-                outputList.add(new Output("Output" + i + outputCount));
+                outputList.add(new Output());
             }
         } else {
             for (int i = --listCount; i >= outputCount; i--) {
@@ -49,28 +51,9 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
             }
         }
     }
+    // endregion
 
-    public int getOutputCount() {
-        return outputCount;
-    }
-
-    public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
-        if (outputCount < MIN_OUTPUT_COUNT || outputCount > MAX_OUTPUT_COUNT)
-            throw new IllegalArgumentException();
-
-        if (this.outputCount == outputCount)
-            return;
-
-        this.outputCount = outputCount;
-
-        if (outputList.size() != outputCount)
-            rearangeOutputs();
-
-        if (onValueChanged != null)
-            onValueChanged.changed();
-    }
-
+    // region Public methods
     @Override
     public ConfigurationFVEP duplicate(String newName) {
         int outputCount = this.outputCount;
@@ -83,40 +66,92 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
         return new ConfigurationFVEP(newName, outputCount, outputList);
     }
 
-    public List<Output> getOutputList() {
-        return outputList;
+    @Override
+    public ArrayList<Packet> getPackets() {
+
+        ArrayList<Packet> packets = new ArrayList<>();
+
+        Code actualDuration = Codes.OUTPUT0_DURATION; //TODO Pulse-up?
+        Code actualPause = Codes.OUTPUT0_PAUSE; //TODO Pulse-down?
+        Code actualFrequency = Codes.OUTPUT0_FREQ;
+        Code actualMiddlePeriod = Codes.OUTPUT0_MIDDLE_PERIOD; //TODO Duty cycle ?
+        Code actualBrightness = Codes.OUTPUT0_BRIGHTNESS;
+
+        for(Output a : outputList){
+            packets.add(new Packet(actualDuration, DataConvertor.milisecondsTo2B(a.puls.up)));
+            packets.add(new Packet(actualPause, DataConvertor.milisecondsTo2B(a.puls.down)));
+            packets.add(new Packet(actualFrequency, DataConvertor.intTo1B(a.frequency)));
+            packets.add(new Packet(actualMiddlePeriod, DataConvertor.intTo1B(a.duty_cycle)));
+            packets.add(new Packet(actualBrightness, DataConvertor.intTo1B(a.brightness)));
+
+            actualDuration = actualDuration.getNext();
+            actualPause = actualPause.getNext();
+            actualFrequency = actualFrequency.getNext();
+            actualMiddlePeriod = actualMiddlePeriod.getNext();
+            actualBrightness = actualBrightness.getNext();
+        }
+
+        return packets;
     }
+    // endregion
+
+    // region Getters & Setters
+    /**
+     * Nastaví počet výstupů
+     * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+     * @param outputCount Počet výstupů
+     * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
+     */
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
+        super.setOutputCount(outputCount, null);
+
+        rearangeOutputs();
+
+        if (onValueChanged != null)
+            onValueChanged.changed();
+    }
+    // endregion
 
     public static final class Output {
 
-        // Název výstupu
-        private final String name;
+        // region Variables
+        public static final int DEF_FREQUENCY = 0;
+        public static final int DEF_DUTY_CYCLE = 0;
+        public static final int DEF_BRIGHTNESS = 0;
         // Reference pro nastavení pulsu
         public final Puls puls;
         private int frequency;
+        // Hodnota v procentech [0 - 100], která určuje délku pulzu při nastavení frekvence
         private int duty_cycle;
         private int brightness;
+        // endregion
 
-        public Output(String name) {
-            this(name, new Puls(), 0, 0, 0);
-        }
-
-        public Output(String name, Puls puls, int frequency, int duty_cycle, int brightness) {
-            this.name = name;
-            this.puls = puls;
-            this.frequency = frequency;
-            this.duty_cycle = duty_cycle;
-            this.brightness = brightness;
+        // region Constructors
+        public Output() {
+            this(new Puls(), DEF_FREQUENCY, DEF_DUTY_CYCLE, DEF_BRIGHTNESS);
         }
 
         public Output(Output source) {
-            this.name = source.name;
-            this.puls = new Puls(source.puls);
-            this.frequency = source.frequency;
-            this.duty_cycle = source.duty_cycle;
-            this.brightness = source.brightness;
+            this(new Puls(source.puls), source.frequency, source.duty_cycle, source.brightness);
         }
 
+        /**
+         * Vytvoří nový výstup z parametrů
+         * @param puls
+         * @param frequency
+         * @param duty_cycle Délka pulzu při nastavení frekvence
+         * @param brightness Jas výstupu
+         */
+        public Output(Puls puls, int frequency, int duty_cycle, int brightness) {
+            this.puls = puls;
+
+            setFrequency(frequency);
+            setDutyCycle(duty_cycle);
+            setBrightness(brightness);
+        }
+        // endregion
+
+        // region Public methods
         /**
          * Zjistí, zda-li hodnota odpovídá frekvenčnímu rozsahu
          * @param val Kontrolovaná hodnota
@@ -143,11 +178,9 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
         public boolean isBrightnessInRange(int val) {
             return RangeUtils.isInByteRange(val);
         }
+        // endregion
 
-        public String getName() {
-            return name;
-        }
-
+        // region Getters & Setters
         public int getFrequency() {
             return frequency;
         }
@@ -192,14 +225,20 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
             if (onValueChanged != null)
                 onValueChanged.changed();
         }
+        // endregion
     }
 
     public static final class Puls {
+        // region Variables
+        public static final int DEF_UP = 0;
+        public static final int DEF_DOWN = 0;
         // Doba, po kterou jsou výstupy aktivní
         private int up;
         // Doba, po kterou jsou výstupy neaktivní
         private int down;
+        // endregion
 
+        // region Constructors
         /**
          * Konstruktor pulsu
          * Vytvoří nový puls s výchozími hodnotami
@@ -207,7 +246,16 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
          * Down - 0
          */
         public Puls() {
-            this(0, 0);
+            this(DEF_UP, DEF_DOWN);
+        }
+
+        /**
+         * Konstruktor pulsu
+         * Vytvoří kopii podle předlohy
+         * @param source Zdrojový puls
+         */
+        public Puls(Puls source) {
+            this(source.up, source.down);
         }
 
         /**
@@ -220,12 +268,9 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
             this.up = up;
             this.down = down;
         }
+        // endregion
 
-        public Puls(Puls source) {
-            this.up = source.up;
-            this.down = source.down;
-        }
-
+        // region Getters & Setters
         public int getUp() {
             return up;
         }
@@ -255,5 +300,6 @@ public class ConfigurationFVEP extends AItem<ConfigurationFVEP> {
             if (onValueChanged != null)
                 onValueChanged.changed();
         }
+        // endregion
     }
 }

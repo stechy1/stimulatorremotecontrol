@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEP;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.EditTextReader;
 
-public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
+public class Screen3 extends ASimpleScreen<ConfigurationFVEP>
+        implements AdapterView.OnItemSelectedListener, View.OnClickListener, Observer {
 
     private static final int PULSE_UP = 0;
     private static final int PULSE_DOWN = 1;
@@ -33,14 +35,16 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
     private static final int DUTY_CYCLE = 3;
     private static final int BRIGHTNESS = 4;
 
-    private String stimulText;
+    private String outputText;
 
-    private EditText[] inputs;
+    private final EditText[] inputs = new EditText[8];
+    private final View[] views = new View[8];
 
-    private LinearLayout outputs;
+    private LinearLayout outputContainer;
     private Spinner spinner;
     private int outputTypeIndex;
     private boolean notifyLock = false;
+    private int visible = 0;
 
     @Nullable
     @Override
@@ -55,14 +59,41 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
         Button btnSave = (Button) v.findViewById(R.id.universal_screen_3_button_save_output);
         btnSave.setOnClickListener(this);
 
-        outputs = (LinearLayout) v.findViewById(R.id.universal_screen_3_linearlayout);
-        inputs = new EditText[1];
+        outputContainer = (LinearLayout) v.findViewById(R.id.universal_screen_3_linearlayout);
+        //inputs = new EditText[1];
 
-        stimulText = getResources().getString(R.string.bci_fvep_screen_3_output);
+        outputText = getResources().getString(R.string.output_title);
 
-        manager.addObserver(this);
+        fillInputs();
+
+        //manager.addObserver(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        manager.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if (notifyLock) return;
+
+        if (data == null) return;
+
+        spinner.setSelection(outputTypeIndex);
+
+        changeValues();
     }
 
     @Override
@@ -86,107 +117,96 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
         writeValues(configuration.outputList);
     }
 
-    @Override
-    public void update(Observable observable, Object data) {
-        if (data == null) {
-            inputs = new EditText[1];
-            this.outputs.removeAllViews();
-            return;
-        }
-        ConfigurationFVEP configuration = (ConfigurationFVEP) data;
-        spinner.setSelection(outputTypeIndex);
-
-        inputs = new EditText[configuration.getOutputCount()];
-
-        outputs.removeAllViews();
-        changeValues();
-    }
-
     private void changeValues() {
-        ConfigurationFVEP configurationFvep = manager.getSelectedItem();
-        if (configurationFvep == null)
+        ConfigurationFVEP configuration = manager.getSelectedItem();
+        if (configuration == null)
             return;
 
-        final Context context = getContext();
-        if (context == null)
-            return;
+        final List<ConfigurationFVEP.Output> outputs = configuration.outputList;
+        int outputCount = configuration.getOutputCount();
 
-        final List<ConfigurationFVEP.Output> outputs = configurationFvep.outputList;
-        final LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-
-        if (inputs[0] == null) {
-            if (inputs.length != configurationFvep.getOutputCount())
-                inputs = new EditText[configurationFvep.getOutputCount()];
-
-            for (int i = 0; i < configurationFvep.getOutputCount(); i++) {
-                LinearLayout layout = new LinearLayout(context);
-                layout.setOrientation(LinearLayout.HORIZONTAL);
-
-                TextView textView = new TextView(context);
-                textView.setText(i + stimulText);
-
-                EditText editText = new EditText(context);
-                editText.setLayoutParams(textLayoutParams);
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                inputs[i] = editText;
-
-                layout.addView(textView);
-                layout.addView(editText);
-
-                this.outputs.addView(layout);
-            }
-        }
+        if (outputCount != visible)
+            rearangeInputs(outputCount);
 
         readValues(outputs);
     }
 
+    private void rearangeInputs(int configOutputCount) {
+        if (configOutputCount > visible) {
+            for (int i = visible; i < configOutputCount; i++) {
+                views[i].setVisibility(View.VISIBLE);
+            }
+        } else {
+            for (int i = --visible; i >= configOutputCount; i--) {
+                views[i].setVisibility(View.INVISIBLE);
+            }
+        }
+
+        visible = configOutputCount;
+    }
+
+    private void fillInputs() {
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        for (int i = 0; i < 8; i++) {
+            LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.control_labeled_input, null);
+            TextView title = (TextView) layout.findViewById(R.id.labeled_input_title);
+            EditText input = (EditText) layout.findViewById(R.id.labeled_input_value);
+
+            title.setText(String.valueOf(i + outputText));
+
+            views[i] = layout;
+            inputs[i] = input;
+
+            outputContainer.addView(layout);
+        }
+    }
+
     private void readValues(List<ConfigurationFVEP.Output> outputs) {
-        int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.puls.getUp());
+                    inputs[i].setText(String.valueOf(output.puls.getUp()));
                 }
                 break;
             case PULSE_DOWN:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.puls.getDown());
+                    inputs[i].setText(String.valueOf(output.puls.getDown()));
                 }
                 break;
 
             case FREQUENCY:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.getFrequency());
+                    inputs[i].setText(String.valueOf(output.getFrequency()));
                 }
                 break;
 
             case DUTY_CYCLE:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.getDutyCycle());
+                    inputs[i].setText(String.valueOf(output.getDutyCycle()));
                 }
                 break;
 
             case BRIGHTNESS:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    inputs[i].setText("" + output.getBrightness());
+                    inputs[i].setText(String.valueOf(output.getBrightness()));
                 }
                 break;
         }
     }
 
     private void writeValues(List<ConfigurationFVEP.Output> outputs) {
-        int count = outputs.size();
         switch (outputTypeIndex) {
             case PULSE_UP:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.puls.getUp());
-                    output.puls.setUp(val, new AItem.OnValueChanged() {
+                    int val = EditTextReader.readValue(inputs[i], output.puls.getUp());
+                    output.puls.setUp(val, new AConfiguration.OnValueChanged() {
                         @Override
                         public void changed() {
                             notifyLock = true;
@@ -195,10 +215,10 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 }
                 break;
             case PULSE_DOWN:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.puls.getDown());
-                    output.puls.setDown(val, new AItem.OnValueChanged() {
+                    int val = EditTextReader.readValue(inputs[i], output.puls.getDown());
+                    output.puls.setDown(val, new AConfiguration.OnValueChanged() {
                         @Override
                         public void changed() {
                             notifyLock = true;
@@ -208,11 +228,11 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 break;
 
             case FREQUENCY:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.getFrequency());
+                    int val = EditTextReader.readValue(inputs[i], output.getFrequency());
                     if (output.isFrequencyInRange(val)) {
-                        output.setFrequency(val, new AItem.OnValueChanged() {
+                        output.setFrequency(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
@@ -227,11 +247,11 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 }
                 break;
             case DUTY_CYCLE:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.getDutyCycle());
+                    int val = EditTextReader.readValue(inputs[i], output.getDutyCycle());
                     if (output.isDutyCycleInRange(val)) {
-                        output.setDutyCycle(val, new AItem.OnValueChanged() {
+                        output.setDutyCycle(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
@@ -247,11 +267,11 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
                 break;
 
             case BRIGHTNESS:
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < visible; i++) {
                     ConfigurationFVEP.Output output = outputs.get(i);
-                    int val = readValue(inputs[i], output.getBrightness());
+                    int val = EditTextReader.readValue(inputs[i], output.getBrightness());
                     if (output.isBrightnessInRange(val)) {
-                        output.setBrightness(val, new AItem.OnValueChanged() {
+                        output.setBrightness(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
@@ -269,31 +289,6 @@ public class Screen3 extends AScreen implements AdapterView.OnItemSelectedListen
             manager.notifySelectedItemInternalChange();
             notifyLock = false;
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, manager.getSelectedItem().getName()), Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí 0
-     * @param input Vstup
-     * @return číslo
-     */
-    private int readValue(EditText input) {return readValue(input, 0);}
-
-    /**
-     * Přečte hodnotu z inputu
-     * Pokud se nepodaří hodnotu naparsovat, tak vrátí výchozí hodnotu
-     * @param input Vstup
-     * @param def Výchozí hodnota
-     * @return číslo
-     */
-    private int readValue(EditText input, int def) {
-        String text = input.getText().toString();
-        try {
-            return Integer.parseInt(text);
-        } catch (Exception ex) {
-            input.setText("" + def);
-            return def;
         }
     }
 }

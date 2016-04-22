@@ -24,12 +24,30 @@
 
     <string name="nav_text_item_1">ERP</string>
     <string name="nav_text_item_2">BCI</string>
+    <string name="nav_text_item_2_1">f-VEP</string>
+    <string name="nav_text_item_2_2">t-VEP</string>
+    <string name="nav_text_item_2_3">c-VEP</string>
     <string name="nav_text_item_3">Reaction experiment</string>
     <string name="nav_text_item_4">Autostimulation</string>
     <string name="nav_text_item_5">Biosensor logger</string>
     <string name="nav_text_item_6">Test mode</string>
     <string name="nav_text_settings">Settings</string>
+    <string name="nav_text_help">Help</string>
     <string name="nav_text_about">About</string>
+
+    <string-array name="nav_text_array">
+        <item>@string/nav_text_item_1</item>
+        <item>@string/nav_text_item_2_1</item>
+        <item>@string/nav_text_item_2_2</item>
+        <item>@string/nav_text_item_2_3</item>
+        <item>@string/nav_text_item_3</item>
+        <item>@string/nav_text_item_4</item>
+        <item>@string/nav_text_item_5</item>
+        <item>@string/nav_text_item_6</item>
+        <item>@string/nav_text_settings</item>
+        <item>@string/nav_text_help</item>
+        <item>@string/nav_text_about</item>
+    </string-array>
     
     <!-- Activity - hledání a připojení zařízení-->
     <string name="select_device">select a device to connect</string>
@@ -39,19 +57,34 @@
     <!-- Activity - home -->
     <string name="version">Version: <xliff:g id="app_version">%1$s</xliff:g></string>
 
+    <!-- Activity - help -->
+    <string-array name="help_parents">
+        <item>@string/nav_text_item_1</item>
+        <item>@string/nav_text_item_2</item>
+        <item>@string/nav_text_item_3</item>
+        <item>@string/nav_text_item_4</item>
+        <item>@string/nav_text_item_5</item>
+        <item>@string/nav_text_item_6</item>
+    </string-array>
+
     <!-- Activity - nastavení-->
     <string name="language_change">Change language</string>
 
     <!-- Screen titles -->
-    <string name="screen_title_schema">Schema</string>
+    <string name="screen_title_schema">Configuration ERP</string>
     <string name="screen_title_fvep">Configuration f-VEP</string>
     <string name="screen_title_tvep">Configuration t-VEP</string>
     <string name="screen_title_cvep">Configuration c-VEP</string>
+    <string name="screen_title_rea">Configuration reaction exp.</string>
 
     <string name="screen_title_general_settings">General settings</string>
     <string name="screen_title_output_settings">Output settings</string>
+    <string name="screen_title_settings_1">Settings 1</string>
+    <string name="screen_title_settings_2">Settings 2</string>
 
     <!-- Output titles -->
+    <string name="output_title">. OUTPUT</string>
+    <string name="output_title_count">Output count</string>
     <string name="output_title_puls_up">Pulse - up [ms]</string>
     <string name="output_title_puls_down">Pulse - down [ms]</string>
     <string name="output_title_distribution_value">Distribution - value [ms]</string>
@@ -59,12 +92,29 @@
     <string name="output_title_brightness">Brightness [%]</string>
     <string name="output_title_frequency">Frequency (0 – 255)</string>
     <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
+    <string name="output_title_cycle_count">Cycle count</string>
+    <string name="output_title_wait_fixed">Wait - fixed</string>
+    <string name="output_title_wait_random">Wait - random</string>
+    <string name="output_title_miss_time">Miss time [ms]</string>
+    <string name="output_title_on_fail">On fail</string>
+    <string name="output_title_on_fail_continue">Continue</string>
+    <string name="output_title_on_fail_wait">Wait</string>
+    <string name="output_title_sex">Sex</string>
+    <string name="output_title_sex_male">Male</string>
+    <string name="output_title_sex_female">Female</string>
 
-    <string name="select">Select</string>
+
+    <string name="out">Out</string>
+    <string name="wait">Wait</string>
+    <string name="puls_length">Puls length [ms]</string>
+    <string name="bit_shift">Bit shift</string>
+    <string name="time_between">Time between [ms]</string>
+    <string name="pattern">. Pattern</string>
+    <string name="pattern_32_bit">Pattern 32 bit</string>
+
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
     <string name="rename">Rename</string>
-    <string name="save_as">Save as</string>
     <string name="save_all">Save all</string>
     <string name="save_values">Save values</string>
     <string name="export">Export</string>
@@ -79,11 +129,8 @@
         <item>@string/screen_title_general_settings</item>
         <item>@string/screen_title_output_settings</item>
     </string-array>
-    <string name="erp_screen_select_schema">Select schema for stimulation</string>
-    <string name="erp_screen_running_stimulation">Spouštím stimulaci…</string>
 
     <!-- ERP screen - 1 -->
-    <string name="erp_scren_1_new_scheme">New scheme</string>
 
     <!-- ERP screen - 2 -->
     <string name="erp_screen_2_random">Random</string>
@@ -98,7 +145,7 @@
         <item>Leading</item>
         <item>Falling</item>
     </string-array>
-    <string name="erp_screen_2_output_count">Output count</string>
+
 
     <!-- ERP screen - 3 -->
     <string-array name="erp_screen_3_output_types">
@@ -109,7 +156,7 @@
         <item>@string/output_title_brightness</item>
 
     </string-array>
-    <string name="erp_screen_3_output">. OUTPUT</string>
+
 
     <!-- BCI screens -->
     <!-- BCI f-VEP screens -->
@@ -120,7 +167,7 @@
     </string-array>
     <!-- BCI f-VEP screen - 1 -->
     <!-- BCI f-VEP screen - 2 -->
-    <string name="bci_fvep_screen_2_output_count">Stimul count</string>
+
     <!-- BCI f-VEP screen - 3 -->
     <string-array name="bci_fvep_screen_3_output_types">
         <item>@string/output_title_puls_up</item>
@@ -132,6 +179,11 @@
     </string-array>
     <string name="bci_fvep_screen_3_output">. STIMUL</string>
     <!-- BCI t-VEP screen - 2 -->
+    <string-array name="bci_tvep_screen_titles">
+        <item>@string/screen_title_tvep</item>
+        <item>@string/screen_title_general_settings</item>
+        <item>@string/screen_title_output_settings</item>
+    </string-array>
     <string name="bci_tvep_screen_2_pattern_length">Pattern length</string>
 
     <!-- BCI c-VEP screen - 1 -->
@@ -141,8 +193,22 @@
         <item>@string/screen_title_output_settings</item>
     </string-array>
     <!-- BCI c-VEP screen - 2 -->
-    <string name="bci_cvep_screen_2_puls_length">Puls length [ms]</string>
-    <string name="bci_cvep_screen_2_bit_shift">Bit shift (1 – 8)</string>
+
+    <!-- Reaction experiments -->
+    <string-array name="rea_screen_titles">
+        <item>@string/screen_title_rea</item>
+        <item>@string/screen_title_settings_1</item>
+        <item>@string/screen_title_settings_2</item>
+    </string-array>
+    <!-- Reaction experiments screen - 3 -->
+    <string-array name="rea_screen_3_fail_type">
+        <item>@string/output_title_on_fail_continue</item>
+        <item>@string/output_title_on_fail_wait</item>
+    </string-array>
+    <string-array name="rea_screen_3_sex">
+        <item>@string/output_title_sex_male</item>
+        <item>@string/output_title_sex_female</item>
+    </string-array>
 
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
@@ -155,13 +221,9 @@
     
     <string name="illegal_input">Illegal input</string>
 
-    <string name="schema_saved">Schema <xliff:g id="saved_schema">%1$s</xliff:g> was saved</string>
-    <string name="schema_was_deleted">Schema was deleted</string>
-    <string name="count_saved_schemes">Count of saved schemes: <xliff:g id="saved_scheme_count">%1$s</xliff:g></string>
-
-    <string name="configuration_saved">Configuration <xliff:g id="saved_conf">%1$s</xliff:g> was saved</string>
     <string name="configuration_was_deleted">Configuration was deleted</string>
     <string name="count_saved_configuration">Count of saved configurations: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
 
     <string name="values_were_saved">Values were saved to: <xliff:g id="config_name">%1$s</xliff:g></string>
+
 </resources>

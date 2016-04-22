@@ -15,26 +15,52 @@ import java.util.Observer;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.PatternControl;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AItem;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.fragment.ASimpleScreen;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
 
-public class Screen3 extends AScreen implements Observer {
+public class Screen3 extends ASimpleScreen<ConfigurationTVEP>
+        implements Observer {
 
-    private PatternControl[] patternControls;
+    private final PatternControl[] patternControls = new PatternControl[8];
+    private final View[] views = new View[8];
 
-    private LinearLayout container;
+    private LinearLayout outputContainer;
+    private String outText;
     private boolean notifyLock = false;
+    private int visible = 8;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bci_tvep_screen_3, container, false);
 
-        this.container = (LinearLayout) v.findViewById(R.id.bci_tvep_screen_3_container);
+        this.outputContainer = (LinearLayout) v.findViewById(R.id.bci_tvep_screen_3_container);
+
+        outText = getString(R.string.pattern);
+
+        fillInputs();
+
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         manager.addObserver(this);
 
-        return v;
+        ConfigurationTVEP configuration = manager.getSelectedItem();
+        if (configuration == null) return;
+
+        changeValues();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        manager.deleteObserver(this);
     }
 
     @Override
@@ -42,10 +68,9 @@ public class Screen3 extends AScreen implements Observer {
         if (data == null)
             return;
 
-        ConfigurationTVEP configuration = (ConfigurationTVEP) data;
-        patternControls = new PatternControl[configuration.getOutputCount()];
+        if (notifyLock)
+            return;
 
-        container.removeAllViews();
         changeValues();
     }
 
@@ -54,24 +79,44 @@ public class Screen3 extends AScreen implements Observer {
         if (configuration == null)
             return;
 
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (patternControls[0] == null) {
-            if (patternControls.length != configuration.getOutputCount())
-                patternControls = new PatternControl[configuration.getOutputCount()];
+        final List<ConfigurationTVEP.Pattern> outputs = configuration.patternList;
+        int outputCount = configuration.getOutputCount();
 
-            for (int i = 0; i < configuration.getOutputCount(); i++) {
-                LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.control_labeled_pattern, null);
-                TextView title =  (TextView) layout.findViewById(R.id.labeled_pattern_title);
-                PatternControl patternControl = (PatternControl) layout.findViewById(R.id.labeled_pattern_control);
+        if (outputCount != visible)
+            rearangeInputs(outputCount);
 
-                title.setText((i + 1) + ". Pattern");
-                patternControls[i] = patternControl;
+        readValues(outputs);
+    }
 
-                container.addView(layout);
+    private void rearangeInputs(int configOutputCount) {
+        if (configOutputCount > visible) {
+            for (int i = visible; i < configOutputCount; i++) {
+                views[i].setVisibility(View.VISIBLE);
+            }
+        } else {
+            for (int i = --visible; i >= configOutputCount; i--) {
+                views[i].setVisibility(View.INVISIBLE);
             }
         }
 
-        readValues(configuration.patternList);
+        visible = configOutputCount;
+    }
+
+    private void fillInputs() {
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        for (int i = 0; i < 8; i++) {
+            LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.control_labeled_pattern, null);
+            TextView title = (TextView) layout.findViewById(R.id.labeled_pattern_title);
+            PatternControl input = (PatternControl) layout.findViewById(R.id.labeled_pattern_control);
+
+            title.setText(String.valueOf(i + outText));
+
+            views[i] = layout;
+            patternControls[i] = input;
+
+            outputContainer.addView(layout);
+        }
     }
 
     private void readValues(List<ConfigurationTVEP.Pattern> patternList) {
@@ -80,7 +125,7 @@ public class Screen3 extends AScreen implements Observer {
         for (ConfigurationTVEP.Pattern pattern : patternList) {
             PatternControl patternControl = patternControls[i];
             patternControl.setBitCount(configurationTVEP.getPatternLength());
-            patternControl.setValue(pattern.getValue());
+            patternControl.setValue(pattern.getValue(), false);
             patternControl.setOnValueChangeListener(new OnPatternValueChangeListener(pattern));
 
             i++;
@@ -97,10 +142,12 @@ public class Screen3 extends AScreen implements Observer {
 
         @Override
         public void change(int oldValue, int newValue) {
-            pattern.setValue(newValue, new AItem.OnValueChanged() {
+            pattern.setValue(newValue, new AConfiguration.OnValueChanged() {
                 @Override
                 public void changed() {
+                    notifyLock = true;
                     manager.notifySelectedItemInternalChange();
+                    notifyLock = false;
                 }
             });
         }

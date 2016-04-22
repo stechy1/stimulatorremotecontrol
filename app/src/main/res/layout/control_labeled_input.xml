@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:visibility="invisible">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/labeled_input_title"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/labeled_input_value"
+        android:inputType="numberSigned"
+        android:layout_marginLeft="@dimen/input_margin_left"
+        android:layout_marginRight="@dimen/input_margin_left"
+        android:gravity="center"/>
+
+</LinearLayout>

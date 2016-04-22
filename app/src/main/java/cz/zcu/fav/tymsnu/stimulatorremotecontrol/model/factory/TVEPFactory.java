@@ -15,7 +15,7 @@ public class TVEPFactory implements IFactory<ConfigurationTVEP> {
     }
 
     @Override
-    public IReadWrite getReadWriteAcces() {
+    public IReadWrite<ConfigurationTVEP> getReadWriteAcces() {
         return handler;
     }
 }

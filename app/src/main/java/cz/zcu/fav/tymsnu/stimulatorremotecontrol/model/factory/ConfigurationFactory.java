@@ -6,7 +6,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
 
 public class ConfigurationFactory implements IFactory<ConfigurationFVEP> {
 
-    private final IReadWrite handler = new FVEPFileJSONHandler();
+    private final IReadWrite<ConfigurationFVEP> handler = new FVEPFileJSONHandler();
 
     @Override
     public ConfigurationFVEP build(String name) {
@@ -14,7 +14,7 @@ public class ConfigurationFactory implements IFactory<ConfigurationFVEP> {
     }
 
     @Override
-    public IReadWrite getReadWriteAcces() {
+    public IReadWrite<ConfigurationFVEP> getReadWriteAcces() {
         return handler;
     }
 }

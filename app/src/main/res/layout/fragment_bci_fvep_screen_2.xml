@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp">
+    android:padding="5dp">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
-        android:text="@string/bci_fvep_screen_2_output_count"
-        android:layout_gravity="center_vertical|top"
-        android:gravity="center"
-        android:layout_marginLeft="10dp"/>
+        android:layout_height="wrap_content"
+        android:text="@string/output_title_count"/>
 
-    <NumberPicker
+    <com.vi.swipenumberpicker.SwipeNumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fvep_screen_2_number_picker"
-        android:layout_gravity="center_horizontal"/>
-</FrameLayout>
+        android:id="@+id/fvep_screen_2_swipe_number_picker"
+        android:layout_marginLeft="@dimen/input_margin_left"/>
+</LinearLayout>
