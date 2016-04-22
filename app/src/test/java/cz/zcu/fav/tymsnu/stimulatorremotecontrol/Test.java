@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfigurationTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERPTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationFVEPTest;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEPTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtilsParametrizedTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtilsSingleTest;
 
@@ -17,6 +18,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtilsSingleTest;
         AConfigurationTest.class,
         ConfigurationERPTest.class,
         ConfigurationFVEPTest.class,
+        ConfigurationTVEPTest.class,
         RangeUtilsSingleTest.class,
         RangeUtilsParametrizedTest.class
 })
