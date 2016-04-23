@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class DataConvertorTest {
 
-    @Test(expected = InstantiationException.class)
+    @Test(expected = InvocationTargetException.class)
     public void testDataConvertorConstruct() throws Exception{
         Constructor<DataConvertor> c = DataConvertor.class.getDeclaredConstructor();
         c.setAccessible(true);

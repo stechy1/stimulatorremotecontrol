@@ -3,6 +3,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.DataConvertorTest;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.PacketTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfigurationTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationCVEPTest;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERPTest;
@@ -24,7 +26,9 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtilsSingleTest;
         ConfigurationCVEPTest.class,
         ConfigurationREATest.class,
         RangeUtilsSingleTest.class,
-        RangeUtilsParametrizedTest.class
+        RangeUtilsParametrizedTest.class,
+        PacketTest.class,
+        DataConvertorTest.class
 })
 public class Test {
 }
