@@ -44,9 +44,9 @@ public class Packet {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < usedBytes; i++) {
-            sb.append(String.format("0x%02X ", value[i]));
+            if(i == usedBytes - 1) sb.append(String.format("0x%02X", value[i]));
+            else sb.append(String.format("0x%02X ", value[i]));
         }
-
         return usedBytes + "B | " + code.getDescription() + " | " + sb.toString();
     }
 
