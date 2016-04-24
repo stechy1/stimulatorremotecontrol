@@ -20,7 +20,7 @@ public class DataConvertorTest {
         System.out.println("Chyba: lze vytvořit privátní konstruktor");
     }
 
-    @Test(expected = InvocationTargetException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testIntTo1B1negative() throws Exception {
         DataConvertor.intTo1B(256);
         System.out.println("Chyba: lze převést číslo 256 na bajt, což je větší než 1B");

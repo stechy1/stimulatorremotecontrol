@@ -2,6 +2,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes;
 
 import java.nio.ByteBuffer;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
+
 /**
  * Třída pro převody hodnot do bajtové podoby,
  * používá se např. při reprezentaci čísel
@@ -17,6 +19,7 @@ public final class DataConvertor {
      * @return pole o jednom bajtu
      */
     public static byte[] intTo1B(int number){
+        if(!RangeUtils.isInByteRange(number, 1)) throw new IllegalArgumentException();
         return ByteBuffer.allocate(1).put((byte)number).array();
     }
 
@@ -26,6 +29,7 @@ public final class DataConvertor {
      * @return pole o dvou bajtech
      */
     public static byte[] intTo2B(int number){
+        if(!RangeUtils.isInByteRange(number, 2)) throw new IllegalArgumentException();
         return ByteBuffer.allocate(2).put(1, (byte) number).put(0,(byte)(number >> 8)).array();
     }
 
