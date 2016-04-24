@@ -82,9 +82,15 @@ public class ConfigurationFVEPTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testOutputConstructNegative() throws Exception {
+    public void testOutputConstructNegative1() throws Exception {
         new ConfigurationFVEP.Output(null, 0, 0, 0);
         System.out.println("Chyba: hodnota parametru puls se nastavila na null");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputConstructNegative2() throws Exception {
+        new ConfigurationFVEP.Output(null);
+        System.out.println("Chyba: lze vytvořit kopii outputu z null objektu");
     }
 
     @Test

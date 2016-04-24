@@ -200,6 +200,12 @@ public class ConfigurationERPTest {
         System.out.println("Chyba: byla očekávána vyjímka IllegalArgumentException, protože parametr Puls je null");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputConstructNegative3() throws Exception {
+        new ConfigurationERP.Output(null);
+        System.out.println("Chyba: lze vytvořit kopii outputu z null objektu");
+    }
+
     @Test
     public void testOutputCanUpdateDistributionPositive() throws Exception {
         ConfigurationERP config = new ConfigurationERP.Builder("config")

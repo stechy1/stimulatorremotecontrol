@@ -146,6 +146,12 @@ public class ConfigurationCVEPTest {
         assertEquals("Chyba: kolekce patternů není stejná", patternList, config.patternList);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testPatternConstructNegative() throws Exception {
+        new ConfigurationCVEP.Pattern(null);
+        System.out.println("Chyba: lze vytvořit kopii patternu z null objektu");
+    }
+
     @Test
     public void testPatternShiftLeftPositive() throws Exception {
         ConfigurationCVEP.Pattern pattern = new ConfigurationCVEP.Pattern(2);

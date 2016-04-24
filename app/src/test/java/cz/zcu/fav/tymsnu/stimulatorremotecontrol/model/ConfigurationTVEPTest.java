@@ -176,6 +176,12 @@ public class ConfigurationTVEPTest {
         assertEquals("Chyba: velikost kolekce výstupů neodpovídá nastavené hodnotě", outputCount, config.patternList.size());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testPatternConstructNegative() throws Exception {
+        new ConfigurationTVEP.Pattern(null);
+        System.out.println("Chyba: lze vytvořit kopii patternu z null objektu");
+    }
+
     @Test
     public void testPatternSevValuePositive() throws Exception {
         ConfigurationTVEP.Pattern pattern = new ConfigurationTVEP.Pattern();
