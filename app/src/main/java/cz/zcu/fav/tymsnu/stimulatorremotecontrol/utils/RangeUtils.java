@@ -22,12 +22,13 @@ public final class RangeUtils {
     }
 
     /**
-     * Zjistí, zda-li je hodnota v intervalu 0 - 255
+     * Zjistí, zda-li je hodnota v intervalu 0 až numOfBytes * 8 - 1
      * @param val Kontrolovaná hodnota
+     * @param numOfBytes počet Bajtů
      * @return True, pokud hodnota je v intervalu, jinak false
      */
-    public static boolean isInByteRange(int val) {
-        return isInRange(val, 0, 255);
+    public static boolean isInByteRange(int val, int numOfBytes) {
+        return isInRange(val, 0, (int)Math.pow(2, numOfBytes * 8) - 1);
     }
 
     /**

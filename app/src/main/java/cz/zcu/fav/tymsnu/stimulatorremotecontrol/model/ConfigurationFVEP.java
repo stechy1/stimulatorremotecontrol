@@ -174,7 +174,7 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
          * @return True, pokud hodnota odpovídá frekvenčnímu rozsahu, jinak false
          */
         public boolean isFrequencyInRange(int val) {
-            return RangeUtils.isInByteRange(val);
+            return RangeUtils.isInByteRange(val, 1);
         }
 
         /**

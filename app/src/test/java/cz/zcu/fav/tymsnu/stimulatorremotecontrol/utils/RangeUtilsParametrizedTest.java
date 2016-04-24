@@ -18,13 +18,18 @@ public class RangeUtilsParametrizedTest {
     @Parameterized.Parameters(name = "{index}: vstupniHodnota={0} ocekavanyVysledek={1}")
     public static Collection<Object[]> rangeData() {
         return Arrays.asList(new Object[][]{
-                {-1, -1, false},
-                {0, 0, true},
-                {1, 1, true},
-                {50, 50, true},
-                {99, 254, true},
-                {100, 255, true},
-                {101, 256, false}
+                {-1, -1, 1, false},
+                {0, 0, 1, true},
+                {1, 1, 1, true},
+                {50, 50, 1, true},
+                {99, 254, 1, true},
+                {100, 255, 1, true},
+                {101, 256, 1, false},
+
+                {1, 256, 2, true},
+                {1, 257, 2, true},
+                {100, 65535, 2, true},
+                {101, 65536, 2, false}
         });
     }
 
@@ -33,11 +38,13 @@ public class RangeUtilsParametrizedTest {
     @Parameterized.Parameter(1)
     public int byteValue;
     @Parameterized.Parameter(2)
+    public int numOfBytes;
+    @Parameterized.Parameter(3)
     public boolean expectedResult;
 
     @Test
     public void testIsInByteRangePositive1() throws Exception {
-        assertEquals("Chyba: hodnota je mimo interval", expectedResult, RangeUtils.isInByteRange(byteValue));
+        assertEquals("Chyba: hodnota je mimo interval", expectedResult, RangeUtils.isInByteRange(byteValue, numOfBytes));
     }
 
     @Test
