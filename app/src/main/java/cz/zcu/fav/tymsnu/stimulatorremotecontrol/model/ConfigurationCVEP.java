@@ -285,21 +285,21 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
         private int value;
         // endregion
 
+        // region Private static methods
+        public static Pattern clone(Pattern source) throws IllegalArgumentException {
+            if (source == null)
+                throw new IllegalArgumentException();
+
+            return new Pattern(source.value);
+        }
+        // endregion
+
         // region Constructors
         /**
          * Konstruktor třídy Pattern s výchozí hodnotou
          */
         public Pattern() {
             this(DEF_VALUE);
-        }
-
-        /**
-         * Konstruktor třídy Pattern
-         * Vytvoří kopii podle předlohy
-         * @param source Předloha
-         */
-        public Pattern(Pattern source){
-            this(source.getValue());
         }
 
         /**

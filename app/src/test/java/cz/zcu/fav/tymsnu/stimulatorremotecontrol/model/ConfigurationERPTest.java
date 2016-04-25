@@ -202,7 +202,7 @@ public class ConfigurationERPTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testOutputConstructNegative3() throws Exception {
-        new ConfigurationERP.Output(null);
+        ConfigurationERP.Output.clone(null);
         System.out.println("Chyba: lze vytvořit kopii outputu z null objektu");
     }
 

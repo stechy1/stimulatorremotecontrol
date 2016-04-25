@@ -89,7 +89,7 @@ public class ConfigurationFVEPTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testOutputConstructNegative2() throws Exception {
-        new ConfigurationFVEP.Output(null);
+        ConfigurationFVEP.Output.clone(null);
         System.out.println("Chyba: lze vytvořit kopii outputu z null objektu");
     }
 

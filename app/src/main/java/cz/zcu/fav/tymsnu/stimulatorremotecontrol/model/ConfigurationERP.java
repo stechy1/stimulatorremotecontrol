@@ -1,6 +1,8 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +99,7 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         List<Output> outputs = new ArrayList<>(outputCount);
 
         for (int i = 0; i < outputCount; i++) {
-            outputs.add(new Output(this.outputList.get(i)));
+            outputs.add(Output.clone(this.outputList.get(i)));
         }
 
         return new ConfigurationERP(newName, outputCount, out, wait, edge, random, outputs);
@@ -290,6 +292,15 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         private int brightness;
         // endregion
 
+        // region Private static methods
+        public static Output clone(Output source) throws IllegalArgumentException {
+            if (source == null)
+                throw new IllegalArgumentException();
+
+            return new Output(new Puls(source.puls), new Distribution(source.distribution), source.brightness);
+        }
+        // endregion
+
         // region Constructors
 
         /**
@@ -297,14 +308,6 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
          */
         public Output() {
             this(new Puls(), new Distribution(), DEF_BRIGHTNESS);
-        }
-
-        /**
-         * Vytvoří kopii třídy
-         * @param source Kopírovaná třída
-         */
-        public Output(Output source) {
-            this(new Puls(source.puls), new Distribution(source.distribution), source.brightness);
         }
 
         /**

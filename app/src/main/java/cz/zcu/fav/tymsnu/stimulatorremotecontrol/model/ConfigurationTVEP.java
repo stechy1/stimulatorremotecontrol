@@ -139,7 +139,7 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
         List<Pattern> patternList = new ArrayList<>();
 
         for(Pattern a : this.patternList){
-            patternList.add(new Pattern(a));
+            patternList.add(Pattern.clone(a));
         }
         return new ConfigurationTVEP(newName, outputCount, patternLength, pulsLength, pulsSkew, brightness, patternList);
     }
@@ -303,21 +303,21 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
         private int value;
         // endregion
 
+        // region Private static methods
+        public static Pattern clone(Pattern source) throws IllegalArgumentException {
+            if (source == null)
+                throw new IllegalArgumentException();
+
+            return new Pattern(source.value);
+        }
+        // endregion
+
         // region Constructors
         /**
          * Konstruktor třídy Pattern s výchozí hodnotou
          */
         public Pattern() {
             this(DEF_VALUE);
-        }
-
-        /**
-         * Konstruktor třídy Pattern
-         * Vytvoří kopii podle předlohy
-         * @param source Předloha
-         */
-        public Pattern(Pattern source) {
-            this(source.value);
         }
 
         /**

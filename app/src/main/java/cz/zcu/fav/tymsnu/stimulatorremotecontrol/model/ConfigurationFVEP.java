@@ -72,7 +72,7 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
         List<Output> outputList = new ArrayList<>(outputCount);
 
         for (int i = 0; i < outputCount; i++) {
-            outputList.add(new Output(this.outputList.get(i)));
+            outputList.add(Output.clone(this.outputList.get(i)));
         }
 
         return new ConfigurationFVEP(newName, outputCount, outputList);
@@ -131,20 +131,21 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
         private int brightness;
         // endregion
 
+        // region Private static methods
+        public static Output clone(Output source) throws IllegalArgumentException {
+            if (source == null)
+                throw new IllegalArgumentException();
+
+            return new Output(new Puls(source.puls), source.frequency, source.duty_cycle, source.brightness);
+        }
+        // endregion
+
         // region Constructors
         /**
          * Vytvoří nový výstup s výchozími hodnotami
          */
         public Output() {
             this(new Puls(), DEF_FREQUENCY, DEF_DUTY_CYCLE, DEF_BRIGHTNESS);
-        }
-
-        /**
-         * Vytvoří nový výstup jako kopii ze zadané třídy
-         * @param source Předloha
-         */
-        public Output(Output source) {
-            this(new Puls(source.puls), source.frequency, source.duty_cycle, source.brightness);
         }
 
         /**

@@ -178,7 +178,7 @@ public class ConfigurationTVEPTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testPatternConstructNegative() throws Exception {
-        new ConfigurationTVEP.Pattern(null);
+        ConfigurationTVEP.Pattern.clone(null);
         System.out.println("Chyba: lze vytvořit kopii patternu z null objektu");
     }
 
