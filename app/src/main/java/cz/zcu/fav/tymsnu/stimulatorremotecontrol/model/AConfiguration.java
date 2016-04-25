@@ -3,9 +3,11 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 import java.util.regex.Pattern;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.IPacketable;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
-public abstract class AConfiguration<T extends AConfiguration<T>> implements IDuplicatable<T> {
+public abstract class AConfiguration<T extends AConfiguration<T>>
+        implements IDuplicatable<T>, IPacketable {
 
     // region Variables
 

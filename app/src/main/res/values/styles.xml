@@ -25,6 +25,4 @@
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
-
-
 </resources>

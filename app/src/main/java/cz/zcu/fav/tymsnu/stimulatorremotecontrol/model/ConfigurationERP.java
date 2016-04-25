@@ -6,6 +6,10 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Code;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Codes;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.DataConvertor;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
 public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
@@ -130,6 +134,41 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
         result = 31 * result + random.hashCode();
         result = 31 * result + outputList.hashCode();
         return result;
+    }
+
+    public ArrayList<Packet> getPackets() {
+
+        ArrayList<Packet> packets = new ArrayList<>();
+
+        packets.add(new Packet(Codes.EDGE, DataConvertor.intTo1B(edge.ordinal())));
+        packets.add(new Packet(Codes.RANDOMNESS_ON, DataConvertor.intTo1B(random.ordinal()))); //TODO jak je to s tím kódem náhodnosti?
+
+        Code actualDURATION = Codes.OUTPUT0_DURATION;
+        Code actualPAUSE = Codes.OUTPUT0_PAUSE;
+        Code actualDISTRIBUTION = Codes.OUTPUT0_DISTRIBUTION;
+        Code actualBRIGHTNESS = Codes.OUTPUT0_BRIGHTNESS;
+
+        int vystup = 0; //index výstupu, slouží pro odfiltrování jasu kvůli sdružení u LED 5 a 7
+
+        for(Output a : outputList){
+            packets.add(new Packet(actualDURATION, DataConvertor.milisecondsTo2B(a.puls.up)));
+            packets.add(new Packet(actualPAUSE, DataConvertor.milisecondsTo2B(a.puls.down)));
+            packets.add(new Packet(actualDISTRIBUTION, DataConvertor.intTo1B(a.distribution.value))); //TODO u distribution parametru ještě neposíláme delay
+
+            if(vystup != 5 && vystup != 7) {  //neukládáme hodnoty pro výstupy 5 a 7 protože jsou sdružené (bereme ty nižší)
+                packets.add(new Packet(actualBRIGHTNESS, DataConvertor.intTo1B(a.brightness)));
+                actualBRIGHTNESS = actualBRIGHTNESS.getNext();
+            }
+
+            actualDURATION = actualDURATION.getNext();
+            actualPAUSE = actualPAUSE.getNext();
+            actualDISTRIBUTION = actualDISTRIBUTION.getNext();
+
+
+            vystup++;
+        }
+
+        return packets;
     }
 
     // endregion

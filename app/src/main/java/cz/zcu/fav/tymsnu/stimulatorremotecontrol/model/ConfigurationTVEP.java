@@ -3,6 +3,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
 public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
@@ -143,6 +144,12 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
         }
         return new ConfigurationTVEP(newName, outputCount, patternLength, pulsLength, pulsSkew, brightness, patternList);
     }
+
+    @Override
+    public ArrayList<Packet> getPackets() {
+        return new ArrayList<>();
+    }
+
     // endregion
 
     // region Getters & Setters

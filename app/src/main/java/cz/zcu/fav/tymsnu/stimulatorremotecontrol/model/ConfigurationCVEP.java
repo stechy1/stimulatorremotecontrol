@@ -3,6 +3,8 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
 public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
@@ -127,6 +129,11 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
         result = 31 * result + mainPattern.hashCode();
         result = 31 * result + patternList.hashCode();
         return result;
+    }
+
+    public ArrayList<Packet> getPackets() {
+        return new ArrayList<>();
+
     }
 
     // endregion

@@ -4,20 +4,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:gravity="center">
+    android:padding="5dp" >
 
-    <TextView
+    <WebView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_title"
-        android:textSize="25sp"
-        android:gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/about_version"
-        android:gravity="center_horizontal"/>
-
+        android:id="@+id/webView" />
 </LinearLayout>
