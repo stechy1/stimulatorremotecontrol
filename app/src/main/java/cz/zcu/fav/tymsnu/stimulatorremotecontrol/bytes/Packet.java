@@ -17,20 +17,24 @@ public class Packet {
     private int usedBytes;
 
     /**
-     * Konstruktor pro bezdatové packety
+     * Konstruktor pro bezdatové packety, vyhodí vyjímku když jako parametr přijde null
      * @param code typ packetu
      */
     public Packet(Code code) {
+        if(code == null) throw new IllegalArgumentException();
+
         this.code = code;
         fillPacket(new byte[]{0x00, code.getCode()});
     }
 
     /**
-     * Konstruktor pro packety s daty
+     * Konstruktor pro packety s daty, když přijde nějaký null parametr -> vyhodí vyjímku
      * @param code typ packetu
      * @param data data packetu
      */
     public Packet(Code code, byte[] data) {
+        if(code == null || data == null) throw new IllegalArgumentException();
+
         this.code = code;
         ByteBuffer buffer = ByteBuffer.allocate(2 + data.length)
                 .put(ByteBuffer.allocate(2).put(1, code.getCode())).put((data));
