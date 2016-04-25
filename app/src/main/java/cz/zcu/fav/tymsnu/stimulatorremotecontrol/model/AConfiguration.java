@@ -4,6 +4,7 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 import java.util.regex.Pattern;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.IPacketable;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
 public abstract class AConfiguration<T extends AConfiguration<T>>
         implements IDuplicatable<T>, IPacketable {
@@ -46,8 +47,11 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
      * @param name Název konfigurace
      * @param outputCount Počet výstupů
      */
-    public AConfiguration(String name, int outputCount) {
+    public AConfiguration(String name, int outputCount) throws IllegalArgumentException {
         setName(name);
+
+        if (!isOutputCountInRange(outputCount))
+            throw new IllegalArgumentException();
 
         this.outputCount = outputCount;
     }
@@ -73,6 +77,21 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
     // endregion
 
     // region Public methods
+
+    /**
+     * Zjistí, zda-li je hodnota v povoleném intervalu
+     * @param value Testovaná hodnota
+     * @return True, pokud je hodnota v povoleném intervalu, jinak false
+     */
+    public boolean isOutputCountInRange(int value) {
+        return RangeUtils.isInRange(value, MIN_OUTPUT_COUNT, MAX_OUTPUT_COUNT);
+    }
+
+    @Override
+    public T duplicate(String newName) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -132,15 +151,15 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
      */
-    public void setOutputCount(int outputCount) {setOutputCount(outputCount, null);}
+    public void setOutputCount(int outputCount) throws IllegalArgumentException {setOutputCount(outputCount, null);}
     /**
      * Nastaví počet výstupů
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
      */
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
-        if (outputCount < MIN_OUTPUT_COUNT || outputCount > MAX_OUTPUT_COUNT)
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (!isOutputCountInRange(outputCount))
             throw new IllegalArgumentException();
 
         if (this.outputCount == outputCount)
