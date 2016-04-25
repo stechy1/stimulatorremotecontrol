@@ -31,7 +31,6 @@ public class PacketTest {
     public void testToStringPositive() throws Exception {
         String expected = "3B | OUTPUT0_BRIGHTNESS | 0x01 0x1C 0x05";
         Packet testPacket = new Packet(Codes.OUTPUT0_BRIGHTNESS, new byte[] {0x05});
-        System.out.println(testPacket);
         assertEquals("Chyba: textová reprezentace packetu neodpovídá předpokladu", expected, testPacket.toString().trim());
     }
 }
