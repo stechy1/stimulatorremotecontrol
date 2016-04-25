@@ -46,6 +46,8 @@ public class Screen2 extends ASimpleScreen<ConfigurationCVEP>
         textViewPulsLength = (EditText) v.findViewById(R.id.cvep_edit_text_puls_length);
 
         numberPickerBitShift = (SwipeNumberPicker) v.findViewById(R.id.cvep_swipe_number_picker_bit_shift);
+        numberPickerBitShift.setMinValue(0);
+        numberPickerBitShift.setMaxValue(31);
         numberPickerBitShift.setOnValueChangeListener(new BitShiftValueListener());
 
         seekBar = (MySeekBar) v.findViewById(R.id.cvep_seekbar_brightness);
