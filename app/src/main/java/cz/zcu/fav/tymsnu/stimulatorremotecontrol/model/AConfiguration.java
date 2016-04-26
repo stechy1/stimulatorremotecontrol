@@ -14,8 +14,9 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
     // Pattern pro název itemu:
     // - musí se jednat o neprázdné slovo
     // - délka slova je z intervalu <1, 32>
-    // - slovo můžu obsahovat pouze [a-zA-Z] a "_"
-    private static final Pattern pattern = Pattern.compile("[a-zA-Z_]{1,32}");
+    // - slovo může obsahovat pouze [a-zA-Z0-9] a "_"
+    //   přičemž číslo nesmí být na první pozici
+    private static final Pattern pattern = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]{0,31}");
 
     // Minimání počet výstupů
     public static final int MIN_OUTPUT_COUNT = 1;
