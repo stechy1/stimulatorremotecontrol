@@ -140,7 +140,7 @@ public final class Screen2 extends ASimpleScreen<ConfigurationERP>
         waitEditText.setText(String.valueOf(configuration.getWait()));
         randomSpinner.setSelection(configuration.getRandom().ordinal());
         edgeSpinner.setSelection(configuration.getEdge().ordinal());
-        numberPicker.setValue(configuration.getOutputCount(), true);
+        numberPicker.setValue(configuration.getOutputCount(), false);
     }
 
     @Override
