@@ -19,6 +19,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static cz.zcu.fav.tymsnu.stimulatorremotecontrol.custom.action.NavigationViewActions.navigateTo;
+import static cz.zcu.fav.tymsnu.stimulatorremotecontrol.custom.comparators.ImageComparator.withVectorDrawable;
 
 /**
  * Testovací třída pro testovaní GUI v t-VEPu 1. screenu
@@ -42,9 +43,13 @@ public class Screen1Test {
     public void testCheckControls() throws Exception {
         onView(withId(R.id.universal_screen_1_container_listview)).check(matches(isDisplayed()));
         onView(withId(R.id.universal_screen_1_btn_new_configuration)).check(matches(isDisplayed()));
+        onView(withId(R.id.universal_screen_1_btn_new_configuration)).check(matches(withVectorDrawable(R.drawable.ic_note_add_black_24dp)));
         onView(withId(R.id.universal_screen_1_btn_save_all)).check(matches(isDisplayed()));
+        onView(withId(R.id.universal_screen_1_btn_save_all)).check(matches(withVectorDrawable(R.drawable.save_all)));
         onView(withId(R.id.universal_screen_1_btn_play)).check(matches(isDisplayed()));
+        onView(withId(R.id.universal_screen_1_btn_play)).check(matches(withVectorDrawable(R.drawable.run_stimulator)));
         onView(withId(R.id.universal_screen_1_btn_stop)).check(matches(isDisplayed()));
+        onView(withId(R.id.universal_screen_1_btn_stop)).check(matches(withVectorDrawable(R.drawable.ic_stop_black_24dp)));
         onView(withId(R.id.universal_title)).check(matches(withText(R.string.screen_title_tvep)));
     }
 

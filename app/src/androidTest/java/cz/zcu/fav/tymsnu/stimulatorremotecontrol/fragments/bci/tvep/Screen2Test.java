@@ -43,9 +43,9 @@ public class Screen2Test {
 
     @Test
     public void testCheckControls() throws Exception {
+        onView(withId(R.id.bci_tvep_screen_2_edit_text_puls_length)).check(matches(isDisplayed()));
         onView(withId(R.id.bci_tvep_screen_2_swipe_number_picker_output_count)).check(matches(isDisplayed()));
         onView(withId(R.id.bci_tvep_screen_2_swipe_number_picker_pattern_length)).check(matches(isDisplayed()));
-        onView(withId(R.id.bci_tvep_screen_2_edit_text_puls_length)).check(matches(isDisplayed()));
         onView(withId(R.id.bci_tvep_screen_2_time_between)).check(matches(isDisplayed()));
         onView(withId(R.id.bci_tvep_screen_2_seek_bar_brightness)).check(matches(isDisplayed()));
         onView(withId(R.id.tvep_button_save_values)).check(matches(isDisplayed()));
