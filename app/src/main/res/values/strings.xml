@@ -6,6 +6,7 @@
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving application…</string>
     <string name="lost_connection">Connection lost…</string>
+    <string name="unable_to_connect">Unable to connect device</string>
 
     <!-- Podnadpis aplikace-->
     <string name="title_connecting">connecting…</string>

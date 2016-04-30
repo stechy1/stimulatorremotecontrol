@@ -247,7 +247,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Constants.MESSAGE_SHOW);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.TOAST, "Unable to connect device");
+        bundle.putString(Constants.TOAST, mContext.getString(R.string.unable_to_connect));
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 

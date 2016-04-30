@@ -6,6 +6,7 @@
     <string name="not_connected">Žádné zařízení není připojeno</string>
     <string name="bt_not_enabled_leaving">Bluetooth nebyl povolen. Ukončuji aplikaci…</string>
     <string name="lost_connection">Spojení bylo ztraceno</string>
+    <string name="unable_to_connect">Nelze navázat spojení</string>
 
     <!-- Podnadpis aplikace-->
     <string name="title_connecting">připojuji…</string>
