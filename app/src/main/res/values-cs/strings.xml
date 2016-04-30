@@ -149,4 +149,7 @@
     <string name="count_saved_configuration">Počet uložených konfigurací: <xliff:g id="saved_conf_count">%1$s</xliff:g></string>
 
     <string name="values_were_saved">Hodnoty byly uloženy do: <xliff:g id="config_name">%1$s</xliff:g></string>
+
+    <!-- Hint -->
+    <string name="hint_config_name">název konfigurace</string>
 </resources>

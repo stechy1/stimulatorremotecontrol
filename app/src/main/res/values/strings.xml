@@ -226,4 +226,7 @@
 
     <string name="values_were_saved">Values were saved to: <xliff:g id="config_name">%1$s</xliff:g></string>
 
+    <!-- Hint -->
+    <string name="hint_config_name">configuration name</string>
+
 </resources>
