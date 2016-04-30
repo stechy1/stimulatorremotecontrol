@@ -165,6 +165,7 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
         canDismiss = true;
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("nazev konfigurace");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.context_set_name);

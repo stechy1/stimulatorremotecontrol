@@ -18,8 +18,8 @@ public class AboutFragment extends ASimpleFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_about, container, false);
 
-        WebView browser = (WebView)v.findViewById(R.id.webView);
-        browser.loadUrl("file:///android_asset/changelog.html");
+        //WebView browser = (WebView)v.findViewById(R.id.webView);
+        //browser.loadUrl("file:///android_asset/changelog.html");
 
         return v;
     }
