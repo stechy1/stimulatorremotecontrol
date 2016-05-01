@@ -6,7 +6,7 @@
     <item
         android:title="@string/menu_main_connect"
         android:id="@+id/menu_main_connect"
-        android:icon="@drawable/bluetooth_disconnected"
+        android:icon="@drawable/bluetooth_off"
         app:showAsAction="ifRoom"
         />
 </menu>

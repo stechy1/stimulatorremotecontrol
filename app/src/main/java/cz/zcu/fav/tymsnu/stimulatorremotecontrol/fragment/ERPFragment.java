@@ -41,7 +41,7 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
 
         ViewPager pager = (ViewPager) v.findViewById(R.id.universal_view_pager);
         pager.setAdapter(buildAdapter());
-        pager.setOffscreenPageLimit(Constants.ERP_SCREEN_COUNT);
+        //pager.setOffscreenPageLimit(2);
         pager.addOnPageChangeListener(this);
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.universal_tablayout);
