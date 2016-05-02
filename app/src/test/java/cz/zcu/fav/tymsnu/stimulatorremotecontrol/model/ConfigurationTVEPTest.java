@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Testovací třída pro třídu ConfigurationTVEP
@@ -105,11 +106,25 @@ public class ConfigurationTVEPTest {
         assertEquals("Chyba: parametr neodpovídá nastavené hodnotě", newValue, configuration.getPulsLength());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetPulsLengthNegative() throws Exception {
+        int newValue = -1;
+        configuration.setPulsLength(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru puls length");
+    }
+
     @Test
-    public void testSetPulsSkew() throws Exception {
+    public void testSetPulsSkewPositive() throws Exception {
         int newValue = 3;
         configuration.setPulsSkew(newValue);
         assertEquals("Chyba: nastavila se špatná hodnota parametru puls skew", newValue, configuration.getPulsSkew());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetPulsSkewNegative() throws Exception {
+        int newValue = -1;
+        configuration.setPulsSkew(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru puls skew");
     }
 
     @Test

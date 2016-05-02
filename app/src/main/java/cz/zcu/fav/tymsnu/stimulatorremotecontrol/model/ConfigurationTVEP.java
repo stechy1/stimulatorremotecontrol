@@ -218,14 +218,17 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param pulsLength Dálka pulsu
      */
-    public void setPulsLength(int pulsLength) {setPulsLength(pulsLength, null);}
+    public void setPulsLength(int pulsLength) throws IllegalArgumentException {setPulsLength(pulsLength, null);}
     /**
      * Nastaví délku pulsu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param pulsLength Délka pulsu
      * @param onValueChanged Callback, který se zavolá po nastavení délky pulsu
      */
-    public void setPulsLength(int pulsLength, OnValueChanged onValueChanged) {
+    public void setPulsLength(int pulsLength, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (pulsLength < 0)
+            throw new IllegalArgumentException();
+
         if (this.pulsLength == pulsLength)
             return;
 
@@ -248,14 +251,16 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param pulsSkew Bitový posun
      */
-    public void setPulsSkew(int pulsSkew) {setPulsSkew(pulsSkew, null);}
+    public void setPulsSkew(int pulsSkew) throws IllegalArgumentException {setPulsSkew(pulsSkew, null);}
     /**
      * Nastaví bitový posun patternu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param pulsSkew Bitový posun
      * @param onValueChanged Callback, který se zavolá po nastavení bitového posunu
      */
-    public void setPulsSkew(int pulsSkew, OnValueChanged onValueChanged) {
+    public void setPulsSkew(int pulsSkew, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (pulsSkew < 0)
+            throw new IllegalArgumentException();
         if (this.pulsSkew == pulsSkew)
             return;
 
