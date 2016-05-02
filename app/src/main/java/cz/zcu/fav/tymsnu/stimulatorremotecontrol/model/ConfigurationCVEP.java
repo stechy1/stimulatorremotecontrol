@@ -168,14 +168,16 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param pulsLength Dálka pulsu
      */
-    public void setPulsLength(int pulsLength) {setPulsLength(pulsLength, null);}
+    public void setPulsLength(int pulsLength) throws IllegalArgumentException {setPulsLength(pulsLength, null);}
     /**
      * Nastaví délku pulsu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param pulsLength Délka pulsu
      * @param onValueChanged Callback, který se zavolá po nastavení délky pulsu
      */
-    public void setPulsLength(int pulsLength, OnValueChanged onValueChanged) {
+    public void setPulsLength(int pulsLength, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (pulsLength < 0)
+            throw new IllegalArgumentException();
         if (this.pulsLength == pulsLength)
             return;
 

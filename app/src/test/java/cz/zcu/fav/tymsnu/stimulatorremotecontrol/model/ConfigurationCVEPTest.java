@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Testovací třída pro třídu ConfigurationCVEP
@@ -67,6 +68,13 @@ public class ConfigurationCVEPTest {
         int newValue = 10;
         configuration.setPulsLength(newValue);
         assertEquals("Chyba: parametr neodpovídá nastavené hodnotě", newValue, configuration.getPulsLength());
+    }
+
+    @Test
+    public void testSetPulsLengthNegative() throws Exception {
+        int newValue = -1;
+        configuration.setPulsLength(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru puls length");
     }
 
     @Test
