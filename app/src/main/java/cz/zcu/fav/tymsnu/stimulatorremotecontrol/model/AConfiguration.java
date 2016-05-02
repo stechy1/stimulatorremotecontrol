@@ -1,9 +1,11 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.IPacketable;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
 public abstract class AConfiguration<T extends AConfiguration<T>>
@@ -90,6 +92,11 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
 
     @Override
     public T duplicate(String newName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ArrayList<Packet> getPackets() throws UnsupportedOperationException {
         throw new UnsupportedOperationException();
     }
 
