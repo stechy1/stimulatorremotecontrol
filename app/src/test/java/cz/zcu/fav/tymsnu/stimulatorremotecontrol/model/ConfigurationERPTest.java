@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -85,11 +86,25 @@ public class ConfigurationERPTest {
         assertEquals("Chyba: nastavila se špatná hodnota parametru out", newValue, configuration.getOut());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetOutNegative() throws Exception {
+        int newValue = -1;
+        configuration.setOut(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru out");
+    }
+
     @Test
     public void testSetWaitPositive() throws Exception {
         int newValue = 5;
         configuration.setWait(newValue);
         assertEquals("Chyba: nastavila se špatná hodnota parametru wait", newValue, configuration.getWait());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetWaitNegative() throws Exception {
+        int newValue = -1;
+        configuration.setWait(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru wait");
     }
 
     @Test
@@ -281,23 +296,39 @@ public class ConfigurationERPTest {
     }
 
     @Test
-    public void testOutputSetUpPositive() throws Exception {
+    public void testOutputPulsSetUpPositive() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int upValue = 15;
         output.puls.setUp(upValue);
         assertEquals("Chyba: nastavila se špatná hodnota parametru up", upValue, output.puls.getUp());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputPulsSetUpNegative() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int upValue = -1;
+        output.puls.setUp(upValue);
+        fail("Chyba: nastavila se záporná hodnota parametru up");
+    }
+
     @Test
-    public void testOutputSetDownPositive() throws Exception {
+    public void testOutputPulsSetDownPositive() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int downValue = 15;
         output.puls.setDown(downValue);
         assertEquals("Chyba: nastavila se špatná hodnota parametru down", downValue, output.puls.getDown());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputPulsSetDownNegative() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int upValue = -1;
+        output.puls.setDown(upValue);
+        fail("Chyba: nastavila se záporná hodnota parametru down");
+    }
+
     @Test
-    public void testOutputSetValuePositive1() throws Exception {
+    public void testOutputDistributionSetValuePositive1() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int value = 0;
         output.distribution.setValue(value);
@@ -305,7 +336,7 @@ public class ConfigurationERPTest {
     }
 
     @Test
-    public void testOutputSetValuePositive2() throws Exception {
+    public void testOutputDistributionSetValuePositive2() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int value = 50;
         output.distribution.setValue(value);
@@ -313,7 +344,7 @@ public class ConfigurationERPTest {
     }
 
     @Test
-    public void testOutputSetValuePositive3() throws Exception {
+    public void testOutputDistributionSetValuePositive3() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int value = 100;
         output.distribution.setValue(value);
@@ -321,7 +352,7 @@ public class ConfigurationERPTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testOutputSetValueNegative1() throws Exception {
+    public void testOutputDistributionSetValueNegative1() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int value = -1;
         output.distribution.setValue(value);
@@ -329,7 +360,7 @@ public class ConfigurationERPTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testOutputSetValueNegative2() throws Exception {
+    public void testOutputDistributionSetValueNegative2() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int value = 101;
         output.distribution.setValue(value);
@@ -337,11 +368,19 @@ public class ConfigurationERPTest {
     }
 
     @Test
-    public void testOutputSetDelayPositive() throws Exception {
+    public void testOutputDistributionSetDelayPositive() throws Exception {
         ConfigurationERP.Output output = new ConfigurationERP.Output();
         int delay = 15;
         output.distribution.setDelay(delay);
         assertEquals("Chyba: nastavila se špatná hodnota parametru delay", delay, output.distribution.getDelay());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputDistributionSetDelayNegative() throws Exception {
+        ConfigurationERP.Output output = new ConfigurationERP.Output();
+        int delay = -1;
+        output.distribution.setDelay(delay);
+        fail("Chyba: nastavila se záporná hodnota parametru delay");
     }
 
     @Test

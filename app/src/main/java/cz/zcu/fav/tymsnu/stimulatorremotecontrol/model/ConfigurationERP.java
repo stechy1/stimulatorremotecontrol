@@ -202,13 +202,16 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
      * Nastaví parametr out
      * @param out Číslo
      */
-    public void setOut(int out) {setOut(out, null);}
+    public void setOut(int out) throws IllegalArgumentException {setOut(out, null);}
     /**
      * Nastaví parametr out
      * @param out Číslo
      * @param onValueChanged Callback, který se zavolá po změně hodnoty
      */
-    public void setOut(int out, OnValueChanged onValueChanged) {
+    public void setOut(int out, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (out < 0)
+            throw new IllegalArgumentException();
+
         if (this.out == out)
             return;
 
@@ -230,13 +233,16 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
      * Nastaví parametr wait
      * @param wait Číslo
      */
-    public void setWait(int wait) {setWait(wait, null);}
+    public void setWait(int wait) throws IllegalArgumentException {setWait(wait, null);}
     /**
      * Nastaví parametr wait
      * @param wait Číslo
      * @param onValueChanged Callback, který se zavolá po změně hodnoty
      */
-    public void setWait(int wait, OnValueChanged onValueChanged) {
+    public void setWait(int wait, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (wait < 0)
+            throw new IllegalArgumentException();
+
         if (this.wait == wait)
             return;
 
@@ -532,14 +538,17 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
              * Nastaví dobu [ms], po kterou je výstup aktivní
              * @param up Doba [ms] po kterou je výstup aktivní
              */
-            public void setUp(int up) {setUp(up, null);}
+            public void setUp(int up) throws IllegalArgumentException {setUp(up, null);}
 
             /**
              * Nastaví dobu [ms], po kterou je výstup aktivní
              * @param up Doba [ms] po kterou je výstup aktivní
              * @param onValueChanged Callback, který se zavolá po nastavení parametru
              */
-            public void setUp(int up, OnValueChanged onValueChanged) {
+            public void setUp(int up, OnValueChanged onValueChanged) throws IllegalArgumentException {
+                if (up < 0)
+                    throw new IllegalArgumentException();
+
                 if (this.up == up)
                     return;
 
@@ -561,13 +570,16 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
              * Nastaví dobu [ms] po kterou je výstup neaktivní
              * @param down Doba [ms] po kterou je výstup neaktivní
              */
-            public void setDown(int down) {setDown(down, null);}
+            public void setDown(int down) throws IllegalArgumentException {setDown(down, null);}
             /**
              * Nastaví dobu [ms] po kterou je výstup neaktivní
              * @param down Doba [ms] po kterou je výstup neaktivní
              * @param onValueChanged Callback, který se zavolá po nastavení parametru
              */
-            public void setDown(int down, OnValueChanged onValueChanged) {
+            public void setDown(int down, OnValueChanged onValueChanged) throws IllegalArgumentException {
+                if (down < 0)
+                    throw new IllegalArgumentException();
+
                 if (this.down == down)
                     return;
 
@@ -678,8 +690,10 @@ public final class ConfigurationERP extends AConfiguration<ConfigurationERP> {
                 return delay;
             }
 
-            public void setDelay(int delay) {setDelay(delay, null);}
-            public void setDelay(int delay, OnValueChanged onValueChanged) {
+            public void setDelay(int delay) throws IllegalArgumentException {setDelay(delay, null);}
+            public void setDelay(int delay, OnValueChanged onValueChanged) throws IllegalArgumentException {
+                if (delay < 0)
+                    throw new IllegalArgumentException();
                 if (this.delay == delay)
                     return;
 
