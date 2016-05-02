@@ -425,8 +425,11 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
             return up;
         }
 
-        public void setUp(int up) {setUp(up, null);}
-        public void setUp(int up, OnValueChanged onValueChanged) {
+        public void setUp(int up) throws IllegalArgumentException {setUp(up, null);}
+        public void setUp(int up, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (up < 0)
+                throw new IllegalArgumentException();
+
             if (this.up == up)
                 return;
 
@@ -440,8 +443,11 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
             return down;
         }
 
-        public void setDown(int down) {setDown(down, null);}
-        public void setDown(int down, OnValueChanged onValueChanged) {
+        public void setDown(int down) throws IllegalArgumentException {setDown(down, null);}
+        public void setDown(int down, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (down < 0)
+                throw new IllegalArgumentException();
+
             if (this.down == down)
                 return;
 

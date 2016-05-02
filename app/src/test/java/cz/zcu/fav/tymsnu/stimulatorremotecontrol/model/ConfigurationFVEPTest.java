@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Testovací třída
@@ -230,19 +231,35 @@ public class ConfigurationFVEPTest {
     }
 
     @Test
-    public void testOutputPulsSetUp() throws Exception {
+    public void testOutputPulsSetUpPositive() throws Exception {
         ConfigurationFVEP.Puls puls = new ConfigurationFVEP.Puls();
         int newValue = 10;
         puls.setUp(newValue);
-        assertEquals("Chyba: nastavila se špatná hodnota argumentu up", newValue, puls.getUp());
+        assertEquals("Chyba: nastavila se špatná hodnota parametru up", newValue, puls.getUp());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputPulsSetUpNegative() throws Exception {
+        ConfigurationFVEP.Puls puls = new ConfigurationFVEP.Puls();
+        int newValue = -1;
+        puls.setUp(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru up");
     }
 
     @Test
-    public void testOutputPulsSetDown() throws Exception {
+    public void testOutputPulsSetDownPositive() throws Exception {
         ConfigurationFVEP.Puls puls = new ConfigurationFVEP.Puls();
         int newValue = 10;
         puls.setDown(newValue);
-        assertEquals("Chyba: nastavila se špatná hodnota argumentu down", newValue, puls.getDown());
+        assertEquals("Chyba: nastavila se špatná hodnota parametru down", newValue, puls.getDown());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOutputPulsSetDownNegative() throws Exception {
+        ConfigurationFVEP.Puls puls = new ConfigurationFVEP.Puls();
+        int newValue = -1;
+        puls.setDown(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru down");
     }
 
     @Test
