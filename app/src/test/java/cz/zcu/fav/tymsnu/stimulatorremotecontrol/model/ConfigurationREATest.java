@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Testovací třída pro třídu ConfigurationREA
@@ -42,6 +43,62 @@ public class ConfigurationREATest {
         assertEquals("Chyba: hodnota parametru A není stejná", configuration.getA(), duplicated.getA());
         assertEquals("Chyba: hodnota parametru H není stejná", configuration.getH(), duplicated.getH());
         assertEquals("Chyba: hodnota parametru W není stejná", configuration.getW(), duplicated.getW());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCycleCountNegative() throws Exception {
+        int newValue = -1;
+        configuration.setCycleCount(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru cycle count");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWaitFixedNegative() throws Exception {
+        int newValue = -1;
+        configuration.setWaitFixed(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru wait fixed");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWaitRandomNegative() throws Exception {
+        int newValue = -1;
+        configuration.setWaitRandom(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru wait random");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMissTimeNegative() throws Exception {
+        int newValue = -1;
+        configuration.setMissTime(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru miss time");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testOnFailNegative() throws Exception {
+        int newValue = -1;
+        configuration.setOnFail(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru on fail");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testANegative() throws Exception {
+        int newValue = -1;
+        configuration.setA(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru A");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWNegative() throws Exception {
+        int newValue = -1;
+        configuration.setW(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru W");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHNegative() throws Exception {
+        int newValue = -1;
+        configuration.setH(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru H");
     }
 
     @Test

@@ -149,8 +149,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return cycleCount;
     }
 
-    public void setCycleCount(int cycleCount) {setCycleCount(cycleCount, null);}
-    public void setCycleCount(int cycleCount, OnValueChanged onValueChanged) {
+    public void setCycleCount(int cycleCount) throws IllegalArgumentException {setCycleCount(cycleCount, null);}
+    public void setCycleCount(int cycleCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (cycleCount < 0)
+            throw new IllegalArgumentException();
+
         if (this.cycleCount == cycleCount)
             return;
 
@@ -164,8 +167,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return waitFixed;
     }
 
-    public void setWaitFixed(int waitFixed) {setWaitFixed(waitFixed, null);}
-    public void setWaitFixed(int waitFixed, OnValueChanged onValueChanged) {
+    public void setWaitFixed(int waitFixed) throws IllegalArgumentException {setWaitFixed(waitFixed, null);}
+    public void setWaitFixed(int waitFixed, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (waitFixed < 0)
+            throw new IllegalArgumentException();
+
         if (this.waitFixed == waitFixed)
             return;
 
@@ -179,8 +185,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return waitRandom;
     }
 
-    public void setWaitRandom(int waitRandom) {setWaitRandom(waitRandom, null);}
-    public void setWaitRandom(int waitRandom, OnValueChanged onValueChanged) {
+    public void setWaitRandom(int waitRandom) throws IllegalArgumentException {setWaitRandom(waitRandom, null);}
+    public void setWaitRandom(int waitRandom, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (waitRandom < 0)
+            throw new IllegalArgumentException();
+
         if (this.waitRandom == waitRandom)
             return;
 
@@ -194,8 +203,10 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return missTime;
     }
 
-    public void setMissTime(int missTime) {setMissTime(missTime, null);}
-    public void setMissTime(int missTime, OnValueChanged onValueChanged) {
+    public void setMissTime(int missTime) throws IllegalArgumentException {setMissTime(missTime, null);}
+    public void setMissTime(int missTime, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (missTime < 0)
+            throw new IllegalArgumentException();
         if (this.missTime == missTime)
             return;
 
@@ -239,8 +250,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return onFail;
     }
 
-    public void setOnFail(int onFail) {setOnFail(onFail, null);}
-    public void setOnFail(int onFail, OnValueChanged onValueChanged) {
+    public void setOnFail(int onFail) throws IllegalArgumentException {setOnFail(onFail, null);}
+    public void setOnFail(int onFail, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (onFail < 0)
+            throw new IllegalArgumentException();
+
         if (this.onFail == onFail)
             return;
 
@@ -272,8 +286,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return a;
     }
 
-    public void setA(int a) {setA(a, null);}
-    public void setA(int a, OnValueChanged onValueChanged) {
+    public void setA(int a) throws IllegalArgumentException {setA(a, null);}
+    public void setA(int a, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (a < 0)
+            throw new IllegalArgumentException();
+
         if (this.a == a)
             return;
 
@@ -287,8 +304,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return h;
     }
 
-    public void setH(int h) {setH(h, null);}
-    public void setH(int h, OnValueChanged onValueChanged) {
+    public void setH(int h) throws IllegalArgumentException {setH(h, null);}
+    public void setH(int h, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (h < 0)
+            throw new IllegalArgumentException();
+
         if (this.h == h)
             return;
 
@@ -302,8 +322,11 @@ public class ConfigurationREA extends AConfiguration<ConfigurationREA> {
         return w;
     }
 
-    public void setW(int w) {setW(w, null);}
-    public void setW(int w, OnValueChanged onValueChanged) {
+    public void setW(int w) throws IllegalArgumentException {setW(w, null);}
+    public void setW(int w, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (w < 0)
+            throw new IllegalArgumentException();
+
         if (this.w == w)
             return;
 
