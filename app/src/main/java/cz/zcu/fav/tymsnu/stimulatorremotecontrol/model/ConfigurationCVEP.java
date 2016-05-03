@@ -201,18 +201,21 @@ public class ConfigurationCVEP extends AConfiguration<ConfigurationCVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param bitShift Bitový posun
      */
-    public void setBitShift(int bitShift) {setBitShift(bitShift, null);}
+    public void setBitShift(int bitShift) throws IllegalArgumentException {setBitShift(bitShift, null);}
     /**
      * Nastaví bitový posun patternu
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
-     * @param pulsSkew Bitový posun
+     * @param bitShift Bitový posun
      * @param onValueChanged Callback, který se zavolá po nastavení bitového posunu
      */
-    public void setBitShift(int pulsSkew, OnValueChanged onValueChanged) {
-        if (this.bitShift == pulsSkew)
+    public void setBitShift(int bitShift, OnValueChanged onValueChanged) throws IllegalArgumentException {
+        if (bitShift < 0)
+            throw new IllegalArgumentException();
+
+        if (this.bitShift == bitShift)
             return;
 
-        this.bitShift = pulsSkew;
+        this.bitShift = bitShift;
         recalculateOutputs();
 
         if (onValueChanged != null)

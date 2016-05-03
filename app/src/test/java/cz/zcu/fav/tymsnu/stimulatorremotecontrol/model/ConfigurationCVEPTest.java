@@ -78,10 +78,17 @@ public class ConfigurationCVEPTest {
     }
 
     @Test
-    public void testSetBitShift() throws Exception {
+    public void testSetBitShiftPositive() throws Exception {
         int sameValue = configuration.getBitShift();
         configuration.setBitShift(sameValue);
         assertEquals("Chyba: nastavila se špatná hodnota parametru bit shift", sameValue, configuration.getBitShift());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetBitShiftNegative() throws Exception {
+        int newValue = -1;
+        configuration.setBitShift(newValue);
+        fail("Chyba: nastavila se záporná hodnota parametru bit shift");
     }
 
     @Test
