@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Observable;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.CorruptedConfigurationException;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory.IFactory;
 
 public class Manager<T extends AConfiguration<T>> extends Observable {
@@ -66,7 +67,7 @@ public class Manager<T extends AConfiguration<T>> extends Observable {
      * @param item Reference na načítaný item
      */
     private void loadItem(T item)  {
-        if (item.loaded) return;
+        if (item.loaded || item.corrupted) return;
 
         try {
             File file = new File(workingDirectory, item.getName() + EXTENTION);
@@ -75,6 +76,8 @@ public class Manager<T extends AConfiguration<T>> extends Observable {
             item.loaded = true;
         } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (IllegalArgumentException ex) {
+            item.corrupted = true;
         }
     }
     // endregion
@@ -296,12 +299,17 @@ public class Manager<T extends AConfiguration<T>> extends Observable {
         if (selectedItem != null && item.equals(selectedItem))
             return;
 
+        loadItem(item);
+
+        if (item.corrupted) {
+            if (callback != null)
+                callback.callback(item);
+            return;
+        }
+
         if (this.selectedItem != null) {
             this.selectedItem.selected = false;
         }
-
-        if (!item.loaded)
-            loadItem(item);
 
         item.selected = true;
         this.selectedItem = item;
@@ -318,7 +326,9 @@ public class Manager<T extends AConfiguration<T>> extends Observable {
      * @param newName Nový název objektu
      * @return Hlubokou kopii
      */
-    public T duplicate(T source, String newName) {
+    public T duplicate(T source, String newName) throws CorruptedConfigurationException {
+        if (source.corrupted)
+            throw new CorruptedConfigurationException();
         return source.duplicate(newName);
     }
 

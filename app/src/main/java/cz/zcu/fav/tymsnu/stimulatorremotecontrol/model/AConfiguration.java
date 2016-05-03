@@ -37,6 +37,8 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
     public boolean selected;
     // Příznak, který určuje, zda-li došlo ke změnš interních hodnot itemu
     public boolean changed;
+    // Přiznak, který určuje, zda-li je konfigurace poškozená - nelze s ní pracovat
+    public boolean corrupted;
     // endregion
 
     // region Constructors

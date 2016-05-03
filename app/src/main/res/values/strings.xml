@@ -214,6 +214,7 @@
     <!-- Exceptions -->
     <string name="exception_general">Failed to perform action</string>
     <string name="value_out_of_range">Value: <xliff:g id="value">%1$s</xliff:g> is out of range</string>
+    <string name="exception_corrupted_configuration">Configuration is corrupted</string>
 
     <!-- Alerts -->
     <string name="unknown_device">Device not recognized</string>

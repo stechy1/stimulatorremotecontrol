@@ -47,14 +47,23 @@ public class SimpleConfigurationAdapter<T extends AConfiguration<T>> extends Arr
         }
 
         T configuration = objects.get(position);
-        schemeHolder.imageView1.setImageResource(configuration.selected ?
-                R.drawable.checkbox_marked_outline : R.drawable.checkbox_blank_outline);
+        schemeHolder.imageView1.setImageResource(getRightIcon(configuration));
         schemeHolder.imageView2.setVisibility(configuration.changed ? View.VISIBLE : View.INVISIBLE);
         schemeHolder.text1.setText(configuration.getName());
         schemeHolder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
-        schemeHolder.text2.setText("Count: " + (configuration.loaded ? configuration.getOutputCount() : "unknown"));
+        schemeHolder.text2.setText("Count: " + (configuration.loaded ? String.valueOf(configuration.getOutputCount()) : "unknown"));
 
         return convertView;
+    }
+
+    private int getRightIcon(AConfiguration<T> configuration) {
+        if (configuration.selected)
+            return R.drawable.checkbox_marked_outline;
+
+        if (configuration.corrupted)
+            return R.drawable.corrupted_file;
+        else
+            return R.drawable.checkbox_blank_outline;
     }
 
     private static class SchemeHolder {
