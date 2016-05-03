@@ -213,24 +213,36 @@ public final class Screen3 extends ASimpleScreen<ConfigurationERP>
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.puls.getUp());
-                    output.puls.setUp(val, new AConfiguration.OnValueChanged() {
-                        @Override
-                        public void changed() {
-                            notifyLock = true;
-                        }
-                    });
+                    try {
+                        output.puls.setUp(val, new AConfiguration.OnValueChanged() {
+                            @Override
+                            public void changed() {
+                                notifyLock = true;
+                            }
+                        });
+                    } catch (IllegalArgumentException ex) {
+                        notifyLock = false;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, val), Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
                 break;
             case PULSE_DOWN:
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.puls.getDown());
+                    try {
                     output.puls.setDown(val, new AConfiguration.OnValueChanged() {
                         @Override
                         public void changed() {
                             notifyLock = true;
                         }
                     });
+                    } catch (IllegalArgumentException ex) {
+                        notifyLock = false;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, val), Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
                 break;
 
@@ -238,18 +250,24 @@ public final class Screen3 extends ASimpleScreen<ConfigurationERP>
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.distribution.getValue());
-                    if (output.distribution.isValueInRange(val) && output.canUpdateDistribution(outputs, val)) {
-                        output.distribution.setValue(val, new AConfiguration.OnValueChanged() {
-                            @Override
-                            public void changed() {
-                                notifyLock = true;
-                            }
-                        });
-                    }
-                    else {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
+                    try {
+                        if (output.canUpdateDistribution(outputs, val)) {
+                            output.distribution.setValue(val, new AConfiguration.OnValueChanged() {
+                                @Override
+                                public void changed() {
+                                    notifyLock = true;
+                                }
+                            });
+                        }
+                        else {
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range), Snackbar.LENGTH_SHORT).show();
+                            notifyLock = false;
+                            break;
+                        }
+                    } catch (IllegalArgumentException ex) {
                         notifyLock = false;
-                        break;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, val), Snackbar.LENGTH_SHORT).show();
+                        return;
                     }
                 }
                 break;
@@ -257,12 +275,18 @@ public final class Screen3 extends ASimpleScreen<ConfigurationERP>
                 for (int i = 0; i < visible; i++) {
                     Output output = outputs.get(i);
                     int val = EditTextReader.readValue(inputs[i], output.distribution.getDelay());
+                    try {
                         output.distribution.setDelay(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
                             }
                         });
+                    } catch (IllegalArgumentException ex) {
+                        notifyLock = false;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, val), Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
                 break;
 
@@ -270,17 +294,17 @@ public final class Screen3 extends ASimpleScreen<ConfigurationERP>
                 for (int i = 0; i < visible; i++) {
                     int val = EditTextReader.readValue(inputs[i]);
                     Output output = outputs.get(i);
-                    if (output.isBrightnessInRange(val)) {
+                    try {
                         output.setBrightness(val, new AConfiguration.OnValueChanged() {
                             @Override
                             public void changed() {
                                 notifyLock = true;
                             }
                         });
-                    } else {
-                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.exception_out_of_range), Snackbar.LENGTH_SHORT).show();
+                    } catch (IllegalArgumentException ex) {
                         notifyLock = false;
-                        break;
+                        Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, val), Snackbar.LENGTH_SHORT).show();
+                        return;
                     }
                 }
                 break;

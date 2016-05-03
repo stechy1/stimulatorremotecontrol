@@ -137,7 +137,7 @@
 
     <!-- Exceptions -->
     <string name="exception_general">Akci se nepodařilo dokončit</string>
-    <string name="exception_out_of_range">Hodnota je mimo rozsah</string>
+    <string name="value_out_of_range">Hodnota: <xliff:g id="value">%1$s</xliff:g> je mimo rozsah</string>
 
     <!-- Alerts -->
     <string name="unknown_device">Zařízení nebylo rozpoznáno</string>
