@@ -25,6 +25,9 @@
 
     <string name="nav_text_item_1">ERP</string>
     <string name="nav_text_item_2">BCI</string>
+    <string name="nav_text_item_2_1">f-VEP</string>
+    <string name="nav_text_item_2_2">t-VEP</string>
+    <string name="nav_text_item_2_3">c-VEP</string>
     <string name="nav_text_item_3">Reaction experiment</string>
     <string name="nav_text_item_4">Autostimulation</string>
     <string name="nav_text_item_5">Biosensor logger</string>
@@ -59,14 +62,14 @@
     <!-- Output titles -->
     <string name="output_title">. VÝSTUP</string>
     <string name="output_title_count">Počet výstupů</string>
-    <string name="output_title_puls_up">Pulse - up [ms]</string>
-    <string name="output_title_puls_down">Pulse - down [ms]</string>
+    <string name="output_title_puls_up">Puls - nahoru [ms]</string>
+    <string name="output_title_puls_down">Puls - dolu [ms]</string>
     <string name="output_title_distribution_value">Distribution - value [ms]</string>
     <string name="output_title_distribution_delay">Distribution - delay [%]</string>
-    <string name="output_title_brightness">Brightness [%]</string>
-    <string name="output_title_frequency">Frequency (0 – 255)</string>
+    <string name="output_title_brightness">Jas [%]</string>
+    <string name="output_title_frequency">Frekvence (0 – 255)</string>
     <string name="output_title_duty_cycle">Duty cycle (0 – 255)</string>
-    <string name="output_title_cycle_count">Cycle count</string>
+    <string name="output_title_cycle_count">Počet cyklů</string>
     <string name="output_title_wait_fixed">Wait - fixed</string>
     <string name="output_title_wait_random">Wait - random</string>
     <string name="output_title_miss_time">Miss time [ms]</string>
@@ -76,6 +79,9 @@
     <string name="output_title_sex">Pohlaví</string>
     <string name="output_title_sex_male">Muž</string>
     <string name="output_title_sex_female">Žena</string>
+    <string name="output_title_age">Věk</string>
+    <string name="output_title_weight">Váha</string>
+    <string name="output_title_height">Výška</string>
 
     <string name="out">Out</string>
     <string name="wait">Wait</string>
@@ -95,6 +101,11 @@
 
     <string name="context_options">Možnosti</string>
     <string name="context_set_name">Zadejte název</string>
+
+    <!-- Configuration item -->
+    <string name="output_count">počet výstupů: <xliff:g id="value">%1$s</xliff:g></string>
+    <string name="output_count_unknown">neznámý</string>
+    <string name="corrupted_configuration">konfigurace je poškozena</string>
 
     <!-- ERP screens -->
 
@@ -127,7 +138,6 @@
 
     <!-- BCI f-VEP screen - 3 -->
 
-    <string name="bci_fvep_screen_3_output">. STIMUL</string>
     <!-- BCI t-VEP screen - 2 -->
     <string name="bci_tvep_screen_2_pattern_length">Pattern length</string>
 

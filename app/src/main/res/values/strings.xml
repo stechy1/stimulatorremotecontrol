@@ -103,6 +103,9 @@
     <string name="output_title_sex">Sex</string>
     <string name="output_title_sex_male">Male</string>
     <string name="output_title_sex_female">Female</string>
+    <string name="output_title_age">Age</string>
+    <string name="output_title_weight">Weight</string>
+    <string name="output_title_height">Height</string>
 
 
     <string name="out">Out</string>
@@ -123,6 +126,11 @@
 
     <string name="context_options">Options</string>
     <string name="context_set_name">Set name</string>
+
+    <!-- Configuration item -->
+    <string name="output_count">output count: <xliff:g id="value">%1$s</xliff:g></string>
+    <string name="output_count_unknown">unknown</string>
+    <string name="corrupted_configuration">configuration is corrupted</string>
 
     <!-- ERP screens -->
     <string-array name="erp_screen_titles">
@@ -178,7 +186,6 @@
         <item>@string/output_title_brightness</item>
 
     </string-array>
-    <string name="bci_fvep_screen_3_output">. STIMUL</string>
     <!-- BCI t-VEP screen - 2 -->
     <string-array name="bci_tvep_screen_titles">
         <item>@string/screen_title_tvep</item>

@@ -20,11 +20,13 @@ public class SimpleConfigurationAdapter<T extends AConfiguration<T>> extends Arr
     private final Context context;
     private final List<T> objects;
 
+
     public SimpleConfigurationAdapter(Context context, List<T> objects) {
         super(context, R.layout.control_list_view_item, objects);
 
         this.context = context;
         this.objects = objects;
+
     }
 
     @Override
@@ -51,19 +53,39 @@ public class SimpleConfigurationAdapter<T extends AConfiguration<T>> extends Arr
         schemeHolder.imageView2.setVisibility(configuration.changed ? View.VISIBLE : View.INVISIBLE);
         schemeHolder.text1.setText(configuration.getName());
         schemeHolder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
-        schemeHolder.text2.setText("Count: " + (configuration.loaded ? String.valueOf(configuration.getOutputCount()) : "unknown"));
+        schemeHolder.text2.setText(getDescription(configuration));
 
         return convertView;
     }
 
+    /**
+     * Vrátí správnou ikonu podle stavu konfigurace
+     * @param configuration Konfigurace
+     * @return Ikonu stavu konfigurace
+     */
     private int getRightIcon(AConfiguration<T> configuration) {
         if (configuration.selected)
             return R.drawable.checkbox_marked_outline;
 
         if (configuration.corrupted)
             return R.drawable.corrupted_file;
-        else
-            return R.drawable.checkbox_blank_outline;
+
+        return R.drawable.checkbox_blank_outline;
+    }
+
+    /**
+     * Vrátí správný popis konfigurace (podnadpis v itemu konfigurace)
+     * @param configuration Konfigurace
+     * @return Podnadpis konfigurace
+     */
+    private String getDescription(AConfiguration<T> configuration) {
+        if (configuration.corrupted)
+            return context.getString(R.string.corrupted_configuration);
+
+        if (configuration.loaded)
+            return context.getString(R.string.output_count, configuration.getOutputCount());
+
+        return context.getString(R.string.output_count, context.getString(R.string.output_count_unknown));
     }
 
     private static class SchemeHolder {

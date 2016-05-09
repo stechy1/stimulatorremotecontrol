@@ -32,7 +32,7 @@ public class MySeekBar extends RelativeLayout implements SeekBar.OnSeekBarChange
         mActValue = (TextView) findViewById(R.id.seekBar_value);
         mSeekBar = (SeekBar) findViewById(R.id.seekBar);
 
-        mActValue.setText(actValue + "");
+        mActValue.setText(String.valueOf(actValue));
         mSeekBar.setMax(maxValue);
         mSeekBar.setProgress(actValue);
 
@@ -56,7 +56,7 @@ public class MySeekBar extends RelativeLayout implements SeekBar.OnSeekBarChange
     // region SeekBar listeners
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mActValue.setText(progress + "");
+        mActValue.setText(String.valueOf(progress));
 
         if (mListener != null)
             mListener.onChange(progress);

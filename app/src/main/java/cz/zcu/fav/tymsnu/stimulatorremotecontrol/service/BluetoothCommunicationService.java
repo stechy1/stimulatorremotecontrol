@@ -298,7 +298,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
             Log.d(TAG, "BEGIN mAcceptThread" + this);
             setName("AcceptThread");
 
-            BluetoothSocket socket = null;
+            BluetoothSocket socket;
 
             // Listen to the server socket if we're not connected
             while (mState != STATE_CONNECTED) {

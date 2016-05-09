@@ -1,8 +1,6 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 

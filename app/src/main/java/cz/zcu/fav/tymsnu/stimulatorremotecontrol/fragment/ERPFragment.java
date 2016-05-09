@@ -62,10 +62,8 @@ public class ERPFragment extends ASimpleFragment implements ViewPager.OnPageChan
 
     private File createWorkingDirectory() {
         File baseFolder = getActivity().getFilesDir();
-        File erpFolder = new File(baseFolder, Constants.FOLDER_ERP);
-        erpFolder.mkdirs();
 
-        return erpFolder;
+        return new File(baseFolder, Constants.FOLDER_ERP);
     }
 
     // region ViewPager page changed

@@ -59,21 +59,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="A" />
+                        android:text="@string/output_title_age" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="W" />
+                        android:text="@string/output_title_weight" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="H" />
+                        android:text="@string/output_title_height" />
                 </LinearLayout>
 
                 <LinearLayout

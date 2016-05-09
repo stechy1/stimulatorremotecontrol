@@ -50,8 +50,6 @@ public class Manager<T extends AConfiguration<T>> extends Observable {
     /**
      * Načte všechny itemy do paměti
      * Načte pouze jejich názvy
-     * @return Pole o dvou prvcích. První prvek obsahuje počet úspěšně načtených itemů,
-     *         druhý prvek počet neúspěšně načtených itemů
      */
     private void loadItems(Callback callback)  {
         if (scanned || workingDirectory == null)

@@ -1,10 +1,8 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.custom.matchers;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -34,12 +32,11 @@ public class VectorDrawableMatcher extends TypeSafeMatcher<View> {
             return imageView.getDrawable() == null;
         }
         Resources resources = target.getContext().getResources();
-        Drawable expectedDrawable = resources.getDrawable(expectedId);
+        Drawable expectedDrawable = ResourcesCompat.getDrawable(resources, expectedId, null);
         resourceName = resources.getResourceEntryName(expectedId);
 
-        if (expectedDrawable == null) {
+        if (expectedDrawable == null)
             return false;
-        }
 
         return imageView.getDrawable().getConstantState().equals(expectedDrawable.getConstantState());
     }

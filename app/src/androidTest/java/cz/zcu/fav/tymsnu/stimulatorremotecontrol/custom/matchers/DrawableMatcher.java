@@ -4,8 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import org.hamcrest.Description;
@@ -35,7 +35,7 @@ public class DrawableMatcher extends TypeSafeMatcher<View> {
         BitmapDrawable bmd = (BitmapDrawable) imageView.getDrawable();
 
         Resources resources = target.getContext().getResources();
-        Drawable expectedDrawable = resources.getDrawable(expectedId);
+        Drawable expectedDrawable = ResourcesCompat.getDrawable(resources, expectedId, null);
         resourceName = resources.getResourceEntryName(expectedId);
         if (expectedDrawable == null) {
             return false;

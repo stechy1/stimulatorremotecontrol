@@ -65,10 +65,8 @@ public class TVEPFragment extends ASimpleFragment
     private File createWorkingDirectory() {
         File baseFolder = getActivity().getFilesDir();
         File bciFolder = new File(baseFolder, Constants.FOLDER_BCI);
-        File fvepFolder = new File(bciFolder, Constants.FOLDER_TVEP);
-        fvepFolder.mkdirs();
 
-        return fvepFolder;
+        return new File(bciFolder, Constants.FOLDER_TVEP);
     }
 
 

@@ -39,7 +39,7 @@ public class ConfigurationTVEP extends AConfiguration<ConfigurationTVEP> {
      * @param patternLength Délka paternu
      * @param pulsLength Délka pulzu
      * @param pulsSkew Délka mezery mezi dvěma pulzy
-     * @param brightness
+     * @param brightness Jas
      * @param patternList Kolekce výstupů
      * @throws IllegalArgumentException Pokud je parametr outputList null
      */

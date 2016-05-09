@@ -54,7 +54,7 @@
             android:icon="@android:drawable/ic_menu_manage"/>
         <item
             android:id="@+id/nav_help"
-            android:title="Help"
+            android:title="@string/nav_text_help"
             android:icon="@drawable/help"
             />
         <item
