@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.TextView;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.BuildConfig;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 
 public class AboutFragment extends ASimpleFragment {

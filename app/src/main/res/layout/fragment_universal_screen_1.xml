@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="5dp"
-    android:paddingRight="5dp">
+    android:paddingRight="5dp"
+    android:id="@+id/fragment_universal_screen_1">
 
     <ListView
         android:layout_width="match_parent"

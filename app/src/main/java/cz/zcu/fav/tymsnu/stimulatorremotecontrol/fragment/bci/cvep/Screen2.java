@@ -26,7 +26,7 @@ public class Screen2 extends ASimpleScreen<ConfigurationCVEP>
         implements View.OnClickListener, Observer, MySeekBar.OnMySeekBarValueChangeListener {
 
     private SwipeNumberPicker numberPicker;
-    private EditText textViewPulsLength;
+    private EditText editTextPulsLength;
     private SwipeNumberPicker numberPickerBitShift;
     private MySeekBar seekBar;
 
@@ -43,9 +43,11 @@ public class Screen2 extends ASimpleScreen<ConfigurationCVEP>
         numberPicker.setMaxValue(8);
         numberPicker.setOnValueChangeListener(new OutputCountValueListener());
 
-        textViewPulsLength = (EditText) v.findViewById(R.id.cvep_edit_text_puls_length);
+        editTextPulsLength = (EditText) v.findViewById(R.id.cvep_edit_text_puls_length);
 
         numberPickerBitShift = (SwipeNumberPicker) v.findViewById(R.id.cvep_swipe_number_picker_bit_shift);
+        numberPickerBitShift.setMinValue(0);
+        numberPickerBitShift.setMaxValue(31);
         numberPickerBitShift.setOnValueChangeListener(new BitShiftValueListener());
 
         seekBar = (MySeekBar) v.findViewById(R.id.cvep_seekbar_brightness);
@@ -81,14 +83,21 @@ public class Screen2 extends ASimpleScreen<ConfigurationCVEP>
         if (configuration == null)
             return;
 
-        configuration.setPulsLength(EditTextReader.readValue(textViewPulsLength, configuration.getPulsLength()), new AConfiguration.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                editTextChanged = true;
-                manager.notifySelectedItemInternalChange();
-            }
-        });
+        try {
+            configuration.setPulsLength(EditTextReader.readValue(editTextPulsLength, configuration.getPulsLength()), new AConfiguration.OnValueChanged() {
+                @Override
+                public void changed() {
+                    notifyLock = true;
+                    editTextChanged = true;
+                    manager.notifySelectedItemInternalChange();
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            notifyLock = false;
+            editTextChanged = false;
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, EditTextReader.readValue(editTextPulsLength)), Snackbar.LENGTH_SHORT).show();
+            return;
+        }
 
         if (editTextChanged) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
@@ -127,7 +136,7 @@ public class Screen2 extends ASimpleScreen<ConfigurationCVEP>
         ConfigurationCVEP configuration = (ConfigurationCVEP) data;
 
         numberPicker.setValue(configuration.getOutputCount(), false);
-        textViewPulsLength.setText(String.valueOf(configuration.getPulsLength()));
+        editTextPulsLength.setText(String.valueOf(configuration.getPulsLength()));
         numberPickerBitShift.setText(String.valueOf(configuration.getBitShift()));
         seekBar.setValue(configuration.getBrightness());
     }

@@ -64,10 +64,8 @@ public class ReactionFragment extends ASimpleFragment
 
     private File createWorkingDirectory() {
         File baseFolder = getActivity().getFilesDir();
-        File erpFolder = new File(baseFolder, Constants.FOLDER_REA);
-        erpFolder.mkdirs();
 
-        return erpFolder;
+        return new File(baseFolder, Constants.FOLDER_REA);
     }
 
     // region ViewPager page changed

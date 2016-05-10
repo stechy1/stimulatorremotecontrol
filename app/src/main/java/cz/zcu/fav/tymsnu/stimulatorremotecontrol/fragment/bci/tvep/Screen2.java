@@ -102,22 +102,36 @@ public class Screen2 extends ASimpleScreen<ConfigurationTVEP>
         if (configuration == null)
             return;
 
-        configuration.setPulsLength(EditTextReader.readValue(editTextPulsLength, configuration.getPulsLength()), new AConfiguration.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                editTextChanged = true;
-                manager.notifySelectedItemInternalChange();
-            }
-        });
-        configuration.setPulsSkew(EditTextReader.readValue(editTextBitSkew, configuration.getPulsSkew()), new AConfiguration.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                editTextChanged = true;
-                manager.notifySelectedItemInternalChange();
-            }
-        });
+        try {
+            configuration.setPulsLength(EditTextReader.readValue(editTextPulsLength, configuration.getPulsLength()), new AConfiguration.OnValueChanged() {
+                @Override
+                public void changed() {
+                    notifyLock = true;
+                    editTextChanged = true;
+                    manager.notifySelectedItemInternalChange();
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            notifyLock = false;
+            editTextChanged = false;
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, EditTextReader.readValue(editTextPulsLength)), Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            configuration.setPulsSkew(EditTextReader.readValue(editTextBitSkew, configuration.getPulsSkew()), new AConfiguration.OnValueChanged() {
+                @Override
+                public void changed() {
+                    notifyLock = true;
+                    editTextChanged = true;
+                    manager.notifySelectedItemInternalChange();
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            notifyLock = false;
+            editTextChanged = false;
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, EditTextReader.readValue(editTextBitSkew)), Snackbar.LENGTH_SHORT).show();
+            return;
+        }
 
         if (editTextChanged) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();

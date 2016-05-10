@@ -42,4 +42,15 @@ public class Code {
     public Code getNext() {
         return next;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+        if(o == null || o.getClass() != this.getClass()) return false;
+
+        Code a = (Code) o;
+        if(this.code == a.getCode() && this.description.equals(a.getDescription())) return true;
+
+        return false;
+    }
 }

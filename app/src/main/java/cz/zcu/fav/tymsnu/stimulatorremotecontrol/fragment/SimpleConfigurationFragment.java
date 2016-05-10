@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,6 +28,7 @@ import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.adapter.SimpleConfigurationAdapter;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.CorruptedConfigurationException;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.manager.Manager;
 
 public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends ASimpleScreen<T>
@@ -77,17 +77,17 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
 
     // ListView onItemClick
     @Override
+    @SuppressWarnings("unchecked")
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
         T selected = (T) listView.getItemAtPosition(position);
         manager.select(selected, new Manager.Callback() {
             @Override
             public void callback(Object object) {
-                ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
-                img.setImageResource(R.drawable.checkbox_marked_outline);
+                /*ImageView img = (ImageView) view.findViewById(R.id.control_list_view_image);
+                img.setImageResource(R.drawable.checkbox_marked_outline);*/
+                ((SimpleConfigurationAdapter) listView.getAdapter()).notifyDataSetChanged();
             }
         });
-
-        ((SimpleConfigurationAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     // ListView onCreateContextMenu
@@ -118,6 +118,8 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
                         } catch (IllegalArgumentException ex) {
                             Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
                             canDismiss = false;
+                        } catch (CorruptedConfigurationException ex) {
+                            Toast.makeText(getContext(), R.string.exception_corrupted_configuration, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -165,6 +167,7 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
         canDismiss = true;
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint(getString(R.string.hint_config_name));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.context_set_name);

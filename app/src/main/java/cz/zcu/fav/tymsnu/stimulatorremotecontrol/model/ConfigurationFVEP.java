@@ -18,12 +18,28 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
     // endregion
 
     // region Constructors
-    public ConfigurationFVEP(String name) {
+    /**
+     * Jednoduchý konstruktor třídy ConfigurationFVEP s výchozím počtem výstupů
+     * @param name Název konfigurace
+     * @throws IllegalArgumentException Pokud je parametr outputList null
+     */
+    public ConfigurationFVEP(String name) throws IllegalArgumentException {
         this(name, DEF_OUTPUT_COUNT, new ArrayList<Output>());
     }
 
-    public ConfigurationFVEP(String name, int outputCount, List<Output> outputList) {
+    /**
+     * Konstruktor třídy ConfigurationFVEP
+     * @param name Název konfigurace
+     * @param outputCount Počet výstupů
+     * @param outputList Kolekce výstupů.
+     *                   Pokud velikost kolekce nebude shodná s parametrem počet výstupů, tak se kolekce automaticky přeurčí
+     * @throws IllegalArgumentException Pokud je parametr outputList null
+     */
+    public ConfigurationFVEP(String name, int outputCount, List<Output> outputList) throws IllegalArgumentException {
         super(name, outputCount);
+
+        if (outputList == null)
+            throw new IllegalArgumentException();
 
         this.outputList = outputList;
 
@@ -60,13 +76,31 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
         List<Output> outputList = new ArrayList<>(outputCount);
 
         for (int i = 0; i < outputCount; i++) {
-            outputList.add(new Output(this.outputList.get(i)));
+            outputList.add(Output.clone(this.outputList.get(i)));
         }
 
         return new ConfigurationFVEP(newName, outputCount, outputList);
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ConfigurationFVEP that = (ConfigurationFVEP) o;
+
+        return outputList.equals(that.outputList);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + outputList.hashCode();
+        return result;
+    }
+
     public ArrayList<Packet> getPackets() {
 
         ArrayList<Packet> packets = new ArrayList<>();
@@ -93,6 +127,7 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
 
         return packets;
     }
+
     // endregion
 
     // region Getters & Setters
@@ -101,8 +136,9 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
      * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
      * @param outputCount Počet výstupů
      * @param onValueChanged Callback, který se zavolá po nastavení počtu výstupů
+     * @throws IllegalArgumentException Pokud počet výstupů není v povoleném rozsahu
      */
-    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) {
+    public void setOutputCount(int outputCount, OnValueChanged onValueChanged) throws IllegalArgumentException {
         super.setOutputCount(outputCount, null);
 
         rearangeOutputs();
@@ -126,13 +162,21 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
         private int brightness;
         // endregion
 
+        // region Private static methods
+        public static Output clone(Output source) throws IllegalArgumentException {
+            if (source == null)
+                throw new IllegalArgumentException();
+
+            return new Output(new Puls(source.puls), source.frequency, source.duty_cycle, source.brightness);
+        }
+        // endregion
+
         // region Constructors
+        /**
+         * Vytvoří nový výstup s výchozími hodnotami
+         */
         public Output() {
             this(new Puls(), DEF_FREQUENCY, DEF_DUTY_CYCLE, DEF_BRIGHTNESS);
-        }
-
-        public Output(Output source) {
-            this(new Puls(source.puls), source.frequency, source.duty_cycle, source.brightness);
         }
 
         /**
@@ -141,8 +185,12 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
          * @param frequency
          * @param duty_cycle Délka pulzu při nastavení frekvence
          * @param brightness Jas výstupu
+         * @throws IllegalArgumentException Pokud se vloží nějaký parametr null
          */
         public Output(Puls puls, int frequency, int duty_cycle, int brightness) {
+            if (puls == null)
+                throw new IllegalArgumentException();
+
             this.puls = puls;
 
             setFrequency(frequency);
@@ -158,7 +206,7 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
          * @return True, pokud hodnota odpovídá frekvenčnímu rozsahu, jinak false
          */
         public boolean isFrequencyInRange(int val) {
-            return RangeUtils.isInByteRange(val);
+            return RangeUtils.isInByteRange(val, 1);
         }
 
         /**
@@ -176,8 +224,32 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
          * @return True, pokud hodnota odpovídá rozsahu jasu, jinak false
          */
         public boolean isBrightnessInRange(int val) {
-            return RangeUtils.isInByteRange(val);
+            return RangeUtils.isInPercentRange(val);
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Output output = (Output) o;
+
+            if (frequency != output.frequency) return false;
+            if (duty_cycle != output.duty_cycle) return false;
+            if (brightness != output.brightness) return false;
+            return puls.equals(output.puls);
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = puls.hashCode();
+            result = 31 * result + frequency;
+            result = 31 * result + duty_cycle;
+            result = 31 * result + brightness;
+            return result;
+        }
+
         // endregion
 
         // region Getters & Setters
@@ -185,8 +257,11 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
             return frequency;
         }
 
-        public void setFrequency(int frequency) {setFrequency(frequency, null);}
-        public void setFrequency(int frequency, OnValueChanged onValueChanged) {
+        public void setFrequency(int frequency) throws IllegalArgumentException {setFrequency(frequency, null);}
+        public void setFrequency(int frequency, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (!isFrequencyInRange(frequency))
+                throw new IllegalArgumentException();
+
             if (this.frequency == frequency)
                 return;
 
@@ -200,8 +275,11 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
             return duty_cycle;
         }
 
-        public void setDutyCycle(int duty_cycle) {setDutyCycle(duty_cycle, null);}
-        public void setDutyCycle(int duty_cycle, OnValueChanged onValueChanged) {
+        public void setDutyCycle(int duty_cycle) throws IllegalArgumentException {setDutyCycle(duty_cycle, null);}
+        public void setDutyCycle(int duty_cycle, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (!isDutyCycleInRange(duty_cycle))
+                throw new IllegalArgumentException();
+
             if (this.duty_cycle == duty_cycle)
                 return;
 
@@ -211,12 +289,31 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
                 onValueChanged.changed();
         }
 
+        /**
+         * Vrátí jas všech výstupů
+         * @return Jas výstupů
+         */
         public int getBrightness() {
             return brightness;
         }
 
-        public void setBrightness(int brightness) {setBrightness(brightness, null);}
-        public void setBrightness(int brightness, OnValueChanged onValueChanged) {
+        /**
+         * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
+         * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+         * @param brightness Jas výstupů
+         */
+        public void setBrightness(int brightness) throws IllegalArgumentException {setBrightness(brightness, null);}
+        /**
+         * Nastaví jas všem výstupům. Hodnoty jsou možné z intervalu <0 - 100>
+         * Pokud se do parametru vloží hodnota, která je stejná jako aktuální, nic se nestane
+         * @param brightness Jas výstupů
+         * @param onValueChanged Callback, který se zavolá po nastavení jasu výstupů
+         * @throws IllegalArgumentException Pokud parametr nevyhovuje intervalu
+         */
+        public void setBrightness(int brightness, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (!isBrightnessInRange(brightness))
+                throw new IllegalArgumentException();
+
             if (this.brightness == brightness)
                 return;
 
@@ -226,6 +323,37 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
                 onValueChanged.changed();
         }
         // endregion
+
+        public static final class Builder {
+            private Puls puls = new Puls();
+            private int frequency = DEF_FREQUENCY;
+            private int duty_cycle = DEF_DUTY_CYCLE;
+            private int brightness = DEF_BRIGHTNESS;
+
+            public Builder puls(Puls puls) {
+                this.puls = puls;
+                return this;
+            }
+
+            public Builder frequency(int frequency) {
+                this.frequency = frequency;
+                return this;
+            }
+
+            public Builder duty_cycle(int duty_cycle) {
+                this.duty_cycle = duty_cycle;
+                return this;
+            }
+
+            public Builder brightness(int brightness) {
+                this.brightness = brightness;
+                return this;
+            }
+
+            public Output build() {
+                return new Output(puls, frequency, duty_cycle, brightness);
+            }
+        }
     }
 
     public static final class Puls {
@@ -265,9 +393,31 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
          * @param down Doba, po kterou jsou výstupy neaktivní
          */
         public Puls(int up, int down) {
-            this.up = up;
-            this.down = down;
+            setUp(up);
+            setDown(down);
         }
+        // endregion
+
+        // region Public methods
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Puls puls = (Puls) o;
+
+            if (up != puls.up) return false;
+            return down == puls.down;
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = up;
+            result = 31 * result + down;
+            return result;
+        }
+
         // endregion
 
         // region Getters & Setters
@@ -275,8 +425,11 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
             return up;
         }
 
-        public void setUp(int up) {setUp(up, null);}
-        public void setUp(int up, OnValueChanged onValueChanged) {
+        public void setUp(int up) throws IllegalArgumentException {setUp(up, null);}
+        public void setUp(int up, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (up < 0)
+                throw new IllegalArgumentException();
+
             if (this.up == up)
                 return;
 
@@ -290,8 +443,11 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
             return down;
         }
 
-        public void setDown(int down) {setDown(down, null);}
-        public void setDown(int down, OnValueChanged onValueChanged) {
+        public void setDown(int down) throws IllegalArgumentException {setDown(down, null);}
+        public void setDown(int down, OnValueChanged onValueChanged) throws IllegalArgumentException {
+            if (down < 0)
+                throw new IllegalArgumentException();
+
             if (this.down == down)
                 return;
 
@@ -301,5 +457,52 @@ public class ConfigurationFVEP extends AConfiguration<ConfigurationFVEP> {
                 onValueChanged.changed();
         }
         // endregion
+
+        public static final class Builder {
+            private int up;
+            private int down;
+
+            public Builder up(int up) {
+                this.up = up;
+                return this;
+            }
+            public Builder down(int down) {
+                this.down = down;
+                return this;
+            }
+
+            public Puls build() {
+                return new Puls(up, down);
+            }
+        }
+    }
+
+    public static final class Builder {
+        private List<Output> outputList = new ArrayList<>();
+        private String name;
+        private int outputCount = DEF_OUTPUT_COUNT;
+
+        public Builder(String name){
+            this.name = name;
+        }
+
+        public Builder outpuCount(int outputCount){
+            this.outputCount = outputCount;
+            return this;
+        }
+
+        public Builder outputList(List<Output> outputList){
+            if(outputList == null)
+                return this;
+
+            this.outputList = outputList;
+            return this;
+        }
+
+        public ConfigurationFVEP build(){
+            return new ConfigurationFVEP(this.name, this.outputCount, this.outputList);
+        }
+
+
     }
 }

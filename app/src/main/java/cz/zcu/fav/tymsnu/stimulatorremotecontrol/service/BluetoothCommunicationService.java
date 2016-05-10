@@ -247,7 +247,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Constants.MESSAGE_SHOW);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.TOAST, "Unable to connect device");
+        bundle.putString(Constants.TOAST, mContext.getString(R.string.unable_to_connect));
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -298,7 +298,7 @@ public class BluetoothCommunicationService implements IBtCommunication {
             Log.d(TAG, "BEGIN mAcceptThread" + this);
             setName("AcceptThread");
 
-            BluetoothSocket socket = null;
+            BluetoothSocket socket;
 
             // Listen to the server socket if we're not connected
             while (mState != STATE_CONNECTED) {

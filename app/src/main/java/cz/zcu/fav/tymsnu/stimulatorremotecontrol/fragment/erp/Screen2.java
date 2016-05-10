@@ -140,7 +140,7 @@ public final class Screen2 extends ASimpleScreen<ConfigurationERP>
         waitEditText.setText(String.valueOf(configuration.getWait()));
         randomSpinner.setSelection(configuration.getRandom().ordinal());
         edgeSpinner.setSelection(configuration.getEdge().ordinal());
-        numberPicker.setValue(configuration.getOutputCount(), true);
+        numberPicker.setValue(configuration.getOutputCount(), false);
     }
 
     @Override
@@ -168,23 +168,37 @@ public final class Screen2 extends ASimpleScreen<ConfigurationERP>
         if (configuration == null)
             return;
 
-        configuration.setOut(EditTextReader.readValue(outEditText, configuration.getOut()), new AConfiguration.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                editTextChanged = true;
-                manager.notifySelectedItemInternalChange();
-            }
-        });
+        try {
+            configuration.setOut(EditTextReader.readValue(outEditText, configuration.getOut()), new AConfiguration.OnValueChanged() {
+                @Override
+                public void changed() {
+                    notifyLock = true;
+                    editTextChanged = true;
+                    manager.notifySelectedItemInternalChange();
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            notifyLock = false;
+            editTextChanged = false;
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, EditTextReader.readValue(outEditText)), Snackbar.LENGTH_SHORT).show();
+            return;
+        }
 
-        configuration.setWait(EditTextReader.readValue(waitEditText, configuration.getWait()), new AConfiguration.OnValueChanged() {
-            @Override
-            public void changed() {
-                notifyLock = true;
-                editTextChanged = true;
-                manager.notifySelectedItemInternalChange();
-            }
-        });
+        try {
+            configuration.setWait(EditTextReader.readValue(waitEditText, configuration.getWait()), new AConfiguration.OnValueChanged() {
+                @Override
+                public void changed() {
+                    notifyLock = true;
+                    editTextChanged = true;
+                    manager.notifySelectedItemInternalChange();
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            notifyLock = false;
+            editTextChanged = false;
+            Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.value_out_of_range, EditTextReader.readValue(waitEditText)), Snackbar.LENGTH_SHORT).show();
+            return;
+        }
 
         if (editTextChanged) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.values_were_saved, configuration.getName()), Snackbar.LENGTH_SHORT).show();
