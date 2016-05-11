@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.MainActivity;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.MainActivity;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 
 import static android.support.test.espresso.Espresso.onView;

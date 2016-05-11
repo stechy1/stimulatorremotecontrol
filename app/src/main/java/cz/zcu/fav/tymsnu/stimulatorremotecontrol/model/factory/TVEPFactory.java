@@ -2,12 +2,12 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationTVEP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.TVEPFileJSONHandler;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.json.TVEPHandler;
 
 
 public class TVEPFactory implements IFactory<ConfigurationTVEP> {
 
-    private IReadWrite<ConfigurationTVEP> handler = new TVEPFileJSONHandler();
+    private IReadWrite<ConfigurationTVEP> handler = new TVEPHandler();
 
     @Override
     public ConfigurationTVEP build(String name) {

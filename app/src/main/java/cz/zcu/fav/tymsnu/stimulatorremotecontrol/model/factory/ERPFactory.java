@@ -2,11 +2,11 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationERP;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.ERPFileJSONHandler;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.json.ERPHandler;
 
 public class ERPFactory implements IFactory<ConfigurationERP> {
 
-    private final IReadWrite<ConfigurationERP> handler = new ERPFileJSONHandler();
+    private final IReadWrite<ConfigurationERP> handler = new ERPHandler();
 
     @Override
     public ConfigurationERP build(String name) {

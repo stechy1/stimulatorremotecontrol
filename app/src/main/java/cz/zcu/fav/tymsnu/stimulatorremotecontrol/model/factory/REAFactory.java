@@ -2,11 +2,11 @@ package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.factory;
 
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ConfigurationREA;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.IReadWrite;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.REAFileJSONHandler;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.handler.file.json.REAHandler;
 
 public class REAFactory implements IFactory<ConfigurationREA> {
 
-    private final IReadWrite<ConfigurationREA> handler = new REAFileJSONHandler();
+    private final IReadWrite<ConfigurationREA> handler = new REAHandler();
 
     @Override
     public ConfigurationREA build(String name) {
