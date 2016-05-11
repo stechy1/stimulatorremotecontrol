@@ -9,13 +9,13 @@
     android:paddingRight="5dp"
     android:id="@+id/fragment_universal_screen_1">
 
-    <ListView
+    <cz.zcu.fav.tymsnu.stimulatorremotecontrol.control.RecyclerViewWithContextMenu
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/universal_screen_1_container_listview"
         android:choiceMode="singleChoice"
         android:padding="5dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,29 +54,6 @@
             android:layout_gravity="end"
             android:layout_weight="1"/>
     </LinearLayout>
-
-<!--    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/universal_screen_1_fab_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/run_stimulator"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_gravity="left"
-            android:layout_weight="1"/>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/universal_screen_1_fab_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/fab_stop_stimulator"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_gravity="right"
-            android:layout_weight="1"/>
-    </LinearLayout>-->
 
 </LinearLayout>
 
