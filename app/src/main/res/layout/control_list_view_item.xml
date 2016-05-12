@@ -1,42 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/control_scheme_view_item"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?android:attr/selectableItemBackground">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/checkbox_blank_outline"
-        android:id="@+id/control_list_view_image"
-        android:layout_marginRight="5dp"/>
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="config"
+            type="cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration" />
+    </data>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/control_scheme_view_item"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
-        <TextView
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/control_list_view_image"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            app:imageResource="@{config.statusIcon}"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/control_list_view_text1"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:layout_marginTop="8dp"/>
-        <TextView
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/control_list_view_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{config.name}"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+            <TextView
+                android:id="@+id/control_list_view_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{config.corrupted ? @string/corrupted_configuration : @string/output_count(config.loaded ? config.stringOutputCount : @string/output_count_unknown)}' />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/control_list_view_image_changed"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/control_list_view_text2"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/content_save"
+            android:visibility="@{config.changed ? View.VISIBLE : View.GONE}" />
+
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/control_list_view_image_changed"
-        android:src="@drawable/content_save" />
-
-</LinearLayout>
+</layout>

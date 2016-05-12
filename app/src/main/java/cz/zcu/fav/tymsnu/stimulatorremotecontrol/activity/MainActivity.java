@@ -30,17 +30,16 @@ import android.view.View;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.Constants;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.IViewSwitcher;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.activity.DeviceListActivity;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.service.BluetoothCommunicationService;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.ASimpleFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.about.AboutFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment.erp.ERPFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.help.HelpFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment.rea.ReactionFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.settings.SettingsFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment.bci.cvep.CVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment.bci.fvep.FVEPFragment;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment.bci.tvep.TVEPFragment;
-import cz.zcu.fav.tymsnu.stimulatorremotecontrol.service.BluetoothCommunicationService;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment.erp.ERPFragment2;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment.rea.ReactionFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.help.HelpFragment;
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IViewSwitcher {
@@ -373,7 +372,7 @@ public class MainActivity extends AppCompatActivity
 
             switch (id) {
                 case Constants.FRAGMENT_ERP:
-                    fragment = new ERPFragment();
+                    fragment = new ERPFragment2();
                     break;
                 case Constants.FRAGMENT_SETTINGS:
                     fragment = new SettingsFragment();

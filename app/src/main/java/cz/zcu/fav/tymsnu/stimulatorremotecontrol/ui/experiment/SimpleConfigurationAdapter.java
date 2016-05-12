@@ -1,17 +1,17 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.ui.experiment;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.BR;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.AConfiguration;
 
@@ -44,11 +44,13 @@ public class SimpleConfigurationAdapter<T extends AConfiguration<T>>
     @Override
     public void onBindViewHolder(ConfigurationHolder holder, int position) {
         T configuration = items.get(position);
-        holder.imageView1.setImageResource(getRightIcon(configuration));
-        holder.imageView2.setVisibility(configuration.changed ? View.VISIBLE : View.INVISIBLE);
-        holder.text1.setText(configuration.getName());
-        holder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
-        holder.text2.setText(getDescription(configuration));
+        holder.binding.setVariable(BR.config, configuration);
+        holder.binding.executePendingBindings();
+//        holder.imageView1.setImageResource(getRightIcon(configuration));
+//        holder.imageView2.setVisibility(configuration.changed ? View.VISIBLE : View.INVISIBLE);
+//        holder.text1.setText(configuration.getName());
+//        holder.text1.setTextColor(configuration.loaded ? Color.BLACK : Color.GRAY);
+//        holder.text2.setText(getDescription(configuration));
     }
 
     @Override
@@ -94,20 +96,13 @@ public class SimpleConfigurationAdapter<T extends AConfiguration<T>>
             extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnCreateContextMenuListener {
 
-        ImageView imageView1, imageView2;
-        TextView text1, text2;
+        final ViewDataBinding binding;
 
         public ConfigurationHolder(View itemView) {
             super(itemView);
 
-            imageView1 = (ImageView) itemView.findViewById(R.id.control_list_view_image);
-            imageView2 = (ImageView) itemView.findViewById(R.id.control_list_view_image_changed);
-            text1 = (TextView) itemView.findViewById(R.id.control_list_view_text1);
-            text2 = (TextView) itemView.findViewById(R.id.control_list_view_text2);
-
+            binding = DataBindingUtil.bind(itemView);
             itemView.setOnClickListener(this);
-            // Musím nastavit listener, který není potřeba implementovat
-            // Bez tohoto nastavení se nezobrazí kontextové menu
             itemView.setOnCreateContextMenuListener(this);
         }
 

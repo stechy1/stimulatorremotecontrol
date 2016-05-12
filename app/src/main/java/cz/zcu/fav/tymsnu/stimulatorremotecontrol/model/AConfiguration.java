@@ -1,14 +1,24 @@
 package cz.zcu.fav.tymsnu.stimulatorremotecontrol.model;
 
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import cz.zcu.fav.tymsnu.stimulatorremotecontrol.R;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.IPacketable;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.bytes.Packet;
 import cz.zcu.fav.tymsnu.stimulatorremotecontrol.utils.RangeUtils;
 
+// ItemViewModel
 public abstract class AConfiguration<T extends AConfiguration<T>>
+        extends BaseObservable
         implements IDuplicatable<T>, IPacketable {
 
     // region Variables
@@ -28,16 +38,21 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
     public static final int MAX_OUTPUT_COUNT = 8;
 
     // Název itemu
+    @Bindable
     protected String name;
     // Počet výstupů
     protected int outputCount;
     // Příznak, který určuje, zda-li byl item načtený, či nikoliv
+    @Bindable
     public boolean loaded;
     // Příznak, který určuje, zda-li byl item vybraný v manažeru
+    @Bindable
     public boolean selected;
     // Příznak, který určuje, zda-li došlo ke změnš interních hodnot itemu
+    @Bindable
     public boolean changed;
     // Přiznak, který určuje, zda-li je konfigurace poškozená - nelze s ní pracovat
+    @Bindable
     public boolean corrupted;
     // endregion
 
@@ -90,6 +105,26 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
      */
     public boolean isOutputCountInRange(int value) {
         return RangeUtils.isInRange(value, MIN_OUTPUT_COUNT, MAX_OUTPUT_COUNT);
+    }
+
+    @Bindable
+    public int getStatusIcon() {
+        if (corrupted)
+            return R.drawable.corrupted_file;
+
+        if (selected)
+            return R.drawable.checkbox_marked_outline;
+
+        return R.drawable.checkbox_blank_outline;
+    }
+
+    @BindingAdapter("bind:imageResource")
+    public static void loadImage(ImageView view, int resourceID) {
+
+        final Drawable drawable = ContextCompat.getDrawable(view.getContext(), resourceID);
+        drawable.setBounds(0,0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        view.setImageDrawable(drawable);
     }
 
     @Override
@@ -154,6 +189,10 @@ public abstract class AConfiguration<T extends AConfiguration<T>>
      */
     public int getOutputCount() {
         return outputCount;
+    }
+
+    public String getStringOutputCount() {
+        return String.valueOf(outputCount);
     }
 
     /**

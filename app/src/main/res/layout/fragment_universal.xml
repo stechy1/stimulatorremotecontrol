@@ -1,26 +1,37 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/universal_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:gravity="center_horizontal" />
+    <data>
+        <variable
+            name="viewModel"
+            type="cz.zcu.fav.tymsnu.stimulatorremotecontrol.model.ViewModel" />
+    </data>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/universal_view_pager"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="24dp" />
+        android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:id="@+id/universal_tablayout"
-        style="@style/MyTabLayout"
-        android:layout_gravity="bottom" />
-</FrameLayout>
+        <TextView
+            android:id="@+id/universal_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/universal_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            app:itemView="@{viewModel.multipleItemViews}"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/universal_tablayout"
+            style="@style/MyTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="bottom" />
+    </FrameLayout>
+
+</layout>

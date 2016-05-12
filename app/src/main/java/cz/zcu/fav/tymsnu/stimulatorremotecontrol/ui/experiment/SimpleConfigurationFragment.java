@@ -91,14 +91,15 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
     }
 
     @Override
-    public void onItemClick(final View v, int position) {
+    public void onItemClick(final View v, final int position) {
         T selected = manager.itemList.get(position);
         manager.select(selected, new Manager.Callback() {
             @Override
             public void callback(Object object) {
                 ImageView img = (ImageView) v.findViewById(R.id.control_list_view_image);
                 img.setImageResource(R.drawable.checkbox_marked_outline);
-                mAdapter.notifyDataSetChanged();
+                //mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(position);
             }
         });
     }
@@ -126,7 +127,8 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
                         try {
                             T duplicated = manager.duplicate(configuration, res);
                             manager.add(duplicated);
-                            manager.notifyValueChanged();
+                            mAdapter.notifyItemInserted(manager.itemList.size());
+                            //manager.notifyValueChanged();
                             canDismiss = true;
                         } catch (IllegalArgumentException ex) {
                             Toast.makeText(getContext(), R.string.illegal_input, Toast.LENGTH_SHORT).show();
@@ -218,7 +220,8 @@ public class SimpleConfigurationFragment<T extends AConfiguration<T>> extends AS
                         manager.create(newName, new Manager.Callback() {
                             @Override
                             public void callback(Object object) {
-                                mAdapter.notifyDataSetChanged();
+                                mAdapter.notifyItemInserted(manager.itemList.size());
+                                //mAdapter.notifyDataSetChanged();
                             }
                         });
                         Log.i(TAG, "Nazev schematu: " + newName);
